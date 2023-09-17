@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
+import FormSubmitButton from "../components/FormSubmitButton";
 
 export const metadata = {
-  title: 'Add Product - MediaSwap',
-}
+  title: "Add Product - MediaSwap",
+};
 
 async function addProduct(formData: FormData) {
   "use server";
@@ -15,11 +16,11 @@ async function addProduct(formData: FormData) {
   const price = Number(formData.get("price") || 0);
 
   if (!name || !description || !imageUrl || !price) {
-    throw Error("必要な項目が存在しません")
+    throw Error("必要な項目が存在しません");
   }
 
   await prisma.product.create({
-    data: {name, description, imageUrl, price}
+    data: { name, description, imageUrl, price },
   });
 
   redirect("/");
@@ -56,7 +57,7 @@ export default function AddProductPage() {
           type="number"
           className="input input-bordered mb-3 w-full"
         />
-        <button className="btn btn-primary btn-block" type="submit">Add Product</button>
+        <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
     </div>
   );
