@@ -37,6 +37,10 @@ export default async function Home() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
+      <Link href="/add-product" className="btn btn-primary">
+        Add Product
+      </Link>
     </div>
   );
 }
