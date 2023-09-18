@@ -8,6 +8,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  // 製品が作成されて7日以内
+  const isNew = Date.now() - new Date(product.createdAt).getTime() < 1000 * 60 * 60 * 24 * 7;
+
   return (
     <Link
       href={"/products/" + product.id}
@@ -23,7 +26,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{product.name}</h2>
+        <h2 className="card-title">
+          {product.name}
+          {isNew && <div className="badge badge-secondary">NEW</div>}
+        </h2>
         <p>{product.description}</p>
         <PriceTag price={product.price} />
       </div>
