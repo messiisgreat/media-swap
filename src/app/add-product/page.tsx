@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db/prisma";
-import { uploadToS3 } from '@/lib/ImageUploadS3';
+import { uploadToS3 } from "@/lib/ImageUploadS3";
 import { redirect } from "next/navigation";
 import FormSubmitButton from "../components/FormSubmitButton";
 
@@ -16,14 +16,17 @@ async function addProduct(formData: FormData) {
   const price = Number(formData.get("price") || 0);
 
   const imageFile = formData.get("imageFile") as File;
-  const imageUrl = await uploadToS3(imageFile, `products/${Date.now()}_${name}`);
+  const imageUrl = await uploadToS3(
+    imageFile,
+    `products/${Date.now()}_${name}`,
+  );
 
   if (!name || !description || !imageUrl || !price) {
     throw Error("必要な項目が存在しません");
   }
 
   await prisma.product.create({
-    data: { name, description, imageUrl, price },
+    data: { name, description, imageUrl, price, status: "selling" },
   });
 
   redirect("/");
@@ -46,12 +49,12 @@ export default function AddProductPage() {
           placeholder="Description"
           className="textarea textarea-bordered mb-3 w-full"
         ></textarea>
-        <input 
-            required 
-            type="file" 
-            name="imageFile" 
-            accept="image/*" 
-            className="input input-bordered mb-3 w-full"
+        <input
+          required
+          type="file"
+          name="imageFile"
+          accept="image/*"
+          className="input input-bordered mb-3 w-full"
         />
         <input
           required
