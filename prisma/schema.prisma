@@ -15,6 +15,15 @@ model Product {
   price       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  BuyItem     BuyItem[]
 
   @@map("products") // databaseではproductsコレクションに保存される。DBでは複数形で格納されるが、Prismaでは単数形で扱える。
+}
+
+model BuyItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@map("buyitems")
 }
