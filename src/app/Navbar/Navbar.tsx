@@ -1,6 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png"
+import { redirect } from "next/navigation";
+
+async function searchProducts(formData: FormData) {
+  "use server";
+
+  const searchQuery = formData.get("searchQuery")?.toString();
+
+  if (searchQuery) {
+    redirect("/search?query=" + searchQuery);
+  }
+}
 
 export default function Navbar() {
   return <div className="bg-base-100">
@@ -12,7 +23,7 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex-none gap-2">
-        <form>
+        <form action={searchProducts}>
           <div className="form-control">
             <input
               name="searchQuery"
