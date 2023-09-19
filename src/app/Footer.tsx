@@ -2,6 +2,7 @@ export default function Footer() {
   return (
     <footer className="bg-neutral p-10 text-neutral-content">
       <div className="footer m-auto max-w-7xl">
+        {/* // TODO: 利用規約ページを作成する */}
         <div>
           <span className="footer-title">MediaSwapについて</span>
           <a className="link-hover link">会社概要(運営会社)</a>
