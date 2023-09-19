@@ -13,7 +13,7 @@ export default function BuyItemButton({ productId }: BuyItemButtonProps) {
 
   return (
     <div className="flex items-center gap-2">
-      {/* TODO: 購入処理が完了すると画像に購入済みのタグを表示し、購入ボタンを非表示にする */}
+      {/* TODO: 購入処理が完了すると画像に購入済みのタグを表示し、購入ボタンを非表示にする。あと取引ページへの遷移処理も必要 */}
       <button
         className="btn btn-primary"
         onClick={() => {
