@@ -4,7 +4,8 @@ const nextConfig = {
     remotePatterns: [
       { hostname: "images.unsplash.com" },
       { hostname: "unsplash.com" },
-      { hostname: "media-swap-image-storage.s3.amazonaws.com"},
+      { hostname: "media-swap-image-storage.s3.amazonaws.com" },
+      { hostname: "lh3.googleusercontent.com" },
     ],
   },
   experimental: {
