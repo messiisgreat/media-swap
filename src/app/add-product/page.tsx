@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import FormSubmitButton from "../components/FormSubmitButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import ProductTag from "../components/ProductTag";
 
 export const metadata = {
   title: "Add Product - MediaSwap",
@@ -85,6 +86,7 @@ export default async function AddProductPage() {
           type="number"
           className="input input-bordered mb-3 w-full"
         />
+        <ProductTag />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
     </div>
