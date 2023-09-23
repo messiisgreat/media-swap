@@ -12,6 +12,8 @@ model Product {
   description String
   userId      String   @db.ObjectId
   user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tagId       String   @db.ObjectId
+  tag         Tag?     @relation(fields: [tagId], references: [id], onDelete: Cascade)
   imageUrl    String
   name        String
   price       Int
@@ -20,6 +22,12 @@ model Product {
   status      String   @default("selling") // 商品のステータス。 TODO: 交渉中のステータスが必要になるかも
 
   @@map("products") // databaseではproductsコレクションに保存される。DBでは複数形で格納されるが、Prismaでは単数形で扱える。
+}
+
+model Tag {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String 
+  Users user[]
 }
 
 model Account {
