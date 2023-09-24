@@ -7,7 +7,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProductTag from "../components/ProductTag";
 
 export const metadata = {
-  title: "Add Product - MediaSwap",
+  title: "Add Product - Swappy",
 };
 
 async function addProduct(formData: FormData) {

@@ -2,7 +2,9 @@
 
 import { WithContext as ReactTags } from "react-tag-input";
 import { useState } from "react";
+import "./productTag.css";
 
+// https://www.npmjs.com/package/react-tag-input
 export default function ProductTag() {
   const [tags, setTags] = useState([
     { id: "Thailand", text: "Thailand" },

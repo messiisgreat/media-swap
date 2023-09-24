@@ -9,36 +9,36 @@ import BuyItemButton from "./BuyItemButton";
 interface ProductPageProps {
   params: {
     id: string;
-  }
+  };
 }
 
 const getProduct = cache(async (id: string) => {
-  const product = await prisma.product.findUnique({where: {id}});
+  const product = await prisma.product.findUnique({ where: { id } });
   if (!product) notFound();
   return product;
 });
 
-export async function generateMetadata(
-  { params: {id} }: ProductPageProps
-): Promise<Metadata> {
+export async function generateMetadata({
+  params: { id },
+}: ProductPageProps): Promise<Metadata> {
   const product = await getProduct(id);
 
   return {
-    title: product.name + " - MediaSwap",
+    title: product.name + " - Swappy",
     description: product.description,
     openGraph: {
-      images: [{url: product.imageUrl}]
-    }
-  }
+      images: [{ url: product.imageUrl }],
+    },
+  };
 }
 
-export default async function ProductPage(
-  { params: {id} }: ProductPageProps
-) {
+export default async function ProductPage({
+  params: { id },
+}: ProductPageProps) {
   const product = await getProduct(id);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 lg:items-center">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
       <Image
         src={product.imageUrl}
         alt={product.name}
