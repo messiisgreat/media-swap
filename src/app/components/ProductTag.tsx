@@ -1,15 +1,20 @@
 "use client";
 
 import { WithContext as ReactTags } from "react-tag-input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ProductTag() {
-  const [tags, setTags] = useState([
-    { id: "Thailand", text: "Thailand" },
-    { id: "India", text: "India" },
-    { id: "Vietnam", text: "Vietnam" },
-    { id: "Turkey", text: "Turkey" },
-  ]);
+type Tag = { id: string; text: string; };
+
+type ProductTagProps = {
+  fetchedTags: Tag[];
+};
+
+export default function ProductTag({ fetchedTags }: ProductTagProps) {
+
+  const [tags, setTags] = useState<{ id: string; text: string; }[]>([]);
+  useEffect(() => {
+    setTags(fetchedTags);
+  }, []);
 
   const KeyCodes = {
     comma: 188,
@@ -43,6 +48,7 @@ export default function ProductTag() {
   return (
     <ReactTags
       tags={tags}
+      // suggestions={suggestions}
       delimiters={delimiters}
       handleDelete={handleDelete}
       handleAddition={handleAddition}

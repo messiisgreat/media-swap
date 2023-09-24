@@ -12,8 +12,6 @@ model Product {
   description String
   userId      String   @db.ObjectId
   user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tagId       String   @db.ObjectId
-  tag         Tag?     @relation(fields: [tagId], references: [id], onDelete: Cascade)
   imageUrl    String
   name        String
   price       Int
@@ -27,7 +25,8 @@ model Product {
 model Tag {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String 
-  Users user[]
+
+  @@map("Tag")
 }
 
 model Account {
