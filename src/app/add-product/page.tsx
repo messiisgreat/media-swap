@@ -34,7 +34,6 @@ async function addProduct(formData: FormData) {
     throw Error("必要な項目が存在しません");
   }
 
-  // TODO: ログインしているユーザーのみが商品を追加できるようにする。userIdとuserを追加したいが、sessionはserverとclientで異なるため、どうするか考える
   await prisma.product.create({
     data: {
       name,
