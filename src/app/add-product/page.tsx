@@ -5,6 +5,7 @@ import FormSubmitButton from "../components/FormSubmitButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProductTag from "../components/ProductTag";
+import { useState } from "react"
 
 export const metadata = {
   title: "Add Product - Swappy",
@@ -29,6 +30,9 @@ async function addProduct(formData: FormData) {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
+
+  console.log("formatdata ... ")
+  console.log(formData)
 
   // formDataからデータを取得する
   const name = formData.get("name")?.toString();
@@ -98,7 +102,7 @@ export default async function AddProductPage() {
           type="number"
           className="input input-bordered mb-3 w-full"
         />
-        <ProductTag fetchedTags={tags}/>
+        <ProductTag fetchedTags={tags} />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
     </div>

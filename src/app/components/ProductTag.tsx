@@ -14,6 +14,13 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
 
   const [tags, setTags] = useState<{ id: string; text: string; }[]>([]);
 
+  useEffect(() => {
+    const hiddenInput = document.getElementById('hiddenTagsInput') as HTMLInputElement;
+    if (hiddenInput) {
+      hiddenInput.value = JSON.stringify(tags);
+    }
+  }, [tags]);
+
   const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -44,15 +51,18 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
   };
 
   return (
-    <ReactTags
-      tags={tags}
-      suggestions={fetchedTags}
-      delimiters={delimiters}
-      handleDelete={handleDelete}
-      handleAddition={handleAddition}
-      handleDrag={handleDrag}
-      inputFieldPosition="bottom"
-      autocomplete
-    />
+    <div>
+      <ReactTags
+        tags={tags}
+        suggestions={fetchedTags}
+        delimiters={delimiters}
+        handleDelete={handleDelete}
+        handleAddition={handleAddition}
+        handleDrag={handleDrag}
+        inputFieldPosition="bottom"
+        autocomplete
+      />
+      <input type="hidden" id="hiddenTagsInput" name="tags" />
+    </div>
   );
 }
