@@ -13,9 +13,6 @@ type ProductTagProps = {
 export default function ProductTag({ fetchedTags }: ProductTagProps) {
 
   const [tags, setTags] = useState<{ id: string; text: string; }[]>([]);
-  useEffect(() => {
-    setTags(fetchedTags);
-  }, []);
 
   const KeyCodes = {
     comma: 188,
@@ -49,7 +46,7 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
   return (
     <ReactTags
       tags={tags}
-      // suggestions={suggestions}
+      suggestions={fetchedTags}
       delimiters={delimiters}
       handleDelete={handleDelete}
       handleAddition={handleAddition}
