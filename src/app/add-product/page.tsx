@@ -22,6 +22,37 @@ async function fetchTags() {
   return transformedTags;
 }
 
+async function getNonMatchingTags(tags: { id: string; text: string }[]) {
+  // Prismaを使用してtagコレクションからすべてのnameを取得
+  const allTagNames = await prisma.tag.findMany({
+    select: {
+      name: true
+    }
+  });
+
+  const existingTagNames = allTagNames.map(t => t.name);
+
+  // 提供されたタグの中から、existingTagNamesに存在しないものをフィルタリング
+  const nonMatchingTags = tags.filter(tag => !existingTagNames.includes(tag.text));
+
+  return nonMatchingTags;
+}
+
+async function processTags(tagsString?: string | null): Promise<void> {
+  const tagsObject = tagsString ? JSON.parse(tagsString) : null;
+
+  if (tagsObject) {
+    const nonMatching = await getNonMatchingTags(tagsObject);
+    for (const tag of nonMatching) {
+      await prisma.tag.create({
+        data: {
+          name: tag.text
+        }
+      });
+    }
+  }
+}
+
 async function addProduct(formData: FormData) {
   "use server";
 
@@ -31,13 +62,13 @@ async function addProduct(formData: FormData) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
 
-  console.log("formatdata ... ")
-  console.log(formData)
-
   // formDataからデータを取得する
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
+  const tagsString = formData.get("tags")?.toString();
+
+  processTags(tagsString)
 
   const imageFile = formData.get("imageFile") as File;
   const imageUrl = await uploadToS3(
