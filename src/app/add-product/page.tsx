@@ -5,10 +5,22 @@ import FormSubmitButton from "../components/FormSubmitButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProductTag from "../components/ProductTag";
+import { useState } from "react"
 
 export const metadata = {
   title: "Add Product - Swappy",
 };
+
+async function fetchTags() {
+  "use server";
+
+  const fetchedTags = await prisma.tag.findMany();
+  const transformedTags = fetchedTags.map(tag => ({
+    id: tag.id,
+    text: tag.name
+  }));
+  return transformedTags;
+}
 
 async function addProduct(formData: FormData) {
   "use server";
@@ -18,6 +30,9 @@ async function addProduct(formData: FormData) {
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
+
+  console.log("formatdata ... ")
+  console.log(formData)
 
   // formDataからデータを取得する
   const name = formData.get("name")?.toString();
@@ -55,6 +70,8 @@ export default async function AddProductPage() {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
 
+  const tags = await fetchTags();
+
   return (
     <div>
       <h1 className="mb-3 text-lg font-bold">Add Product</h1>
@@ -85,7 +102,7 @@ export default async function AddProductPage() {
           type="number"
           className="input input-bordered mb-3 w-full"
         />
-        <ProductTag />
+        <ProductTag fetchedTags={tags} />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
     </div>
