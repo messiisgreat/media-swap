@@ -3,8 +3,9 @@
 import { WithContext as ReactTags } from "react-tag-input";
 import "./productTag.css";
 import { useState, useEffect } from "react";
+import { Tag } from "../types/tag"
 
-type Tag = { id: string; text: string; };
+// type Tag = { id: string; text: string; };
 
 type ProductTagProps = {
   fetchedTags: Tag[];

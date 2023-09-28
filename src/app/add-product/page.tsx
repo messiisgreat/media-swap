@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProductTag from "../components/ProductTag";
 import { useState } from "react"
+import { Tag } from "../types/tag"
 
 export const metadata = {
   title: "Add Product - Swappy",
@@ -22,7 +23,7 @@ async function fetchTags() {
   return transformedTags;
 }
 
-async function getNonMatchingTags(tags: { id: string; text: string }[]) {
+async function getNonMatchingTags(tags: Tag[]) {
   // Prismaを使用してtagコレクションからすべてのnameを取得
   const allTagNames = await prisma.tag.findMany({
     select: {
@@ -38,7 +39,7 @@ async function getNonMatchingTags(tags: { id: string; text: string }[]) {
   return nonMatchingTags;
 }
 
-async function processTags(tagsString?: string | null): Promise<void> {
+async function processTags(tagsString?: string | null): Promise<string[]> {
   const tagsObject = tagsString ? JSON.parse(tagsString) : null;
 
   if (tagsObject) {
@@ -51,6 +52,18 @@ async function processTags(tagsString?: string | null): Promise<void> {
       });
     }
   }
+  const matchingIds: string[] = [];
+  for (const tagObj of tagsObject) {
+    const tag = await prisma.tag.findFirst({
+      where: {
+          name: tagObj.text
+      }
+    });
+    if (tag) {
+      matchingIds.push(tag.id);
+    }
+  }
+  return matchingIds;
 }
 
 async function addProduct(formData: FormData) {
@@ -67,8 +80,8 @@ async function addProduct(formData: FormData) {
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
   const tagsString = formData.get("tags")?.toString();
-
-  processTags(tagsString)
+  
+  const tagIds = await processTags(tagsString);
 
   const imageFile = formData.get("imageFile") as File;
   const imageUrl = await uploadToS3(
@@ -84,9 +97,14 @@ async function addProduct(formData: FormData) {
     data: {
       name,
       description,
-      userId: session.user.id,
+      user: {
+        connect: {
+          id: session.user.id,
+        },
+      },
       imageUrl,
       price,
+      tagIds: tagIds,
       status: "selling",
     },
   });
