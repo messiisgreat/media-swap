@@ -16,9 +16,9 @@ async function fetchTags() {
   "use server";
 
   const fetchedTags = await prisma.tag.findMany();
-  const transformedTags = fetchedTags.map(tag => ({
+  const transformedTags = fetchedTags.map((tag) => ({
     id: tag.id,
-    text: tag.name
+    text: tag.name,
   }));
   return transformedTags;
 }
