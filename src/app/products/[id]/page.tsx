@@ -5,6 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import BuyItemButton from "./BuyItemButton";
+import Link from 'next/link';
 
 interface ProductPageProps {
   params: {
@@ -65,11 +66,20 @@ export default async function ProductPage({
 
       <div>
         <h1 className="text-5xl font-bold">{product.name}</h1>
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <span key={tag.id} className="bg-yellow-400 px-3 py-1 rounded-full font-medium shadow-md">
               {tag.name}
             </span>
+          ))}
+        </div> */}
+        <div className="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
+              <span className="bg-yellow-400 px-3 py-1 rounded-full font-medium shadow-md cursor-pointer">
+                {tag.name}
+              </span>
+            </Link>
           ))}
         </div>
         <PriceTag price={product.price} className="mt-4" />
