@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-neutral p-10 text-neutral-content">
@@ -14,7 +16,8 @@ export default function Footer() {
         </div>
         <div>
           <span className="footer-title">プライバシーと利用規約</span>
-          <a className="link-hover link">プライバシーポリシー</a>
+          <Link href={"/privacy-policy/"}>プライバシーポリシー</Link>
+          {/* <a className="link-hover link">プライバシーポリシー</a> */}
           <a className="link-hover link">外部送信ポリシー</a>
           <a className="link-hover link">Swappy利用規約</a>
           <a className="link-hover link">電磁交付規約</a>
