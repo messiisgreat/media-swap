@@ -16,8 +16,18 @@ export default function Footer() {
         </div>
         <div>
           <span className="footer-title">プライバシーと利用規約</span>
-          <Link href={"/privacy-policy/"}>プライバシーポリシー</Link>
-          <Link href={"/cookie-policy/"}>外部送信ポリシー</Link>
+          <Link
+            href={"/privacy-policy/"}
+            className="font-medium hover:underline"
+          >
+            プライバシーポリシー
+          </Link>
+          <Link
+            href={"/cookie-policy/"}
+            className="font-medium hover:underline"
+          >
+            外部送信ポリシー
+          </Link>
           {/* <a className="link-hover link">プライバシーポリシー</a> */}
           {/* <a className="link-hover link">外部送信ポリシー</a> */}
           <a className="link-hover link">Swappy利用規約</a>
