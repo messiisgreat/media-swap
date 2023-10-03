@@ -28,7 +28,9 @@ export default function Footer() {
           >
             外部送信ポリシー
           </Link>
-          <a className="link-hover link">Swappy利用規約</a>
+          <Link href={"/tos/"} className="font-medium hover:underline">
+            Swappy利用規約
+          </Link>
           <a className="link-hover link">電磁交付規約</a>
           <a className="link-hover link">個人データの安全管理に係る基本方針</a>
           <a className="link-hover link">特定商取引に関する表記</a>
