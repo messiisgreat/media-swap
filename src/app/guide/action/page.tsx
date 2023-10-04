@@ -1,4 +1,4 @@
-export default function GuidePage() {
+export default function GuideActionPage() {
   return (
     <div>
       <div className="border-2">

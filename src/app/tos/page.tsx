@@ -280,7 +280,7 @@ export default function TOSPage() {
           <p>
             弊社は、本サービスに接したユーザー及び第三者の、
             <Link
-              href={"/guide/"}
+              href={"/guide/action/"}
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
             >
               ガイドの禁止されている行為
@@ -289,7 +289,42 @@ export default function TOSPage() {
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold"></h3>
+          <h3 className="text-lg font-bold">第 9 条 商品の出品</h3>
+          <div className="py-2">
+            <h4 className="text-lg font-bold">1. 出品手続等</h4>
+            <p>
+              出品者は、弊社所定の手続に従い商品の出品を行うものとします。出品者は、出品に先立ち、弊社との間で加盟店契約を締結する必要があります。出品者は、本規約に加え、弊社が定める「加盟店規約（出品者用）」（以下「加盟店規約」といいます。）の定めに従って本サービスを利用するものとします。
+              弊社は、ガイド記載の特定の出品方法について基準を設け、審査を行い、出品者が基準に合致しない場合には、当該出品方法の利用を制限することができます。
+            </p>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold">2. 出品禁止商品</h4>
+            <p>
+              出品者は
+              <Link
+                href={"/guide/product/"}
+                className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+              >
+                ガイドの禁止されている出品物
+              </Link>
+              （以下「出品禁止物」といいます。）に記載された商品の出品ができないことについて、予め了承します。出品禁止物に該当する商品を出品した場合は、出品者の故意又は過失に関わらず、本規約違反行為とみなします。
+            </p>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold"></h4>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold"></h4>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold"></h4>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold"></h4>
+          </div>
+          <div className="py-2">
+            <h4 className="text-lg font-bold"></h4>
+          </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold"></h3>
