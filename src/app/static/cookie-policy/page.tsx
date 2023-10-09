@@ -9,7 +9,7 @@ export default function CookiePage() {
           この外部送信ポリシー (以下「本ポリシー」といいます)
           は、株式会社Swappyのうち、
           <Link
-            href={"/privacy-policy/"}
+            href={"/static/privacy-policy/"}
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             プライバシーポリシー
@@ -18,14 +18,14 @@ export default function CookiePage() {
           により提供される様々なサービス（以下、「本サービス」と称します）
           をご活用の際、ユーザーの端末より弊社または弊社が許可した第三者へ転送されるデータや、その目的、転送先等に関する内容を示しています。本ガイドラインでの用語の解釈は、特に明記されているケースや文の流れから異なる意味が取れる場合を除き、
           <Link
-            href={"/tos/"}
+            href={"/static/tos/"}
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             利用規約
           </Link>
           、その他弊社の定める利用規約および
           <Link
-            href={"/privacy-policy/"}
+            href={"/static/privacy-policy/"}
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             プライバシーポリシー

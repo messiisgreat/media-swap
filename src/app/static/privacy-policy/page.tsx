@@ -214,7 +214,7 @@ export default function PrivacyPage() {
             <li>
               (3) Cookie等の利用に関する詳細については
               <Link
-                href={"/cookie-policy/"}
+                href={"/static/cookie-policy/"}
                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
               >
                 外部送信ポリシー
@@ -344,6 +344,16 @@ export default function PrivacyPage() {
           </p>
           <p>〒160-0022 東京都新宿区新宿７丁目２６−７</p>
           <p>株式会社Swappy 個人情報担当者宛</p>
+          <p>
+            お問い合わせフォーム：{" "}
+            <a
+              href={"https://forms.gle/pFZjV5xMxwxcRDV1A"}
+              target="_blank"
+              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+            >
+              https://forms.gle/pFZjV5xMxwxcRDV1A
+            </a>
+          </p>
         </div>
       </div>
       <div className="border-2">

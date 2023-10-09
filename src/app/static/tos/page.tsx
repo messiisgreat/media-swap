@@ -32,7 +32,7 @@ export default function TOSPage() {
               <li>
                 (1) 「外国 PEPs 等」とは、
                 <Link
-                  href="/peps/"
+                  href="/static/peps/"
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   海外のPEPs（外国の政府や機関で重要な役職にある者）として
@@ -267,7 +267,7 @@ export default function TOSPage() {
           <p>
             弊社は、本サービスに接したユーザー及び第三者の、
             <Link
-              href={"/guide/action/"}
+              href={"/static/guide/action/"}
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
             >
               ガイドの禁止されている行為
@@ -288,7 +288,7 @@ export default function TOSPage() {
             <p>
               出品者は
               <Link
-                href={"/guide/product/"}
+                href={"/static/guide/product/"}
                 className="font-medium text-blue-600 hover:underline dark:text-blue-500"
               >
                 ガイドの禁止されている出品物

@@ -78,6 +78,7 @@ export default function CompliancePage() {
           </div>
         </div>
       </div>
+      <div className="text-right">2023年10月1日制定</div>
     </div>
   );
 }

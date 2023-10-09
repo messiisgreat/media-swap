@@ -17,28 +17,38 @@ export default function Footer() {
         <div>
           <span className="footer-title">プライバシーと利用規約</span>
           <Link
-            href={"/privacy-policy/"}
+            href={"/static/privacy-policy/"}
             className="font-medium hover:underline"
           >
             プライバシーポリシー
           </Link>
           <Link
-            href={"/cookie-policy/"}
+            href={"/static/cookie-policy/"}
             className="font-medium hover:underline"
           >
             外部送信ポリシー
           </Link>
-          <Link href={"/tos/"} className="font-medium hover:underline">
+          <Link href={"/static/tos/"} className="font-medium hover:underline">
             Swappy利用規約
           </Link>
-          <Link href={"/digital/"} className="font-medium hover:underline">
+          <Link
+            href={"/static/digital/"}
+            className="font-medium hover:underline"
+          >
             電磁交付規約
           </Link>
-          <Link href={"/compliance/"} className="font-medium hover:underline">
+          <Link
+            href={"/static/compliance/"}
+            className="font-medium hover:underline"
+          >
             コンプライアンスポリシー
           </Link>
-
-          <a className="link-hover link">個人データの安全管理に係る基本方針</a>
+          <Link
+            href={"/static/data-security/"}
+            className="font-medium hover:underline"
+          >
+            個人データの安全管理に係る基本方針
+          </Link>
           <a className="link-hover link">特定商取引に関する表記</a>
           <a className="link-hover link">資金決済法に基づく表示</a>
           <a className="link-hover link">法務確認について</a>
