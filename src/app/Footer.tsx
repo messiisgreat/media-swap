@@ -34,6 +34,10 @@ export default function Footer() {
           <Link href={"/digital/"} className="font-medium hover:underline">
             電磁交付規約
           </Link>
+          <Link href={"/compliance/"} className="font-medium hover:underline">
+            コンプライアンスポリシー
+          </Link>
+
           <a className="link-hover link">個人データの安全管理に係る基本方針</a>
           <a className="link-hover link">特定商取引に関する表記</a>
           <a className="link-hover link">資金決済法に基づく表示</a>
