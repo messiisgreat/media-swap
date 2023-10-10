@@ -52,11 +52,11 @@ export default function TokuteiPage() {
           <h3 className="text-lg font-bold">Swappyについて</h3>
           <div className="py-2">
             <h4 className="text-lg font-bold">役務の内容</h4>
-            <p>お客さま間の物品の売買の場・機会を提供します。</p>
+            <p>お客さま間の商品の取引の場所・機会を提供します。</p>
           </div>
           <div className="py-2">
             <h4 className="text-lg font-bold">
-              役務の対価及びその支払い方法・支払時期
+              役務の対価及びその支払い手段・期間
             </h4>
             <table className="min-w-full bg-white">
               <tbody>
@@ -66,10 +66,10 @@ export default function TokuteiPage() {
                   </td>
                   <td className="border-b border-r border-gray-200 px-3 py-2">
                     <ul>
-                      <li>・ 販売手数料として販売価格の10%</li>
+                      <li>・ 販売からの手数料は販売価格の10%</li>
                       <li>
                         ・
-                        出品した商品が購入され取引が完了した時に、販売価格の10%が販売手数料として販売価格から差し引かれます。
+                        商品が売れた際に、販売価格の10%を手数料として引かれる。
                       </li>
                     </ul>
                   </td>
@@ -109,7 +109,9 @@ export default function TokuteiPage() {
                   </td>
                   <td className="border-b border-r border-gray-200 px-3 py-2">
                     <ul>
-                      <li>・ 会員登録後、直ちにご利用いただけます。</li>
+                      <li>
+                        ・ 会員として登録すると、すぐにサービスを利用できます。
+                      </li>
                     </ul>
                   </td>
                 </tr>
@@ -123,9 +125,7 @@ export default function TokuteiPage() {
             <ul className="list-disc px-4">
               <li>商品を購入する際、支払い方法により所定の支払手数料</li>
               <li>商品の配送費用</li>
-              <li>
-                メルカリで販売した商品の売上を引き出す際、所定の振込手数料
-              </li>
+              <li>Swappyで販売した商品の売上を引き出す際、所定の振込手数料</li>
             </ul>
           </div>
         </div>
