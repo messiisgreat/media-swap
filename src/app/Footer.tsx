@@ -49,7 +49,12 @@ export default function Footer() {
           >
             個人データの安全管理に係る基本方針
           </Link>
-          <a className="link-hover link">特定商取引に関する表記</a>
+          <Link
+            href={"/static/tokutei/"}
+            className="font-medium hover:underline"
+          >
+            特定商取引に関する表記
+          </Link>
           <a className="link-hover link">資金決済法に基づく表示</a>
           <a className="link-hover link">法務確認について</a>
         </div>
