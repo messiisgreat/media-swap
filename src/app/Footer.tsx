@@ -55,7 +55,12 @@ export default function Footer() {
           >
             特定商取引に関する表記
           </Link>
-          <a className="link-hover link">資金決済法に基づく表示</a>
+          <Link
+            href={"/static/shikin-kessai/"}
+            className="font-medium hover:underline"
+          >
+            資金決済法に基づく表示
+          </Link>
           <a className="link-hover link">法務確認について</a>
         </div>
       </div>
