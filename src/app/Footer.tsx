@@ -61,7 +61,12 @@ export default function Footer() {
           >
             資金決済法に基づく表示
           </Link>
-          <a className="link-hover link">法務確認について</a>
+          <Link
+            href={"/static/legal-check/"}
+            className="font-medium hover:underline"
+          >
+            法務確認について
+          </Link>
         </div>
       </div>
     </footer>
