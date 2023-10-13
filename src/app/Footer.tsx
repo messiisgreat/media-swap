@@ -72,8 +72,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="m-auto max-w-7xl flex">
-        <div className="flex flex-grow justify-between">
-          <div className="flex">
+        <div className="md:flex md:flex-grow md:justify-between">
+          <div className="flex my-2">
             <a href="https://twitter.com/home" className="pr-1" target="_blank" rel="noopener noreferrer"><FaSquareXTwitter size={30} /></a>
             <a href="https://twitter.com/home" className="px-1" target="_blank" rel="noopener noreferrer"><FaFacebookSquare size={30} /></a>
           </div>
