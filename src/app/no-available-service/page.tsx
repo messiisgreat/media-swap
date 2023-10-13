@@ -1,11 +1,11 @@
 import Image from "next/image";
-import cat2048 from "/src/assets/close.jpeg";
+import closeIcon from "/src/assets/close.jpeg";
 
 export default function NoAvailableServicePage() {
     return (
         <div className="flex flex-col items-center my-12">
             <Image
-                src={cat2048}
+                src={closeIcon}
                 alt=""
                 width={120}
                 height={120}
