@@ -6,16 +6,14 @@ type AgeCheckIsYesProps = {
 
 export default function AgeCheckAnswerButton({ isYes }: AgeCheckIsYesProps) {
     return (
-        <Link href={`${isYes ? '/' : '/no-available-service'}`}>
+        <Link
+            href={`${isYes ? '/' : '/no-available-service'}`}>
             <button className={`
-            as="a"
-            ${isYes ? '' : 'mr-10'}
-            text-lg
-            w-56
-            h-12
-            rounded-full
-            border-blue-500
-            font-bold
+            text-lg font-bold
+            rounded-full border-gray-500
+            sm:w-56 w-full h-12
+            ${isYes ? '' : 'sm:mr-10'}
+            ${isYes ? '' : 'sm:mb-4'} mb-4
             ${isYes ? 'bg-red-500' : 'bg-white'}
             ${isYes ? 'text-white' : 'text-black'}
             `}>

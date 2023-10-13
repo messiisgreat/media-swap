@@ -19,7 +19,7 @@ export default function AgeCheckPage() {
                 18歳未満の方のアクセスは固くお断りします。
             </p>
 
-            <div className="flex">
+            <div className='sm:flex items-center w-full justify-center'>
                 <AgeCheckAnswerButton isYes={false} />
                 <AgeCheckAnswerButton isYes={true} />
             </div>
