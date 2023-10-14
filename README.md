@@ -60,3 +60,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 8. [Figma](https://www.figma.com/file/hGDNS4SqUcCFPEO7QktPpm/Untitled?type=design&node-id=0-1&mode=design&t=RXinljJlgKGIVOjm-0)
 
 その他資料はslackの資料chにあるので、PR出す前に確認してください
+## ローカル開発環境構築
+### dockerの起動・停止コマンド
+- 起動コマンド `docker-compose up -d`
+- 停止コマンド `docker-compose down`
+### リストアの方法
+ローカルのデータベースを更新したい場合は以下のような操作を行う
+1. 次のリストアコマンドを実行して`dump.gz`をダウンロードする`mongorestore --uri mongodb+srv://<USER>:<PASSWORD>@cluster0.c1apanj.mongodb.net`
+2. ダウンロードされた`dump.gz`を`media-swap/initdb`に格納する
