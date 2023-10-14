@@ -3,22 +3,40 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
     const url = req.url;
-    console.log('リダイレクトURL: ' + url);
-
     const parsedUrl = new URL(url);
     const pathName = parsedUrl.pathname;
-    console.log(pathName);
+    console.log('RedirectURL: ' + pathName);
 
     const isAgeCheckedThrough = req.cookies.get('isAgeCheckedThrough')?.value;
+    const isAgeChecUnDefined = isAgeCheckedThrough == undefined;
     const isAgeCheckPath = pathName == '/age-check';
-    console.log(isAgeCheckPath);
+    const isNoAvailablePath = pathName == '/no-available-service';
 
-    if (!isAgeCheckPath && isAgeCheckedThrough == undefined) {
+    /// 年齢認証をしていない時
+    if (isAgeChecUnDefined && !isAgeCheckPath) {
+        if (isAgeCheckPath) {
+            return;
+        }
         console.log('年齢認証画面にリダイレクト');
         return NextResponse.redirect(new URL('/age-check', req.url))
-    } else if (isAgeCheckPath && isAgeCheckedThrough != undefined) {
-        // age-check が終わってるけどリダイレクトしてしまった場合はホームに返す
-        return NextResponse.redirect(new URL('/', req.url))
+    }
+
+    /// 年齢確認 no の時
+    if (isAgeCheckedThrough == 'false') {
+        if (isNoAvailablePath) {
+            return;
+        }
+        console.log('サービス利用不可にリダイレクト');
+        return NextResponse.redirect(new URL('/no-available-service', req.url))
+    }
+
+    /// 年齢確認 yes の時
+    if (isAgeCheckedThrough == 'true') {
+        if (isAgeCheckPath || isNoAvailablePath) {
+            console.log('ホームにリダイレクト');
+            return NextResponse.redirect(new URL('/', req.url))
+        }
+        return;
     }
 }
 
@@ -26,6 +44,7 @@ export const config = {
     matcher: [
         '/',
         '/age-check',
+        '/no-available-service',
         '/products/:path*',
     ],
 }
