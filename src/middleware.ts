@@ -23,8 +23,14 @@ export async function middleware(req: NextRequest) {
 
     /// 年齢確認 no の時
     if (isAgeCheckedThrough == 'false') {
-        if (isNoAvailablePath) {
+        // cookie を取得してチェックする
+        const hasAgeCheckedThrogh = req.cookies.has('isAgeCheckedThrough');
+
+        if (isNoAvailablePath || isAgeCheckPath) {
             return;
+        } else if (hasAgeCheckedThrogh) {
+            req.cookies.delete('isAgeCheckedThrough');
+            return NextResponse.redirect(new URL('/age-check', req.url))
         }
         console.log('サービス利用不可にリダイレクト');
         return NextResponse.redirect(new URL('/no-available-service', req.url))
