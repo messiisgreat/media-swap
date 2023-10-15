@@ -8,10 +8,7 @@ type AgeCheckIsYesProps = {
 
 export default function AgeCheckAnswerButton({ isYes }: AgeCheckIsYesProps) {
     const handleAgeChecked = () => {
-        setCookie(null, 'isAgeCheckedThrough', isYes ? 'true' : 'false', {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-        })
+        setCookie(null, 'isAgeCheckedThrough', isYes ? 'true' : 'false')
     }
 
     return (
