@@ -1,12 +1,11 @@
-import { prisma } from "@/lib/db/prisma";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { redirect } from "next/navigation";
-import FormSubmitButton from "../components/FormSubmitButton";
+import { prisma } from "@/lib/db/prisma";
+import { Tag } from "@prisma/client";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import FormSubmitButton from "../components/FormSubmitButton";
 import ProductTag from "../components/ProductTag";
-import { useState } from "react";
-import { Tag } from "../types/tag";
 
 export const metadata = {
   title: "Add Product - Swappy",
@@ -18,20 +17,20 @@ async function fetchTags() {
   const fetchedTags = await prisma.tag.findMany();
   const transformedTags = fetchedTags.map((tag) => ({
     id: tag.id,
-    text: tag.name,
+    text: tag.text,
   }));
   return transformedTags;
 }
 
 async function getNonMatchingTags(tags: Tag[]) {
-  // Prismaを使用してtagコレクションからすべてのnameを取得
+  // Prismaを使用してtagコレクションからすべてのtextを取得
   const allTagNames = await prisma.tag.findMany({
     select: {
-      name: true,
+      text: true,
     },
   });
 
-  const existingTagNames = allTagNames.map((t) => t.name);
+  const existingTagNames = allTagNames.flatMap((tag) => tag.text);
 
   // 提供されたタグの中から、existingTagNamesに存在しないものをフィルタリング
   const nonMatchingTags = tags.filter(
@@ -49,7 +48,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
     for (const tag of nonMatching) {
       await prisma.tag.create({
         data: {
-          name: tag.text,
+          text: tag.text,
         },
       });
     }
@@ -58,7 +57,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
   for (const tagObj of tagsObject) {
     const tag = await prisma.tag.findFirst({
       where: {
-        name: tagObj.text,
+        text: tagObj.text,
       },
     });
     if (tag) {

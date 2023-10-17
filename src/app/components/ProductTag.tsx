@@ -1,9 +1,9 @@
 "use client";
 
+import { Tag } from "@prisma/client";
+import { useEffect, useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 import "./productTag.css";
-import { useState, useEffect } from "react";
-import { Tag } from "../types/tag";
 
 // type Tag = { id: string; text: string; };
 
@@ -63,6 +63,10 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
         handleDrag={handleDrag}
         inputFieldPosition="bottom"
         autocomplete
+        classNames={{
+          tag: "badge badge-primary",
+          tagInputField: "input input-bordered",
+        }}
       />
       <input type="hidden" id="hiddenTagsInput" name="tags" />
     </div>

@@ -20,7 +20,7 @@ export const Badge = ({
   outline,
   ...props
 }: BadgeProps) => {
-  const badgeClass = `badge ${outline ? "badge-outline" : ""} ${
+  const badgeClass = `badge p-2 ${outline ? "badge-outline" : ""} ${
     variant ? badgeVariants[variant] : ""
   } ${className}`;
   return <div className={badgeClass} {...props} />;

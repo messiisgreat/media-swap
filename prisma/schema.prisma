@@ -25,7 +25,7 @@ model Product {
 
 model Tag {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String 
+  text String 
 
   @@map("Tag")
 }
