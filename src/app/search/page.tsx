@@ -1,7 +1,6 @@
+import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/lib/db/prisma";
-import ProductCard from "../components/ProductCard";
 import { Metadata } from "next";
-
 // TODO: 日本語クエリにも対応する
 
 interface SearchPageProps {

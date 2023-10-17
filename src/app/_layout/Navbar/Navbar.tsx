@@ -1,10 +1,10 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import logo from "@/assets/logo.png";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo.png";
 import { redirect } from "next/navigation";
 import UserMenuButton from "./UserMenuButton";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function searchProducts(formData: FormData) {
   "use server";
@@ -16,7 +16,7 @@ async function searchProducts(formData: FormData) {
   }
 }
 
-export default async function Navbar() {
+export async function Navbar() {
   const session = await getServerSession(authOptions);
 
   return (

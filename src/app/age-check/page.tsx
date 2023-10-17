@@ -1,4 +1,4 @@
-import AgeCheckAnswerButton from "../components/AgeCheckAnswerButton";
+import AgeCheckAnswerButton from "@/app/age-check/AgeCheckAnswerButton";
 
 export default function AgeCheckPage() {
   return (

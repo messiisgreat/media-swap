@@ -1,11 +1,11 @@
-import PriceTag from "@/app/components/PriceTag";
+import PriceTag from "@/components/PriceTag";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import BuyItemButton from "./BuyItemButton";
-import Link from "next/link";
 
 interface ProductPageProps {
   params: {

@@ -1,12 +1,11 @@
-import { prisma } from "@/lib/db/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import FormSubmitButton from "@/components/FormSubmitButton";
+import ProductTag from "@/components/ProductTag";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { redirect } from "next/navigation";
-import FormSubmitButton from "../components/FormSubmitButton";
+import { prisma } from "@/lib/db/prisma";
+import { Tag } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import ProductTag from "../components/ProductTag";
-import { useState } from "react";
-import { Tag } from "../types/tag";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Add Product - Swappy",

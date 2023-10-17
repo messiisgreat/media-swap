@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
+import { Tag } from "../app/types/tag";
 import "./productTag.css";
-import { useState, useEffect } from "react";
-import { Tag } from "../types/tag";
 
 // type Tag = { id: string; text: string; };
 
