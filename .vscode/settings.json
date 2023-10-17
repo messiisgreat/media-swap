@@ -1,0 +1,10 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  // デフォルトのフォーマッターに prettier を指定
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // 保存時に prettier によって整形
+  "editor.formatOnSave": true,
+}

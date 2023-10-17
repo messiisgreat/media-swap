@@ -5,7 +5,7 @@ import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
 
 interface SearchPageProps {
-  searchParams: { query: string, tagid: string };
+  searchParams: { query: string; tagid: string };
 }
 
 export function generateMetadata({
@@ -24,7 +24,7 @@ export default async function SearchPage({
       OR: [
         { name: { contains: query, mode: "insensitive" } },
         { description: { contains: query, mode: "insensitive" } },
-        { tagIds : {has: tagid} },
+        { tagIds: { has: tagid } },
       ],
     },
     orderBy: { id: "desc" },

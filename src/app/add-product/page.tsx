@@ -5,8 +5,8 @@ import FormSubmitButton from "../components/FormSubmitButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import ProductTag from "../components/ProductTag";
-import { useState } from "react"
-import { Tag } from "../types/tag"
+import { useState } from "react";
+import { Tag } from "../types/tag";
 
 export const metadata = {
   title: "Add Product - Swappy",
@@ -27,14 +27,16 @@ async function getNonMatchingTags(tags: Tag[]) {
   // Prismaを使用してtagコレクションからすべてのnameを取得
   const allTagNames = await prisma.tag.findMany({
     select: {
-      name: true
-    }
+      name: true,
+    },
   });
 
-  const existingTagNames = allTagNames.map(t => t.name);
+  const existingTagNames = allTagNames.map((t) => t.name);
 
   // 提供されたタグの中から、existingTagNamesに存在しないものをフィルタリング
-  const nonMatchingTags = tags.filter(tag => !existingTagNames.includes(tag.text));
+  const nonMatchingTags = tags.filter(
+    (tag) => !existingTagNames.includes(tag.text),
+  );
 
   return nonMatchingTags;
 }
@@ -47,8 +49,8 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
     for (const tag of nonMatching) {
       await prisma.tag.create({
         data: {
-          name: tag.text
-        }
+          name: tag.text,
+        },
       });
     }
   }
@@ -56,8 +58,8 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
   for (const tagObj of tagsObject) {
     const tag = await prisma.tag.findFirst({
       where: {
-          name: tagObj.text
-      }
+        name: tagObj.text,
+      },
     });
     if (tag) {
       matchingIds.push(tag.id);
@@ -80,7 +82,7 @@ async function addProduct(formData: FormData) {
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
   const tagsString = formData.get("tags")?.toString();
-  
+
   const tagIds = await processTags(tagsString);
 
   const imageFile = formData.get("imageFile") as File;

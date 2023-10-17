@@ -5,7 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import BuyItemButton from "./BuyItemButton";
-import Link from 'next/link';
+import Link from "next/link";
 
 interface ProductPageProps {
   params: {
@@ -25,9 +25,9 @@ const getTags = cache(async (ids: string[]) => {
   const tags = await prisma.tag.findMany({
     where: {
       id: {
-        in: ids
-      }
-    }
+        in: ids,
+      },
+    },
   });
 
   return tags;
@@ -76,7 +76,7 @@ export default async function ProductPage({
         <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-              <span className="bg-yellow-400 px-3 py-1 rounded-full font-medium shadow-md cursor-pointer">
+              <span className="cursor-pointer rounded-full bg-yellow-400 px-3 py-1 font-medium shadow-md">
                 {tag.name}
               </span>
             </Link>

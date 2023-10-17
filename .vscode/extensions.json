@@ -1,0 +1,9 @@
+{
+  // 拡張機能がインストールされていない場合、インストールの推奨を表示
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "github.vscode-pull-request-github",
+    "vscode-icons-team.vscode-icons"
+  ]
+}
