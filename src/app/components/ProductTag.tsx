@@ -3,7 +3,7 @@
 import { WithContext as ReactTags } from "react-tag-input";
 import "./productTag.css";
 import { useState, useEffect } from "react";
-import { Tag } from "../types/tag"
+import { Tag } from "../types/tag";
 
 // type Tag = { id: string; text: string; };
 
@@ -12,11 +12,12 @@ type ProductTagProps = {
 };
 
 export default function ProductTag({ fetchedTags }: ProductTagProps) {
-
-  const [tags, setTags] = useState<{ id: string; text: string; }[]>([]);
+  const [tags, setTags] = useState<{ id: string; text: string }[]>([]);
 
   useEffect(() => {
-    const hiddenInput = document.getElementById('hiddenTagsInput') as HTMLInputElement;
+    const hiddenInput = document.getElementById(
+      "hiddenTagsInput",
+    ) as HTMLInputElement;
     if (hiddenInput) {
       hiddenInput.value = JSON.stringify(tags);
     }

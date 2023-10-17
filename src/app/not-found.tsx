@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function NotFoundPage() {
   return (
@@ -6,5 +6,5 @@ export default function NotFoundPage() {
       <h1>Page not found.</h1>
       <h1>ページが見つかりません</h1>
     </div>
-  )
+  );
 }

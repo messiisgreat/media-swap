@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { FaSquareXTwitter } from "react-icons/fa6"
-import { FaFacebookSquare } from "react-icons/fa"
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaFacebookSquare } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -71,11 +71,25 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-      <div className="m-auto max-w-7xl flex">
+      <div className="m-auto flex max-w-7xl">
         <div className="md:flex md:flex-grow md:justify-between">
-          <div className="flex my-2">
-            <a href="https://twitter.com/home" className="pr-1" target="_blank" rel="noopener noreferrer"><FaSquareXTwitter size={30} /></a>
-            <a href="https://twitter.com/home" className="px-1" target="_blank" rel="noopener noreferrer"><FaFacebookSquare size={30} /></a>
+          <div className="my-2 flex">
+            <a
+              href="https://twitter.com/home"
+              className="pr-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaSquareXTwitter size={30} />
+            </a>
+            <a
+              href="https://twitter.com/home"
+              className="px-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookSquare size={30} />
+            </a>
           </div>
           <div className="flex">
             <div>

@@ -9,7 +9,9 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   // 製品が作成されて7日以内
-  const isNew = Date.now() - new Date(product.createdAt).getTime() < 1000 * 60 * 60 * 24 * 7;
+  const isNew =
+    Date.now() - new Date(product.createdAt).getTime() <
+    1000 * 60 * 60 * 24 * 7;
 
   return (
     <Link
