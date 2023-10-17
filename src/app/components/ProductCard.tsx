@@ -1,6 +1,7 @@
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "./Badge";
 import PriceTag from "./PriceTag";
 
 interface ProductCardProps {
@@ -30,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="card-body">
         <h2 className="card-title">
           {product.name}
-          {isNew && <div className="badge badge-secondary">NEW</div>}
+          {isNew && <Badge variant="secondary">New</Badge>}
         </h2>
         <p>{product.description}</p>
         <PriceTag price={product.price} />
