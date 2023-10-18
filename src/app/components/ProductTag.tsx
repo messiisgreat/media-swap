@@ -3,7 +3,6 @@
 import { Tag } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
-import "./productTag.css";
 
 // type Tag = { id: string; text: string; };
 
