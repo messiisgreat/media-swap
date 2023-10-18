@@ -1,9 +1,8 @@
 "use client";
 
+import { Tag } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
-import { Tag } from "../app/types/tag";
-import "./productTag.css";
 
 // type Tag = { id: string; text: string; };
 
