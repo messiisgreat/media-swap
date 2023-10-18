@@ -1,51 +1,38 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
+async function redirectToAgeCheck(req: NextRequest) {
+  return NextResponse.redirect(new URL("/age-check", req.url));
+}
+
+async function redirectToHome(req: NextRequest) {
+  return NextResponse.redirect(new URL("/", req.url));
+}
+
+/**
+ * 年齢認証を通過していない場合に年齢認証画面にリダイレクトするミドルウェア
+ * @param req
+ */
 export async function middleware(req: NextRequest) {
-  const url = req.url;
-  const parsedUrl = new URL(url);
-  const pathName = parsedUrl.pathname;
-  console.log("RedirectURL: " + pathName);
+  const pathName = new URL(req.url).pathname;
 
   const isAgeCheckedThrough = req.cookies.get("isAgeCheckedThrough")?.value;
-  const isAgeChecUnDefined = isAgeCheckedThrough == undefined;
-  const isAgeCheckPath = pathName == "/age-check";
-  const isNoAvailablePath = pathName == "/no-available-service";
 
-  /// 年齢認証をしていない時
-  if (isAgeChecUnDefined && !isAgeCheckPath) {
-    if (isAgeCheckPath) {
-      return;
-    }
-    console.log("年齢認証画面にリダイレクト");
-    return NextResponse.redirect(new URL("/age-check", req.url));
+  if (isAgeCheckedThrough === undefined) {
+    return redirectToAgeCheck(req);
   }
 
-  /// 年齢確認 no の時
-  if (isAgeCheckedThrough == "false") {
-    // cookie を取得してチェックする
-    const hasAgeCheckedThrogh = req.cookies.has("isAgeCheckedThrough");
-
-    if (isNoAvailablePath || isAgeCheckPath) {
-      return;
-    } else if (hasAgeCheckedThrogh) {
-      req.cookies.delete("isAgeCheckedThrough");
-      return NextResponse.redirect(new URL("/age-check", req.url));
-    }
-    console.log("サービス利用不可にリダイレクト");
-    return NextResponse.redirect(new URL("/no-available-service", req.url));
-  }
-
-  /// 年齢確認 yes の時
-  if (isAgeCheckedThrough == "true") {
-    if (isAgeCheckPath || isNoAvailablePath) {
-      console.log("ホームにリダイレクト");
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    return;
+  if (
+    isAgeCheckedThrough === "true" &&
+    (pathName === "/age-check" || pathName === "/no-available-service")
+  ) {
+    return redirectToHome(req);
   }
 }
 
 export const config = {
-  matcher: ["/", "/age-check", "/no-available-service", "/products/:path*"],
+  matcher: [
+    /**年齢確認画面、サービス利用不可画面、関連アセット以外にマッチ */
+    "/((?!age-check|no-available-service|api|_next/static|_next/image|favicon.ico).*)",
+  ],
 };
