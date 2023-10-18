@@ -1,11 +1,12 @@
+import { formatPrice } from "@/lib/format";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import PriceTag from "./PriceTag";
+import { Badge } from "./Badge";
 
-interface ProductCardProps {
+type ProductCardProps = {
   product: Product;
-}
+};
 
 export default function ProductCard({ product }: ProductCardProps) {
   // 製品が作成されて7日以内
@@ -30,10 +31,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="card-body">
         <h2 className="card-title">
           {product.name}
-          {isNew && <div className="badge badge-secondary">NEW</div>}
+          {isNew && <Badge variant="secondary">New</Badge>}
         </h2>
         <p>{product.description}</p>
-        <PriceTag price={product.price} />
+        <Badge>{formatPrice(product.price)}</Badge>
       </div>
     </Link>
   );

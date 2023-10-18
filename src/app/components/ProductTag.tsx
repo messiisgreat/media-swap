@@ -1,27 +1,15 @@
 "use client";
 
+import { Tag } from "@prisma/client";
+import { useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
-import "./productTag.css";
-import { useState, useEffect } from "react";
-import { Tag } from "../types/tag";
-
-// type Tag = { id: string; text: string; };
 
 type ProductTagProps = {
   fetchedTags: Tag[];
 };
 
 export default function ProductTag({ fetchedTags }: ProductTagProps) {
-  const [tags, setTags] = useState<{ id: string; text: string }[]>([]);
-
-  useEffect(() => {
-    const hiddenInput = document.getElementById(
-      "hiddenTagsInput",
-    ) as HTMLInputElement;
-    if (hiddenInput) {
-      hiddenInput.value = JSON.stringify(tags);
-    }
-  }, [tags]);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const KeyCodes = {
     comma: 188,
@@ -48,7 +36,6 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
 
-    // re-render
     setTags(newTags);
   };
 
@@ -63,8 +50,13 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
         handleDrag={handleDrag}
         inputFieldPosition="bottom"
         autocomplete
+        classNames={{
+          tag: "badge badge-primary",
+          tagInputField: "input input-bordered",
+          selected: "flex flex-wrap gap-2 mb-2",
+        }}
       />
-      <input type="hidden" id="hiddenTagsInput" name="tags" />
+      <input type="hidden" name="tags" value={JSON.stringify(tags)} />
     </div>
   );
 }

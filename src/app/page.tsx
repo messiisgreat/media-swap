@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
-import ProductCard from "./components/ProductCard";
 import Link from "next/link";
 import PaginationBar from "./components/PaginationBar";
+import ProductCard from "./components/ProductCard";
 
 interface HomeProps {
   searchParams: { page: string };

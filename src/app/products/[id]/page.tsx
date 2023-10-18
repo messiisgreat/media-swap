@@ -1,17 +1,17 @@
-import PriceTag from "@/app/components/PriceTag";
+import { Badge } from "@/app/components/Badge";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import BuyItemButton from "./BuyItemButton";
-import Link from "next/link";
 
-interface ProductPageProps {
+type ProductPageProps = {
   params: {
     id: string;
   };
-}
+};
 
 const getProduct = cache(async (id: string) => {
   const product = await prisma.product.findUnique({ where: { id } });
@@ -77,12 +77,12 @@ export default async function ProductPage({
           {tags.map((tag) => (
             <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
               <span className="cursor-pointer rounded-full bg-yellow-400 px-3 py-1 font-medium shadow-md">
-                {tag.name}
+                {tag.text}
               </span>
             </Link>
           ))}
         </div>
-        <PriceTag price={product.price} className="mt-4" />
+        <Badge className="mt-4">{product.price}</Badge>
         <p className="py-6">{product.description}</p>
         <BuyItemButton productId={product.id} />
       </div>
