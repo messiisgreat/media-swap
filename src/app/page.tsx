@@ -1,8 +1,9 @@
+import ProductTag from "@/app/components/ProductTag";
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
-import ProductCard from "./components/ProductCard";
 import Link from "next/link";
 import PaginationBar from "./components/PaginationBar";
+import ProductCard from "./components/ProductCard";
 
 interface HomeProps {
   searchParams: { page: string };
@@ -28,6 +29,7 @@ export default async function Home({
   });
   return (
     <div className="flex flex-col items-center">
+      <ProductTag fetchedTags={[]} />
       {currentPage === 1 && (
         <div className="hero rounded-xl bg-base-200">
           <div className="hero-content flex-col lg:flex-row">
