@@ -7,4 +7,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // 保存時に prettier によって整形
   "editor.formatOnSave": true,
+  // インポートを絶対パス優先に
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

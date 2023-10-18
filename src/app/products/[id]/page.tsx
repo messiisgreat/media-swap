@@ -1,4 +1,4 @@
-import { Badge } from "@/app/components/Badge";
+import { Badge } from "@/components/Badge";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import Image from "next/image";

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaFacebookSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="bg-neutral p-10 text-neutral-content">
       <div className="footer m-auto max-w-7xl">
