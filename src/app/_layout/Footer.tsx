@@ -50,35 +50,64 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-neutral p-10 text-neutral-content">
+    <footer className="bg-[#444] p-10 text-neutral-content">
       <div className="footer m-auto max-w-7xl">
-        {links.map((section, index) => (
-          <div key={index}>
-            <span className="footer-title">{section.title}</span>
-            {section.items.map((item, i) => (
-              <Link
-                href={item.url}
-                key={i}
-                className="font-medium hover:underline"
-              >
-                {item.text}
-              </Link>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="m-auto max-w-7xl md:flex md:grow md:justify-between">
-        <div className="my-2 flex gap-2">
-          {/* todo: twitterのリンクを追加する */}
-          <Link href="https://twitter.com/home" target="_blank">
-            <FaSquareXTwitter size={30} />
+        {/* // TODO: 利用規約ページを作成する */}
+        <div>
+          <span className="text-white font-semibold">Swappyについて</span>
+          <a className="link-hover link">会社概要(運営会社)</a>
+          <a className="link-hover link">採用情報</a>
+        </div>
+        <div>
+          <span className="text-white font-semibold">ヘルプ</span>
+          <a className="link-hover link">お問い合わせ</a>
+        </div>
+        <div>
+          <span className="text-white font-semibold">プライバシーと利用規約</span>
+          <Link
+            href={"/static/privacy-policy/"}
+            className="font-medium hover:underline"
+          >
+            プライバシーポリシー
+          </Link>
+          <Link
+            href={"/static/cookie-policy/"}
+            className="font-medium hover:underline"
+          >
+            外部送信ポリシー
           </Link>
           {/* todo: facebookのリンクを追加する */}
           <Link href="https://www.facebook.com/" target="_blank">
             <FaFacebookSquare size={30} />
           </Link>
         </div>
-        <span className="text-sm">©︎Swappy</span>
+      </div>
+      <div className="flex max-w-7xl mx-auto justify-center">
+        <div className="md:flex md:flex-grow md:justify-between">
+          <div className="my-2 flex">
+            <a
+              href="https://twitter.com/home"
+              className="pr-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaSquareXTwitter size={30} />
+            </a>
+            <a
+              href="https://twitter.com/home"
+              className="px-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookSquare size={30} />
+            </a>
+          </div>
+          <div className="flex">
+            <div>
+              <p className="text-sm">©︎Swappy</p>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );
