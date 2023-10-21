@@ -23,14 +23,14 @@ export const AgeChechContainer = () => {
         href="/no-available-service"
         className={`bg-white text-black hover:bg-gray-100 ${linkClass}`}
       >
-        いいえ
+        18歳未満です
       </Link>
       <Link
         href="/"
         className={`bg-red-500 text-white hover:bg-red-600 ${linkClass}`}
         onClick={handleYes}
       >
-        はい
+        私は18歳以上です
       </Link>
     </div>
   );
