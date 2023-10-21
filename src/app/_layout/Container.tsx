@@ -1,4 +1,4 @@
-import { Section } from "@/components/structure";
+import { Main } from "@/components/structure";
 import { ReactNode } from "react";
 
 /**
@@ -6,5 +6,5 @@ import { ReactNode } from "react";
  * @returns section
  */
 export const Container = ({ children }: { children: ReactNode }) => {
-  return <Section className="container mx-auto lg:my-4">{children}</Section>;
+  return <Main className="container mx-auto">{children}</Main>;
 };

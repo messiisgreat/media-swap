@@ -1,3 +1,4 @@
+export { ClientProvider } from "./ClientProvider";
+export { Container } from "./Container";
 export { Footer } from "./Footer";
-export { SessionProvider } from "./SessionProvider";
-export { Header as Navbar } from "./header";
+export { Header } from "./header";
