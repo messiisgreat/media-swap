@@ -1,5 +1,5 @@
 import Image from "next/image";
-import closeIcon from "/src/assets/close.jpeg";
+import closeIcon from "/src/assets/close.webp";
 
 export default function NoAvailableServicePage() {
   return (
