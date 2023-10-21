@@ -50,20 +50,20 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#444] p-10 text-neutral-content">
+    <footer className="bg-neutral p-10 text-neutral-content">
       <div className="footer m-auto max-w-7xl">
         {/* // TODO: 利用規約ページを作成する */}
         <div>
-          <span className="text-white font-semibold">Swappyについて</span>
+          <span className="footer-title">Swappyについて</span>
           <a className="link-hover link">会社概要(運営会社)</a>
           <a className="link-hover link">採用情報</a>
         </div>
         <div>
-          <span className="text-white font-semibold">ヘルプ</span>
+          <span className="footer-title">ヘルプ</span>
           <a className="link-hover link">お問い合わせ</a>
         </div>
         <div>
-          <span className="text-white font-semibold">プライバシーと利用規約</span>
+          <span className="footer-title">プライバシーと利用規約</span>
           <Link
             href={"/static/privacy-policy/"}
             className="font-medium hover:underline"
@@ -82,7 +82,7 @@ export function Footer() {
           </Link>
         </div>
       </div>
-      <div className="flex max-w-7xl mx-auto justify-center">
+      <div className="m-auto flex max-w-7xl">
         <div className="md:flex md:flex-grow md:justify-between">
           <div className="my-2 flex">
             <a
