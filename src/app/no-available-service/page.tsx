@@ -7,7 +7,7 @@ export default function NoAvailableServicePage() {
       <Image src={closeIcon} alt="" width={120} height={120} />
       <h1 className="my-10 text-4xl font-bold text-red-500">年齢認証</h1>
       <p className="font-bold text-orange-600">
-        このサイトは18歳以上でご利用いただけます
+        このサイトはアダルトコンテンツを含むため、18歳未満の方はご利用いただけません
       </p>
     </div>
   );
