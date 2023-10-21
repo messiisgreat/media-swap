@@ -1,13 +1,13 @@
 "use client";
 
-import { Session } from "next-auth";
-import Image from "next/image";
 import profilePicPlaceholder from "@/assets/profile-pic-placeholder.png";
+import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 
-interface UserMenuButtonProps {
+type UserMenuButtonProps = {
   session: Session | null;
-}
+};
 
 export default function UserMenuButton({ session }: UserMenuButtonProps) {
   const user = session?.user;
