@@ -58,3 +58,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 6. [vercel](https://vercel.com/dirtyman69/media-swap)
 7. ドメイン[swappy](https://www.swappy.jp/)
 8. [Figma](https://www.figma.com/file/hGDNS4SqUcCFPEO7QktPpm/Untitled?type=design&node-id=0-1&mode=design&t=RXinljJlgKGIVOjm-0)
+
+その他資料はslackの資料chにあるので、PR出す前に確認してください

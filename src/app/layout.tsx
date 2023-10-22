@@ -1,5 +1,5 @@
-import { Footer, Navbar, SessionProvider } from "@/app/_layout";
-import { GoogleAnalytics } from "@/app/_layout/GoogleAnalytics";
+import { ClientProvider, Container, Footer, Header } from "@/app/_layout";
+import { GoogleTagManager } from "@/app/_layout/GoogleTagManager";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -17,14 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="jp">
       <body className={inter.className}>
-        <GoogleAnalytics />
-        <SessionProvider>
-          <Navbar />
-          <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
+        <GoogleTagManager />
+        <ClientProvider>
+          <Header />
+          <Container>{children}</Container>
           <Footer />
-        </SessionProvider>
+        </ClientProvider>
       </body>
     </html>
   );
