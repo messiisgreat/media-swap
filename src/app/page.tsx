@@ -59,7 +59,7 @@ export default async function Home({
         ))}
       </div>
 
-      <Link href="/add-product" className="btn btn-primary">
+      <Link href="/add-product" className="btn btn-primary mb-4">
         Add Product
       </Link>
 
