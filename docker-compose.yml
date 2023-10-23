@@ -1,14 +1,39 @@
-version: '3'
+version: "3"
 
 services:
-  mongodb:
+  mongo-primary:
     image: mongo:latest
-    container_name: mongo-container
+    hostname: mongo-primary
+    container_name: mongo-primary-container
+    command: mongod --replSet replset
     volumes:
-      - mongo-data:/data/db
-      - ./initdb:/docker-entrypoint-initdb.d
+      - mongo-primary-data:/data/db
+      - ./etc/init:/docker-entrypoint-initdb.d:ro
+    expose:
+      - "27017"
     ports:
-      - "27017:27017"
+      - "27018:27017"
+    restart: always
+
+  mongo-secondary:
+    image: mongo:latest
+    hostname: mongo-secondary
+    container_name: mongo-secondary-container
+    command: mongod --replSet replset
+    volumes:
+      - mongo-secondary-data:/data/db
+    expose:
+      - "27017"
+    restart: always
+
+  mongo-arbiter:
+    image: mongo:latest
+    hostname: mongo-arbiter
+    container_name: mongo-arbiter-container
+    command: mongod --replSet replset
+    expose:
+      - "27017"
+    restart: always
 
   nextjs:
     build:
@@ -19,9 +44,12 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=mongodb://mongodb:27017/ecommerce
+      - DATABASE_URL=mongodb://mongo-primary:27017, mongo-secondary:27017, mongo-arbiter:27017/ecommerce?replicaSet=replset
     depends_on:
-      - mongodb
+      - mongo-primary
+      - mongo-secondary
+      - mongo-arbiter
 
 volumes:
-  mongo-data:
+  mongo-primary-data:
+  mongo-secondary-data:
