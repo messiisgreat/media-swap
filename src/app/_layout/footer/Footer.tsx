@@ -8,27 +8,23 @@ import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
  * @returns footer
  */
 export function Footer() {
-  const checkIsMobile = () => {
+  const checkIsMobile: () => boolean = () => {
     return window.matchMedia("(max-width: 768px)").matches;
   };
 
   const [isMobile, setIsMobile] = useState(checkIsMobile());
 
-  const checkWindowWidth = useCallback(() => {
-    setIsMobile(checkIsMobile());
-  }, []);
-
   useEffect(() => {
-    const handleResize = () => {
-      checkWindowWidth();
+    const checkWindowWidth = () => {
+      setIsMobile(checkIsMobile());
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", checkWindowWidth);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", checkWindowWidth);
     };
-  }, [checkWindowWidth]);
+  }, []);
 
   return (
     <footer className="bg-neutral p-10 text-neutral-content">
