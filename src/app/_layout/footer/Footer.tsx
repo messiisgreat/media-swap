@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
 
 /**
@@ -8,18 +8,27 @@ import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
  * @returns footer
  */
 export function Footer() {
-  const [isMobile, setIsMobile] = useState(true);
-  useEffect(() => {
-    const checkWindowWidth = () => {
-      const footerWidth = window.matchMedia("(max-width: 768px)").matches;
-      setIsMobile(footerWidth);
-    };
-    checkWindowWidth();
-    window.addEventListener("resize", checkWindowWidth);
-    return () => {
-      window.removeEventListener("resize", checkWindowWidth);
-    };
+  const checkIsMobile = () => {
+    return window.matchMedia("(max-width: 768px)").matches;
+  };
+
+  const [isMobile, setIsMobile] = useState(checkIsMobile());
+
+  const checkWindowWidth = useCallback(() => {
+    setIsMobile(checkIsMobile());
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      checkWindowWidth();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [checkWindowWidth]);
 
   return (
     <footer className="bg-neutral p-10 text-neutral-content">
