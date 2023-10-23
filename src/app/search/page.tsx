@@ -1,11 +1,11 @@
-import ProductCard from "@/components/ProductCard";
+import { ProductCard } from "@/components";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
 
-interface SearchPageProps {
+type SearchPageProps = {
   searchParams: { query: string; tagid: string };
-}
+};
 
 export function generateMetadata({
   searchParams: { query },

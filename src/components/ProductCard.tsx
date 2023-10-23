@@ -8,7 +8,7 @@ type ProductCardProps = {
   product: Product;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   // 製品が作成されて7日以内
   const isNew =
     Date.now() - new Date(product.createdAt).getTime() <
