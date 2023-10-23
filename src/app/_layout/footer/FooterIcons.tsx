@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+
+/**
+ * フッター下部のソーシャルアイコン及びコピーライト
+ * @returns footer
+ */
 export const FooterIcons = () => {
   return (
-    <>
       <div className="m-auto max-w-7xl md:flex md:flex-grow md:justify-between">
         <div className="my-2 flex gap-2">
           {/* todo: twitterのリンクを追加する */}
@@ -17,6 +21,5 @@ export const FooterIcons = () => {
         </div>
         <span className="text-sm">©︎Swappy</span>
       </div>
-    </>
   );
 };
