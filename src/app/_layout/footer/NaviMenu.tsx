@@ -13,6 +13,10 @@ import { ImUser } from "react-icons/im";
 
 type NavItem = "home" | "bell" | "camera" | "user";
 
+/**
+ * フッターの下部ナビゲーションメニュー
+ * @returns footer
+ */
 export const NaviMenu = () => {
   const [activeItem, setActiveItem] = useState<NavItem>("home");
 
