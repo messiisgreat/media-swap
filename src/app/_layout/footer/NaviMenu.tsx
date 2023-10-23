@@ -4,61 +4,110 @@ import {
   AiOutlineHome,
   AiFillHome,
   AiOutlineBell,
-  AiFillBell,
   AiOutlineCamera,
+  AiFillBell,
   AiFillCamera,
 } from "react-icons/ai";
 import { SlUser } from "react-icons/sl";
 import { ImUser } from "react-icons/im";
-
-type NavItem = "home" | "bell" | "camera" | "user";
 
 /**
  * フッターの下部ナビゲーションメニュー
  * @returns footer
  */
 export const NaviMenu = () => {
-  const [activeItem, setActiveItem] = useState<NavItem>("home");
+  const [homeActive, setHomeActive] = useState(false);
+  const [bellActive, setBellActive] = useState(false);
+  const [cameraActive, setCameraActive] = useState(false);
+  const [userActive, setUserActive] = useState(false);
 
-  const handleClick = (itemName: NavItem) => {
-    setActiveItem(itemName);
+  const handleHomeClick = () => {
+    setHomeActive(true);
+    setBellActive(false);
+    setCameraActive(false);
+    setUserActive(false);
   };
 
-  const createNavItem = (
-    itemName: NavItem,
-    IconActive: React.ElementType,
-    IconInactive: React.ElementType,
-    iconText: string,
-    href: string,
-  ) => {
-    const isActive = activeItem === itemName;
+  const handleBellClick = () => {
+    setHomeActive(false);
+    setBellActive(true);
+    setCameraActive(false);
+    setUserActive(false);
+  };
 
-    return (
-      <Link
-        href={href}
-        className="btn btn-ghost flex-1 p-1"
-        onClick={() => handleClick(itemName)}
-        passHref
-      >
-        <div className="flex flex-col items-center">
-          {isActive ? (
-            <IconActive className="text-2xl" />
-          ) : (
-            <IconInactive className="text-2xl" />
-          )}
-          <div className="text-xs">{iconText}</div>
-        </div>
-      </Link>
-    );
+  const handleCameraClick = () => {
+    setHomeActive(false);
+    setBellActive(false);
+    setCameraActive(true);
+    setUserActive(false);
+  };
+
+  const handleUserClick = () => {
+    setHomeActive(false);
+    setBellActive(false);
+    setCameraActive(false);
+    setUserActive(true);
   };
 
   return (
     <div className="fixed bottom-0 w-full bg-white border-t border-gray-200">
       <div className="navbar flex-auto justify-center bg-gray-100">
-        {createNavItem("home", AiFillHome, AiOutlineHome, "ホーム", "/")}
-        {createNavItem("bell", AiFillBell, AiOutlineBell, "お知らせ", "/")}
-        {createNavItem("camera", AiFillCamera, AiOutlineCamera, "出品", "/")}
-        {createNavItem("user", ImUser, SlUser, "マイページ", "/")}
+        <Link
+          href="/"
+          className="btn btn-ghost flex-1 p-1"
+          onClick={handleHomeClick}
+        >
+          <div className="flex flex-col items-center">
+            {homeActive ? (
+              <AiFillHome className="text-2xl" />
+            ) : (
+              <AiOutlineHome className="text-2xl" />
+            )}
+            <div className="text-xs">ホーム</div>
+          </div>
+        </Link>
+        <Link
+          href="/"
+          className="btn btn-ghost flex-1 p-1"
+          onClick={handleBellClick}
+        >
+          <div className="flex flex-col items-center">
+            {bellActive ? (
+              <AiFillBell className="text-2xl" />
+            ) : (
+              <AiOutlineBell className="text-2xl" />
+            )}
+            <div className="text-xs">お知らせ</div>
+          </div>
+        </Link>
+        <Link
+          href="/"
+          className="btn btn-ghost flex-1 p-1"
+          onClick={handleCameraClick}
+        >
+          <div className="flex flex-col items-center">
+            {cameraActive ? (
+              <AiFillCamera className="text-2xl" />
+            ) : (
+              <AiOutlineCamera className="text-2xl" />
+            )}
+            <div className="text-xs">出品</div>
+          </div>
+        </Link>
+        <Link
+          href="/"
+          className="btn btn-ghost flex-1 p-1"
+          onClick={handleUserClick}
+        >
+          <div className="flex flex-col items-center">
+            {userActive ? (
+              <ImUser className="text-2xl" />
+            ) : (
+              <SlUser className="text-2xl" />
+            )}
+            <div className="text-xs">マイページ</div>
+          </div>
+        </Link>
       </div>
     </div>
   );
