@@ -49,11 +49,13 @@ export const NaviMenu = () => {
   };
 
   return (
-    <div className="navbar flex-auto justify-center bg-gray-100">
-      {createNavItem("home", AiFillHome, AiOutlineHome, "ホーム", "/")}
-      {createNavItem("bell", AiFillBell, AiOutlineBell, "お知らせ", "/")}
-      {createNavItem("camera", AiFillCamera, AiOutlineCamera, "出品", "/")}
-      {createNavItem("user", ImUser, SlUser, "マイページ", "/")}
+    <div className="fixed bottom-0 w-full bg-white border-t border-gray-200">
+      <div className="navbar flex-auto justify-center bg-gray-100">
+        {createNavItem("home", AiFillHome, AiOutlineHome, "ホーム", "/")}
+        {createNavItem("bell", AiFillBell, AiOutlineBell, "お知らせ", "/")}
+        {createNavItem("camera", AiFillCamera, AiOutlineCamera, "出品", "/")}
+        {createNavItem("user", ImUser, SlUser, "マイページ", "/")}
+      </div>
     </div>
   );
 };
