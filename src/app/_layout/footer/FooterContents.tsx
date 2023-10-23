@@ -16,7 +16,7 @@ export const FooterMobileContent = () => {
             </summary>
             <ul className="mx-0 px-0">
               {section.items.map((item) => (
-                <li key={item.text} color="">
+                <li key={item.text}>
                   <Link
                     href={item.url}
                     className="px-0 font-medium hover:text-white hover:underline "
