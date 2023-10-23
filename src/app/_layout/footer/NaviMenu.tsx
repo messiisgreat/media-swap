@@ -16,41 +16,25 @@ import { ImUser } from "react-icons/im";
  * @returns footer
  */
 export const NaviMenu = () => {
-  const [homeActive, setHomeActive] = useState(false);
-  const [bellActive, setBellActive] = useState(false);
-  const [cameraActive, setCameraActive] = useState(false);
-  const [userActive, setUserActive] = useState(false);
+  const [activeItem, setActiveItem] = useState("");
 
   const handleHomeClick = () => {
-    setHomeActive(true);
-    setBellActive(false);
-    setCameraActive(false);
-    setUserActive(false);
+    setActiveItem("home");
   };
-
   const handleBellClick = () => {
-    setHomeActive(false);
-    setBellActive(true);
-    setCameraActive(false);
-    setUserActive(false);
+    setActiveItem("bell");
   };
 
   const handleCameraClick = () => {
-    setHomeActive(false);
-    setBellActive(false);
-    setCameraActive(true);
-    setUserActive(false);
+    setActiveItem("camera");
   };
 
   const handleUserClick = () => {
-    setHomeActive(false);
-    setBellActive(false);
-    setCameraActive(false);
-    setUserActive(true);
+    setActiveItem("user");
   };
 
   return (
-    <div className="fixed bottom-0 w-full bg-white border-t border-gray-200">
+    <div className="fixed bottom-0 w-full border-t border-gray-200 bg-white">
       <div className="navbar flex-auto justify-center bg-gray-100">
         <Link
           href="/"
@@ -58,7 +42,7 @@ export const NaviMenu = () => {
           onClick={handleHomeClick}
         >
           <div className="flex flex-col items-center">
-            {homeActive ? (
+            {activeItem === "home" ? (
               <AiFillHome className="text-2xl" />
             ) : (
               <AiOutlineHome className="text-2xl" />
@@ -72,7 +56,7 @@ export const NaviMenu = () => {
           onClick={handleBellClick}
         >
           <div className="flex flex-col items-center">
-            {bellActive ? (
+            {activeItem === "bell" ? (
               <AiFillBell className="text-2xl" />
             ) : (
               <AiOutlineBell className="text-2xl" />
@@ -86,7 +70,7 @@ export const NaviMenu = () => {
           onClick={handleCameraClick}
         >
           <div className="flex flex-col items-center">
-            {cameraActive ? (
+            {activeItem === "camera" ? (
               <AiFillCamera className="text-2xl" />
             ) : (
               <AiOutlineCamera className="text-2xl" />
@@ -100,7 +84,7 @@ export const NaviMenu = () => {
           onClick={handleUserClick}
         >
           <div className="flex flex-col items-center">
-            {userActive ? (
+            {activeItem === "user" ? (
               <ImUser className="text-2xl" />
             ) : (
               <SlUser className="text-2xl" />
