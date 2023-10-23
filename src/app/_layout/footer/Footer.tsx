@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FooterIcons } from "@/app/_layout/FooterIcons";
-import { FooterContent, FooterMobileContent } from "@/app/_layout/FooterContents";
+import { FooterContent, FooterMobileContent, FooterIcons } from "./index";
 
 /**
  * サイトのフッター
