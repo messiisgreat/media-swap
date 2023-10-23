@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
+import { FooterContent, FooterMobileContent, NaviMenu } from "./";
 
 /**
  * サイトのフッター
@@ -8,32 +8,37 @@ import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
  * @returns footer
  */
 export function Footer() {
-  const checkIsMobile: () => boolean = () => {
-    return window.matchMedia("(max-width: 768px)").matches;
-  };
-
-  const [isMobile, setIsMobile] = useState(checkIsMobile());
-
-  useEffect(() => {
-    const checkWindowWidth = () => {
-      setIsMobile(checkIsMobile());
-    };
-
-    window.addEventListener("resize", checkWindowWidth);
-
-    return () => {
-      window.removeEventListener("resize", checkWindowWidth);
-    };
+  const [isMobile, setIsMobile] = useState(false);
+      const checkWindowWidth = useCallback(() => {
+    const footerWidth = window.matchMedia("(max-width: 768px)").matches;
+    setIsMobile(footerWidth);
+    return footerWidth
   }, []);
 
+  useEffect(() => {
+    checkWindowWidth(); 
+
+    const handleResize = () => {
+      checkWindowWidth();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [checkWindowWidth]);
+
   return (
-    <footer className="bg-neutral p-10 text-neutral-content">
+    <>
       {isMobile ? (
-        <FooterMobileContent />
+        <>
+          <FooterMobileContent />
+          <NaviMenu />
+        </>
       ) : (
         <FooterContent />
       )}
-      <FooterIcons />
-    </footer>
+    </>
   );
 }
