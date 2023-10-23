@@ -18,19 +18,8 @@ import { ImUser } from "react-icons/im";
 export const NaviMenu = () => {
   const [activeItem, setActiveItem] = useState("");
 
-  const handleHomeClick = () => {
-    setActiveItem("home");
-  };
-  const handleBellClick = () => {
-    setActiveItem("bell");
-  };
-
-  const handleCameraClick = () => {
-    setActiveItem("camera");
-  };
-
-  const handleUserClick = () => {
-    setActiveItem("user");
+  const handleClick = (item: string) => {
+    setActiveItem(item);
   };
 
   return (
@@ -39,7 +28,7 @@ export const NaviMenu = () => {
         <Link
           href="/"
           className="btn btn-ghost flex-1 p-1"
-          onClick={handleHomeClick}
+          onClick={() => handleClick("home")}
         >
           <div className="flex flex-col items-center">
             {activeItem === "home" ? (
@@ -53,7 +42,7 @@ export const NaviMenu = () => {
         <Link
           href="/"
           className="btn btn-ghost flex-1 p-1"
-          onClick={handleBellClick}
+          onClick={() => handleClick("bell")}
         >
           <div className="flex flex-col items-center">
             {activeItem === "bell" ? (
@@ -67,7 +56,7 @@ export const NaviMenu = () => {
         <Link
           href="/"
           className="btn btn-ghost flex-1 p-1"
-          onClick={handleCameraClick}
+          onClick={() => handleClick("camera")}
         >
           <div className="flex flex-col items-center">
             {activeItem === "camera" ? (
@@ -81,7 +70,7 @@ export const NaviMenu = () => {
         <Link
           href="/"
           className="btn btn-ghost flex-1 p-1"
-          onClick={handleUserClick}
+          onClick={() => handleClick("user")}
         >
           <div className="flex flex-col items-center">
             {activeItem === "user" ? (
