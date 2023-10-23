@@ -82,7 +82,7 @@ export default async function ProductPage({
             </Link>
           ))}
         </div>
-        <Badge className="mt-4">{product.price}</Badge>
+        <Badge className="mt-4">¥{product.price}</Badge>
         <p className="py-6">{product.description}</p>
         <BuyItemButton productId={product.id} />
       </div>
