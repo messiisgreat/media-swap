@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FooterContent, FooterMobileContent, FooterIcons } from "./";
+import { FooterContent, FooterMobileContent, FooterIcons, NaviMenu } from "./";
 
 /**
  * サイトのフッター
@@ -8,19 +8,26 @@ import { FooterContent, FooterMobileContent, FooterIcons } from "./";
  * @returns footer
  */
 export function Footer() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   useEffect(() => {
-    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
-  }, [isMobile]);
+    const checkWindowWidth = () => {
+      const footerWidth = window.matchMedia("(max-width: 768px)").matches;
+      setIsMobile(footerWidth);
+    };
+    checkWindowWidth();
+    window.addEventListener("resize", checkWindowWidth);
+    return () => {
+      window.removeEventListener("resize", checkWindowWidth);
+    };
+  }, []);
 
   return (
-    <footer className="bg-neutral p-10 text-neutral-content">
-      {isMobile ? (
-        <FooterMobileContent />
-      ) : (
-        <FooterContent />
-      )}
-      <FooterIcons />
-    </footer>
+    <>
+      <footer className="bg-neutral p-10 text-neutral-content">
+        {isMobile ? <FooterMobileContent /> : <FooterContent />}
+        <FooterIcons />
+      </footer>
+      {isMobile && <NaviMenu />}
+    </>
   );
 }
