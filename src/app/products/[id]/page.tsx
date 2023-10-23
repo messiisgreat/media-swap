@@ -76,9 +76,9 @@ export default async function ProductPage({
         <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-              <span className="cursor-pointer rounded-full bg-yellow-400 px-3 py-1 font-medium shadow-md">
+              <Badge className="cursor-pointer bg-yellow-400 badge-lg border-none font-medium shadow-md">
                 {tag.text}
-              </span>
+              </Badge>
             </Link>
           ))}
         </div>
