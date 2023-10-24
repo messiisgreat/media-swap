@@ -6,10 +6,10 @@ import { useState, useEffect, useCallback } from "react";
  * @param maxWidth 
  * @returns boolean
  */
-export function useMediaQuery(maxWidth: number): boolean {
+export function useMediaQuery(maxWidth: number = 768): boolean {
   const [isMobile, setIsMobile] = useState(false);
   const checkWindowWidth = useCallback(() => {
-    const footerWidth = window.matchMedia("(max-width: 768px)").matches;
+    const footerWidth = window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
     setIsMobile(footerWidth);
     return footerWidth;
   }, []);
