@@ -12,7 +12,7 @@ export function useMediaQuery(maxWidth: number = 768): boolean {
     const footerWidth = window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
     setIsMobile(footerWidth);
     return footerWidth;
-  }, []);
+  }, [maxWidth]);
 
   useEffect(() => {
     checkWindowWidth();
