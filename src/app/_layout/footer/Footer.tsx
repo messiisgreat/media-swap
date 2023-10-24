@@ -1,6 +1,9 @@
 "use client";
-import { FooterContent, FooterMobileContent, NaviMenu } from "./";
-import { useMediaQuery } from "@/app/hooks";
+import {
+  FooterContent,
+  FooterMobileContent,
+} from "@/app/_layout/footer/FooterContents";
+import { useMediaQuery } from "@/hooks";
 
 /**
  * サイトのフッター
@@ -10,16 +13,5 @@ import { useMediaQuery } from "@/app/hooks";
 export function Footer() {
   const isMobile = useMediaQuery();
 
-  return (
-    <>
-      {isMobile ? (
-        <>
-          <FooterMobileContent />
-          <NaviMenu />
-        </>
-      ) : (
-        <FooterContent />
-      )}
-    </>
-  );
+  return <>{isMobile ? <FooterMobileContent /> : <FooterContent />}</>;
 }

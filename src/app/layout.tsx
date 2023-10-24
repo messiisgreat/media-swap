@@ -1,5 +1,11 @@
-import { ClientProvider, Container, Footer, Header } from "@/app/_layout";
-import { GoogleTagManager } from "@/app/_layout/GoogleTagManager";
+import {
+  ClientProvider,
+  Container,
+  Footer,
+  GoogleTagManager,
+  Header,
+} from "@/app/_layout";
+import { NaviMenu } from "@/app/_layout/NaviMenu";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -24,6 +30,7 @@ export default function RootLayout({
           <Header />
           <Container>{children}</Container>
           <Footer />
+          <NaviMenu />
         </ClientProvider>
       </body>
     </html>
