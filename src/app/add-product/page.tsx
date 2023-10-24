@@ -123,34 +123,34 @@ export default async function AddProductPage() {
   const tags = await fetchTags();
 
   return (
-    <div>
+    <div className="my-8">
       <h1 className="mb-3 text-lg font-bold">Add Product</h1>
-      <form action={addProduct}>
+      <form action={addProduct} className="flex flex-col gap-3">
         <input
           required
           name="name"
           placeholder="Name"
-          className="input input-bordered mb-3 w-full"
+          className="input input-bordered w-full"
         />
         <textarea
           required
           name="description"
           placeholder="Description"
-          className="textarea textarea-bordered mb-3 w-full"
+          className="textarea textarea-bordered w-full"
         ></textarea>
         <input
           required
           type="file"
           name="imageFile"
           accept="image/*"
-          className="input input-bordered mb-3 w-full"
+          className="file-input file-input-bordered file-input-accent"
         />
         <input
           required
           name="price"
           placeholder="Price"
           type="number"
-          className="input input-bordered mb-3 w-full"
+          className="input input-bordered w-full"
         />
         <ProductTag fetchedTags={tags} />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
