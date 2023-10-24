@@ -1,15 +1,28 @@
-## コーディング規約
 
-### ディレクトリ構成
+# コーディング規約
 
-https://nextjs.org/docs/app/building-your-application/routing/colocation
+## ディレクトリ構成
 
-### コード規則
+コロケーションの原則を意識し、ページやコンポーネントで使用するファイルやテストなどは同じディレクトリに配置する。
+ファイル数が多くなる場合はそのディレクトリに`_components`のようにアンダースコア始まりのフォルダを切り、その中にファイルを配置する。
+インポートは原則上層からの使用のみとする。
+逆転する場合それは共通コンポーネントになるため、`src/components`以下に配置する。
+ただし、index.tsで再エクスポートすることで上位層でも使えるようにするのは許容する。
 
-1. 基本的にはinterfaceではなくtypeを使う
-2. import { Button } from '@/components/button'と@を使用する
+<https://nextjs.org/docs/app/building-your-application/routing/colocation>
 
-### デザイン
-1. まずはdaisyui UIをベースにクラスを当てる
-2. daisyui UIだけで書けないところのみtailwindcssを当てる
-3. スマホの見た目だけ作れば良い
+## コード規則
+
+1. タイプセーフな実装を心がける
+   anyを使わない
+   オブジェクトを定義する際は必ず型指定を行う。
+2. import { Button } from '@/components'　同一ディレクトリからのインポートを除き、左記のように絶対パスを使用する
+
+## デザイン
+
+1. まずはdaisy UIをベースにクラスを当てる
+2. daisy UIだけで書けないところのみtailwindcssでコンポーネントを作成する。
+3. flex,grid,padding,margin,gapなど、レイアウトに関するものはや色などはTailwind CSSで指定する。
+4. marginなど、コンポーネントの外側に影響するCSSはコンポーネント内に書かない。
+5. mr,ptなど微妙な調整は避け、親要素のgapで調整するように心がける。
+6. スマホの見た目だけ作れば良い
