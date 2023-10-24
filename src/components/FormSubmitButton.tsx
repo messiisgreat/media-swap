@@ -8,6 +8,13 @@ type FormSubmitButtonProps = {
   className?: string;
 } & ComponentProps<"button">;
 
+/**
+ * フォーム送信ボタン
+ *
+ * @param {ReactNode} props.children - ボタン内に表示されるコンテンツ
+ * @param {string} [props.className] - 追加のCSSクラス名(省略可能)
+ * @returns
+ */
 export default function FormSubmitButton({
   children,
   className,

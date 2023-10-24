@@ -12,7 +12,13 @@ export const metadata = {
   title: "Add Product - Swappy",
 };
 
-async function getNonMatchingTags(tags: Tag[]) {
+/**
+ * 一致しないタグの取得
+ *
+ * @param {Tag[]} tags - タグオブジェクトの配列
+ * @returns {Promise<Tag[]>} 一致しないタグオブジェクトの配列
+ */
+async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
   const allTagNames = await fetchTags();
   const existingTagNames = allTagNames.flatMap((tag) => tag.text);
   const nonMatchingTags = tags.filter(
@@ -22,9 +28,10 @@ async function getNonMatchingTags(tags: Tag[]) {
 }
 
 /**
+ * タグ情報を処理して、一致するタグのIDの配列を返す
  *
- * @param tagsString
- * @returns
+ * @param {string | null | undefined} tagsString - タグ情報のJSON文字列。省略可能
+ * @returns {Promise<string[]>} 一致するタグのIDの配列
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
   const tagsObject = tagsString ? JSON.parse(tagsString) : null;
@@ -83,7 +90,7 @@ const addProduct = async (formData: FormData) => {
 
   await insertProduct(product);
   redirect("/");
-  //失敗したときの処理を書いてない
+  // TODO: 失敗したときの処理を書いてない
 };
 
 export default async function Page() {

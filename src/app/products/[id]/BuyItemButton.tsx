@@ -7,6 +7,10 @@ type BuyItemButtonProps = {
   productId: string;
 };
 
+/**
+ * 商品購入ボタン
+ * @returns 
+ */
 export default function BuyItemButton({ productId }: BuyItemButtonProps) {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);

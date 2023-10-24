@@ -6,7 +6,7 @@ type PaginationBarProps = {
 };
 
 /**
- *
+ * ページネーションバー
  * @param param0
  * @returns
  */

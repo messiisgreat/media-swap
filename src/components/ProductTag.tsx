@@ -10,6 +10,10 @@ type ProductTagProps = {
   fetchedTags: Tag[];
 };
 
+/**
+ * 商品のタグ
+ * @returns 
+ */
 export default function ProductTag({ fetchedTags }: ProductTagProps) {
   const [tags, setTags] = useState<{ id: string; text: string }[]>([]);
 

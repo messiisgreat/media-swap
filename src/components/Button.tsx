@@ -5,6 +5,16 @@ type Props = ComponentProps<"button"> & {
   secondary?: boolean;
 };
 
+/**
+ * ボタンコンポーネント
+ *
+ * @param {boolean} [props.outline=false] - ボタンをアウトラインスタイルにするかどうか(省略可能)
+ * @param {boolean} [props.secondary=false] - セカンダリスタイルのボタンかどうか(省略可能)
+ * @param {ReactNode} props.children - ボタン内に表示されるコンテンツ。
+ * @param {string} [props.className] - 追加のCSSクラス名(省略可能)
+ * @param {*} [props.type="button"] - ボタンのタイプ属性(省略可能)
+ * @returns
+ */
 export const Button = memo(function Button({
   outline = false,
   secondary = false,
