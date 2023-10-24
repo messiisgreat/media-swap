@@ -1,12 +1,11 @@
-import PaginationBar from "@/components/PaginationBar";
-import ProductCard from "@/components/ProductCard";
+import { PaginationBar, ProductCard } from "@/components";
 import { prisma } from "@/lib/db/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-interface HomeProps {
+type HomeProps = {
   searchParams: { page: string };
-}
+};
 
 export default async function Home({
   searchParams: { page = "1" },
@@ -30,7 +29,7 @@ export default async function Home({
     <div className="flex flex-col items-center">
       {currentPage === 1 && (
         <div className="hero rounded-xl bg-base-200">
-          <div className="hero-content flex-col lg:flex-row">
+          <div className="hero-content flex-col lg:flex-row ">
             <Image
               src={products[0].imageUrl}
               alt={products[0].name}

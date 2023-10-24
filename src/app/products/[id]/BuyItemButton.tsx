@@ -3,9 +3,9 @@
 import { useState, useTransition } from "react";
 import { updateProduct } from "./actions";
 
-interface BuyItemButtonProps {
+type BuyItemButtonProps = {
   productId: string;
-}
+};
 
 export default function BuyItemButton({ productId }: BuyItemButtonProps) {
   const [isPending, startTransition] = useTransition();
