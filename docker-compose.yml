@@ -5,7 +5,7 @@ services:
     image: mongo:latest
     hostname: mongo-primary
     container_name: mongo-primary
-    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
+    command: mongod --replSet replset
     volumes:
       - mongo-primary-data:/data/db
       - ./etc/init:/docker-entrypoint-initdb.d:ro
@@ -22,7 +22,7 @@ services:
     image: mongo:latest
     hostname: mongo-secondary
     container_name: mongo-secondary
-    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
+    command: mongod --replSet replset
     volumes:
       - mongo-secondary-data:/data/db
       - ./etc/mongod-keyfile:/etc/mongod-keyfile:ro
@@ -38,7 +38,7 @@ services:
     image: mongo:latest
     hostname: mongo-arbiter
     container_name: mongo-arbiter
-    command: mongod --replSet replset --auth --keyFile /etc/mongod-keyfile
+    command: mongod --replSet replset
     volumes:
       - ./etc/mongod-keyfile:/etc/mongod-keyfile:ro
     expose:
@@ -63,6 +63,8 @@ services:
       - mongo-primary
       - mongo-secondary
       - mongo-arbiter
+    networks:
+      - replset
 
 volumes:
   mongo-primary-data:
@@ -70,6 +72,4 @@ volumes:
 
 networks:
   replset:
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
+    driver: bridge

@@ -1,5 +1,4 @@
 #!/bin/bash
-mongorestore --gzip --archive=/docker-entrypoint-initdb.d/dump.gz
 mongosh --eval '
 rs.initiate({
   _id: "replset",
@@ -10,3 +9,4 @@ rs.initiate({
   ],
 });
 '
+mongorestore --gzip --archive=/docker-entrypoint-initdb.d/dump.gz
