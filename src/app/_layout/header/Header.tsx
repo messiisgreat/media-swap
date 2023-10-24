@@ -12,9 +12,11 @@ export async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="flex justify-around bg-base-100 p-4">
-      <TitleLogo />
-      <div className="flex gap-2">
+    <header className="navbar justify-around bg-base-100 p-4">
+      <div>
+        <TitleLogo />
+      </div>
+      <div>
         <SearchWindow />
         <UserMenuButton session={session} />
       </div>
