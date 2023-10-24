@@ -1,32 +1,33 @@
 import Link from "next/link";
 
-interface PaginationBarProps {
+type PaginationBarProps = {
   currentPage: number;
   totalPages: number;
-}
+};
 
-export default function PaginationBar({
-  currentPage,
-  totalPages,
-}: PaginationBarProps) {
+/**
+ *
+ * @param param0
+ * @returns
+ */
+export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
   const maxPage = Math.min(totalPages, Math.max(currentPage + 4, 10));
   const minPage = Math.max(1, Math.min(currentPage - 5, maxPage - 9));
 
-  const numberedPageItems: JSX.Element[] = [];
-
-  for (let page = minPage; page <= maxPage; page++) {
-    numberedPageItems.push(
-      <Link
-        href={"?page=" + page}
-        key={page}
-        className={`btn join-item ${
-          currentPage === page ? "btn-active pointer-events-none" : ""
-        }`}
-      >
-        {page}
-      </Link>,
-    );
-  }
+  const numberedPageItems = Array.from(
+    { length: maxPage - minPage + 1 },
+    (_, i) => minPage + i,
+  ).map((page) => (
+    <Link
+      href={"?page=" + page}
+      key={page}
+      className={`btn join-item ${
+        currentPage === page ? "btn-active pointer-events-none" : ""
+      }`}
+    >
+      {page}
+    </Link>
+  ));
 
   return (
     <>
