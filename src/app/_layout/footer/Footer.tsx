@@ -8,7 +8,7 @@ import { useMediaQuery } from "@/app/hooks";
  * @returns footer
  */
 export function Footer() {
-  const isMobile = useMediaQuery(768);
+  const isMobile = useMediaQuery();
 
   return (
     <>
