@@ -1,7 +1,6 @@
 import PaginationBar from "@/components/PaginationBar";
 import ProductCard from "@/components/ProductCard";
 import { prisma } from "@/lib/db/prisma";
-import Image from "next/image";
 import Link from "next/link";
 
 interface HomeProps {
@@ -28,41 +27,14 @@ export default async function Home({
   });
   return (
     <div className="flex flex-col items-center">
-      {currentPage === 1 && (
-        <div className="hero rounded-xl bg-base-200">
-          <div className="hero-content flex-col lg:flex-row">
-            <Image
-              src={products[0].imageUrl}
-              alt={products[0].name}
-              width={400}
-              height={800}
-              className="w-full max-w-sm rounded-lg shadow-2xl"
-              priority
-            />
-            <div>
-              <h1 className="text-5xl font-bold">{products[0].name}</h1>
-              <p className="py-6">{products[0].description}</p>
-              <Link
-                href={"/products/" + products[0].id}
-                className="btn btn-primary"
-              >
-                詳細を見る
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="my-4 grid grid-cols-3 gap-4">
         {(currentPage === 1 ? products.slice(1) : products).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-
       <Link href="/add-product" className="btn btn-primary">
         Add Product
       </Link>
-
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}

@@ -1,4 +1,4 @@
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/ProductCard.1";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
