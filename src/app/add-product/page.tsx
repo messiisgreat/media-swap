@@ -7,6 +7,7 @@ import { prisma } from "@/lib/db/prisma";
 import { Tag } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { BiSolidCamera } from "react-icons/bi";
 
 export const metadata = {
   title: "Add Product - Swappy",
@@ -111,12 +112,18 @@ export default async function Page() {
           placeholder="Description"
           className="textarea textarea-bordered w-full"
         ></textarea>
+        <label className="flex items-center justify-center bg-white text-red-500 border border-red-500 rounded-md hover:bg-red-50 hover:text-rose-400 hover:border-rose-400 cursor-pointer mb-3" htmlFor="imageInput">
+          <div className="px-3 py-3.5 flex flex-row items-center justify-center" >
+            <BiSolidCamera size={20} /><p className="ml-1 font-bold" >画像を選択する</p>
+          </div>
+        </label>
         <input
           required
           type="file"
           name="imageFile"
           accept="image/*"
-          className="file-input file-input-bordered file-input-accent"
+          id="imageInput"
+          className="hidden"
         />
         <input
           required
