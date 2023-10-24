@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "github.vscode-pull-request-github",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "bradlc.vscode-tailwindcss"
   ]
 }
