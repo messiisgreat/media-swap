@@ -8,8 +8,7 @@ services:
     command: mongod --replSet replset
     volumes:
       - mongo-primary-data:/data/db
-      - ./etc/init:/docker-entrypoint-initdb.d:ro
-      - ./etc/mongod-keyfile:/etc/mongod-keyfile:ro
+      - ./etc/mongod-keyfile:/etc/mongod-keyfile
     expose:
       - "27017"
     ports:
@@ -17,6 +16,9 @@ services:
     restart: always
     networks:
       - replset
+    depends_on:
+      - mongo-secondary
+      - mongo-arbiter
 
   mongo-secondary:
     image: mongo:latest
