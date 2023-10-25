@@ -5,12 +5,13 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint/eslint-plugin", "tailwindcss"],
+  plugins: ["@typescript-eslint/eslint-plugin", "tailwindcss", "jsdoc"],
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "prettier",
+    "plugin:jsdoc/recommended-typescript-error"
   ],
   root: true,
   env: {
@@ -33,5 +34,33 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
+    "jsdoc/tag-lines": "off",
+    "jsdoc/no-types": "off",
+    "jsdoc/require-param": [
+      "error",
+      {
+        "checkDestructuredRoots": false,
+      },
+    ],
+    "jsdoc/check-param-names": [
+      "error",
+      {
+        "checkDestructured": false,
+      },
+    ],
+    "jsdoc/require-jsdoc": [
+      "error",
+      {
+        "publicOnly": true,
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": true,
+          "FunctionExpression": true,
+        },
+      },
+    ],
+    "jsdoc/require-returns-description": "off"
   },
 };

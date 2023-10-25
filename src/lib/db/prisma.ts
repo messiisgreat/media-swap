@@ -10,6 +10,7 @@ const prismaBase = globalForPrisma.prisma ?? new PrismaClient();
 export const prisma = prismaBase.$extends({
   query: {
     product: {
+      // eslint-disable-next-line jsdoc/require-jsdoc
       async update({ args, query }) {
         args.data = { ...args.data, updatedAt: new Date() };
         return query(args);
