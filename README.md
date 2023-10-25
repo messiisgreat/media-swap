@@ -38,6 +38,25 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - データソースアクセスユーザーを作成する
 - IPアドレスをホワイトリストに入れる(ネットワークの設定のところ)
 
+## ローカル開発環境構築
+
+### 初期設定
+
+- Docker Desktop, docker-composeなどがない人はインストール
+- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`を設定
+- `sh mongodb_dump.sh`を実行してdump.gzをダウンロード
+- `docker-compose build`を実行してビルド
+
+## 起動
+
+- `docker-compose up -d`を実行してコンテナを起動
+- `sh docker_init.sh`を実行してレプリカの初期設定とデータのリストア
+
+## 停止
+
+- `docker-compose down`でコンテナ停止
+  - `-v`オプションをつけるとボリューム(コンテナ内のデータベースを削除)
+
 ## 環境構築手順
 
 0. slackに招待する
