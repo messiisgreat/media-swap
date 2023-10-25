@@ -14,6 +14,14 @@ type BadgeProps = ComponentProps<"div"> & {
   outline?: boolean;
 };
 
+/**
+ * バッジ
+ *
+ * @param {string} [props.className] - 追加のCSSクラス名(省略可能)
+ * @param {*} [props.variant] - バッジのバリエーション(省略可能)
+ * @param {boolean} [props.outline] - バッジをアウトラインスタイルにするかどうか(省略可能)
+ * @returns 
+ */
 export const Badge = ({
   className,
   variant,

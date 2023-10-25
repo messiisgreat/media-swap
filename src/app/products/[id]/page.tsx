@@ -13,12 +13,26 @@ type ProductPageProps = {
   };
 };
 
+/**
+ * キャッシュを使用して製品情報を取得
+ *
+ * @param {string} id - 取得対象の製品のID
+ * @returns 取得した製品情報
+ * @throws 製品が見つからない場合404になる
+ */
 const getProduct = cache(async (id: string) => {
   const product = await prisma.product.findUnique({ where: { id } });
   if (!product) notFound();
   return product;
 });
 
+/**
+ * キャッシュを使用して指定されたIDのタグ情報を取得
+ *
+ * @param {string[]} ids - 取得対象のタグのIDの配列
+ * @returns 取得したタグ情報
+ * 空の配列が返されることもある
+ */
 const getTags = cache(async (ids: string[]) => {
   if (!ids.length) return [];
 
