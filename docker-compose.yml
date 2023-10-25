@@ -8,7 +8,6 @@ services:
     command: mongod --replSet replset
     volumes:
       - mongo-primary-data:/data/db
-      - ./etc/mongod-keyfile:/etc/mongod-keyfile
     expose:
       - "27017"
     ports:
@@ -27,7 +26,6 @@ services:
     command: mongod --replSet replset
     volumes:
       - mongo-secondary-data:/data/db
-      - ./etc/mongod-keyfile:/etc/mongod-keyfile:ro
     expose:
       - "27017"
     ports:
@@ -41,8 +39,6 @@ services:
     hostname: mongo-arbiter
     container_name: mongo-arbiter
     command: mongod --replSet replset
-    volumes:
-      - ./etc/mongod-keyfile:/etc/mongod-keyfile:ro
     expose:
       - "27017"
     ports:
