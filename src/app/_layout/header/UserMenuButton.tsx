@@ -8,7 +8,10 @@ import Image from "next/image";
 type UserMenuButtonProps = {
   session: Session | null;
 };
-
+/**
+ * ヘッダーに表示するユーザーボタン (サインイン/サインアウト)
+ * @returns 
+ */
 export default function UserMenuButton({ session }: UserMenuButtonProps) {
   const user = session?.user;
 

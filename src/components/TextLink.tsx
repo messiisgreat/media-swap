@@ -6,8 +6,10 @@ type TextLinkProps = ComponentProps<typeof Link>;
 /**
  * next/linkのラッパー
  * 外部リンクを開く場合はtarget="_blank"を付与する
- * @param param0
- * @returns
+ * @param param0.href リンク先URL
+ * @param param0.children リンクテキスト(もしくは子要素)
+ * @param param0.className リンクに付与するクラス名
+ * @returns TextLink
  */
 export const TextLink = ({
   href,

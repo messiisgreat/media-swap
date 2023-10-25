@@ -6,9 +6,10 @@ type PaginationBarProps = {
 };
 
 /**
- *
- * @param param0
- * @returns
+ * ページネーションバー
+ * @param param0.currentPage 現在のページ
+ * @param param0.totalPages 総ページ数
+ * @returns ページネーションバー
  */
 export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
   const maxPage = Math.min(totalPages, Math.max(currentPage + 4, 10));
