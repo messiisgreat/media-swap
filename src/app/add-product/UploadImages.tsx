@@ -1,7 +1,5 @@
 "use client"
 
-// TODO: anyをなくす
-
 import { useState, useCallback, useEffect } from "react"
 import Image from "next/image"
 import { useDropzone } from "react-dropzone"
@@ -49,7 +47,7 @@ export const UploadImages = () => {
       <section>
         <h2 className='font-semibold' >出品画像 (最大10枚)</h2>
         <ul className='mt-1 grid grid-cols-4'>
-          {files.map((file: any) => (
+          {files.map((file: FileWithPreview) => (
             <li
               key={file.name}
               className="relative"
