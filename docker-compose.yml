@@ -56,7 +56,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=mongodb://mongo-primary:27017,mongo-secondary:27017,mongo-arbiter:27017/ecommerce?replicaSet=replset
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - mongo-primary
       - mongo-secondary
