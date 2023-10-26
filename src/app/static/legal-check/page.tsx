@@ -1,3 +1,6 @@
+/**
+ * 法務確認についてのページ
+ */
 export default function LegalPage() {
   return (
     <div>

@@ -9,6 +9,9 @@ export const metadata = {
   title: "Add Product - Swappy",
 };
 
+/**
+ * 商品追加ページ
+ */
 export default async function Page() {
   const session = await getServerSession(authOptions);
 

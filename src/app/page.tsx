@@ -7,6 +7,10 @@ type HomeProps = {
   searchParams: { page: string };
 };
 
+/**
+ * TOPページ
+ * @param param0.searchParams.page ページ番号 
+ */
 export default async function Home({
   searchParams: { page = "1" },
 }: HomeProps) {
