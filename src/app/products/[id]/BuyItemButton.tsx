@@ -3,10 +3,15 @@
 import { useState, useTransition } from "react";
 import { updateProduct } from "./actions";
 
-interface BuyItemButtonProps {
+type BuyItemButtonProps = {
   productId: string;
-}
+};
 
+/**
+ * 商品購入ボタン
+ * @param param0.productId 商品ID
+ * @returns 商品購入ボタン(現在は購入処理も含まれてます)
+ */
 export default function BuyItemButton({ productId }: BuyItemButtonProps) {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);

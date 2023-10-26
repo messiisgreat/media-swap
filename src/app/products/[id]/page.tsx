@@ -13,12 +13,26 @@ type ProductPageProps = {
   };
 };
 
+/**
+ * キャッシュを使用して製品情報を取得
+ *
+ * @param {string} id - 取得対象の製品のID
+ * @returns 取得した製品情報
+ * @throws 製品が見つからない場合404になる
+ */
 const getProduct = cache(async (id: string) => {
   const product = await prisma.product.findUnique({ where: { id } });
   if (!product) notFound();
   return product;
 });
 
+/**
+ * キャッシュを使用して指定されたIDのタグ情報を取得
+ *
+ * @param {string[]} ids - 取得対象のタグのIDの配列
+ * @returns 取得したタグ情報
+ * 空の配列が返されることもある
+ */
 const getTags = cache(async (ids: string[]) => {
   if (!ids.length) return [];
 
@@ -54,37 +68,39 @@ export default async function ProductPage({
   const tags = await getTags(product.tagIds);
 
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
-      <Image
-        src={product.imageUrl}
-        alt={product.name}
-        width={500}
-        height={500}
-        className="rounded-lg"
-        priority
-      />
+    <div className="hero">
+      <div className="hero-content flex-col lg:flex-row lg:items-center lg:-ml-[12%]">
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          width={500}
+          height={500}
+          className="rounded-lg"
+          priority
+        />
 
-      <div>
-        <h1 className="text-5xl font-bold">{product.name}</h1>
-        {/* <div className="mt-4 flex flex-wrap gap-2">
+        <div>
+          <h1 className="text-5xl font-bold">{product.name}</h1>
+          {/* <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <span key={tag.id} className="bg-yellow-400 px-3 py-1 rounded-full font-medium shadow-md">
               {tag.name}
             </span>
           ))}
         </div> */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-              <span className="cursor-pointer rounded-full bg-yellow-400 px-3 py-1 font-medium shadow-md">
-                {tag.text}
-              </span>
-            </Link>
-          ))}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
+                <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
+                  {tag.text}
+                </Badge>
+              </Link>
+            ))}
+          </div>
+          <Badge className="mt-4">¥{product.price}</Badge>
+          <p className="py-6">{product.description}</p>
+          <BuyItemButton productId={product.id} />
         </div>
-        <Badge className="mt-4">{product.price}</Badge>
-        <p className="py-6">{product.description}</p>
-        <BuyItemButton productId={product.id} />
       </div>
     </div>
   );

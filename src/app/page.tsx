@@ -1,11 +1,10 @@
-import PaginationBar from "@/components/PaginationBar";
-import ProductCard from "@/components/ProductCard";
+import { PaginationBar, ProductCard } from "@/components";
 import { prisma } from "@/lib/db/prisma";
 import Link from "next/link";
 
-interface HomeProps {
+type HomeProps = {
   searchParams: { page: string };
-}
+};
 
 export default async function Home({
   searchParams: { page = "1" },
@@ -32,12 +31,12 @@ export default async function Home({
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <Link href="/add-product" className="btn btn-primary">
+      <Link href="/add-product" className="btn btn-primary mb-4">
         Add Product
       </Link>
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-    </div>
+  </>
   );
 }

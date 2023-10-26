@@ -1,11 +1,11 @@
-import ProductCard from "@/components/ProductCard.1";
+import { ProductCard } from "@/components";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
 
-interface SearchPageProps {
+type SearchPageProps = {
   searchParams: { query: string; tagid: string };
-}
+};
 
 export function generateMetadata({
   searchParams: { query },
@@ -33,10 +33,14 @@ export default async function SearchPage({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-      {products.map((product) => (
-        <ProductCard product={product} key={product.id} />
-      ))}
+    <div className="px-4 lg:px-0 my-4">
+      <p className="font-medium text-lg mb-4">検索結果</p>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {products.map((product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
+      </div>
     </div>
   );
 }

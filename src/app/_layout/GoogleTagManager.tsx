@@ -3,7 +3,7 @@
  * G-から始まるトラッキングIDを環境変数に設定する
  * @returns Fragment
  */
-export const GoogleAnalytics = () => {
+export const GoogleTagManager = () => {
   const trackingId = process.env.TRACKING_ID;
   const trackingURL = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
   return (
