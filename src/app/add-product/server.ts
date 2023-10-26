@@ -54,6 +54,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
 /**
  * フォームに入力された商品情報をDBに登録する
  * @param formData 商品情報が入力されたFormData
+ * @param captchaValue reCAPTCHAのトークン
  * @todo もうちょっといいエラーの処理方法を考えたい
  */
 export const addProduct = async (formData: FormData, captchaValue: string | null | undefined) => {
