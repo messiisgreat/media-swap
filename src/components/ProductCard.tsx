@@ -8,6 +8,11 @@ type ProductCardProps = {
   product: Product;
 };
 
+/**
+ * 商品のカード
+ * @param param0.product 商品
+ * @returns 商品のカード
+ */
 export function ProductCard({ product }: ProductCardProps) {
   // 製品が作成されて7日以内
   const isNew =

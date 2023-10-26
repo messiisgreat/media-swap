@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+/**
+ * プライバシーポリシー
+ */
 export default function PrivacyPage() {
   return (
     <div>

@@ -1,5 +1,11 @@
-import { ClientProvider, Container, Footer, Header } from "@/app/_layout";
-import { GoogleTagManager } from "@/app/_layout/GoogleTagManager";
+import {
+  ClientProvider,
+  Container,
+  Footer,
+  GoogleTagManager,
+  Header,
+} from "@/app/_layout";
+import { NaviMenu } from "@/app/_layout/NaviMenu";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -11,19 +17,23 @@ export const metadata: Metadata = {
   description: "フリーマーケットアプリ",
 };
 
+/**
+ * 基本レイアウト
+ */
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="jp">
+    <html lang="ja">
       <body className={inter.className}>
         <GoogleTagManager />
         <ClientProvider>
           <Header />
           <Container>{children}</Container>
           <Footer />
+          <NaviMenu />
         </ClientProvider>
       </body>
     </html>
