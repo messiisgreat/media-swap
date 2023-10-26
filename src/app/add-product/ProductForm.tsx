@@ -61,6 +61,7 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
           className="input input-bordered w-full"
         />
         <ProductTag fetchedTags={tags} />
+        {/* パブリックキーなのでsrc/lib/env.tsでやらないほうがいいかも */}
         <ReCAPTCHA sitekey={z.string().nonempty().parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY)} ref={captchaRef} />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>

@@ -2,6 +2,7 @@
 
 import { uploadToS3 } from "@/lib/ImageUploadS3";
 import { prisma } from "@/lib/db/prisma";
+import { env } from "@/lib/env";
 import { Product, Tag } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
@@ -77,7 +78,7 @@ export const addProduct = async (formData: FormData, captchaValue: string | null
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      secret: z.string().nonempty().parse(process.env.GOOGLE_RECAPTCHA_SECRET_KEY),
+      secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
       response: captchaValue,
     }).toString()
   });
