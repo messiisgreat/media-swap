@@ -3,6 +3,7 @@ import { GoogleTagManager } from "@/app/_layout/GoogleTagManager";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <Header />
           <Container>{children}</Container>
           <Footer />
+          <Toaster />
         </ClientProvider>
       </body>
     </html>

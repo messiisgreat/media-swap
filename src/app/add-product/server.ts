@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db/prisma";
 import { Product, Tag } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import z from "zod";
 
 async function getNonMatchingTags(tags: Tag[]) {
   const allTagNames = await fetchTags();
@@ -48,15 +49,36 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
 /**
  * フォームに入力された商品情報をDBに登録する
  * @param formData
+ * @todo もうちょっといいエラーの処理方法を考えたい
  */
-export const addProduct = async (formData: FormData) => {
+export const addProduct = async (formData: FormData, captchaValue: string | null | undefined) => {
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
   const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
   if (!name || !description || !imageFile || !price) {
-    throw Error("必要な項目が存在しません");
+    return "必要な項目が存在しません";
+  }
+
+  if (!captchaValue) {
+    return "reCAPTCHAを通してください";
+  }
+
+  const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      secret: z.string().nonempty().parse(process.env.GOOGLE_RECAPTCHA_SECRET_KEY),
+      response: captchaValue,
+    }).toString()
+  });
+  const captchaResponseJson = await captchaResponse.json();
+
+  if (!captchaResponseJson.success) {
+    return "reCAPTCHAが正しくありません";
   }
 
   const tagIds = await processTags(tagsString);
