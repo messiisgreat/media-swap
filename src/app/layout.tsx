@@ -24,6 +24,9 @@ title: {template: `%s - ${SITE_NAME}`,default: SITE_NAME},
     siteName:SITE_NAME,
     title:`同人誌フリマ ${SITE_NAME}}`,
     description:"フリーマーケットアプリ",
+  },
+  twitter:{
+    card:"summary_large_image",
   }
 };
 
