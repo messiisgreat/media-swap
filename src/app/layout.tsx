@@ -20,9 +20,9 @@ title: {template: `%s - ${SITE_NAME}`,default: SITE_NAME},
   openGraph:{
     type:"website",
     locale:"ja_JP",
-    url:`${SITE_URL}`,
-    siteName:"Swappy",
-    title:"Swappy",
+    url:SITE_URL,
+    siteName:SITE_NAME,
+    title:`同人誌フリマ ${SITE_NAME}}`,
     description:"フリーマーケットアプリ",
   }
 };
