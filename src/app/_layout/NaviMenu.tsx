@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "@/hooks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
@@ -46,14 +45,10 @@ const naviMenu: NaviMenu[] = [
  * @returns footer
  */
 export const NaviMenu = () => {
-  const isMobile = useMediaQuery();
   const pathName = usePathname();
 
-  if (!isMobile) {
-    return null;
-  }
   return (
-    <div className="navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100">
+    <div className="navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 md:hidden">
       {naviMenu.map((item) => {
         const Icon = item.icon;
         return (

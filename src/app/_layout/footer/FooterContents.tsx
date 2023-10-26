@@ -8,7 +8,7 @@ import Link from "next/link";
  */
 export const FooterMobileContent = () => {
   return (
-    <footer className="mb-16 bg-neutral p-10 text-neutral-content">
+    <footer className="mb-16 bg-neutral p-10 text-neutral-content md:hidden">
       <ul className="menu px-0">
         <li>
           {links.map((section) => (
@@ -43,7 +43,7 @@ export const FooterMobileContent = () => {
  */
 export const FooterContent = () => {
   return (
-    <footer className="bg-neutral p-10 text-neutral-content">
+    <footer className="hidden bg-neutral p-10 text-neutral-content md:block">
       <div className="footer m-auto max-w-7xl">
         {links.map((section) => (
           <div key={section.title}>
