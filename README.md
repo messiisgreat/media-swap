@@ -65,7 +65,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # リモートDBに切り替え
 
-- .envファイルで`DATABASE_URL="mongodb+srv://squall0609kanon:MOivgTFJkD0cjQ5b@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`に切り替え
+- .envファイルで`DATABASE_URL="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`に切り替え
 
 ## 環境構築手順
 
