@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+/**
+ * 外部送信ポリシーページ
+ */
 export default function CookiePage() {
   return (
     <div>

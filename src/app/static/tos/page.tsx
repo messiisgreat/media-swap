@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+/**
+ * 利用規約
+ */
 export default function TOSPage() {
   return (
     <div>

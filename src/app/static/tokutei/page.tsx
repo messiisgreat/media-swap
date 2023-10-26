@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+/**
+ * 特定商取引に関する表記ページ
+ */
 export default function TokuteiPage() {
   return (
     <div>
