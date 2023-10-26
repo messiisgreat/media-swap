@@ -1,3 +1,6 @@
+/**
+ * ガイドページ(取引)
+ */
 export default function GuideActionPage() {
   return (
     <div>

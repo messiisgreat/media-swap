@@ -6,7 +6,12 @@ import { Product, Tag } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
-async function getNonMatchingTags(tags: Tag[]) {
+/**
+ * タグの配列から、DBに存在しないタグの配列を取得する
+ * @param tags タグの配列
+ * @returns DBに存在しないタグの配列
+ */
+async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
   const allTagNames = await fetchTags();
   const existingTagNames = allTagNames.flatMap((tag) => tag.text);
   const nonMatchingTags = tags.filter(
@@ -16,8 +21,8 @@ async function getNonMatchingTags(tags: Tag[]) {
 }
 
 /**
- *
- * @param tagsString
+ * タグの文字列をパースして、DBに存在するタグのIDの配列を取得する
+ * @param tagsString タグの文字列
  * @returns
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
@@ -47,7 +52,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
 
 /**
  * フォームに入力された商品情報をDBに登録する
- * @param formData
+ * @param formData 商品情報が入力されたFormData
  */
 export const addProduct = async (formData: FormData) => {
   const name = formData.get("name")?.toString();
@@ -101,7 +106,7 @@ export const fetchTag = cache(async (text: string) => {
 
 /**
  * 商品を追加する
- * @param product
+ * @param product 商品情報
  * @returns
  */
 export const insertProduct = async (product: Product) => {

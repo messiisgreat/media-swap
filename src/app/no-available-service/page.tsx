@@ -1,6 +1,10 @@
 import Image from "next/image";
 import closeIcon from "/src/assets/close.webp";
 
+/**
+ * 年齢確認で「いいえ」を押したときのページ
+ * @see /src/app/age-check/page.tsx
+ */
 export default function NoAvailableServicePage() {
   return (
     <div className="my-12 flex flex-col items-center">

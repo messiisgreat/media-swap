@@ -1,3 +1,6 @@
+/**
+ * 個人データの安全管理に係る基本方針
+ */
 export default function DataSecurityPage() {
   return (
     <div>
