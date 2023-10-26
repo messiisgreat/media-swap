@@ -6,6 +6,7 @@ import {
   Header,
 } from "@/app/_layout";
 import { NaviMenu } from "@/app/_layout/NaviMenu";
+import { SITE_NAME, SITE_URL } from "config";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -13,8 +14,17 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Swappy",
+  metadataBase: new URL(SITE_URL),
+title: {template: `%s - ${SITE_NAME}`,default: SITE_NAME},
   description: "フリーマーケットアプリ",
+  openGraph:{
+    type:"website",
+    locale:"ja_JP",
+    url:`${SITE_URL}`,
+    siteName:"Swappy",
+    title:"Swappy",
+    description:"フリーマーケットアプリ",
+  }
 };
 
 /**
