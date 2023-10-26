@@ -61,6 +61,13 @@ module.exports = {
         },
       },
     ],
-    "jsdoc/require-returns-description": "off"
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-returns-description": "off",
+    "jsdoc/require-description": [
+      "error",
+      {
+        descriptionStyle: "body"
+      }
+    ]
   },
 };
