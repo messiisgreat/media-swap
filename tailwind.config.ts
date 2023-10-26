@@ -26,6 +26,7 @@ const config: Config = {
         },
       },
     ],
+    logs: false,
   },
 };
 export default config;

@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * PEPsページ
+ */
 export default function PepsPage() {
   return (
     <div>

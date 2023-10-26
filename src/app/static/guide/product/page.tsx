@@ -1,3 +1,6 @@
+/**
+ * ガイドページ(出品)
+ */
 export default function GuideProductPage() {
   return (
     <div>

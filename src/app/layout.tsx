@@ -17,13 +17,16 @@ export const metadata: Metadata = {
   description: "フリーマーケットアプリ",
 };
 
+/**
+ * 基本レイアウト
+ */
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="jp">
+    <html lang="ja">
       <body className={inter.className}>
         <GoogleTagManager />
         <ClientProvider>

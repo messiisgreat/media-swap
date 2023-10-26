@@ -10,6 +10,11 @@ type ProductTagProps = {
   fetchedTags: Tag[];
 };
 
+/**
+ * 商品のタグ
+ * @param param0.fetchedTags タグの配列
+ * @returns タグ
+ */
 export default function ProductTag({ fetchedTags }: ProductTagProps) {
   const [tags, setTags] = useState<{ id: string; text: string }[]>([]);
 
@@ -29,6 +34,7 @@ export default function ProductTag({ fetchedTags }: ProductTagProps) {
 
   const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
+  
   const handleDelete = (i: number) => {
     setTags(tags.filter((tag, index) => index !== i));
   };

@@ -7,6 +7,10 @@ type HomeProps = {
   searchParams: { page: string };
 };
 
+/**
+ * TOPページ
+ * @param param0.searchParams.page ページ番号 
+ */
 export default async function Home({
   searchParams: { page = "1" },
 }: HomeProps) {
@@ -26,7 +30,7 @@ export default async function Home({
     take: pageSize + (currentPage === 1 ? heroItemCount : 0),
   });
   return (
-    <div className="flex flex-col items-center">
+    <>
       {currentPage === 1 && products[0] && (
         <div className="hero rounded-xl bg-base-200">
           <div className="hero-content flex-col lg:flex-row ">
@@ -65,6 +69,6 @@ export default async function Home({
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-    </div>
+  </>
   );
 }
