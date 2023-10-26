@@ -23,7 +23,7 @@ async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
 /**
  * タグの文字列をパースして、DBに存在するタグのIDの配列を取得する
  * @param tagsString タグの文字列
- * @returns
+ * @returns DBに存在するタグのIDの配列
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
   const tagsObject = tagsString ? JSON.parse(tagsString) : null;
@@ -93,7 +93,7 @@ export const fetchTags = cache(async () => await prisma.tag.findMany());
 /**
  * 文字列に一致するタグを取得する
  * @param text
- * @returns
+ * @returns 一致するタグ
  */
 export const fetchTag = cache(async (text: string) => {
   const tag = await prisma.tag.findFirst({
@@ -107,7 +107,7 @@ export const fetchTag = cache(async (text: string) => {
 /**
  * 商品を追加する
  * @param product 商品情報
- * @returns
+ * @returns 追加された商品
  */
 export const insertProduct = async (product: Product) => {
   const insertedProduct = await prisma.product.create({

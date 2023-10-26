@@ -66,6 +66,7 @@ export async function generateMetadata({
 
 /**
  * 商品ページ
+ * @param param0.params.id 商品ID
  */
 export default async function ProductPage({
   params: { id },
