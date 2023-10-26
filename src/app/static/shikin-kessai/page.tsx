@@ -1,3 +1,6 @@
+/**
+ * 資金決済法ページ
+ */
 export default function ShikinPage() {
   return (
     <div>

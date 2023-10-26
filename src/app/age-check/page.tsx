@@ -1,5 +1,8 @@
 import { AgeChechContainer } from "@/app/age-check/AgeCheckContainer";
 
+/**
+ * 年齢確認ページ
+ */
 export default function AgeCheckPage() {
   return (
     <div className="my-16 flex flex-col items-center">

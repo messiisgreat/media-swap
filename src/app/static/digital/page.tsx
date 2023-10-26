@@ -1,3 +1,6 @@
+/**
+ * 電磁交付規約ページ
+ */
 export default function DigitalPage() {
   return (
     <div>
