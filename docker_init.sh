@@ -19,7 +19,7 @@ for i in {1..5}; do
 done
 
 # mongorestoreをリトライ
-for i in {1..5}; do
+for i in {1..10}; do
     OUTPUT=$(mongorestore --host $MONGO_HOST --port $MONGO_PORT --gzip --archive=./dump.gz 2>&1)
 
     if [ $? -eq 0 ]; then

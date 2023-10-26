@@ -43,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### 初期設定
 
 - Docker Desktop, docker-composeなどがない人はインストール
-- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`を設定
+- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`, `DATABASE_URL="mongodb://mongo-primary:27017,mongo-secondary:27017,mongo-arbiter:27017/ecommerce?replicaSet=replset"`を設定
 - `sh mongodb_dump.sh`を実行してdump.gzをダウンロード
 - `docker-compose build`を実行してビルド
 
@@ -56,6 +56,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - `docker-compose down`でコンテナ停止
   - `-v`オプションをつけるとボリューム(コンテナ内のデータベースを削除)
+
+# GUI操作
+
+- MongoDB Compassを用意
+- URIに`mongodb://localhost:27018/?directConnection=true`と入力
+- Connect
+
+# リモートDBに切り替え
+
+- .envファイルで`DATABASE_URL="mongodb+srv://squall0609kanon:MOivgTFJkD0cjQ5b@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`に切り替え
 
 ## 環境構築手順
 
