@@ -7,6 +7,8 @@ const s3 = new AWS.S3({
   region: process.env.AWS_REGION,
 });
 
+// AWS は後々使わないので、eslint-disable-next-line を指定しておく
+// eslint-disable-next-line jsdoc/require-jsdoc
 export async function uploadToS3(
   file: File,
   filename: string,

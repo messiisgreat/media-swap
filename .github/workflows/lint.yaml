@@ -1,0 +1,26 @@
+name: npm CI 💫
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: 
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clean install 🧹
+        run: "npm ci"
+
+      - name: Lint ✨
+        run: "npm run lint"
+        

@@ -7,6 +7,9 @@ type SearchPageProps = {
   searchParams: { query: string; tagid: string };
 };
 
+/**
+ * OGP生成
+ */
 export function generateMetadata({
   searchParams: { query },
 }: SearchPageProps): Metadata {
@@ -15,6 +18,11 @@ export function generateMetadata({
   };
 }
 
+/**
+ * 検索ページ
+ * @param param0.searchParams.query 検索クエリ
+ * @param param0.searchParams.tagid タグID
+ */
 export default async function SearchPage({
   searchParams: { query, tagid },
 }: SearchPageProps) {
