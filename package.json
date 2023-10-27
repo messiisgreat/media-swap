@@ -53,6 +53,7 @@
     "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "typescript": "^5.2.2"
   }
 }
