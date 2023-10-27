@@ -1,3 +1,5 @@
+import { SITE_NAME } from "config";
+
 export type LinkObject = {
   text: string;
   url: string;
@@ -10,7 +12,7 @@ export type LinkSection = {
 
 export const links: LinkSection[] = [
   {
-    title: "Swappyについて",
+    title: `${SITE_NAME}について`,
     items: [
       { text: "会社概要(運営会社)", url: "#" },
       { text: "採用情報", url: "#" },
@@ -25,7 +27,7 @@ export const links: LinkSection[] = [
     items: [
       { text: "プライバシーポリシー", url: "/static/privacy-policy/" },
       { text: "外部送信ポリシー", url: "/static/cookie-policy/" },
-      { text: "Swappy利用規約", url: "/static/tos/" },
+      { text: `${SITE_NAME}利用規約`, url: "/static/tos/" },
       { text: "電磁交付規約", url: "/static/digital/" },
       { text: "コンプライアンスポリシー", url: "/static/compliance/" },
       {

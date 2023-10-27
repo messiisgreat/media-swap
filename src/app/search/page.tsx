@@ -14,7 +14,7 @@ export function generateMetadata({
   searchParams: { query },
 }: SearchPageProps): Metadata {
   return {
-    title: `Search: ${query} - Swappy`,
+    title: `検索結果: ${query}`,
   };
 }
 

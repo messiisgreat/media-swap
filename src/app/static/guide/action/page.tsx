@@ -1,3 +1,5 @@
+import { SITE_NAME } from "config";
+
 /**
  * ガイドページ(取引)
  */
@@ -5,11 +7,11 @@ export default function GuideActionPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">Swappyガイド</h2>
+        <h2 className="text-center text-xl font-bold">{SITE_NAME}ガイド</h2>
         <div className="py-6">
           <h3 className="text-lg font-bold">禁止されている行為</h3>
           <p className="py-4">
-            Swappyは、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
+            {SITE_NAME}は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
             多数のユーザーが心置きなく安全に取引を行えるため、以下の活動を制限しております。
           </p>
           <p className="py-4">
@@ -19,9 +21,9 @@ export default function GuideActionPage() {
         <div className="py-6">
           <h4 className="text-lg font-bold">取引に関する注意点</h4>
           <ul className="list-disc px-4">
-            <li>Swappyが提供していない支払い手段の使用を推奨すること</li>
+            <li>{SITE_NAME}が提供していない支払い手段の使用を推奨すること</li>
             <li>商品情報が不明確な取引</li>
-            <li>Swappyの指定した取引手順に従わない活動</li>
+            <li>{SITE_NAME}の指定した取引手順に従わない活動</li>
             <li>資金洗浄と見なされる活動</li>
             <li>
               商品を出品した者やその家族、関連する人物がその商品を購入すること
@@ -72,7 +74,7 @@ export default function GuideActionPage() {
             <li>他者を勧誘する活動</li>
             <li>真実でない情報の掲載</li>
             <li>個人情報を伴うリスト・投稿、またはその不正な使用</li>
-            <li>Swappyアカウントの不正な活用</li>
+            <li>{SITE_NAME}アカウントの不正な活用</li>
             <li>非合法的な行為やそれを助長する行為</li>
             <li>人々の間での差別感を生じさせる行為</li>
             <li>一般的な道徳に違反する行為</li>
