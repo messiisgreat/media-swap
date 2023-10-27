@@ -6,7 +6,6 @@ import { env } from "@/lib/env";
 import { Product, Tag } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import z from "zod";
 
 /**
  * タグの配列から、DBに存在しないタグの配列を取得する
