@@ -24,16 +24,17 @@ export const fetchTag = cache(async (text: string) => {
 });
 
 /**DB上で初期値を登録する値を除いたProduct型 */
-export type unregisteredProduct = Omit<Product, "id" | "createdAt" | "updatedAt">;
+export type unregisteredProduct = Omit<
+  Product,
+  "id" | "createdAt" | "updatedAt"
+>;
 
 /**
  * 商品を追加する
  * @param product 商品情報
  * @returns 追加された商品
  */
-export const insertProduct = async (
-  product: unregisteredProduct,
-) => {
+export const insertProduct = async (product: unregisteredProduct) => {
   const insertedProduct = await prisma.product.create({
     data: product,
   });

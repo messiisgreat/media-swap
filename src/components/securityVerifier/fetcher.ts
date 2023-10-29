@@ -7,17 +7,25 @@ import { env } from "@/utils/env";
  */
 export const fetchVerifyResult = async (captchaValue: string) => {
   const url = "https://www.google.com/recaptcha/api/siteverify";
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
-      response: captchaValue,
-    }).toString(),
-  });
-  const json = await response.json();
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
+        response: captchaValue,
+      }).toString(),
+    });
+    const json = await response.json();
 
-  return json.success ? true : false;
+    if (!json.success) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
