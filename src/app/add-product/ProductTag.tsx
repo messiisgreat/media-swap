@@ -26,6 +26,7 @@ type Props = Omit<
 
 /**
  * タグを入力するコンポーネント
+ * formから認識できるようにhidden inputに値を設定している
  * @param tags データベースから取得したタグの配列
  * @returns div
  */
@@ -65,26 +66,24 @@ export function ProductTagInput({ tags, name, ...props }: Props) {
   );
 
   return (
-    <ReactTags
-      tags={enteredTags}
-      suggestions={tags}
-      delimiters={delimiters}
-      handleAddition={handleAddition}
-      handleDelete={handleDelete}
-      handleDrag={handleDrag}
-      inputFieldPosition="bottom"
-      autocomplete
-      classNames={{
-        tagInputField: "input input-bordered w-full",
-        tag: "badge badge-primary p-2",
-        tagInput: "",
-        remove: "tag-remove",
-        suggestions: "tag-suggestions",
-        activeSuggestion: "tag-activeSuggestion",
-      }}
-      {...props}
-      ref={ref as any}
-      name={name}
-    />
+    <div>
+      <ReactTags
+        tags={enteredTags}
+        suggestions={tags}
+        delimiters={delimiters}
+        handleAddition={handleAddition}
+        handleDelete={handleDelete}
+        handleDrag={handleDrag}
+        inputFieldPosition="bottom"
+        autocomplete
+        classNames={{
+          tagInputField: "input input-bordered w-full",
+          tag: "badge badge-primary p-2",
+          tagInput: "",
+        }}
+        {...props}
+      />
+      <input type="hidden" name={name} ref={ref} />
+    </div>
   );
 }
