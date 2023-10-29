@@ -57,33 +57,35 @@ export const UploadImages = () => {
 
   return (
     <>
-      <h2 className="font-semibold" >出品画像 (最大10枚)</h2>
-      <ul className="grid grid-cols-4">
-        {files.map((file: FileWithPreview) => (
-          <li
-            key={file.name}
-            className="relative"
-          >
-            <button
-              type='button'
-              className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-50"
-              onClick={() => removeFile(file.name)}
+      <div>
+        <h2 className="font-semibold" >出品画像 (最大10枚)</h2>
+        <ul className="grid grid-cols-4">
+          {files.map((file: FileWithPreview) => (
+            <li
+              key={file.name}
+              className="relative"
             >
-              <FaXmark color="white" />
-            </button>
-            <Image 
-              src={file.preview}
-              alt={file.name}
-              width={80}
-              height={80}
-              onLoad={() => {
-                URL.revokeObjectURL(file.preview);
-              }}
-              className="object-contain p-2"
-            />
-          </li>
-        ))}
-      </ul>
+              <button
+                type='button'
+                className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-50"
+                onClick={() => removeFile(file.name)}
+              >
+                <FaXmark color="white" />
+              </button>
+              <Image 
+                src={file.preview}
+                alt={file.name}
+                width={80}
+                height={80}
+                onLoad={() => {
+                  URL.revokeObjectURL(file.preview);
+                }}
+                className="object-contain p-2"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
       {files?.length < 10 ?
         (<div 
           {...getRootProps()}
