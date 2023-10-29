@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  mongo-primary:
+    image: mongo:latest
+    hostname: mongo-primary
+    container_name: mongo-primary
+    command: mongod --replSet replset
+    volumes:
+      - mongo-primary-data:/data/db
+    expose:
+      - "27017"
+    ports:
+      - "27018:27017"
+    restart: always
+    networks:
+      - replset
+    depends_on:
+      - mongo-secondary
+      - mongo-arbiter
+
+  mongo-secondary:
+    image: mongo:latest
+    hostname: mongo-secondary
+    container_name: mongo-secondary
+    command: mongod --replSet replset
+    volumes:
+      - mongo-secondary-data:/data/db
+    expose:
+      - "27017"
+    ports:
+      - "27019:27017"
+    restart: always
+    networks:
+      - replset
+
+  mongo-arbiter:
+    image: mongo:latest
+    hostname: mongo-arbiter
+    container_name: mongo-arbiter
+    command: mongod --replSet replset
+    expose:
+      - "27017"
+    ports:
+      - "27020:27017"
+    restart: always
+    networks:
+      - replset
+
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - mongo-primary
+      - mongo-secondary
+      - mongo-arbiter
+    networks:
+      - replset
+
+volumes:
+  mongo-primary-data:
+  mongo-secondary-data:
+
+networks:
+  replset:
+    driver: bridge
