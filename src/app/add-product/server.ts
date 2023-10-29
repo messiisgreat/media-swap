@@ -1,5 +1,6 @@
 "use server";
 
+import getSession from "@/app/actions/getSession";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
 import { prisma } from "@/lib/db/prisma";
 import { env } from "@/lib/env";
@@ -26,29 +27,42 @@ async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
  * @param tagsString タグの文字列
  * @returns DBに存在するタグのIDの配列
  */
+// async fu
 async function processTags(tagsString?: string | null): Promise<string[]> {
-  const tagsObject = tagsString ? JSON.parse(tagsString) : null;
+  let matchingIds: string[] = [];
 
-  if (tagsObject) {
-    const nonMatching = await getNonMatchingTags(tagsObject);
-    await prisma.tag.createMany({
-      data: nonMatching.map((tag) => ({ text: tag.text })),
-    });
+  if (!tagsString) {
+    return matchingIds; // タグが提供されていない場合は、空の配列を返します。
   }
-  const matchingIds = tagsObject?.map((tag: Tag) => tag.id);
 
-  tagsObject?.forEach(async (tag: Tag) => {
-    const existingTag = await prisma.tag.findFirst({
-      where: {
-        text: tag.text,
-      },
-    });
-    if (existingTag) {
-      matchingIds?.push(existingTag.id);
+  try {
+    const tagsObject: Tag[] = JSON.parse(tagsString);
+
+    // DBに存在しないタグをフィルタリング
+    const nonMatching = await getNonMatchingTags(tagsObject);
+
+    // DBに存在しないタグがある場合のみ、それらを作成
+    if (nonMatching.length > 0) {
+      await prisma.tag.createMany({
+        data: nonMatching.map((tag) => ({ text: tag.text })),
+      });
     }
-  });
 
-  return matchingIds;
+    // すべてのタグのIDを収集
+    matchingIds = await Promise.all(
+      tagsObject.map(async (tag) => {
+        const existingTag = await prisma.tag.findFirst({
+          where: { text: tag.text },
+        });
+        return existingTag ? existingTag.id : "";
+      }),
+    );
+  } catch (error) {
+    console.error("An error occurred during tag processing:", error);
+    // 必要に応じてエラーをスローするか、エラーハンドリングを行います。
+  }
+
+  return matchingIds.filter((id) => id !== ""); // 空のIDをフィルタリングして返す
 }
 
 /**
@@ -57,12 +71,23 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
  * @param captchaValue reCAPTCHAのトークン
  * @todo もうちょっといいエラーの処理方法を考えたい
  */
-export const addProduct = async (formData: FormData, captchaValue: string | null | undefined) => {
+export const addProduct = async (
+  formData: FormData,
+  captchaValue: string | null | undefined,
+) => {
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
   const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
+
+  const session = await getSession();
+  const userId = session?.user.id;
+
+  if (!userId) {
+    throw new Error("User is not authenticated");
+  }
+
   if (!name || !description || !imageFile || !price) {
     return "必要な項目が存在しません";
   }
@@ -71,16 +96,19 @@ export const addProduct = async (formData: FormData, captchaValue: string | null
     return "reCAPTCHAを通してください";
   }
 
-  const captchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const captchaResponse = await fetch(
+    "https://www.google.com/recaptcha/api/siteverify",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
+        response: captchaValue,
+      }).toString(),
     },
-    body: new URLSearchParams({
-      secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
-      response: captchaValue,
-    }).toString()
-  });
+  );
   const captchaResponseJson = await captchaResponse.json();
 
   if (!captchaResponseJson.success) {
@@ -101,11 +129,16 @@ export const addProduct = async (formData: FormData, captchaValue: string | null
     imageUrl,
     price,
     tagIds,
+    userId,
   };
 
-  await insertProduct(product);
-  redirect("/");
-  //失敗したときの処理を書いてない
+  try {
+    await insertProduct(product);
+    redirect("/");
+  } catch (error) {
+    console.error("An error occurred while inserting the product:", error);
+    // 必要に応じてエラーをスローするか、エラーハンドリングを行います。
+  }
 };
 
 /**
