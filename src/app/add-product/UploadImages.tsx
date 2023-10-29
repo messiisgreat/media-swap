@@ -28,7 +28,7 @@ export const UploadImages = () => {
     }
   }, [])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/*": []
@@ -79,7 +79,7 @@ export const UploadImages = () => {
         (<div 
           {...getRootProps()}
           className="flex items-center justify-center bg-white text-red-500 border border-red-500 rounded-md hover:border-rose-400 hover:bg-red-50 cursor-pointer mt-3 mb-3" >
-          <input {...getInputProps({ name: 'file' })} />
+          <input {...getInputProps({ name: "imageFile" })} />
           <div className="px-3 py-3.5 flex flex-row items-center justify-center gap-1" >
             <BiSolidCamera size={20}/>
             <p className="font-bold" >画像を選択する</p>

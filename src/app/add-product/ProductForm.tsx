@@ -27,7 +27,7 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
     }
   }, [captchaRef]);
     return (
-        <form action={action} className="flex flex-col gap-3">
+      <form action={action} className="flex flex-col gap-3">
         <input
           required
           name="name"
@@ -63,9 +63,8 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         />
         <ProductTag fetchedTags={tags} />
         {/* パブリックキーなのでsrc/lib/env.tsでやらないほうがいいかも */}
-        <ReCAPTCHA sitekey={z.string().nonempty().parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY)} ref={captchaRef} />
+        {/* <ReCAPTCHA sitekey={z.string().nonempty().parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY)} ref={captchaRef} /> */}
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
-      </>
     )
 }

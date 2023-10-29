@@ -1,6 +1,9 @@
 "use server";
 
-import { uploadToS3 } from "@/lib/ImageUploadS3";
+// Todo UserId, tagIds, imageUrlでエラーが吐かれないように処理をかく
+// s3の処理は削除済み
+
+import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import { prisma } from "@/lib/db/prisma";
 import { env } from "@/lib/env";
 import { Product, Tag } from "@prisma/client";
@@ -61,7 +64,7 @@ export const addProduct = async (formData: FormData, captchaValue: string | null
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price") || 0);
-  const tagsString = formData.get("tags")?.toString();
+  // const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
   if (!name || !description || !imageFile || !price) {
     return "必要な項目が存在しません";
@@ -87,20 +90,19 @@ export const addProduct = async (formData: FormData, captchaValue: string | null
     return "reCAPTCHAが正しくありません";
   }
 
-  const tagIds = await processTags(tagsString);
+  // const tagIds = await processTags(tagsString);
 
-  const imageUrl = await uploadToS3(
-    imageFile,
-    `products/${Date.now()}_${name}`, // 一意のIDをつけるべきでは？
-  );
+  const imageUrl = await uploadToCloudinary(imageFile);
 
   /** @todo 必須の型がいろいろと不足しているのでanyにしてある */
   const product: any = {
-    name,
-    description,
-    imageUrl,
-    price,
-    tagIds,
+    // userId: "653a4f71dc95a19525961c11",
+    description: description,
+    // imageUrl: imageUrl,
+    imageUrl: "https://res.cloudinary.com/djdz9eulk/image/upload/v1698565205/swappy/gvhohfwg5140vh83wxh6.png",
+    name: name,
+    price: price,
+    tagIds: ["example", "test"],
   };
 
   await insertProduct(product);
