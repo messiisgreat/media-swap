@@ -26,7 +26,7 @@ export const Textarea = forwardRef<
 export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input">
->(function ImageInput({ className, id }, ref) {
+>(function ImageInput({ className, id, ...props }, ref) {
   const labelClass = `flex cursor-pointer items-center justify-center 
   rounded-md border border-red-500 bg-white text-red-500 
   hover:border-rose-400 hover:bg-red-50 hover:text-rose-400 ${className ?? ""}`;
@@ -45,6 +45,7 @@ export const ImageInput = forwardRef<
         id={id}
         className="hidden"
         ref={ref}
+        {...props}
       />
     </>
   );
