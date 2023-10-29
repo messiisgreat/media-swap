@@ -1,3 +1,4 @@
+import { CORPORATE_ADDRESS, CORPORATE_DELEGATE, CORPORATE_MAIL, CORPORATE_NAME, CORPORATE_TEL, SITE_NAME, SITE_URL } from "config";
 import Link from "next/link";
 
 /**
@@ -13,46 +14,46 @@ export default function TokuteiPage() {
         <div className="py-6">
           <h3 className="text-lg font-bold">事業者</h3>
           <div className="py-2">
-            <p>株式会社Swappy</p>
+            <p>{CORPORATE_NAME}</p>
           </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold">代表者</h3>
           <div className="py-2">
-            <p>原奏音</p>
+            <p>{CORPORATE_DELEGATE}</p>
           </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold">ホームページ</h3>
           <div className="py-2">
             <Link
-              href={"/"}
+              href="/"
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
             >
-              https://www.swappy.jp/
+              {SITE_URL}
             </Link>
           </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold">メールアドレス</h3>
           <div className="py-2">
-            <p>apapk434@gmail.com</p>
+            <p>{CORPORATE_MAIL}</p>
           </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold">所在地</h3>
           <div className="py-2">
-            <p>〒160-0022 東京都新宿区新宿７丁目２６−７</p>
+            <p>{CORPORATE_ADDRESS}</p>
           </div>
         </div>
         <div className="py-6">
           <h3 className="text-lg font-bold">電話番号</h3>
           <div className="py-2">
-            <p>070-83255472</p>
+            <p>{CORPORATE_TEL}</p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">Swappyについて</h3>
+          <h3 className="text-lg font-bold">{SITE_NAME}について</h3>
           <div className="py-2">
             <h4 className="text-lg font-bold">役務の内容</h4>
             <p>お客さま間の商品の取引の場所・機会を提供します。</p>

@@ -1,0 +1,8 @@
+node_modules
+.next
+.github
+.vscode
+project_doc
+.env
+.env.example
+README.md

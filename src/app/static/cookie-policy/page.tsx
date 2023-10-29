@@ -1,3 +1,4 @@
+import { CORPORATE_NAME } from "config";
 import Link from "next/link";
 
 /**
@@ -10,7 +11,7 @@ export default function CookiePage() {
         <h2 className="text-center text-xl font-bold">外部送信ポリシー</h2>
         <p className="py-6">
           この外部送信ポリシー (以下「本ポリシー」といいます)
-          は、株式会社Swappyのうち、
+          は、{CORPORATE_NAME}のうち、
           <Link
             href={"/static/privacy-policy/"}
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"

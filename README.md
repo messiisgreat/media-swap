@@ -38,6 +38,46 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - データソースアクセスユーザーを作成する
 - IPアドレスをホワイトリストに入れる(ネットワークの設定のところ)
 
+## ローカル開発環境構築
+
+### 初期設定
+
+- Docker Desktop, docker-composeなどがない人はインストール
+- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`, `DATABASE_URL="mongodb://mongo-primary:27017,mongo-secondary:27017,mongo-arbiter:27017/ecommerce?replicaSet=replset"`を設定
+- `sh mongodb_dump.sh`を実行してdump.gzをダウンロード(オプション)
+- `docker-compose build`を実行してビルド
+
+## 起動
+
+- `docker-compose up -d`を実行してコンテナを起動
+- `sh replicaset_init.sh`を実行してレプリカセットを初期化
+
+## データの投入
+
+- リモートと同じデータを使用したい場合
+  - `sh mongodb_restore.sh`を実行
+- prisma/seed.jsで初期データを作りたい場合
+  - `docker-compose exec -it nextjs npx prisma db seed`を実行
+
+## 停止
+
+- `docker-compose down`でコンテナ停止
+  - `-v`オプションをつけるとボリューム(コンテナ内のデータベースを削除)
+
+# MongoDB CompassでのGUI操作
+
+- MongoDB Compassを起動
+- URIに`mongodb://localhost:27018/?directConnection=true`と入力
+- Connect
+
+# Prisma StudioでのGUI操作
+
+- `docker-compose exec -it nextjs npx prisma studio`を実行
+
+# リモートDBに切り替え
+
+- .envファイルで`DATABASE_URL="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`に切り替え
+
 ## 環境構築手順
 
 0. slackに招待する
@@ -60,3 +100,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 8. [Figma](https://www.figma.com/file/hGDNS4SqUcCFPEO7QktPpm/Untitled?type=design&node-id=0-1&mode=design&t=RXinljJlgKGIVOjm-0)
 
 その他資料はslackの資料chにあるので、PR出す前に確認してください
+## ローカル開発環境構築
+### dockerの起動・停止コマンド
+- 起動コマンド `docker-compose up -d`
+- 停止コマンド `docker-compose down`
+### リストアの方法
+ローカルのデータベースを更新したい場合は以下のような操作を行う
+1. 次のリストアコマンドを実行して`dump.gz`をダウンロードする`mongorestore --uri mongodb+srv://<USER>:<PASSWORD>@cluster0.c1apanj.mongodb.net`
+2. ダウンロードされた`dump.gz`を`media-swap/initdb`に格納する
