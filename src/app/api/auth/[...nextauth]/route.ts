@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db/prisma";
-import { env } from "@/lib/env";
+import { prisma } from "@/lib/prisma";
+import { env } from "@/utils/env";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";

@@ -1,5 +1,5 @@
 import { PaginationBar, ProductCard } from "@/components";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ type HomeProps = {
 
 /**
  * TOPページ
- * @param param0.searchParams.page ページ番号 
+ * @param param0.searchParams.page ページ番号
  */
 export default async function Home({
   searchParams: { page = "1" },
@@ -63,12 +63,12 @@ export default async function Home({
       </div>
 
       <Link href="/add-product" className="btn btn-primary mb-4">
-        Add Product
+        出品する
       </Link>
 
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-  </>
+    </>
   );
 }
