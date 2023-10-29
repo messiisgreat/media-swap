@@ -18,24 +18,14 @@ export const UploadImages = () => {
 
   const onDrop = useCallback((droppedFiles: File[]) => {
     if (droppedFiles?.length){
-      if (files?.length + droppedFiles.length > 10) {
-        const acceptedFiles = droppedFiles.slice(0, 10 - files.length);
-        const filesWithPreview = acceptedFiles.map((file: File) => Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })) as FileWithPreview[];
-        setFiles((previousFiles: FileWithPreview[]) => [
-          ...previousFiles,
-          ...filesWithPreview
-        ])
-      } else {
-        const filesWithPreview = droppedFiles.map((file: File) => Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })) as FileWithPreview[];
-        setFiles((previousFiles: FileWithPreview[]) => [
-          ...previousFiles,
-          ...filesWithPreview
-        ])
-      }
+      const acceptedFiles = droppedFiles.slice(0, 10 - files.length);
+      const filesWithPreview = acceptedFiles.map((file: File) => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })) as FileWithPreview[];
+      setFiles((previousFiles: FileWithPreview[]) => [
+      ...previousFiles,
+        ...filesWithPreview
+      ])
     }
   }, [files])
 
