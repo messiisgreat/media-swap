@@ -2,8 +2,6 @@ import { addProduct, fetchTags } from "@/app/add-product/server"
 import FormSubmitButton from "@/components/FormSubmitButton"
 import ProductTag from "@/components/ProductTag"
 import { UploadImages } from "@/app/add-product/UploadImages"
-import { BiSolidCamera } from "react-icons/bi"
-import { useDropzone } from "react-dropzone"
 
 /**
  * 商品を登録するためのフォーム
