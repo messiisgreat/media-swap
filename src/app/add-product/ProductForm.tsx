@@ -42,9 +42,13 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         inputMode="numeric"
         type="number"
       />
-      <ProductTagInput tags={tags} />
-      <SecurityVerifier />
-      <FormSubmitButton className="btn-block">出品する</FormSubmitButton>
+      <ProductTagInput
+        tags={tags}
+        name="tags"
+        placeholder="タグ名を入力してください"
+      />
+      {SecurityVerifier}
+      <FormSubmitButton>出品する</FormSubmitButton>
     </form>
   );
 };

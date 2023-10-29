@@ -10,6 +10,7 @@ import { uploadToS3 } from "@/lib/ImageUploadS3";
 import { prisma } from "@/lib/prisma";
 import getSession from "@/utils/getSession";
 import { Tag } from "@prisma/client";
+import cuid from "cuid";
 import { redirect } from "next/navigation";
 
 /**
@@ -79,39 +80,41 @@ export const addProduct = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
+  console.log(formData);
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
-  const price = Number(formData.get("price") || 0);
+  const price = Number(formData.get("price"));
   const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
-
   const session = await getSession();
   const userId = session?.user.id;
 
   if (!userId) {
     throw new Error("User is not authenticated");
   }
-
-  if (!name || !description || !imageFile || !price) {
-    return "必要な項目が存在しません";
+  if (!name) {
+    return "商品名を入力してください";
+  }
+  if (!description) {
+    return "商品説明を入力してください";
+  }
+  if (!imageFile) {
+    return "画像を選択してください";
+  }
+  if (!price) {
+    return "価格を入力してください";
   }
 
   if (!captchaValue) {
     return "reCAPTCHAを通してください";
   }
-
   const isVerified = await fetchVerifyResult(captchaValue);
-
   if (!isVerified) {
     return "reCAPTCHAが正しくありません";
   }
 
   const tagIds = await processTags(tagsString);
-
-  const imageUrl = await uploadToS3(
-    imageFile,
-    `products/${Date.now()}_${name}`, // 一意のIDをつけるべきでは？
-  );
+  const imageUrl = await uploadToS3(imageFile, `products/${cuid()}`);
 
   const product: unregisteredProduct = {
     name,
