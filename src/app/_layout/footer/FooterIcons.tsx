@@ -1,3 +1,4 @@
+import { SITE_NAME } from "config";
 import Link from "next/link";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
@@ -19,7 +20,7 @@ export const FooterIcons = () => {
             <FaFacebookSquare size={30} />
           </Link>
         </div>
-        <span className="text-sm">©︎Swappy</span>
+        <span className="text-sm">{`©${SITE_NAME}`}</span>
       </div>
   );
 };

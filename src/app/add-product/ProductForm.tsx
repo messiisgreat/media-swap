@@ -1,18 +1,33 @@
-import { addProduct, fetchTags } from "@/app/add-product/server"
+"use client";
+
+import { addProduct } from "@/app/add-product/server"
 import FormSubmitButton from "@/components/FormSubmitButton"
 import ProductTag from "@/components/ProductTag"
 import { UploadImages } from "@/app/add-product/UploadImages"
+import ReCAPTCHA from "react-google-recaptcha"
+import z from "zod";
+import { Tag } from "@prisma/client";
+import { useCallback, useRef } from "react";
+import { toast } from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
+ * @param param0.tags タグ
  * @returns form
  */
-export const ProductForm = async () => {
-
-    const tags = await fetchTags();
+export const ProductForm = ({ tags }: { tags: Tag[] }) => {
+  const captchaRef = useRef<ReCAPTCHA>(null);
+  const action = useCallback(async (f: FormData) => {
+    const e = await addProduct(f, captchaRef.current?.getValue());
+    if (typeof e === "string") {
+      // クライアントサイドに公開しても問題ないのでそのまま流す
+      toast.error(e);
+    } else {
+      throw e;
+    }
+  }, [captchaRef]);
     return (
-      <>
-      <form action={addProduct} className="flex flex-col gap-3">
+        <form action={action} className="flex flex-col gap-3">
         <input
           required
           name="name"
@@ -47,6 +62,8 @@ export const ProductForm = async () => {
           className="input input-bordered w-full"
         />
         <ProductTag fetchedTags={tags} />
+        {/* パブリックキーなのでsrc/lib/env.tsでやらないほうがいいかも */}
+        <ReCAPTCHA sitekey={z.string().nonempty().parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY)} ref={captchaRef} />
         <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
       </form>
       </>
