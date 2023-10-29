@@ -1,5 +1,5 @@
 import { Badge } from "@/components/Badge";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
