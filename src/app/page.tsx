@@ -37,6 +37,6 @@ export default async function Home({
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-  </>
+  </div>
   );
 }
