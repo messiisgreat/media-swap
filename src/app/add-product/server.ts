@@ -1,7 +1,7 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import { Product } from "@prisma/client";
+import { Product, Tag } from "@prisma/client";
 import { cache } from "react";
 
 /**
@@ -39,4 +39,18 @@ export const insertProduct = async (product: unregisteredProduct) => {
     data: product,
   });
   return insertedProduct;
+};
+
+/**
+ * タグを追加及び更新する
+ * @param tag タグ
+ * @returns 更新されたタグ
+ */
+export const upsertTag = async (tag: Tag) => {
+  const insertedTag = await prisma.tag.upsert({
+    where: { text: tag.text },
+    update: tag,
+    create: tag,
+  });
+  return insertedTag;
 };
