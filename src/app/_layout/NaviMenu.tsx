@@ -30,7 +30,7 @@ const naviMenu: NaviMenu[] = [
     id: "camera",
     icon: AiFillCamera,
     text: "出品",
-    path: "/exhibit", //TBD
+    path: "/add-product", //TBD
   },
   {
     id: "user",
