@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
  * サーバーサイドでのセッション取得を実現します。
  *
  * @async
- * @return {Promise<Object>} セッションデータを含むプロミスオブジェクト。
+ * @returns {Promise<object|null>} セッションデータを含むプロミスオブジェクト。
  * セッションが存在しない場合はnullを返します。
  */
 export default async function getSession() {
