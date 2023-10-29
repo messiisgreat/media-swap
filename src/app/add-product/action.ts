@@ -1,86 +1,49 @@
 "use server";
 
 import {
-  fetchTags,
   insertProduct,
   unregisteredProduct,
+  upsertTag,
 } from "@/app/add-product/server";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { prisma } from "@/lib/prisma";
 import getSession from "@/utils/getSession";
 import { Tag } from "@prisma/client";
 import cuid from "cuid";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 /**
- * タグの配列から、DBに存在しないタグの配列を取得する
- * @param tags タグの配列
- * @returns DBに存在しないタグの配列
- */
-async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
-  const allTagNames = await fetchTags();
-  const existingTagNames = allTagNames.flatMap((tag) => tag.text);
-  const nonMatchingTags = tags.filter(
-    (tag) => !existingTagNames.includes(tag.text),
-  );
-  return nonMatchingTags;
-}
-
-/**
- * タグの文字列をパースして、DBに存在するタグのIDの配列を取得する
+ * 受け取ったタグ文字列をDBに登録する
+ * upsertで同一IDのタグが存在する場合は更新する
+ *
  * @param tagsString タグの文字列
  * @returns DBに存在するタグのIDの配列
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
-  // tagsStringが提供されていない場合、空の配列を直ちに返す。
-  if (!tagsString) {
-    return [];
-  }
-
+  if (!tagsString) return [];
   try {
-    const tagsObject: Tag[] = JSON.parse(tagsString);
-
-    // DBに存在しないタグをフィルタリング
-    const nonMatching = await getNonMatchingTags(tagsObject);
-
-    // DBに存在しないタグがある場合のみ、それらを作成
-    if (nonMatching.length > 0) {
-      await prisma.tag.createMany({
-        data: nonMatching.map((tag) => ({ text: tag.text })),
-      });
-    }
-
-    // すべてのタグのIDを収集し、結果を直接returnする。
-    // このパターンは「即時returnパターン」と呼ばれ、不要な一時変数を避けるために使用されます。
-    return (
-      await Promise.all(
-        tagsObject.map(async (tag) => {
-          const existingTag = await prisma.tag.findFirst({
-            where: { text: tag.text },
-          });
-          return existingTag ? existingTag.id : "";
-        }),
-      )
-    ).filter((id) => id !== ""); // 空のIDをフィルタリング
-  } catch (error) {
-    console.error("An error occurred during tag processing:", error);
-    // エラーが発生した場合、空の配列を返して処理を継続、またはエラーをスローする
+    const tags: Tag[] = JSON.parse(tagsString);
+    const upsertedTags = await Promise.all(
+      tags.map(async (tag) => await upsertTag(tag)),
+    );
+    console.log(upsertedTags);
+    return upsertedTags.map((tag) => tag.id);
+  } catch (e) {
     return [];
   }
 }
 
 /**
  * フォームに入力された商品情報をDBに登録する
+ * 入力されていない項目がある場合やreCAPTCHAに不備がある場合Toastに渡す用のメッセージを返す
  * @param formData 商品情報が入力されたFormData
  * @param captchaValue reCAPTCHAのトークン
- * @todo もうちょっといいエラーの処理方法を考えたい
  */
 export const addProduct = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
-  console.log(formData);
   const name = formData.get("name")?.toString();
   const description = formData.get("description")?.toString();
   const price = Number(formData.get("price"));
@@ -89,33 +52,21 @@ export const addProduct = async (
   const session = await getSession();
   const userId = session?.user.id;
 
-  if (!userId) {
-    throw new Error("User is not authenticated");
-  }
-  if (!name) {
-    return "商品名を入力してください";
-  }
-  if (!description) {
-    return "商品説明を入力してください";
-  }
-  if (!imageFile) {
-    return "画像を選択してください";
-  }
-  if (!price) {
-    return "価格を入力してください";
-  }
+  if (!userId) throw new Error("User is not authenticated");
+  if (!name) return "商品名を入力してください";
+  if (!description) return "商品説明を入力してください";
+  if (!imageFile) return "画像を選択してください";
+  if (!price) return "価格を入力してください";
+  if (!captchaValue) return "reCAPTCHAを通してください";
 
-  if (!captchaValue) {
-    return "reCAPTCHAを通してください";
-  }
   const isVerified = await fetchVerifyResult(captchaValue);
-  if (!isVerified) {
-    return "reCAPTCHAが正しくありません";
-  }
+  if (!isVerified) return "reCAPTCHAが正しくありません";
 
+  console.log(tagsString);
   const tagIds = await processTags(tagsString);
   const imageUrl = await uploadToS3(imageFile, `products/${cuid()}`);
 
+  console.log(tagIds);
   const product: unregisteredProduct = {
     name,
     description,
@@ -133,4 +84,19 @@ export const addProduct = async (
 
   await insertProduct(product);
   redirect("/");
+};
+
+/**
+ * 商品を登録する。エラーが発生した場合はトーストを表示する。
+ * @param formData フォームデータ
+ * @param verifiedValue reCAPTCHAのトークン
+ */
+export const action = async (
+  formData: FormData,
+  verifiedValue: string | null,
+) => {
+  const e = await addProduct(formData, verifiedValue);
+  if (typeof e === "string") {
+    toast.error(e);
+  }
 };
