@@ -28,10 +28,9 @@ async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
  * @returns DBに存在するタグのIDの配列
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
-  let matchingIds: string[] = [];
-
+  // tagsStringが提供されていない場合、空の配列を直ちに返す。
   if (!tagsString) {
-    return matchingIds; // タグが提供されていない場合は、空の配列を返します。
+    return [];
   }
 
   try {
@@ -47,21 +46,23 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
       });
     }
 
-    // すべてのタグのIDを収集
-    matchingIds = await Promise.all(
-      tagsObject.map(async (tag) => {
-        const existingTag = await prisma.tag.findFirst({
-          where: { text: tag.text },
-        });
-        return existingTag ? existingTag.id : "";
-      }),
-    );
+    // すべてのタグのIDを収集し、結果を直接returnする。
+    // このパターンは「即時returnパターン」と呼ばれ、不要な一時変数を避けるために使用されます。
+    return (
+      await Promise.all(
+        tagsObject.map(async (tag) => {
+          const existingTag = await prisma.tag.findFirst({
+            where: { text: tag.text },
+          });
+          return existingTag ? existingTag.id : "";
+        }),
+      )
+    ).filter((id) => id !== ""); // 空のIDをフィルタリング
   } catch (error) {
     console.error("An error occurred during tag processing:", error);
-    // 必要に応じてエラーをスローするか、エラーハンドリングを行います。
+    // エラーが発生した場合、空の配列を返して処理を継続、またはエラーをスローする
+    return [];
   }
-
-  return matchingIds.filter((id) => id !== ""); // 空のIDをフィルタリングして返す
 }
 
 /**

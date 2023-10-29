@@ -28,6 +28,7 @@ module.exports = {
       "ForOfStatement",
       "LabeledStatement",
       "WithStatement",
+      "VariableDeclaration[kind='let']",
     ],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
