@@ -27,7 +27,6 @@ async function getNonMatchingTags(tags: Tag[]): Promise<Tag[]> {
  * @param tagsString タグの文字列
  * @returns DBに存在するタグのIDの配列
  */
-// async fu
 async function processTags(tagsString?: string | null): Promise<string[]> {
   let matchingIds: string[] = [];
 
