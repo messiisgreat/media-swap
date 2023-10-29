@@ -132,13 +132,8 @@ export const addProduct = async (
     userId,
   };
 
-  try {
-    await insertProduct(product);
-    redirect("/");
-  } catch (error) {
-    console.error("An error occurred while inserting the product:", error);
-    // 必要に応じてエラーをスローするか、エラーハンドリングを行います。
-  }
+  await insertProduct(product);
+  await redirect("/");
 };
 
 /**
