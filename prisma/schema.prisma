@@ -14,20 +14,22 @@ generator erd {
 // ユーザーテーブル
 model User {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  email              String   @unique @map("メールアドレス")
-  isEmailVerified    Boolean  @default(false) @map("メールアドレス認証済みフラグ")
-  isIdentityVerified Boolean  @default(false) @map("本人確認済みフラグ")
-  username           String   @map("ユーザー名")
-  birthdate          DateTime @map("生年月日")
-  userIconImageUrl   String?  @map("ユーザーアイコン画像URL")
-  balance            Float    @default(0) @map("残高")
-  points             Int      @default(0) @map("ポイント")
-  createdAt          DateTime @default(now()) @map("アカウント作成日")
-  updatedAt          DateTime @default(now()) @map("アカウント情報更新日")
-  lastLoginDate      DateTime @default(now()) @map("最終ログイン日")
-  isDeleted          Boolean  @default(false) @map("削除フラグ")
-  isBanned           Boolean  @default(false) @map("追放フラグ")
+  email              String   @unique
+  isEmailVerified    Boolean  @default(false) @map("is_email_verified")
+  isIdentityVerified Boolean  @default(false) @map("is_identity_verified")
+  username           String
+  birthdate          DateTime
+  userIconImageUrl   String?  @map("user_icon_image_url")
+  balance            Float    @default(0)
+  points             Int      @default(0)
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @default(now()) @map("updated_at")
+  lastLoginDate      DateTime @default(now()) @map("last_login_date")
+  isDeleted          Boolean  @default(false) @map("is_deleted")
+  isBanned           Boolean  @default(false) @map("is_banned")
 
+  accounts              Account[]
+  sessions              Session[]
   addresses             Address[]
   transferRequests      TransferRequest[]
   pointChanges          PointChange[]
@@ -44,13 +46,13 @@ model User {
 // 住所テーブル
 model Address {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String @map("ユーザーID") @db.ObjectId
-  postalCode   String @map("郵便番号")
-  prefecture   String @map("都道府県")
-  city         String @map("市区町村")
-  addressLine1 String @map("番地")
-  addressLine2 String @map("建物名")
-  phoneNumber  String @map("電話番号")
+  userId       String @map("user_id") @db.ObjectId
+  postalCode   String @map("postal_code")
+  prefecture   String
+  city         String
+  addressLine1 String @map("address_line1")
+  addressLine2 String @map("address_line2")
+  phoneNumber  String @map("phone_number")
 
   user User @relation(fields: [userId], references: [id])
 
@@ -60,10 +62,10 @@ model Address {
 // 振込申請テーブル
 model TransferRequest {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  amount        Float    @map("金額")
-  date          DateTime @default(now()) @map("日付")
-  isTransferred Boolean  @default(false) @map("振込済みフラグ")
-  userId        String   @map("ユーザーID") @db.ObjectId
+  amount        Float
+  date          DateTime @default(now())
+  isTransferred Boolean  @default(false) @map("is_transferred")
+  userId        String   @map("user_id") @db.ObjectId
 
   user User @relation(fields: [userId], references: [id])
 
@@ -73,11 +75,11 @@ model TransferRequest {
 // ポイント増減テーブル
 model PointChange {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @map("ユーザーID") @db.ObjectId
-  amount             Float    @map("金額")
-  date               DateTime @default(now()) @map("日付")
-  event              String?  @map("イベント名称")
-  pointChangeEventId String?  @map("ポイント増減イベントID") @db.ObjectId
+  userId             String   @map("user_id") @db.ObjectId
+  amount             Float
+  date               DateTime @default(now())
+  event              String?
+  pointChangeEventId String?  @map("point_change_event_id") @db.ObjectId
 
   user             User              @relation(fields: [userId], references: [id])
   pointChangeEvent PointChangeEvent? @relation(fields: [pointChangeEventId], references: [id])
@@ -88,8 +90,8 @@ model PointChange {
 // ポイント増減イベントテーブル
 model PointChangeEvent {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String @map("名称")
-  amount Float? @map("金額")
+  name   String
+  amount Float?
 
   PointChanges PointChange[]
 
@@ -98,33 +100,36 @@ model PointChangeEvent {
 
 // 出品情報テーブル
 model Listing {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  productName      String?   @map("商品名")
-  price            Int?      @map("価格")
-  previousPrice    Int?      @map("変更前価格")
-  isPublic         Boolean   @default(false) @map("公開フラグ")
-  isDeleted        Boolean   @default(false) @map("削除フラグ")
-  isPaid           Boolean   @default(false) @map("支払済フラグ")
-  isShipped        Boolean   @default(false) @map("発送済みフラグ")
-  isReceived       Boolean   @default(false) @map("受取済みフラグ")
-  listingDate      DateTime? @map("出品日")
-  auctionDate      DateTime? @map("落札日")
-  updatedAt        DateTime? @map("情報更新日")
-  sellerId         String    @map("出品者ID") @db.ObjectId
-  buyerId          String?   @map("購入者ID") @db.ObjectId
-  shippingDaysId   String?   @map("配送日数ID") @db.ObjectId
-  shippingMethodId String?   @map("配送方法ID") @db.ObjectId
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  productName        String?   @map("product_name")
+  price              Int?
+  previousPrice      Int?      @map("previous_price")
+  isPublic           Boolean   @default(false) @map("is_public")
+  isDeleted          Boolean   @default(false) @map("is_deleted")
+  isPaid             Boolean   @default(false) @map("is_paid")
+  isShipped          Boolean   @default(false) @map("is_shipped")
+  isReceived         Boolean   @default(false) @map("is_received")
+  listingDate        DateTime? @map("listing_date")
+  auctionDate        DateTime? @map("auction_date")
+  updatedAt          DateTime? @map("updated_at")
+  sellerId           String    @map("seller_id") @db.ObjectId
+  buyerId            String?   @map("buyer_id") @db.ObjectId
+  shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId
+  shippingMethodId   String?   @map("shipping_method_id") @db.ObjectId
+  productConditionId String?   @map("product_condition_id") @db.ObjectId
 
-  seller         User?           @relation("seller", fields: [sellerId], references: [id])
-  buyer          User?           @relation("buyer", fields: [buyerId], references: [id])
-  shippingDays   ShippingDays?   @relation(fields: [shippingDaysId], references: [id])
-  shippingMethod ShippingMethod? @relation(fields: [shippingMethodId], references: [id])
+  seller           User?             @relation("seller", fields: [sellerId], references: [id])
+  buyer            User?             @relation("buyer", fields: [buyerId], references: [id])
+  shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
+  shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
+  productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
 
   listingImages     ListingImage[]
   userViewHistorys  UserViewHistory[]
   listingComments   ListingComment[]
   likes             Like[]
   listingCategories ListingCategory[]
+  listingTags       ListingTag[]
 
   @@map("listings")
 }
@@ -132,8 +137,8 @@ model Listing {
 // 出品情報画像テーブル
 model ListingImage {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
-  listingId String @map("出品情報ID") @db.ObjectId
-  imageId   String @map("画像ID") @db.ObjectId
+  listingId String @map("listing_id") @db.ObjectId
+  imageId   String @map("image_id") @db.ObjectId
 
   listing Listing @relation(fields: [listingId], references: [id])
   image   Image   @relation(fields: [imageId], references: [id])
@@ -144,7 +149,7 @@ model ListingImage {
 // 画像テーブル
 model Image {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  imageUrl String @map("画像URL")
+  imageURL String @map("image_url")
 
   listingImages ListingImage[]
 
@@ -154,9 +159,9 @@ model Image {
 // ユーザー閲覧履歴テーブル
 model UserViewHistory {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @map("ユーザーID") @db.ObjectId
-  listingId String   @map("商品ID") @db.ObjectId
-  viewedAt  DateTime @default(now()) @map("閲覧日時")
+  userId    String   @map("user_id") @db.ObjectId
+  listingId String   @map("listing_id") @db.ObjectId
+  viewedAt  DateTime @default(now()) @map("viewed_at")
 
   user    User    @relation(fields: [userId], references: [id])
   listing Listing @relation(fields: [listingId], references: [id])
@@ -167,10 +172,10 @@ model UserViewHistory {
 // 出品情報コメントテーブル
 model ListingComment {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  listingId String  @map("出品情報ID") @db.ObjectId
-  userId    String  @map("ユーザーID") @db.ObjectId
-  comment   String  @map("コメント")
-  isRead    Boolean @default(false) @map("既読フラグ")
+  listingId String  @map("listing_id") @db.ObjectId
+  userId    String  @map("user_id") @db.ObjectId
+  comment   String
+  isRead    Boolean @default(false) @map("is_read")
 
   user    User    @relation(fields: [userId], references: [id])
   listing Listing @relation(fields: [listingId], references: [id])
@@ -178,13 +183,26 @@ model ListingComment {
   @@map("listing_comments")
 }
 
+// 商品状態テーブル
+model ProductCondition {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  listings Listing[]
+
+  @@map("product_conditions")
+}
+
 // カテゴリーテーブル
 model Category {
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  parentCategoryId String? @map("親カテゴリID") @db.ObjectId
-  categoryName     String  @map("カテゴリー名")
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  parentId     String? @map("parent_id") @db.ObjectId
+  categoryName String  @map("category_name")
+
+  parentCategory Category? @relation("parentCategory", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   listingCategories ListingCategory[]
+  children          Category[]        @relation("parentCategory")
 
   @@map("categories")
 }
@@ -192,8 +210,8 @@ model Category {
 // 商品カテゴリーテーブル
 model ListingCategory {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
-  listingId  String @map("商品ID") @db.ObjectId
-  categoryId String @map("カテゴリーID") @db.ObjectId
+  listingId  String @map("listing_id") @db.ObjectId
+  categoryId String @map("category_id") @db.ObjectId
 
   listing  Listing  @relation(fields: [listingId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
@@ -204,8 +222,8 @@ model ListingCategory {
 // いいねテーブル
 model Like {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
-  listingId String @map("商品ID") @db.ObjectId
-  userId    String @map("ユーザーID") @db.ObjectId
+  listingId String @map("listing_id") @db.ObjectId
+  userId    String @map("user_id") @db.ObjectId
 
   user    User    @relation(fields: [userId], references: [id])
   listing Listing @relation(fields: [listingId], references: [id])
@@ -216,16 +234,30 @@ model Like {
 // タグテーブル
 model Tag {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @map("名称")
+  name String
+
+  listingTags ListingTag[]
 
   @@map("tags")
+}
+
+// 出品情報タグテーブル
+model ListingTag {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String @map("listing_id") @db.ObjectId
+  tagId     String @map("tag_id") @db.ObjectId
+
+  listing Listing @relation(fields: [listingId], references: [id])
+  tag     Tag     @relation(fields: [tagId], references: [id])
+
+  @@map("listing_tags")
 }
 
 // 配送日数テーブル
 model ShippingDays {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
-  title   String @map("タイトル")
-  maxDays Int    @map("最大日数")
+  label   String
+  maxDays Int
 
   listing Listing[]
 
@@ -235,8 +267,8 @@ model ShippingDays {
 // 配送方法テーブル
 model ShippingMethod {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String @map("名称")
-  amount Float  @map("金額")
+  name   String
+  amount Int
 
   listings Listing[]
 
@@ -246,8 +278,8 @@ model ShippingMethod {
 // お知らせテーブル
 model Notification {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  date    DateTime @default(now()) @map("お知らせ日")
-  content String   @map("お知らせ内容")
+  date    DateTime @default(now())
+  content String
 
   userNotificationRead UserNotificationRead[]
 
@@ -257,12 +289,55 @@ model Notification {
 // ユーザーお知らせ既読テーブル
 model UserNotificationRead {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  notificationId String  @map("お知らせID") @db.ObjectId
-  userId         String  @map("ユーザーID") @db.ObjectId
-  isRead         Boolean @default(false) @map("既読フラグ")
+  notificationId String  @map("notification_id") @db.ObjectId
+  userId         String  @map("user_id") @db.ObjectId
+  isRead         Boolean @default(false) @map("is_read")
 
   user         User         @relation(fields: [userId], references: [id])
   notification Notification @relation(fields: [notificationId], references: [id])
 
   @@map("user_notification_reads")
+}
+
+// 認証情報テーブル
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @map("user_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// セッションテーブル
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id") @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// 認証トークンテーブル
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }
