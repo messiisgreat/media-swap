@@ -23,22 +23,6 @@ export const findTag = cache(async (text: string) => {
   return tag;
 });
 
-/**
- * 既に登録済みのタグを取得する
- * @param texts 検索するタグのテキスト
- * @returns
- */
-export const findExistingTags = async (texts: string[]) => {
-  const tags = await prisma.tag.findMany({
-    where: {
-      text: {
-        in: texts,
-      },
-    },
-  });
-  return tags;
-};
-
 /**DB上で初期値を登録する値を除いたProduct型 */
 export type unregisteredProduct = Omit<
   Product,
