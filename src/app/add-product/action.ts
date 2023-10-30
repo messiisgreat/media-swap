@@ -80,7 +80,7 @@ export const addProduct = async (
     price,
     tagIds,
     userId,
-    status: null,
+    status: "selling",
     condition: null,
     shippingCost: null,
     daysToShip: null,
