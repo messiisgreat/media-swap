@@ -23,6 +23,22 @@ export const fetchTag = cache(async (text: string) => {
   return tag;
 });
 
+/**
+ * 既に登録済みのタグを取得する
+ * @param texts 検索するタグのテキスト
+ * @returns
+ */
+export const fetchExistingTags = async (texts: string[]) => {
+  const tags = await prisma.tag.findMany({
+    where: {
+      text: {
+        in: texts,
+      },
+    },
+  });
+  return tags;
+};
+
 /**DB上で初期値を登録する値を除いたProduct型 */
 export type unregisteredProduct = Omit<
   Product,
@@ -39,6 +55,20 @@ export const insertProduct = async (product: unregisteredProduct) => {
     data: product,
   });
   return insertedProduct;
+};
+
+/**
+ * タグを追加する
+ * @param text タグのテキスト
+ * @returns
+ */
+export const createTag = async (text: string) => {
+  const tag = await prisma.tag.create({
+    data: {
+      text: text,
+    },
+  });
+  return tag;
 };
 
 /**
