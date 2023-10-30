@@ -43,21 +43,22 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### 初期設定
 
 - Docker Desktop, docker-composeなどがない人はインストール
-- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`, `DATABASE_URL="mongodb://mongo-primary:27017,mongo-secondary:27017,mongo-arbiter:27017/ecommerce?replicaSet=replset"`を設定
+- .envファイルで`MONGO_URI="mongodb+srv://<user>:<password>@cluster0.c1apanj.mongodb.net/ecommerce?retryWrites=true&w=majority"`, `DATABASE_URL="mongodb://localhost:27018/ecommerce?replicaSet=replset&directConnection=true"`を設定
 - `sh mongodb_dump.sh`を実行してdump.gzをダウンロード(オプション)
 - `docker-compose build`を実行してビルド
 
 ## 起動
 
-- `docker-compose up -d`を実行してコンテナを起動
+- `docker-compose up -d`を実行してMongoDBコンテナを起動
 - `sh replicaset_init.sh`を実行してレプリカセットを初期化
+- `npm run dev`を実行してホストマシンでNextJSを起動
 
 ## データの投入
 
 - リモートと同じデータを使用したい場合
   - `sh mongodb_restore.sh`を実行
 - prisma/seed.jsで初期データを作りたい場合
-  - `docker-compose exec -it nextjs npx prisma db seed`を実行
+  - `npx prisma db seed`を実行
 
 ## 停止
 
