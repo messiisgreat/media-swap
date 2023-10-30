@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { updateProductStatus } from "@/app/products/[id]/server";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -9,10 +9,7 @@ import { revalidatePath } from "next/cache";
  * @param {string} productId - 更新対象の製品のID
  */
 export async function updateProduct(productId: string) {
-  await prisma.product.update({
-    where: { id: productId },
-    data: { status: "sold" },
-  });
+  await updateProductStatus(productId);
 
   revalidatePath("/products/[id]");
 }
