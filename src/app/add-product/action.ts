@@ -24,6 +24,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
   if (!tagsString) return [];
   try {
     const tags: Tag[] = JSON.parse(tagsString);
+
     const upsertedTags = await Promise.all(
       tags.map(async (tag) => await upsertTag(tag)),
     );
