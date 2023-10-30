@@ -1,9 +1,9 @@
 "use server";
 
 import {
-  insertProduct,
+  createProduct,
+  createTag,
   unregisteredProduct,
-  upsertTag,
 } from "@/app/add-product/server";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
@@ -14,29 +14,36 @@ import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
 /**
- * 受け取ったタグ文字列をDBに登録する
- * upsertで同一IDのタグが存在する場合は更新する
+ * タグ文字列の処理を行う。
+ * 未登録のタグをDBに登録し、登録済みのタグと併せてタグIDの配列を返す
  *
- * @param tagsString タグの文字列
- * @returns DBに存在するタグのIDの配列
+ * @param tagsString stringifyされたタグのJSON文字列
+ * @returns Tag IDの配列
  */
 async function processTags(tagsString?: string | null): Promise<string[]> {
   if (!tagsString) return [];
   try {
     const tags: Tag[] = JSON.parse(tagsString);
-
-    const upsertedTags = await Promise.all(
-      tags.map(async (tag) => await upsertTag(tag)),
+    const [newTags, existingTags] = tags.reduce(
+      (acc, tag) => {
+        tag.id === tag.text ? acc[0].push(tag) : acc[1].push(tag);
+        return acc;
+      },
+      [[], []] as [Tag[], Tag[]],
     );
-    console.log(upsertedTags);
-    return upsertedTags.map((tag) => tag.id);
+
+    const createdTags = await Promise.all(
+      newTags.map(async (tag) => await createTag(tag.text)),
+    );
+    console.log(createdTags);
+    return [...existingTags, ...createdTags].map((tag) => tag.id);
   } catch (e) {
     return [];
   }
 }
 
 /**
- * フォームに入力された商品情報をDBに登録する
+ * フォームに入力された商品情報をDBに登録し、完了後に確認ページにリダイレクトする
  * 入力されていない項目がある場合やreCAPTCHAに不備がある場合Toastに渡す用のメッセージを返す
  * @param formData 商品情報が入力されたFormData
  * @param captchaValue reCAPTCHAのトークン
@@ -63,11 +70,9 @@ export const addProduct = async (
   const isVerified = await fetchVerifyResult(captchaValue);
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
-  console.log(tagsString);
   const tagIds = await processTags(tagsString);
   const imageUrl = await uploadToS3(imageFile, `products/${cuid()}`);
 
-  console.log(tagIds);
   const product: unregisteredProduct = {
     name,
     description,
@@ -83,8 +88,8 @@ export const addProduct = async (
     sellingPrice: null,
   };
 
-  await insertProduct(product);
-  redirect("/");
+  const insertedProduct = await createProduct(product);
+  redirect(`/products/complete?product_id=${insertedProduct.id}`);
 };
 
 /**
@@ -92,7 +97,7 @@ export const addProduct = async (
  * @param formData フォームデータ
  * @param verifiedValue reCAPTCHAのトークン
  */
-export const action = async (
+export const productFormAction = async (
   formData: FormData,
   verifiedValue: string | null,
 ) => {

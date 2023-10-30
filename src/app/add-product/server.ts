@@ -1,20 +1,20 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import { Product, Tag } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { cache } from "react";
 
 /**
  * すべてのタグを取得する
  */
-export const fetchTags = cache(async () => await prisma.tag.findMany());
+export const findTags = cache(async () => await prisma.tag.findMany());
 
 /**
  * 文字列に一致するタグを取得する
  * @param text
  * @returns 一致するタグ
  */
-export const fetchTag = cache(async (text: string) => {
+export const findTag = cache(async (text: string) => {
   const tag = await prisma.tag.findFirst({
     where: {
       text: text,
@@ -28,7 +28,7 @@ export const fetchTag = cache(async (text: string) => {
  * @param texts 検索するタグのテキスト
  * @returns
  */
-export const fetchExistingTags = async (texts: string[]) => {
+export const findExistingTags = async (texts: string[]) => {
   const tags = await prisma.tag.findMany({
     where: {
       text: {
@@ -50,7 +50,7 @@ export type unregisteredProduct = Omit<
  * @param product 商品情報
  * @returns 追加された商品
  */
-export const insertProduct = async (product: unregisteredProduct) => {
+export const createProduct = async (product: unregisteredProduct) => {
   const insertedProduct = await prisma.product.create({
     data: product,
   });
@@ -69,18 +69,4 @@ export const createTag = async (text: string) => {
     },
   });
   return tag;
-};
-
-/**
- * タグを追加及び更新する
- * @param tag タグ
- * @returns 更新されたタグ
- */
-export const upsertTag = async (tag: Tag) => {
-  const insertedTag = await prisma.tag.upsert({
-    where: { text: tag.text },
-    update: tag,
-    create: tag,
-  });
-  return insertedTag;
 };

@@ -1,5 +1,5 @@
 import { ProductForm } from "@/app/add-product/ProductForm";
-import { fetchTags } from "@/app/add-product/server";
+import { findTags } from "@/app/add-product/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { H } from "@/components/structure/H";
 import { Metadata } from "next";
@@ -20,7 +20,7 @@ export default async function Page() {
     redirect("/api/auth/signin?callbackUrl=/add-product");
   }
 
-  const tags = await fetchTags();
+  const tags = await findTags();
 
   return (
     <>
