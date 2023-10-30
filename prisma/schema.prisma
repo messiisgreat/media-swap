@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -10,138 +11,258 @@ generator erd {
   provider = "prisma-erd-generator"
 }
 
-model Product {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  description    String
-  userId         String   @db.ObjectId
-  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  imageUrl       String
-  name           String
-  price          Int
-  tagIds         String[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  status         String?  @default("selling") // 商品のステータス。 TODO: 交渉中のステータスが必要になるかも
-  condition      String? // 商品の状態
-  shippingCost   Int? // 送料
-  daysToShip     Int? // 発送までの日数
-  shippingMethod String? // 配送方法
-  sellingPrice   Int? // 販売価格
-
-  @@map("products") // databaseではproductsコレクションに保存される。DBでは複数形で格納されるが、Prismaでは単数形で扱える。
-}
-
-model Tag {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
-
-  @@map("Tag")
-}
-
-model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // createdAt      DateTime @default(now())
-  // updatedAt      DateTime @updatedAt
-
-  @@map("sessions")
-}
-
+// ユーザーテーブル
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  Products      Product[]
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  email              String   @unique @map("メールアドレス")
+  isEmailVerified    Boolean  @default(false) @map("メールアドレス認証済みフラグ")
+  isIdentityVerified Boolean  @default(false) @map("本人確認済みフラグ")
+  username           String   @map("ユーザー名")
+  birthdate          DateTime @map("生年月日")
+  userIconImageUrl   String?  @map("ユーザーアイコン画像URL")
+  balance            Float    @default(0) @map("残高")
+  points             Int      @default(0) @map("ポイント")
+  createdAt          DateTime @default(now()) @map("アカウント作成日")
+  updatedAt          DateTime @default(now()) @map("アカウント情報更新日")
+  lastLoginDate      DateTime @default(now()) @map("最終ログイン日")
+  isDeleted          Boolean  @default(false) @map("削除フラグ")
+  isBanned           Boolean  @default(false) @map("追放フラグ")
 
-  conversationsIds String[]       @db.ObjectId
-  conversations    Conversation[] @relation(fields: [conversationsIds], references: [id])
-
-  seenMessageIds String[]  @db.ObjectId
-  seenMessages   Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
-
-  messages Message[]
-
-  // TODO: のちに必要かも
-  // hashedPassword String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  addresses             Address[]
+  transferRequests      TransferRequest[]
+  pointChanges          PointChange[]
+  userViewHistories     UserViewHistory[]
+  listingComments       ListingComment[]
+  likes                 Like[]
+  userNotificationReads UserNotificationRead[]
+  sellListings          Listing[]              @relation("seller")
+  buyListings           Listing[]              @relation("buyer")
 
   @@map("users")
 }
 
-model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
-  token      String   @unique
-  expires    DateTime
+// 住所テーブル
+model Address {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String @map("ユーザーID") @db.ObjectId
+  postalCode   String @map("郵便番号")
+  prefecture   String @map("都道府県")
+  city         String @map("市区町村")
+  addressLine1 String @map("番地")
+  addressLine2 String @map("建物名")
+  phoneNumber  String @map("電話番号")
 
-  @@unique([identifier, token])
-  @@map("verificationtokens")
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("addresses")
 }
 
-model Conversation {
+// 振込申請テーブル
+model TransferRequest {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt     DateTime @default(now())
-  lastMessageAt DateTime @default(now())
-  // name String?
-  // isGroup Boolean?
+  amount        Float    @map("金額")
+  date          DateTime @default(now()) @map("日付")
+  isTransferred Boolean  @default(false) @map("振込済みフラグ")
+  userId        String   @map("ユーザーID") @db.ObjectId
 
-  messagesIds String[]  @db.ObjectId
-  messages    Message[]
+  user User @relation(fields: [userId], references: [id])
 
-  userIds String[] @db.ObjectId
-  users   User[]   @relation(fields: [userIds], references: [id])
-
-  // buyerId String @db.ObjectId
-  // buyer User @relation(fields: [buyerId], references: [id])
-
-  // sellerId String @db.ObjectId
-  // seller User @relation(fields: [sellerId], references: [id])
-  @@map("conversations")
+  @@map("transfer_requests")
 }
 
-model Message {
+// ポイント増減テーブル
+model PointChange {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @map("ユーザーID") @db.ObjectId
+  amount             Float    @map("金額")
+  date               DateTime @default(now()) @map("日付")
+  event              String?  @map("イベント名称")
+  pointChangeEventId String?  @map("ポイント増減イベントID") @db.ObjectId
+
+  user             User              @relation(fields: [userId], references: [id])
+  pointChangeEvent PointChangeEvent? @relation(fields: [pointChangeEventId], references: [id])
+
+  @@map("point_changes")
+}
+
+// ポイント増減イベントテーブル
+model PointChangeEvent {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @map("名称")
+  amount Float? @map("金額")
+
+  PointChanges PointChange[]
+
+  @@map("point_change_events")
+}
+
+// 出品情報テーブル
+model Listing {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  productName      String?   @map("商品名")
+  price            Int?      @map("価格")
+  previousPrice    Int?      @map("変更前価格")
+  isPublic         Boolean   @default(false) @map("公開フラグ")
+  isDeleted        Boolean   @default(false) @map("削除フラグ")
+  isPaid           Boolean   @default(false) @map("支払済フラグ")
+  isShipped        Boolean   @default(false) @map("発送済みフラグ")
+  isReceived       Boolean   @default(false) @map("受取済みフラグ")
+  listingDate      DateTime? @map("出品日")
+  auctionDate      DateTime? @map("落札日")
+  updatedAt        DateTime? @map("情報更新日")
+  sellerId         String    @map("出品者ID") @db.ObjectId
+  buyerId          String?   @map("購入者ID") @db.ObjectId
+  shippingDaysId   String?   @map("配送日数ID") @db.ObjectId
+  shippingMethodId String?   @map("配送方法ID") @db.ObjectId
+
+  seller         User?           @relation("seller", fields: [sellerId], references: [id])
+  buyer          User?           @relation("buyer", fields: [buyerId], references: [id])
+  shippingDays   ShippingDays?   @relation(fields: [shippingDaysId], references: [id])
+  shippingMethod ShippingMethod? @relation(fields: [shippingMethodId], references: [id])
+
+  listingImages     ListingImage[]
+  userViewHistorys  UserViewHistory[]
+  listingComments   ListingComment[]
+  likes             Like[]
+  listingCategories ListingCategory[]
+
+  @@map("listings")
+}
+
+// 出品情報画像テーブル
+model ListingImage {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String @map("出品情報ID") @db.ObjectId
+  imageId   String @map("画像ID") @db.ObjectId
+
+  listing Listing @relation(fields: [listingId], references: [id])
+  image   Image   @relation(fields: [imageId], references: [id])
+
+  @@map("listing_images")
+}
+
+// 画像テーブル
+model Image {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl String @map("画像URL")
+
+  listingImages ListingImage[]
+
+  @@map("images")
+}
+
+// ユーザー閲覧履歴テーブル
+model UserViewHistory {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  body      String?
-  image     String?
-  createdAt DateTime @default(now())
+  userId    String   @map("ユーザーID") @db.ObjectId
+  listingId String   @map("商品ID") @db.ObjectId
+  viewedAt  DateTime @default(now()) @map("閲覧日時")
 
-  seenIds String[] @db.ObjectId
-  seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
 
-  conversationId String       @db.ObjectId
-  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  @@map("user_view_history")
+}
 
-  senderId String @db.ObjectId
-  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+// 出品情報コメントテーブル
+model ListingComment {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String  @map("出品情報ID") @db.ObjectId
+  userId    String  @map("ユーザーID") @db.ObjectId
+  comment   String  @map("コメント")
+  isRead    Boolean @default(false) @map("既読フラグ")
 
-  @@map("messages")
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+
+  @@map("listing_comments")
+}
+
+// カテゴリーテーブル
+model Category {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  parentCategoryId String? @map("親カテゴリID") @db.ObjectId
+  categoryName     String  @map("カテゴリー名")
+
+  listingCategories ListingCategory[]
+
+  @@map("categories")
+}
+
+// 商品カテゴリーテーブル
+model ListingCategory {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId  String @map("商品ID") @db.ObjectId
+  categoryId String @map("カテゴリーID") @db.ObjectId
+
+  listing  Listing  @relation(fields: [listingId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("listing_categories")
+}
+
+// いいねテーブル
+model Like {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String @map("商品ID") @db.ObjectId
+  userId    String @map("ユーザーID") @db.ObjectId
+
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+
+  @@map("likes")
+}
+
+// タグテーブル
+model Tag {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @map("名称")
+
+  @@map("tags")
+}
+
+// 配送日数テーブル
+model ShippingDays {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  title   String @map("タイトル")
+  maxDays Int    @map("最大日数")
+
+  listing Listing[]
+
+  @@map("shipping_days")
+}
+
+// 配送方法テーブル
+model ShippingMethod {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @map("名称")
+  amount Float  @map("金額")
+
+  listings Listing[]
+
+  @@map("shipping_methods")
+}
+
+// お知らせテーブル
+model Notification {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  date    DateTime @default(now()) @map("お知らせ日")
+  content String   @map("お知らせ内容")
+
+  userNotificationRead UserNotificationRead[]
+
+  @@map("notifications")
+}
+
+// ユーザーお知らせ既読テーブル
+model UserNotificationRead {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  notificationId String  @map("お知らせID") @db.ObjectId
+  userId         String  @map("ユーザーID") @db.ObjectId
+  isRead         Boolean @default(false) @map("既読フラグ")
+
+  user         User         @relation(fields: [userId], references: [id])
+  notification Notification @relation(fields: [notificationId], references: [id])
+
+  @@map("user_notification_reads")
 }
