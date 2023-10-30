@@ -26,17 +26,17 @@ export default async function Home({
   });
   return (
     <div className="flex flex-col items-center">
-      <div className="my-4 grid grid-cols-3 gap-4">
+      <div className="my-4 mr-6 grid grid-cols-3 gap-4">
         {(currentPage === 1 ? products.slice(1) : products).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <Link href="/add-product" className="btn btn-primary mb-4">
+      <Link href="/add-product" className="btn btn-primary mb-4 mr-3">
         Add Product
       </Link>
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-  </div>
+    </div>
   );
 }

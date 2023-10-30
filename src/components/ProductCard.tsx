@@ -11,6 +11,8 @@ type ProductCardProps = {
  * 商品のカード
  * @param param0.product 商品
  * @returns 商品のカード
+ * @example
+ * <ProductCard product={sampleProduct} />
  */
 export function ProductCard({ product }: ProductCardProps) {
   // 製品が作成されて7日以内
@@ -20,10 +22,10 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="">
-      <div className="relative rounded-lg bg-gray-300 p-4 flex justify-center items-center">
+      <div className="relative flex items-center justify-center rounded-lg bg-gray-300 p-2">
         <Link href={"/products/" + product.id}>
           <div
-            className="h-24 w-24 sm:h-48 sm:w-48 cursor-pointer rounded-lg object-cover"
+            className="h-24 w-24 cursor-pointer rounded-lg object-cover sm:h-48 sm:w-48"
             style={{
               backgroundImage: `url(${product.imageUrl})`,
               backgroundSize: "cover",
@@ -31,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <PriceBadge className="absolute bottom-2 left-2 rounded-lg">
+            <PriceBadge className="absolute bottom-2 left-4 rounded-lg pb-2 text-xs">
               {formatPrice(product.price)}
             </PriceBadge>
           </div>
