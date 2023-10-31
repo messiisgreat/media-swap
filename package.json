@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "package:install": "npm install",
+    "package:install": "pnpm install",
     "dev": "next dev",
+    "build": "prisma generate && next build",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
@@ -37,6 +38,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-tag-input": "^6.8.1",
+    "sharp": "^0.32.6",
     "server-only": "^0.0.1",
     "tailwindcss": "3.3.3",
     "zod": "^3.22.3"
@@ -60,5 +62,9 @@
   },
   "prisma": {
     "seed": "node prisma/seed.js"
+  },
+  "engines": {
+    "npm": "🔥パッケージマネージャーはnpmではなくpnpmを使用してください。 see https://pnpm.io/installation",
+    "yarn": "🔥パッケージマネージャーはyarnではなくpnpmを使用してください。see https://pnpm.io/installation"
   }
 }
