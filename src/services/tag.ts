@@ -8,18 +8,17 @@ import "server-only";
  * @returns
  */
 export const createTag = async (text: string) => {
-  const tag = await prisma.tag.create({
+  return prisma.tag.create({
     data: {
       text: text,
     },
   });
-  return tag;
 };
 
 /**
  * すべてのタグを取得する
  */
-export const findTags = cache(async () => await prisma.tag.findMany());
+export const findTags = cache(async () => prisma.tag.findMany());
 
 /**
  * 指定されたIDのタグ情報を取得
@@ -28,15 +27,13 @@ export const findTags = cache(async () => await prisma.tag.findMany());
  * @returns 取得したタグ情報
  */
 export const findTagsByIds = cache(async (ids: string[]) => {
-  if (!ids.length) return [];
-  const tags = await prisma.tag.findMany({
+  return prisma.tag.findMany({
     where: {
       id: {
         in: ids,
       },
     },
   });
-  return tags;
 });
 
 /**
@@ -45,10 +42,9 @@ export const findTagsByIds = cache(async (ids: string[]) => {
  * @returns 一致するタグ
  */
 export const findTag = cache(async (text: string) => {
-  const tag = await prisma.tag.findFirst({
+  return prisma.tag.findFirst({
     where: {
       text: text,
     },
   });
-  return tag;
 });

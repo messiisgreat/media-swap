@@ -10,7 +10,7 @@ import { cache } from "react";
  * @param productId - 更新対象の商品ID
  */
 export const updateProductStatus = async (productId: string) => {
-  await prisma.product.update({
+  return prisma.product.update({
     where: { id: productId },
     data: { status: "sold" },
   });
@@ -24,8 +24,7 @@ export const updateProductStatus = async (productId: string) => {
  * @throws 製品が見つからない場合はエラーがスローされる
  */
 export const findProduct = cache(async (id: string) => {
-  const product = await prisma.product.findUniqueOrThrow({ where: { id } });
-  return product;
+  return prisma.product.findUniqueOrThrow({ where: { id } });
 });
 
 /**DB上で初期値を登録する値を除いたProduct型 */
@@ -40,8 +39,7 @@ export type unregisteredProduct = Omit<
  * @returns 追加された商品
  */
 export const createProduct = async (product: unregisteredProduct) => {
-  const insertedProduct = await prisma.product.create({
+  return prisma.product.create({
     data: product,
   });
-  return insertedProduct;
 };

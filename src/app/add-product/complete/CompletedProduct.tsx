@@ -1,5 +1,5 @@
-import { findProduct } from "@/app/add-product/complete/server";
 import { Button } from "@/components/Button";
+import { findProduct } from "@/services/product";
 import Image from "next/image";
 import Link from "next/link";
 
