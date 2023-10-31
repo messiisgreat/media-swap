@@ -1,6 +1,6 @@
 "use server";
 
-import { updateProductStatus } from "@/app/products/[id]/server";
+import { updateProductStatus } from "@/services/product";
 import { revalidatePath } from "next/cache";
 
 /**

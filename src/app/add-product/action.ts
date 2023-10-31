@@ -1,12 +1,9 @@
 "use server";
 
-import {
-  createProduct,
-  createTag,
-  unregisteredProduct,
-} from "@/app/add-product/server";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
+import { createProduct, unregisteredProduct } from "@/services/product";
+import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { Tag } from "@prisma/client";
 import cuid from "cuid";

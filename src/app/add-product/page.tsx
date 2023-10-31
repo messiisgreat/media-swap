@@ -1,7 +1,8 @@
 import { ProductForm } from "@/app/add-product/ProductForm";
-import { findTags } from "@/app/add-product/server";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { H } from "@/components/structure/H";
+import { findTags } from "@/services/tag";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
