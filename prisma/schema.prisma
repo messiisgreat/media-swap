@@ -38,21 +38,25 @@ model User {
   likes                 Like[]
   userNotificationReads UserNotificationRead[]
   sellListings          Listing[]              @relation("seller")
-  buyListings           Listing[]              @relation("buyer")
+  transactions          Transaction[]          @relation("buyer")
+  raterTransactions     TransactionRating[]    @relation("rater")
+  ratedTransactions     TransactionRating[]    @relation("rated")
+  transactionComments   TransactionComment[]
+  userCoupons           UserCoupon[]
 
   @@map("users")
 }
 
-// 住所テーブル
+// ユーザー住所テーブル
 model Address {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String @map("user_id") @db.ObjectId
-  postalCode   String @map("postal_code")
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String  @map("user_id") @db.ObjectId
+  postalCode   String  @map("postal_code")
   prefecture   String
   city         String
-  addressLine1 String @map("address_line1")
-  addressLine2 String @map("address_line2")
-  phoneNumber  String @map("phone_number")
+  addressLine1 String  @map("address_line1")
+  addressLine2 String? @map("address_line2")
+  phoneNumber  String  @map("phone_number")
 
   user User @relation(fields: [userId], references: [id])
 
@@ -62,10 +66,10 @@ model Address {
 // 振込申請テーブル
 model TransferRequest {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @map("user_id") @db.ObjectId
   amount        Float
   date          DateTime @default(now())
   isTransferred Boolean  @default(false) @map("is_transferred")
-  userId        String   @map("user_id") @db.ObjectId
 
   user User @relation(fields: [userId], references: [id])
 
@@ -98,6 +102,34 @@ model PointChangeEvent {
   @@map("point_change_events")
 }
 
+// クーポン種別テーブル
+model Coupon {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  discountAmount Float?    @map("discount_amount")
+  discountRate   Int?      @map("discount_rate")
+  startDate      DateTime? @map("start_date")
+  endDate        DateTime? @map("end_date")
+
+  userCoupons UserCoupon[]
+
+  @@map("coupons")
+}
+
+// クーポンテーブル
+model UserCoupon {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String  @map("user_id") @db.ObjectId
+  couponId String  @map("coupon_id") @db.ObjectId
+  isUsed   Boolean @default(false) @map("is_used")
+
+  user        User         @relation(fields: [userId], references: [id])
+  coupon      Coupon       @relation(fields: [couponId], references: [id])
+  Transaction Transaction?
+
+  @@map("user_coupons")
+}
+
 // 出品情報テーブル
 model Listing {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
@@ -106,24 +138,20 @@ model Listing {
   previousPrice      Int?      @map("previous_price")
   isPublic           Boolean   @default(false) @map("is_public")
   isDeleted          Boolean   @default(false) @map("is_deleted")
-  isPaid             Boolean   @default(false) @map("is_paid")
-  isShipped          Boolean   @default(false) @map("is_shipped")
-  isReceived         Boolean   @default(false) @map("is_received")
   listingDate        DateTime? @map("listing_date")
-  auctionDate        DateTime? @map("auction_date")
   updatedAt          DateTime? @map("updated_at")
   sellerId           String    @map("seller_id") @db.ObjectId
-  buyerId            String?   @map("buyer_id") @db.ObjectId
   shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId
   shippingMethodId   String?   @map("shipping_method_id") @db.ObjectId
   productConditionId String?   @map("product_condition_id") @db.ObjectId
+  transactionId      String?   @unique @map("transaction_id") @db.ObjectId
 
   seller           User?             @relation("seller", fields: [sellerId], references: [id])
-  buyer            User?             @relation("buyer", fields: [buyerId], references: [id])
   shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
   shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
   productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
 
+  transaction       Transaction?
   listingImages     ListingImage[]
   userViewHistorys  UserViewHistory[]
   listingComments   ListingComment[]
@@ -134,53 +162,29 @@ model Listing {
   @@map("listings")
 }
 
-// 出品情報画像テーブル
-model ListingImage {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  listingId String @map("listing_id") @db.ObjectId
-  imageId   String @map("image_id") @db.ObjectId
-
-  listing Listing @relation(fields: [listingId], references: [id])
-  image   Image   @relation(fields: [imageId], references: [id])
-
-  @@map("listing_images")
-}
-
 // 画像テーブル
 model Image {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  imageURL String @map("image_url")
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  imageURL String  @map("image_url")
+  caption  String?
 
   listingImages ListingImage[]
 
   @@map("images")
 }
 
-// ユーザー閲覧履歴テーブル
-model UserViewHistory {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @map("user_id") @db.ObjectId
-  listingId String   @map("listing_id") @db.ObjectId
-  viewedAt  DateTime @default(now()) @map("viewed_at")
+// 出品情報画像テーブル
+model ListingImage {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String @map("listing_id") @db.ObjectId
+  imageId   String @map("image_id") @db.ObjectId
+  order     Int    @default(0)
 
-  user    User    @relation(fields: [userId], references: [id])
   listing Listing @relation(fields: [listingId], references: [id])
+  image   Image   @relation(fields: [imageId], references: [id])
 
-  @@map("user_view_history")
-}
-
-// 出品情報コメントテーブル
-model ListingComment {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  listingId String  @map("listing_id") @db.ObjectId
-  userId    String  @map("user_id") @db.ObjectId
-  comment   String
-  isRead    Boolean @default(false) @map("is_read")
-
-  user    User    @relation(fields: [userId], references: [id])
-  listing Listing @relation(fields: [listingId], references: [id])
-
-  @@map("listing_comments")
+  @@unique([listingId, imageId])
+  @@map("listing_images")
 }
 
 // 商品状態テーブル
@@ -216,6 +220,7 @@ model ListingCategory {
   listing  Listing  @relation(fields: [listingId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
 
+  @@unique([listingId, categoryId])
   @@map("listing_categories")
 }
 
@@ -228,6 +233,7 @@ model Like {
   user    User    @relation(fields: [userId], references: [id])
   listing Listing @relation(fields: [listingId], references: [id])
 
+  @@unique([userId, listingId])
   @@map("likes")
 }
 
@@ -250,13 +256,14 @@ model ListingTag {
   listing Listing @relation(fields: [listingId], references: [id])
   tag     Tag     @relation(fields: [tagId], references: [id])
 
+  @@unique([listingId, tagId])
   @@map("listing_tags")
 }
 
 // 配送日数テーブル
 model ShippingDays {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
-  label   String
+  name    String
   maxDays Int
 
   listing Listing[]
@@ -275,6 +282,105 @@ model ShippingMethod {
   @@map("shipping_methods")
 }
 
+// 出品情報コメントテーブル
+model ListingComment {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String  @map("listing_id") @db.ObjectId
+  userId    String  @map("user_id") @db.ObjectId
+  comment   String
+  isRead    Boolean @default(false) @map("is_read")
+
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+
+  @@unique([userId, listingId])
+  @@map("listing_comments")
+}
+
+// 取引テーブル
+model Transaction {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  listingId           String   @unique @map("listing_id") @db.ObjectId
+  buyerId             String   @map("buyer_id") @db.ObjectId
+  price               Int
+  externalPaymentId   String?  @map("external_payment_id")
+  isPaid              Boolean  @default(false) @map("is_paid")
+  isShipped           Boolean  @default(false) @map("is_shipped")
+  isReceived          Boolean  @default(false) @map("is_received")
+  isCanceled          Boolean  @default(false) @map("is_canceled")
+  userCouponId        String?  @unique @map("user_coupon_id") @db.ObjectId
+  purchaseDate        DateTime @default(now()) @map("purchase_date")
+  transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId
+
+  buyer      User        @relation("buyer", fields: [buyerId], references: [id])
+  listing    Listing     @relation(fields: [listingId], references: [id])
+  userCoupon UserCoupon? @relation(fields: [userCouponId], references: [id])
+
+  transactionRating   TransactionRating[]
+  transactionComments TransactionComment[]
+
+  @@unique([listingId, buyerId])
+  @@map("transactions")
+}
+
+// 取引コメントテーブル
+model TransactionComment {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  transactionId String  @map("transaction_id") @db.ObjectId
+  userId        String  @map("user_id") @db.ObjectId
+  comment       String
+  isRead        Boolean @default(false) @map("is_read")
+
+  user        User        @relation(fields: [userId], references: [id])
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+
+  @@unique([userId, transactionId])
+  @@map("transaction_comments")
+}
+
+// 取引評価テーブル
+model TransactionRating {
+  id                        String  @id @default(auto()) @map("_id") @db.ObjectId
+  transactionId             String  @map("transaction_id") @db.ObjectId
+  raterId                   String  @map("rater_id") @db.ObjectId
+  ratedId                   String  @map("rated_id") @db.ObjectId
+  transactionRatingOptionId String? @map("transaction_rating_option_id") @db.ObjectId
+  comment                   String?
+
+  rater                   User                     @relation("rater", fields: [raterId], references: [id])
+  rated                   User                     @relation("rated", fields: [ratedId], references: [id])
+  transaction             Transaction              @relation(fields: [transactionId], references: [id])
+  transactionRatingOption TransactionRatingOption? @relation(fields: [transactionRatingOptionId], references: [id])
+
+  @@unique([transactionId, raterId, ratedId])
+  @@map("user_transaction_ratings")
+}
+
+// 取引評価選択肢テーブル
+model TransactionRatingOption {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  rating Int
+
+  transactionRatings TransactionRating[]
+
+  @@map("transaction_ratings")
+}
+
+// ユーザー出品閲覧履歴テーブル
+model UserViewHistory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @map("user_id") @db.ObjectId
+  listingId String   @map("listing_id") @db.ObjectId
+  viewedAt  DateTime @default(now()) @map("viewed_at")
+
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+
+  @@unique([userId, listingId])
+  @@map("user_view_history")
+}
+
 // お知らせテーブル
 model Notification {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -286,7 +392,7 @@ model Notification {
   @@map("notifications")
 }
 
-// ユーザーお知らせ既読テーブル
+// ユーザーお知らせ既読情報テーブル
 model UserNotificationRead {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
   notificationId String  @map("notification_id") @db.ObjectId
@@ -296,6 +402,7 @@ model UserNotificationRead {
   user         User         @relation(fields: [userId], references: [id])
   notification Notification @relation(fields: [notificationId], references: [id])
 
+  @@unique([notificationId, userId])
   @@map("user_notification_reads")
 }
 
