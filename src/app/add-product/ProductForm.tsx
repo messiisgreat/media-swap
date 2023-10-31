@@ -40,8 +40,8 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
           placeholder="Description"
           className="textarea textarea-bordered w-full"
         ></textarea>
-        <label className="flex items-center justify-center bg-white text-red-500 border border-red-500 rounded-md hover:bg-red-50 hover:text-rose-400 hover:border-rose-400 cursor-pointer mb-3" htmlFor="imageInput">
-          <div className="px-3 py-3.5 flex flex-row items-center justify-center gap-1" >
+        <label className="mb-3 flex cursor-pointer items-center justify-center rounded-md border border-red-500 bg-white text-red-500 hover:border-rose-400 hover:bg-red-50 hover:text-rose-400" htmlFor="imageInput">
+          <div className="flex flex-row items-center justify-center gap-1 px-3 py-3.5" >
             <BiSolidCamera size={20} /><p className="font-bold" >画像を選択する</p>
           </div>
         </label>

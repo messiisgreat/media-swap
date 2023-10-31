@@ -41,8 +41,8 @@ export default async function SearchPage({
   }
 
   return (
-    <div className="px-4 lg:px-0 my-4">
-      <p className="font-medium text-lg mb-4">検索結果</p>
+    <div className="my-4 px-4 lg:px-0">
+      <p className="mb-4 text-lg font-medium">検索結果</p>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.map((product) => (

@@ -76,7 +76,7 @@ export default async function ProductPage({
 
   return (
     <div className="hero">
-      <div className="hero-content flex-col lg:flex-row lg:items-center lg:-ml-[12%]">
+      <div className="hero-content flex-col lg:-ml-[12%] lg:flex-row lg:items-center">
         <Image
           src={product.imageUrl}
           alt={product.name}
