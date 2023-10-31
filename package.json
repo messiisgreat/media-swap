@@ -5,7 +5,7 @@
   "scripts": {
     "package:install": "npm install",
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -20,6 +20,7 @@
     "@prisma/client": "^5.3.1",
     "autoprefixer": "10.4.15",
     "aws-sdk": "^2.1459.0",
+    "cuid": "^3.0.0",
     "daisyui": "^3.7.4",
     "eslint": "^8.52.0",
     "eslint-config-next": "13.4.19",
@@ -36,6 +37,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-tag-input": "^6.8.1",
+    "server-only": "^0.0.1",
     "tailwindcss": "3.3.3",
     "zod": "^3.22.3"
   },

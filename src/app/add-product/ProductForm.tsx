@@ -1,14 +1,12 @@
 "use client";
 
-import { addProduct } from "@/app/add-product/server"
-import FormSubmitButton from "@/components/FormSubmitButton"
-import ProductTag from "@/components/ProductTag"
-import { BiSolidCamera } from "react-icons/bi"
-import ReCAPTCHA from "react-google-recaptcha"
-import z from "zod";
+import { ProductTagInput } from "@/app/add-product/ProductTagInput";
+import { productFormAction } from "@/app/add-product/action";
+import { ImageInput, Input, Textarea } from "@/components/FormElements";
+import FormSubmitButton from "@/components/FormSubmitButton";
+import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { Tag } from "@prisma/client";
-import { useCallback, useRef } from "react";
-import { toast } from "react-hot-toast";
+import { useId } from "react";
 
 /**
  * 商品を登録するためのフォーム
@@ -16,54 +14,32 @@ import { toast } from "react-hot-toast";
  * @returns form
  */
 export const ProductForm = ({ tags }: { tags: Tag[] }) => {
-  const captchaRef = useRef<ReCAPTCHA>(null);
-  const action = useCallback(async (f: FormData) => {
-    const e = await addProduct(f, captchaRef.current?.getValue());
-    if (typeof e === "string") {
-      // クライアントサイドに公開しても問題ないのでそのまま流す
-      toast.error(e);
-    } else {
-      throw e;
-    }
-  }, [captchaRef]);
-    return (
-        <form action={action} className="flex flex-col gap-3">
-        <input
-          required
-          name="name"
-          placeholder="Name"
-          className="input input-bordered w-full"
-        />
-        <textarea
-          required
-          name="description"
-          placeholder="Description"
-          className="textarea textarea-bordered w-full"
-        ></textarea>
-        <label className="flex items-center justify-center bg-white text-red-500 border border-red-500 rounded-md hover:bg-red-50 hover:text-rose-400 hover:border-rose-400 cursor-pointer mb-3" htmlFor="imageInput">
-          <div className="px-3 py-3.5 flex flex-row items-center justify-center gap-1" >
-            <BiSolidCamera size={20} /><p className="font-bold" >画像を選択する</p>
-          </div>
-        </label>
-        <input
-          required
-          type="file"
-          name="imageFile"
-          accept="image/*"
-          id="imageInput"
-          className="hidden"
-        />
-        <input
-          required
-          name="price"
-          placeholder="Price"
-          type="number"
-          className="input input-bordered w-full"
-        />
-        <ProductTag fetchedTags={tags} />
-        {/* パブリックキーなのでsrc/lib/env.tsでやらないほうがいいかも */}
-        <ReCAPTCHA sitekey={z.string().nonempty().parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY)} ref={captchaRef} />
-        <FormSubmitButton className="btn-block">Add Product</FormSubmitButton>
-      </form>
-    )
-}
+  const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
+  const imageInputId = useId();
+
+  return (
+    <form
+      action={(f) => productFormAction(f, verifiedValue)}
+      className="flex flex-col gap-3"
+    >
+      <Input required name="name" placeholder="商品名" />
+      <Textarea required name="description" placeholder="説明文"></Textarea>
+      <ImageInput id={imageInputId} name="imageFile" />
+      <Input
+        required
+        name="price"
+        placeholder="10000"
+        min={0}
+        inputMode="numeric"
+        type="number"
+      />
+      <ProductTagInput
+        tags={tags}
+        name="tags"
+        placeholder="タグ名を入力してください"
+      />
+      {SecurityVerifier}
+      <FormSubmitButton>出品する</FormSubmitButton>
+    </form>
+  );
+};

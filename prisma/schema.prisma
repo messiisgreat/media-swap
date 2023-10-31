@@ -30,7 +30,7 @@ model Product {
 
 model Tag {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
-  text String
+  text String @unique
 
   @@map("Tag")
 }
