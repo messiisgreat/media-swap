@@ -7,7 +7,6 @@ import { BiSolidCamera } from "react-icons/bi";
  */
 type FormCommonProps = {
   labelText?: string;
-  optionItems?: (string | number)[];
   characterLimit?: number;
 };
 
