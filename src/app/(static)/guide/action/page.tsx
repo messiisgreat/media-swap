@@ -1,4 +1,4 @@
-import { SITE_NAME } from "const";
+import { SITE_NAME } from "constants";
 
 /**
  * ガイドページ(取引)

@@ -1,4 +1,4 @@
-import { CORPORATE_NAME } from "const";
+import { CORPORATE_NAME } from "constants";
 
 /**
  * コンプライアンスポリシー

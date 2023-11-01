@@ -1,4 +1,4 @@
-import { CORPORATE_NAME, SITE_NAME } from "const";
+import { CORPORATE_NAME, SITE_NAME } from "constants";
 import Link from "next/link";
 
 /**
