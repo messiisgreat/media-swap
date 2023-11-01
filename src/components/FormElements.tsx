@@ -25,7 +25,9 @@ function useCharacterLimit(
   handleChange: (newValue: string) => void;
 } {
   const [value, setValue] = useState(initialValue);
-  const [characterCount, setCharacterCount] = useState(initialValue.length || 0);
+  const [characterCount, setCharacterCount] = useState(
+    initialValue.length || 0,
+  );
   const handleChange = (newValue: string) => {
     if (limit && newValue.length > limit) {
       setValue(newValue.substring(0, limit));

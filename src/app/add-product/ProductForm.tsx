@@ -4,6 +4,7 @@ import { ProductTagInput } from "@/app/add-product/ProductTagInput";
 import { productFormAction } from "@/app/add-product/action";
 import { ImageInput, Input, Textarea, Select } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
+import { TitleUnderbar } from "@/components/TitleUnderbar";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
@@ -45,8 +46,7 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         name="imageFile"
       />
       <Input labelText="商品名" characterLimit={10} name="name" required />
-      <label className="text-lg">商品の詳細</label>
-      <hr className="border-t-2 border-gray-300" />
+      <TitleUnderbar title="商品の説明" />
       <Select labelText="商品の状態" optionItems={productState} />
       <Textarea
         labelText="商品の説明"
@@ -59,8 +59,7 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         name="tags"
         placeholder="タグ名を入力してください"
       />
-      <label className="text-lg">配送について</label>
-      <hr className="border-t-2 border-gray-300" />
+      <TitleUnderbar title="配送について" />
       <Select labelText="配送料の負担" optionItems={postage} />
       <Select labelText="配送の方法" optionItems={shippingMethod} />
       <Select labelText="発送までの日数" optionItems={deliveryTime} />
