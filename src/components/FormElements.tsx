@@ -1,16 +1,17 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { BiSolidCamera } from "react-icons/bi";
 
-/**
- * inputタグにCSSを適用したラッパー
- */
-type InputProps = {
+type FormCommonProps = {
   labelText?: string;
   labelFooter?: string;
 };
+
+/**
+ * inputタグにCSSを適用したラッパー
+ */
 export const Input = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & InputProps
+  ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input({ className, labelText, labelFooter, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
   return (
@@ -27,13 +28,9 @@ export const Input = forwardRef<
 /**
  * textareaタグにCSSを適用したラッパー
  */
-type TextareaProps = {
-  labelText?: string;
-  labelFooter?: string;
-};
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
-  ComponentPropsWithoutRef<"textarea"> & TextareaProps
+  ComponentPropsWithoutRef<"textarea"> & FormCommonProps
 >(function Textarea({ className, labelText, labelFooter, ...props }, ref) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
   return (
@@ -48,12 +45,14 @@ export const Textarea = forwardRef<
 });
 
 /**
- * selectタグにCSSを適用したラッパー
+ * Select用の型宣言
  */
-type SelectProps = {
-  labelText?: string;
+type SelectProps = FormCommonProps & {
   optionItems?: (string | number)[];
 };
+/**
+ * selectタグにCSSを適用したラッパー
+ */
 export const Select = forwardRef<
   HTMLSelectElement,
   ComponentPropsWithoutRef<"select"> & SelectProps
@@ -82,12 +81,9 @@ export const Select = forwardRef<
  * @param props inputタグのattribute
  * @returns label
  */
-type ImageInputProps = {
-  labelText?: string;
-};
 export const ImageInput = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & ImageInputProps
+  ComponentPropsWithoutRef<"input"> & FormCommonProps 
 >(function ImageInput({ className, id, labelText, ...props }, ref) {
   const labelClass = `flex cursor-pointer items-center justify-center 
   gap-1 rounded-md border border-red-500 bg-white 
