@@ -1,4 +1,4 @@
-import { CORPORATE_ADDRESS, CORPORATE_NAME } from "config";
+import { CORPORATE_ADDRESS, CORPORATE_NAME } from "const";
 
 /**
  * 個人データの安全管理に係る基本方針

@@ -1,4 +1,4 @@
-import { SITE_NAME } from "config";
+import { SITE_NAME } from "const";
 
 export type LinkObject = {
   text: string;

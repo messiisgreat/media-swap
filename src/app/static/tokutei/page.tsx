@@ -6,7 +6,7 @@ import {
   CORPORATE_TEL,
   SITE_NAME,
   SITE_URL,
-} from "config";
+} from "const";
 import Link from "next/link";
 
 /**
