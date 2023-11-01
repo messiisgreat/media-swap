@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
