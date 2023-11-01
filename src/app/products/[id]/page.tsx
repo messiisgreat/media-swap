@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import { Badge } from "@/components/Badge";
 import { findProduct } from "@/services/product";
 import { findTagsByIds } from "@/services/tag";

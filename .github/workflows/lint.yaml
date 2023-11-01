@@ -1,4 +1,4 @@
-name: npm CI 💫
+name: pnpm CI 💫
 
 on: 
   push:
@@ -17,10 +17,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+        uses: pnpm/action-setup@v2.2.2
 
       - name: Clean install 🧹
-        run: "npm ci"
+        run: "pnpm install --frozen-lockfile"
 
       - name: Lint ✨
-        run: "npm run lint"
+        run: "pnpm run lint"
         
