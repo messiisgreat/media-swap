@@ -1,6 +1,9 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { BiSolidCamera } from "react-icons/bi";
 
+/**
+ * Formの共通型
+ */
 type FormCommonProps = {
   labelText?: string;
   labelFooter?: string;
@@ -45,11 +48,12 @@ export const Textarea = forwardRef<
 });
 
 /**
- * Select用の型宣言
+ * Select用の型
  */
 type SelectProps = FormCommonProps & {
   optionItems?: (string | number)[];
 };
+
 /**
  * selectタグにCSSを適用したラッパー
  */
