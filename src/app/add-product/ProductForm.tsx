@@ -16,7 +16,24 @@ import { useId } from "react";
 export const ProductForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
-  const items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+  const productState = [
+    "選択してください",
+    "未使用品",
+    "大きな傷有り",
+    "その他",
+  ];
+  const postage = [
+    "選択してください",
+    "送料込み(出品者負担)",
+    "着払い(購入者負担)",
+  ];
+  const shippingMethod = ["選択してください", "クリックポスト"];
+  const deliveryTime = [
+    "選択してください",
+    "1~2日で発送",
+    "2~3日で発送",
+    "4~7日で発送",
+  ];
   return (
     <form
       action={(f) => productFormAction(f, verifiedValue)}
@@ -28,10 +45,29 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         name="imageFile"
       />
       <Input labelText="商品名" labelFooter={"0/40"} name="name" required />
+      {/* labelFooterは未実装 */}
       <label className="text-lg">商品の詳細</label>
       <hr className="border-t-2 border-gray-300" />
-      <Textarea labelText="商品説明" labelFooter={"100/1000"} name="description" required>
+      <Select labelText="商品の状態" optionItems={productState} />
+      <Textarea
+        labelText="商品の説明"
+        labelFooter={"100/1000"}
+        name="description"
+        required
+      >
+        {/* labelFooterは未実装 */}
+        <ProductTagInput
+          tags={tags}
+          name="tags"
+          placeholder="タグ名を入力してください"
+        />
       </Textarea>
+      <label className="text-lg">配送について</label>
+      <hr className="border-t-2 border-gray-300" />
+      <Select labelText="配送料の負担" optionItems={postage} />
+      <Select labelText="配送の方法" optionItems={shippingMethod} />
+      <Select labelText="発送までの日数" optionItems={deliveryTime} />
+      <label className="text-lg">販売価格</label>
       <Input
         labelText="販売価格"
         type="number"
@@ -41,12 +77,10 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         inputMode="numeric"
         required
       />
-      <Select optionItems={items}/>
-      <ProductTagInput
-        tags={tags}
-        name="tags"
-        placeholder="タグ名を入力してください"
-      />
+      <label>販売手数料</label>
+      {/* 別途コンポーネントを作成の必要あり*/}
+      <label className="mb-2">販売利益</label>
+      {/* 別途コンポーネントを作成の必要あり*/}
       {SecurityVerifier}
       <FormSubmitButton>出品する</FormSubmitButton>
     </form>

@@ -62,7 +62,7 @@ export const Select = forwardRef<
   const sliceNumver = 1;
   const reOptionItems = optionItems?.slice(sliceNumver);
   return (
-    <>
+    <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <select className={selectClass} {...props} ref={ref}>
         <option selected disabled>
@@ -72,7 +72,7 @@ export const Select = forwardRef<
           <option key={optionItem}>{optionItem}</option>
         ))}
       </select>
-    </>
+    </div>
   );
 });
 
