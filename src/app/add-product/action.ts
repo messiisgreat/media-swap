@@ -5,8 +5,9 @@ import { uploadToS3 } from "@/lib/ImageUploadS3";
 import { createProduct, unregisteredProduct } from "@/services/product";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
+import { createId } from "@paralleldrive/cuid2";
 import { Tag } from "@prisma/client";
-import cuid from "cuid";
+
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -68,7 +69,7 @@ export const addProduct = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const imageUrl = await uploadToS3(imageFile, `products/${cuid()}`);
+  const imageUrl = await uploadToS3(imageFile, `products/${createId()}`);
 
   const product: unregisteredProduct = {
     name,
