@@ -44,18 +44,16 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         id={imageInputId}
         name="imageFile"
       />
-      <Input labelText="商品名" labelFooter={"0/40"} name="name" required />
-      {/* labelFooterは未実装 */}
+      <Input labelText="商品名" characterLimit={10} name="name" required />
       <label className="text-lg">商品の詳細</label>
       <hr className="border-t-2 border-gray-300" />
       <Select labelText="商品の状態" optionItems={productState} />
       <Textarea
         labelText="商品の説明"
-        labelFooter={"100/1000"}
+        characterLimit={10}
         name="description"
         required
       >
-        {/* labelFooterは未実装 */}
         <ProductTagInput
           tags={tags}
           name="tags"

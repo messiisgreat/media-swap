@@ -6,7 +6,8 @@ import { BiSolidCamera } from "react-icons/bi";
  */
 type FormCommonProps = {
   labelText?: string;
-  labelFooter?: string;
+  optionItems?: (string | number)[];
+  characterLimit?: number;
 };
 
 /**
@@ -15,15 +16,13 @@ type FormCommonProps = {
 export const Input = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function Input({ className, labelText, labelFooter, ...props }, ref) {
+>(function Input({ className, labelText, characterLimit, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <input className={inputClass} {...props} ref={ref} />
-      {labelFooter && (
-        <label className="label-text-alt self-end">{labelFooter}</label>
-      )}
+      {characterLimit && <></>}
     </div>
   );
 });
@@ -34,32 +33,23 @@ export const Input = forwardRef<
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
->(function Textarea({ className, labelText, labelFooter, ...props }, ref) {
+>(function Textarea({ className, labelText, characterLimit, ...props }, ref) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <textarea className={textareaClass} {...props} ref={ref} />
-      {labelFooter && (
-        <label className="label-text-alt self-end">{labelFooter}</label>
-      )}
+      {characterLimit && <></>}
     </div>
   );
 });
-
-/**
- * Select用の型
- */
-type SelectProps = FormCommonProps & {
-  optionItems?: (string | number)[];
-};
 
 /**
  * selectタグにCSSを適用したラッパー
  */
 export const Select = forwardRef<
   HTMLSelectElement,
-  ComponentPropsWithoutRef<"select"> & SelectProps
+  ComponentPropsWithoutRef<"select"> & FormCommonProps
 >(function Select({ className, labelText, optionItems, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
   const sliceNumber = 1;
@@ -87,7 +77,7 @@ export const Select = forwardRef<
  */
 export const ImageInput = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & FormCommonProps 
+  ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function ImageInput({ className, id, labelText, ...props }, ref) {
   const labelClass = `flex cursor-pointer items-center justify-center 
   gap-1 rounded-md border border-red-500 bg-white 
