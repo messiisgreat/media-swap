@@ -6,7 +6,8 @@ import {
   Header,
 } from "@/app/_layout";
 import { NaviMenu } from "@/app/_layout/NaviMenu";
-import { SITE_NAME, SITE_URL } from "const";
+
+import { SITE_NAME, SITE_URL } from "@/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";

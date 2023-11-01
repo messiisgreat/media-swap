@@ -1,4 +1,4 @@
-import { CORPORATE_ADDRESS, CORPORATE_NAME } from "const";
+import { CORPORATE_ADDRESS, CORPORATE_NAME } from "constants";
 
 /**
  * 個人データの安全管理に係る基本方針
