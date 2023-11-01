@@ -64,7 +64,7 @@ export default function CommentSection({
   return (
     <div className="mx-auto w-full">
       <p className="mb-2 text-xl font-medium">コメント</p>
-      {!session ? (
+      {session ? (
         <form className="flex flex-col items-start gap-4">
           <textarea className="textarea textarea-bordered w-full resize-none"></textarea>
           <button className="btn btn-secondary">コメントを書き込む</button>
