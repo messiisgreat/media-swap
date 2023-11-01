@@ -1,3 +1,4 @@
+"use client";
 import { ComponentPropsWithoutRef, forwardRef, useState } from "react";
 import { BiSolidCamera } from "react-icons/bi";
 
@@ -100,11 +101,18 @@ export const Textarea = forwardRef<
 });
 
 /**
+ * Selectの型宣言
+ */
+type SelectProps = FormCommonProps & {
+  optionItems: (string | number)[];
+};
+
+/**
  * selectタグにCSSを適用したラッパー
  */
 export const Select = forwardRef<
   HTMLSelectElement,
-  ComponentPropsWithoutRef<"select"> & FormCommonProps
+  ComponentPropsWithoutRef<"select"> & SelectProps
 >(function Select({ className, labelText, optionItems, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
   return (
