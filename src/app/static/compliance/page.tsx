@@ -1,3 +1,8 @@
+import { CORPORATE_NAME } from "config";
+
+/**
+ * コンプライアンスポリシー
+ */
 export default function CompliancePage() {
   return (
     <div>
@@ -9,7 +14,7 @@ export default function CompliancePage() {
           <h3 className="text-lg font-bold">第１条 （会社の使命）</h3>
           <div className="py-2">
             <p>
-              株式会社Swappy（以下「弊社」と呼びます。）の基本方針として「すべての人に可能性を」と掲げ、弊社が行う事業を通じ、新しい価値を持続的に社会に届けることを目的としております。
+              {CORPORATE_NAME}（以下「弊社」と呼びます。）の基本方針として「すべての人に可能性を」と掲げ、弊社が行う事業を通じ、新しい価値を持続的に社会に届けることを目的としております。
             </p>
           </div>
         </div>

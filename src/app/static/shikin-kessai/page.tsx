@@ -1,3 +1,8 @@
+import { CORPORATE_NAME, SITE_NAME } from "config";
+
+/**
+ * 資金決済法ページ
+ */
 export default function ShikinPage() {
   return (
     <div>
@@ -12,7 +17,7 @@ export default function ShikinPage() {
                 <b>商号</b>
               </td>
               <td className="border-b border-r border-gray-200 px-3 py-2">
-                株式会社Swappy
+                {CORPORATE_NAME}
               </td>
             </tr>
             <tr>
@@ -42,7 +47,7 @@ export default function ShikinPage() {
               </td>
               <td className="border-b border-r border-gray-200 px-3 py-2">
                 <p>東京都新宿区新宿７丁目２６−７</p>
-                <p>株式会社Swappy カスタマーサポート</p>
+                <p>{CORPORATE_NAME} カスタマーサポート</p>
                 <p>apapk434@gmail.com</p>
               </td>
             </tr>
@@ -52,7 +57,7 @@ export default function ShikinPage() {
               </td>
               <td className="border-b border-r border-gray-200 px-3 py-2">
                 <ul>
-                  <li>・ Swappyサービス内</li>
+                  <li>・ {SITE_NAME}サービス内</li>
                   <li>・ 弊社加盟店</li>
                   <li>・ 弊社が提携するブランド加盟店</li>
                 </ul>
@@ -71,7 +76,7 @@ export default function ShikinPage() {
                 <b>未使用残高確認方法</b>
               </td>
               <td className="border-b border-r border-gray-200 px-3 py-2">
-                Swappyサイトからご確認いただけます。
+                {SITE_NAME}サイトからご確認いただけます。
               </td>
             </tr>
             <tr>

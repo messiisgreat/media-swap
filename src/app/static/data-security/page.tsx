@@ -1,3 +1,8 @@
+import { CORPORATE_ADDRESS, CORPORATE_NAME } from "config";
+
+/**
+ * 個人データの安全管理に係る基本方針
+ */
 export default function DataSecurityPage() {
   return (
     <div>
@@ -38,10 +43,10 @@ export default function DataSecurityPage() {
           <p>
             弊社は、個人データの安全管理を徹底的に行っております。その取り組みに関するご質問や苦情については、真摯に受け止め、速やかに対応いたします。
           </p>
-          <p>〒160-0022 東京都新宿区新宿７丁目２６−７</p>
-          <p>株式会社Swappy 個人情報担当者宛</p>
+          <p>{CORPORATE_ADDRESS}</p>
+          <p>{CORPORATE_NAME} 個人情報担当者宛</p>
           <p>
-            お問い合わせフォーム：{" "}
+            お問い合わせフォーム：
             <a
               href={"https://forms.gle/pFZjV5xMxwxcRDV1A"}
               target="_blank"

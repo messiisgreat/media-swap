@@ -1,12 +1,17 @@
+import { SITE_NAME } from "config";
+
+/**
+ * ガイドページ(出品)
+ */
 export default function GuideProductPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">Swappyガイド</h2>
+        <h2 className="text-center text-xl font-bold">{SITE_NAME}ガイド</h2>
         <div className="py-6">
           <h3 className="text-lg font-bold">禁止されている出品物</h3>
           <p className="py-4">
-            Swappyは、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
+            {SITE_NAME}は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
             多数のユーザーが心置きなく安全に取引を行えるため、以下の活動を制限しております。
           </p>
           <p className="py-4">

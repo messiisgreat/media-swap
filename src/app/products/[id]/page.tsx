@@ -1,10 +1,9 @@
 import { Badge } from "@/components/Badge";
-import { prisma } from "@/lib/db/prisma";
+import { findProduct } from "@/services/product";
+import { findTagsByIds } from "@/services/tag";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { cache } from "react";
 import BuyItemButton from "./BuyItemButton";
 
 type ProductPageProps = {
@@ -14,46 +13,15 @@ type ProductPageProps = {
 };
 
 /**
- * キャッシュを使用して製品情報を取得
- *
- * @param {string} id - 取得対象の製品のID
- * @returns 取得した製品情報
- * @throws 製品が見つからない場合404になる
+ * OGP生成
  */
-const getProduct = cache(async (id: string) => {
-  const product = await prisma.product.findUnique({ where: { id } });
-  if (!product) notFound();
-  return product;
-});
-
-/**
- * キャッシュを使用して指定されたIDのタグ情報を取得
- *
- * @param {string[]} ids - 取得対象のタグのIDの配列
- * @returns 取得したタグ情報
- * 空の配列が返されることもある
- */
-const getTags = cache(async (ids: string[]) => {
-  if (!ids.length) return [];
-
-  const tags = await prisma.tag.findMany({
-    where: {
-      id: {
-        in: ids,
-      },
-    },
-  });
-
-  return tags;
-});
-
 export async function generateMetadata({
   params: { id },
 }: ProductPageProps): Promise<Metadata> {
-  const product = await getProduct(id);
+  const product = await findProduct(id);
 
   return {
-    title: product.name + " - Swappy",
+    title: product.name,
     description: product.description,
     openGraph: {
       images: [{ url: product.imageUrl }],
@@ -61,15 +29,19 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * 商品ページ
+ * @param param0.params.id 商品ID
+ */
 export default async function ProductPage({
   params: { id },
 }: ProductPageProps) {
-  const product = await getProduct(id);
-  const tags = await getTags(product.tagIds);
+  const product = await findProduct(id);
+  const tags = await findTagsByIds(product.tagIds);
 
   return (
     <div className="hero">
-      <div className="hero-content flex-col lg:flex-row lg:items-center lg:-ml-[12%]">
+      <div className="hero-content flex-col lg:-ml-[12%] lg:flex-row lg:items-center">
         <Image
           src={product.imageUrl}
           alt={product.name}

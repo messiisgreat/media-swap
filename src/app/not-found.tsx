@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * 404ページ
+ */
 export default function NotFoundPage() {
   return (
     <div>

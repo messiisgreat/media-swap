@@ -1,5 +1,5 @@
 import PriceBadge from "@/components/PriceBadge";
-import { formatPrice } from "@/lib/format";
+import { formatPrice } from "@/utils/format";
 import { Product } from "@prisma/client";
 import Link from "next/link";
 

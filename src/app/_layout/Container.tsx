@@ -6,5 +6,5 @@ import { ReactNode } from "react";
  * @returns main
  */
 export const Container = ({ children }: { children: ReactNode }) => {
-  return <Main className="flex flex-col items-center justify-center container sm:mx-auto max-sm:m-4">{children}</Main>;
+  return <Main className="container flex flex-col items-center justify-center max-sm:p-4 sm:mx-auto">{children}</Main>;
 };

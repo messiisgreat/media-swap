@@ -1,12 +1,16 @@
+import { CORPORATE_NAME, SITE_NAME } from "config";
 import Link from "next/link";
 
+/**
+ * 利用規約
+ */
 export default function TOSPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">Swappy利用規約</h2>
+        <h2 className="text-center text-xl font-bold">{SITE_NAME}利用規約</h2>
         <p className="py-6">
-          この規約（以下「本利用規約」といいます。）は、株式会社Swappy（以下「弊社」といいます。）が運営するインターネットサービス「Swappy」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。
+          この規約（以下「本利用規約」といいます。）は、{CORPORATE_NAME}（以下「弊社」といいます。）が運営するインターネットサービス「{SITE_NAME}」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。
         </p>
         <div className="py-6">
           <h3 className="text-lg font-bold">
@@ -427,7 +431,7 @@ export default function TOSPage() {
               </li>
               <li>
                 (4)
-                支払期日までに購入者が支払債務を支払わなかった場合、Swappy社は、当該購入者に対し、年率
+                支払期日までに購入者が支払債務を支払わなかった場合、{SITE_NAME}社は、当該購入者に対し、年率
                 14.6％の遅延損害金を請求することができるものとします。
               </li>
             </ul>
@@ -502,7 +506,7 @@ export default function TOSPage() {
             <ul>
               <li>
                 (1)
-                取引が完了した際、弊社は決済会社に通知し、出品者（残高ユーザーを除く）は取引完了から180日以内にSwappyアプリの手続きを通じて、売上の引出を要求するものとします。
+                取引が完了した際、弊社は決済会社に通知し、出品者（残高ユーザーを除く）は取引完了から180日以内に{SITE_NAME}アプリの手続きを通じて、売上の引出を要求するものとします。
               </li>
               <li>
                 (2)
