@@ -63,6 +63,7 @@ jobs:
               - async componentは言語仕様に追加された
               - async function内でのErrorのThrowはError Boundaryでのcatchを意図しているので指摘をしない
               - Custom hooks内の関数化されていないComponentについて指摘をしない
+              - Next/Link Component内にaタグを配置しなくなった
 
           summarize: |
             次の内容でmarkdownフォーマットを使用して、最終的な回答を提供してください。
