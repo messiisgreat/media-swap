@@ -6,29 +6,29 @@ import {
   Header,
 } from "@/app/_layout";
 import { NaviMenu } from "@/app/_layout/NaviMenu";
-import { SITE_NAME, SITE_URL } from "config";
+import { SITE_NAME, SITE_URL } from "const";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-title: {template: `%s - ${SITE_NAME}`,default: SITE_NAME},
+  title: { template: `%s - ${SITE_NAME}`, default: SITE_NAME },
   description: "フリーマーケットアプリ",
-  openGraph:{
-    type:"website",
-    locale:"ja_JP",
-    url:SITE_URL,
-    siteName:SITE_NAME,
-    title:`同人誌フリマ ${SITE_NAME}`,
-    description:"フリーマーケットアプリ",
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `同人誌フリマ ${SITE_NAME}`,
+    description: "フリーマーケットアプリ",
   },
-  twitter:{
-    card:"summary_large_image",
-  }
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 /**

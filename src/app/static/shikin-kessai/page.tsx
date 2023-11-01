@@ -1,4 +1,4 @@
-import { CORPORATE_NAME, SITE_NAME } from "config";
+import { CORPORATE_NAME, SITE_NAME } from "const";
 
 /**
  * 資金決済法ページ

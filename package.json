@@ -60,7 +60,8 @@
     "typescript": "^5.2.2"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "schema": "db/schema.prisma",
+    "seed": "node db/seed.js"
   },
   "engines": {
     "npm": "🔥パッケージマネージャーはnpmではなくpnpmを使用してください。 see https://pnpm.io/installation",
