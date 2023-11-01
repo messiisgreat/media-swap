@@ -1,9 +1,11 @@
-import nextJest from "next/jest.js";
+const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
   dir: "./",
 });
 
+// eslint-disable-next-line jsdoc/check-tag-names
+/** @type {import('jest').Config} */
 const config = {
   testEnvironment: "jest-environment-jsdom",
   moduleNameMapper: {
