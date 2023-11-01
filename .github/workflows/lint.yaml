@@ -19,8 +19,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Clean install 🧹
-        run: "npm ci"
+        run: "pnpm ci"
 
       - name: Lint ✨
-        run: "npm run lint"
+        run: "pnpm run lint"
         
