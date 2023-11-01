@@ -25,7 +25,7 @@ function useCharacterLimit(
   handleChange: (newValue: string) => void;
 } {
   const [value, setValue] = useState(initialValue);
-  const [characterCount, setCharacterCount] = useState(initialValue.length);
+  const [characterCount, setCharacterCount] = useState(initialValue.length || 0);
   const handleChange = (newValue: string) => {
     if (limit && newValue.length > limit) {
       setValue(newValue.substring(0, limit));
@@ -107,17 +107,14 @@ export const Select = forwardRef<
   ComponentPropsWithoutRef<"select"> & FormCommonProps
 >(function Select({ className, labelText, optionItems, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
-  const sliceNumber = 1;
-  const reOptionItems = optionItems?.slice(sliceNumber);
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <select className={selectClass} {...props} ref={ref}>
-        <option selected disabled>
-          {optionItems?.[0]}
-        </option>
-        {reOptionItems?.map((optionItem) => (
-          <option key={optionItem}>{optionItem}</option>
+        {optionItems?.map((optionItem, index) => (
+          <option key={optionItem} disabled={index === 0}>
+            {optionItem}
+          </option>
         ))}
       </select>
     </div>
