@@ -59,8 +59,8 @@ export const Select = forwardRef<
   ComponentPropsWithoutRef<"select"> & SelectProps
 >(function Select({ className, labelText, optionItems, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
-  const sliceNumver = 1;
-  const reOptionItems = optionItems?.slice(sliceNumver);
+  const sliceNumber = 1;
+  const reOptionItems = optionItems?.slice(sliceNumber);
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
