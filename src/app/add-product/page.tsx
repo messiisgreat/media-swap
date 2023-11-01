@@ -25,7 +25,7 @@ export default async function Page() {
 
   return (
     <>
-      <H className="mb-3 text-lg font-bold">商品を出品する</H>
+      <H className="mb-3 text-lg font-bold">商品を出品</H>
       <ProductForm tags={tags} />
     </>
   );

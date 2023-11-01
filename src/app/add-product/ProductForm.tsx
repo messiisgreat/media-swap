@@ -2,7 +2,7 @@
 
 import { ProductTagInput } from "@/app/add-product/ProductTagInput";
 import { productFormAction } from "@/app/add-product/action";
-import { ImageInput, Input, Textarea } from "@/components/FormElements";
+import { ImageInput, Input, Textarea, Select } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { Tag } from "@prisma/client";
@@ -16,23 +16,32 @@ import { useId } from "react";
 export const ProductForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
-
+  const items = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
   return (
     <form
       action={(f) => productFormAction(f, verifiedValue)}
       className="flex flex-col gap-3"
     >
-      <Input required name="name" placeholder="商品名" />
-      <Textarea required name="description" placeholder="説明文"></Textarea>
-      <ImageInput id={imageInputId} name="imageFile" />
+      <ImageInput
+        labelText="出品画像(最大10枚)"
+        id={imageInputId}
+        name="imageFile"
+      />
+      <Input labelText="商品名" labelFooter={"0/40"} name="name" required />
+      <label className="text-lg">商品の詳細</label>
+      <hr className="border-t-2 border-gray-300" />
+      <Textarea labelText="商品説明" labelFooter={"100/1000"} name="description" required>
+      </Textarea>
       <Input
-        required
+        labelText="販売価格"
+        type="number"
         name="price"
-        placeholder="10000"
+        placeholder="￥"
         min={0}
         inputMode="numeric"
-        type="number"
+        required
       />
+      <Select optionItems={items}/>
       <ProductTagInput
         tags={tags}
         name="tags"
