@@ -6,22 +6,22 @@ settings:
 
 dependencies:
   '@auth/prisma-adapter':
-    specifier: ^1.0.2
+    specifier: ^1.0.5
     version: 1.0.5(@prisma/client@5.5.2)
   '@paralleldrive/cuid2':
     specifier: ^2.2.2
     version: 2.2.2
   '@prisma/client':
-    specifier: ^5.3.1
+    specifier: ^5.5.2
     version: 5.5.2(prisma@5.5.2)
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.31)
   aws-sdk:
-    specifier: ^2.1459.0
-    version: 2.1484.0
+    specifier: ^2.1485.0
+    version: 2.1485.0
   daisyui:
-    specifier: ^3.7.4
+    specifier: ^3.9.4
     version: 3.9.4
   eslint:
     specifier: ^8.52.0
@@ -42,13 +42,13 @@ dependencies:
     specifier: 13.5.6
     version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
   next-auth:
-    specifier: ^4.23.1
+    specifier: ^4.24.4
     version: 4.24.4(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
   postcss:
     specifier: 8.4.31
     version: 8.4.31
   prisma:
-    specifier: ^5.3.1
+    specifier: ^5.5.2
     version: 5.5.2
   react:
     specifier: 18.2.0
@@ -78,12 +78,12 @@ dependencies:
     specifier: 3.3.3
     version: 3.3.3
   zod:
-    specifier: ^3.22.3
+    specifier: ^3.22.4
     version: 3.22.4
 
 devDependencies:
   '@types/node':
-    specifier: ^20.8.9
+    specifier: ^20.8.10
     version: 20.8.10
   '@types/react':
     specifier: ^18.2.33
@@ -98,10 +98,10 @@ devDependencies:
     specifier: ^6.6.3
     version: 6.6.3
   '@typescript-eslint/eslint-plugin':
-    specifier: ^6.9.0
+    specifier: ^6.9.1
     version: 6.9.1(@typescript-eslint/parser@6.9.1)(eslint@8.52.0)(typescript@5.2.2)
   '@typescript-eslint/parser':
-    specifier: ^6.9.0
+    specifier: ^6.9.1
     version: 6.9.1(eslint@8.52.0)(typescript@5.2.2)
   prettier:
     specifier: ^3.0.3
@@ -760,8 +760,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
-  /aws-sdk@2.1484.0:
-    resolution: {integrity: sha512-emfCmb5j/UtaB7U8tvLpGdVNAlZMg4xZOhoFvL8jBQwIVJyCRyaqcshe31JXTwJdafThn2pNPtQOeYbZJCE0Ow==}
+  /aws-sdk@2.1485.0:
+    resolution: {integrity: sha512-Lm+eLtZEOuVuLu9fWztAFhVFOiVpWprgVwauoS7Dd/IeXt4WafUWe+AnWQ46F8HuHZG+CuD+iUUNa/HDZWWP1g==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       buffer: 4.9.2
@@ -829,7 +829,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001559
-      electron-to-chromium: 1.4.571
+      electron-to-chromium: 1.4.572
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: false
@@ -846,7 +846,7 @@ packages:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
     dev: false
 
   /builtin-modules@3.3.0:
@@ -1103,8 +1103,8 @@ packages:
     dependencies:
       esutils: 2.0.3
 
-  /electron-to-chromium@1.4.571:
-    resolution: {integrity: sha512-Sc+VtKwKCDj3f/kLBjdyjMpNzoZsU6WuL/wFb6EH8USmHEcebxRXcRrVpOpayxd52tuey4RUDpUsw5OS5LhJqg==}
+  /electron-to-chromium@1.4.572:
+    resolution: {integrity: sha512-RlFobl4D3ieetbnR+2EpxdzFl9h0RAJkPK3pfiwMug2nhBin2ZCsGIAJWdpNniLz43sgXam/CgipOmvTA+rUiA==}
     dev: false
 
   /emoji-regex@9.2.2:
@@ -1815,6 +1815,10 @@ packages:
 
   /ieee754@1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
+    dev: false
+
+  /ieee754@1.2.1:
+    resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
     dev: false
 
   /ignore@5.2.4:
