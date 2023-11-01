@@ -68,6 +68,18 @@ model Session {
   @@map("sessions")
 }
 
+model Address {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  user          User      @relation(fields: [id], references: [id], onDelete: Cascade)
+  postalcode    String?
+  prefecture    String
+  city          String
+  address1      String
+  address2      String?
+
+  @@map("addresses")
+}
+
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -77,6 +89,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Products      Product[]
+  Addresses       Address[]
 
   conversationsIds String[] @db.ObjectId
   conversations Conversation[] @relation(fields: [conversationsIds], references: [id])

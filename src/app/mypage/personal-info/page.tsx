@@ -1,11 +1,37 @@
+"use client";
+
 import FormSubmitButton from "@/components/FormSubmitButton";
+import { addAddress } from "@/app/mypage/personal-info/server";
+import { toast } from "react-hot-toast";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type TAddressFormData = {
+  prefecture: string;
+  city: string;
+  address1: string;
+  address2?: string;
+  postalCode?: string;
+};
 
 /**
  * 住所変更ページ
+ * TODO: フォームの細かいバリデーションなどについては、react-hook-formが入った後に対応
  */
-export default async function Page() {
+export default function Page() {
+  // TODO: react-hook-formが入った後に厳密に型に対応。
+  const submit = async (formData: FormData) => {
+    try {
+      const response = await addAddress(formData);
+      if (typeof response === "string") {
+        toast.error(response);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-3">
+    <form className="flex flex-col gap-3" action={submit}>
       <label>
         <span>郵便番号</span>
         <div>
@@ -16,7 +42,7 @@ export default async function Page() {
             maxLength={8}
             pattern="\d*"
             autoComplete="shipping postal-code"
-            className="border border-gray-300 rounded-md py-2 px-3 w-250"
+            className="rounded-md border border-gray-300 px-3 py-2"
             placeholder="例: 1234567"
           />
         </div>
@@ -86,7 +112,7 @@ export default async function Page() {
           type="text"
           name="city"
           autoComplete="shipping address-level2"
-          className="border border-gray-300 rounded-md py-2 px-3 w-full"
+          className="w-full rounded-md border border-gray-300 px-3 py-2"
           placeholder="川崎市川崎区"
         />
       </label>
@@ -96,7 +122,7 @@ export default async function Page() {
           type="text"
           name="address1"
           autoComplete="shipping address-line1"
-          className="border border-gray-300 rounded-md py-2 px-3 w-full"
+          className="w-full rounded-md border border-gray-300 px-3 py-2"
           placeholder="旭町1-1"
         />
       </label>
@@ -106,11 +132,11 @@ export default async function Page() {
           type="text"
           name="address2"
           autoComplete="shipping address-line2"
-          className="border border-gray-300 rounded-md py-2 px-3 w-full"
+          className="w-full rounded-md border border-gray-300 px-3 py-2"
           placeholder="○○マンション101号"
         />
       </label>
-      <FormSubmitButton className="btn-block">住所を登録する</FormSubmitButton>
+      <FormSubmitButton>住所を登録する</FormSubmitButton>
     </form>
   );
 }
