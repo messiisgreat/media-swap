@@ -50,16 +50,15 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
       <Select labelText="商品の状態" optionItems={productState} />
       <Textarea
         labelText="商品の説明"
-        characterLimit={10}
+        characterLimit={1000}
         name="description"
         required
-      >
-        <ProductTagInput
-          tags={tags}
-          name="tags"
-          placeholder="タグ名を入力してください"
-        />
-      </Textarea>
+      ></Textarea>
+      <ProductTagInput
+        tags={tags}
+        name="tags"
+        placeholder="タグ名を入力してください"
+      />
       <label className="text-lg">配送について</label>
       <hr className="border-t-2 border-gray-300" />
       <Select labelText="配送料の負担" optionItems={postage} />

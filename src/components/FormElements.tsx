@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useState } from "react";
 import { BiSolidCamera } from "react-icons/bi";
 
 /**
@@ -11,6 +11,33 @@ type FormCommonProps = {
 };
 
 /**
+ * テキスト入力フィールドの文字数制限を扱うためのフックス
+ * @param {string} initialValue - テキスト入力フィールドの初期値
+ * @param {number} limit - テキスト入力フィールドで許可される最大文字数（オプション）
+ * @returns {object} - テキスト入力フィールドの現在の値、文字数カウント、および値を更新するためのhandleChange関数を含むオブジェクト
+ */
+function useCharacterLimit(
+  initialValue: string,
+  limit?: number,
+): {
+  value: string;
+  characterCount: number;
+  handleChange: (newValue: string) => void;
+} {
+  const [value, setValue] = useState(initialValue);
+  const [characterCount, setCharacterCount] = useState(initialValue.length);
+  const handleChange = (newValue: string) => {
+    if (limit && newValue.length > limit) {
+      setValue(newValue.substring(0, limit));
+      setCharacterCount(limit);
+    } else {
+      setValue(newValue);
+      setCharacterCount(newValue.length);
+    }
+  };
+  return { value, characterCount, handleChange };
+}
+/**
  * inputタグにCSSを適用したラッパー
  */
 export const Input = forwardRef<
@@ -18,11 +45,25 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input({ className, labelText, characterLimit, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
+  const { value, characterCount, handleChange } = useCharacterLimit(
+    "",
+    characterLimit,
+  );
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <input className={inputClass} {...props} ref={ref} />
-      {characterLimit && <></>}
+      <input
+        className={inputClass}
+        {...props}
+        ref={ref}
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      {characterLimit && (
+        <label className="label-text-alt self-end">
+          {characterCount}/{characterLimit}
+        </label>
+      )}
     </div>
   );
 });
@@ -35,11 +76,25 @@ export const Textarea = forwardRef<
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
 >(function Textarea({ className, labelText, characterLimit, ...props }, ref) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
+  const { value, characterCount, handleChange } = useCharacterLimit(
+    "",
+    characterLimit,
+  );
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <textarea className={textareaClass} {...props} ref={ref} />
-      {characterLimit && <></>}
+      <textarea
+        className={textareaClass}
+        {...props}
+        ref={ref}
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      {characterLimit && (
+        <label className="label-text-alt self-end">
+          {characterCount}/{characterLimit}
+        </label>
+      )}
     </div>
   );
 });
