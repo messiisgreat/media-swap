@@ -33,7 +33,6 @@ model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   body      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   productId String @db.ObjectId
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
