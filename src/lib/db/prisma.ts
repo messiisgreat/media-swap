@@ -16,6 +16,7 @@ export const prisma = prismaBase.$extends({
         return query(args);
       },
     },
+    address: {},
   },
 });
 
