@@ -11,7 +11,7 @@ export const SITE_URL =
 export const CORPORATE_NAME = "株式会社Swappy";
 
 /** 代表者名 */
-export const CORPORATE_DELEGATE = "橋田至";
+export const CORPORATE_DELEGATE = "原奏音";
 
 /** 法人所在地 */
 export const CORPORATE_ADDRESS = "〒160-0022 東京都新宿区新宿７丁目２６−７";
