@@ -1,4 +1,12 @@
-import { CORPORATE_ADDRESS, CORPORATE_DELEGATE, CORPORATE_MAIL, CORPORATE_NAME, CORPORATE_TEL, SITE_NAME, SITE_URL } from "config";
+import {
+  CORPORATE_ADDRESS,
+  CORPORATE_DELEGATE,
+  CORPORATE_MAIL,
+  CORPORATE_NAME,
+  CORPORATE_TEL,
+  SITE_NAME,
+  SITE_URL,
+} from "config";
 import Link from "next/link";
 
 /**
@@ -179,6 +187,9 @@ export default function TokuteiPage() {
                 到着した商品に不良・不足があった場合は、商品名や状況を明記のうえ、Webにログイン後「マイページ＞お問い合わせ」からご連絡ください。
               </li>
             </ul>
+          </div>
+          <div className="py-2">
+            本名・住所・電話番号については求めに応じて遅延なく提供します。
           </div>
         </div>
       </div>
