@@ -59,7 +59,7 @@ jobs:
             些細なコードスタイルの問題や、コメント・ドキュメントの欠落についてはコメントしないでください。
             重要な問題を特定し、解決して全体的なコード品質を向上させることを目指してくださいが、細かい問題は意図的に無視してください。
             補足:
-              - use client,use server directiveについて指摘をしない
+              - use client,use server directive,form actionについて指摘をしない
               - async componentは言語仕様に追加された
               - async function内でのErrorのThrowはError Boundaryでのcatchを意図しているので指摘をしない
               - Custom hooks内の関数化されていないComponentについて指摘をしない
