@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductTagInput } from "@/app/add-product/ProductTagInput";
+import { ListingTagInput } from "@/app/add-product/ListingTagInput";
 import { productFormAction } from "@/app/add-product/action";
 import { ImageInput, Input, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
@@ -13,7 +13,7 @@ import { useId } from "react";
  * @param param0.tags タグ
  * @returns form
  */
-export const ProductForm = ({ tags }: { tags: Tag[] }) => {
+export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
 
@@ -33,7 +33,7 @@ export const ProductForm = ({ tags }: { tags: Tag[] }) => {
         inputMode="numeric"
         type="number"
       />
-      <ProductTagInput
+      <ListingTagInput
         tags={tags}
         name="tags"
         placeholder="タグ名を入力してください"

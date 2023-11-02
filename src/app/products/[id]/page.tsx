@@ -1,13 +1,13 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import { Badge } from "@/components/Badge";
-import { findProduct } from "@/services/product";
+import { findListing } from "@/services/product";
 import { findTagsByIds } from "@/services/tag";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import BuyItemButton from "./BuyItemButton";
 
-type ProductPageProps = {
+type ListingPageProps = {
   params: {
     id: string;
   };
@@ -18,8 +18,8 @@ type ProductPageProps = {
  */
 export async function generateMetadata({
   params: { id },
-}: ProductPageProps): Promise<Metadata> {
-  const product = await findProduct(id);
+}: ListingPageProps): Promise<Metadata> {
+  const product = await findListing(id);
 
   return {
     title: product.name,
@@ -34,10 +34,10 @@ export async function generateMetadata({
  * 商品ページ
  * @param param0.params.id 商品ID
  */
-export default async function ProductPage({
+export default async function ListingPage({
   params: { id },
-}: ProductPageProps) {
-  const product = await findProduct(id);
+}: ListingPageProps) {
+  const product = await findListing(id);
   const tags = await findTagsByIds(product.tagIds);
 
   return (

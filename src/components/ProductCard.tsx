@@ -1,11 +1,11 @@
 import { formatPrice } from "@/utils/format";
-import { Product } from "@prisma/client";
+import { Listing } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./Badge";
 
-type ProductCardProps = {
-  product: Product;
+type ListingCardProps = {
+  product: Listing;
 };
 
 /**
@@ -13,7 +13,7 @@ type ProductCardProps = {
  * @param param0.product 商品
  * @returns 商品のカード
  */
-export function ProductCard({ product }: ProductCardProps) {
+export function ListingCard({ product }: ListingCardProps) {
   // 製品が作成されて7日以内
   const isNew =
     Date.now() - new Date(product.createdAt).getTime() <

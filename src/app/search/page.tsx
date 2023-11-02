@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components";
+import { ListingCard } from "@/components";
 import { prisma } from "@/lib/prisma";
 import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
@@ -46,7 +46,7 @@ export default async function SearchPage({
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.map((product) => (
-          <ProductCard product={product} key={product.id} />
+          <ListingCard product={product} key={product.id} />
         ))}
       </div>
     </div>

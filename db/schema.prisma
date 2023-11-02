@@ -14,11 +14,11 @@ generator erd {
 // ユーザーテーブル
 model User {
     id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    name               String   @unique // ユーザー名
     email              String // メールアドレス
     isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
     isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
-    username           String   @unique // ユーザー名
-    birthdate          DateTime // 生年月日
+    birthDate          DateTime // 生年月日
     iconImageUrl       String?  @map("icon_image_url") // アイコン画像URL
     balance            Int      @default(0) // 残高
     points             Int      @default(0) // ポイント
@@ -139,6 +139,7 @@ model Listing {
     price              Int? // 価格
     previousPrice      Int?      @map("previous_price") // 変更前価格
     isPublic           Boolean   @default(false) @map("is_public") // 公開フラグ
+    description        String? // 説明
     isDeleted          Boolean   @default(false) @map("is_deleted") // 削除フラグ
     listingDate        DateTime? @map("listing_date") // 出品日時
     updatedAt          DateTime? @map("updated_at") // 更新日時

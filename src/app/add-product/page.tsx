@@ -1,4 +1,4 @@
-import { ProductForm } from "@/app/add-product/ProductForm";
+import { ListingForm } from "@/app/add-product/ListingForm";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { H } from "@/components/structure/H";
@@ -26,7 +26,7 @@ export default async function Page() {
   return (
     <>
       <H className="mb-3 text-lg font-bold">商品を出品する</H>
-      <ProductForm tags={tags} />
+      <ListingForm tags={tags} />
     </>
   );
 }

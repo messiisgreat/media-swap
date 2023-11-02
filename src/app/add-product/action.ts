@@ -2,7 +2,7 @@
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { createProduct, unregisteredProduct } from "@/services/product";
+import { createListing, unregisteredListing } from "@/services/product";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";
@@ -46,7 +46,7 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
  * @param formData 商品情報が入力されたFormData
  * @param captchaValue reCAPTCHAのトークン
  */
-export const addProduct = async (
+export const addListing = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
@@ -71,7 +71,7 @@ export const addProduct = async (
   const tagIds = await processTags(tagsString);
   const imageUrl = await uploadToS3(imageFile, `products/${createId()}`);
 
-  const product: unregisteredProduct = {
+  const product: unregisteredListing = {
     name,
     description,
     imageUrl,
@@ -86,8 +86,8 @@ export const addProduct = async (
     sellingPrice: null,
   };
 
-  const insertedProduct = await createProduct(product);
-  redirect(`/products/complete?product_id=${insertedProduct.id}`);
+  const insertedListing = await createListing(product);
+  redirect(`/products/complete?product_id=${insertedListing.id}`);
 };
 
 /**
@@ -99,7 +99,7 @@ export const productFormAction = async (
   formData: FormData,
   verifiedValue: string | null,
 ) => {
-  const e = await addProduct(formData, verifiedValue);
+  const e = await addListing(formData, verifiedValue);
   if (typeof e === "string") {
     toast.error(e);
   }

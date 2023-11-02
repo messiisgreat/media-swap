@@ -1,6 +1,6 @@
 "use server";
 
-import { updateProductStatus } from "@/services/product";
+import { updateListingStatus } from "@/services/product";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -8,8 +8,8 @@ import { revalidatePath } from "next/cache";
  *
  * @param {string} productId - 更新対象の製品のID
  */
-export async function updateProduct(productId: string) {
-  await updateProductStatus(productId);
+export async function updateListing(productId: string) {
+  await updateListingStatus(productId);
 
   revalidatePath("/products/[id]");
 }

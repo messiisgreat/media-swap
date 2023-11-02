@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { findProduct } from "@/services/product";
+import { findListing } from "@/services/product";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,12 +8,12 @@ import Link from "next/link";
  * @param productId 商品ID
  * @returns
  */
-export const CompletedProduct = async ({
+export const CompletedListing = async ({
   productId,
 }: {
   productId: string;
 }) => {
-  const product = await findProduct(productId);
+  const product = await findListing(productId);
   return (
     <Link href={"/products/" + productId} className="grid justify-center gap-4">
       <Image

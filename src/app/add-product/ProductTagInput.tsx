@@ -32,7 +32,7 @@ type Props = Omit<
  * @see https://github.com/react-tags/react-tags
  * @todo 直接refを渡せなかったり、CSSが不自由なのでできれば別のライブラリの使用を検討する
  */
-export function ProductTagInput({ tags, name, ...props }: Props) {
+export function ListingTagInput({ tags, name, ...props }: Props) {
   const [enteredTags, setEnteredTags] = useState<Tag[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { updateProduct } from "./actions";
+import { updateListing } from "./actions";
 
 type BuyItemButtonProps = {
   productId: string;
@@ -24,7 +24,7 @@ export default function BuyItemButton({ productId }: BuyItemButtonProps) {
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {
-            await updateProduct(productId);
+            await updateListing(productId);
             setSuccess(true);
           });
         }}
