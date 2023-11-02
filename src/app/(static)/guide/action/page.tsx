@@ -1,4 +1,4 @@
-import { SITE_NAME } from "config";
+import { SITE_NAME } from "@/constants";
 
 /**
  * ガイドページ(取引)
@@ -11,7 +11,8 @@ export default function GuideActionPage() {
         <div className="py-6">
           <h3 className="text-lg font-bold">禁止されている行為</h3>
           <p className="py-4">
-            {SITE_NAME}は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
+            {SITE_NAME}
+            は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
             多数のユーザーが心置きなく安全に取引を行えるため、以下の活動を制限しております。
           </p>
           <p className="py-4">
