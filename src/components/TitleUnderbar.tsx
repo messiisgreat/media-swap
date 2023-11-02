@@ -1,4 +1,5 @@
 import React from "react";
+import { H } from "@/components/structure/H";
 
 type TitleUnderbarProps = {
   title: string;
@@ -9,27 +10,11 @@ type TitleUnderbarProps = {
  *
  * @param {TitleUnderbarProps} props - タイトルアンダーバーコンポーネントのプロパティ
  * @param {string} props.title - タイトルアンダーバーのタイトル
- * @returns {ReactElement} レンダリングされたタイトルアンダーバーコンポーネント
  */
-export const TitleUnderbar: React.FC<TitleUnderbarProps> = ({ title }) => {
+export const TitleUnderbar = ({ title }: TitleUnderbarProps) => {
   return (
-    // eslint-disable-next-line tailwindcss/no-custom-classname
-    <div className="section-title">
-      <h2 className="mb-3 text-lg">{title}</h2>
-      <style jsx>{`
-        .section-title {
-          position: relative;
-        }
-        .section-title::before {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: rgba(163, 169, 174, 0.3);
-        }
-      `}</style>
-    </div>
+    <H className="relative text-lg after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:bg-gray-300">
+      {title}
+    </H>
   );
 };
