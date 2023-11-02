@@ -24,8 +24,24 @@ model Product {
   daysToShip     Int? // 発送までの日数
   shippingMethod String? // 配送方法
   sellingPrice   Int? // 販売価格
+  comments       Comment[] // コメント
 
   @@map("products") // databaseではproductsコレクションに保存される。DBでは複数形で格納されるが、Prismaでは単数形で扱える。
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId String @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
 }
 
 model Tag {
@@ -76,7 +92,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  // QUESTION: なぜここだけ最初が大文字？
   Products      Product[]
+  comments      Comment[]
 
   conversationsIds String[]       @db.ObjectId
   conversations    Conversation[] @relation(fields: [conversationsIds], references: [id])

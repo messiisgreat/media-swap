@@ -2,6 +2,8 @@
 
 import { updateProductStatus } from "@/services/product";
 import { revalidatePath } from "next/cache";
+import { Comment, User } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 /**
  * 製品のステータスを更新し、関連するパスをrevalidate
@@ -12,4 +14,30 @@ export async function updateProduct(productId: string) {
   await updateProductStatus(productId);
 
   revalidatePath("/products/[id]");
+}
+
+export type CommentWithPartialUser = Comment & { user: Pick<User, "name" | "image"> };
+/**
+ * コメントを取得する
+ * @param productId 取得対象の製品のID
+ * @returns 取得したコメント
+ */
+export async function getComments(productId: string): Promise<CommentWithPartialUser[]> {
+  const comments = await prisma.comment.findMany({
+    where: { productId },
+    orderBy: { createdAt: "desc" },
+    include: { user: true },
+  });
+
+  const commentsWithUserNameAndImage = comments.map((comment) => {
+    return {
+      ...comment,
+      user: {
+        name: comment.user.name,
+        image: comment.user.image,
+      },
+    };
+  });
+
+  return commentsWithUserNameAndImage;
 }

@@ -1,20 +1,10 @@
 "use client";
 
+import { CommentWithPartialUser, getComments } from "@/app/products/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-// TODO: DBにコメントの型定義を作成。今は仮の型定義
-type Comment = {
-  id: string;
-  user: {
-    name: string;
-    iconUrl: string;
-  };
-  comment: string;
-  createdAt: Date;
-};
 
 function Skeleton() {
   return (
@@ -42,10 +32,10 @@ export default function CommentSection({
   productId: string;
   session: Session | null;
 }) {
-  const [comments, setComments] = useState<Comment[] | null>(null);
+  const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
 
   useEffect(() => {
-    setComments([
+    /*setComments([
       {
         id: "1",
         user: {
@@ -55,11 +45,10 @@ export default function CommentSection({
         comment: "コメント1",
         createdAt: new Date(),
       },
-    ]);
+    ]);*/
 
-    // TODO: DBからコメントを取得する処理を実装
-    //fetchComments(productId).then((comments) => setComments(comments));
-  }, []);
+    getComments(productId).then((comments) => setComments(comments));
+  }, [productId]);
 
   return (
     <div className="mx-auto w-full">
@@ -85,8 +74,8 @@ export default function CommentSection({
             <li key={comment.id} className="flex flex-1 items-center gap-4">
               <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400">
                 <Image
-                  src={comment.user.iconUrl}
-                  alt={comment.user.name}
+                  src={comment.user.image || ""}
+                  alt={comment.user.name || "名無し"}
                   className="rounded-full"
                   width={64}
                   height={64}
@@ -99,7 +88,7 @@ export default function CommentSection({
                     {parseRelativeTime(comment.createdAt)}
                   </p>
                 </div>
-                <p className="text-sm">{comment.comment}</p>
+                <p className="text-sm">{comment.body}</p>
               </div>
             </li>
           ))
