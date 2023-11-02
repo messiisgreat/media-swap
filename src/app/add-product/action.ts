@@ -2,7 +2,10 @@
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { createListing, unregisteredListing } from "@/services/listing";
+import {
+  UnregisteredListing,
+  createListingWithTagsAndImages,
+} from "@/services/listing";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";
@@ -50,16 +53,22 @@ export const addListing = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
-  const name = formData.get("name")?.toString();
-  const description = formData.get("description")?.toString();
+  const productName = formData.get("productName")?.toString();
   const price = Number(formData.get("price"));
+  const previousPrice = null;
+  const isPublic = true;
+  const description = formData.get("description")?.toString();
+
   const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
   const session = await getSession();
   const userId = session?.user.id;
+  const shippingDaysId = null;
+  const shippingMethodId = null;
+  const productConditionId = null;
 
   if (!userId) throw new Error("User is not authenticated");
-  if (!name) return "商品名を入力してください";
+  if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
   if (!imageFile) return "画像を選択してください";
   if (!price) return "価格を入力してください";
@@ -69,25 +78,29 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const imageUrl = await uploadToS3(imageFile, `products/${createId()}`);
+  const images = await Promise.all(
+    await uploadToS3(imageFile, `products/${createId()}`),
+  );
 
-  const product: unregisteredListing = {
-    name,
-    description,
-    imageUrl,
+  const listing: UnregisteredListing = {
+    productName,
     price,
-    tagIds,
-    userId,
-    status: "selling",
-    condition: null,
-    shippingCost: null,
-    daysToShip: null,
-    shippingMethod: null,
-    sellingPrice: null,
+    previousPrice,
+    description,
+    sellerId: userId,
+    isPublic,
+    shippingDaysId,
+    shippingMethodId,
+    productConditionId,
   };
 
-  const insertedListing = await createListing(product);
-  redirect(`/products/complete?product_id=${insertedListing.id}`);
+  const insertedListing = await createListingWithTagsAndImages(
+    listing,
+    tagIds,
+    images,
+  );
+
+  redirect(`/products/complete?listing_id=${insertedListing.id}`);
 };
 
 /**
@@ -95,7 +108,7 @@ export const addListing = async (
  * @param formData フォームデータ
  * @param verifiedValue reCAPTCHAのトークン
  */
-export const productFormAction = async (
+export const listingFormAction = async (
   formData: FormData,
   verifiedValue: string | null,
 ) => {
