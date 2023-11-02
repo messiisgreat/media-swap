@@ -11,7 +11,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "prettier",
-    "plugin:jsdoc/recommended-typescript-error"
+    "plugin:jsdoc/recommended-typescript-error",
   ],
   root: true,
   env: {
@@ -39,25 +39,25 @@ module.exports = {
     "jsdoc/require-param": [
       "error",
       {
-        "checkDestructuredRoots": false,
+        checkDestructuredRoots: false,
       },
     ],
     "jsdoc/check-param-names": [
       "error",
       {
-        "checkDestructured": false,
+        checkDestructured: false,
       },
     ],
     "jsdoc/require-jsdoc": [
       "error",
       {
-        "publicOnly": true,
-        "require": {
-          "FunctionDeclaration": true,
-          "MethodDefinition": true,
-          "ClassDeclaration": true,
-          "ArrowFunctionExpression": true,
-          "FunctionExpression": true,
+        publicOnly: true,
+        require: {
+          FunctionDeclaration: true,
+          MethodDefinition: true,
+          ClassDeclaration: true,
+          ArrowFunctionExpression: true,
+          FunctionExpression: true,
         },
       },
     ],
@@ -66,8 +66,8 @@ module.exports = {
     "jsdoc/require-description": [
       "error",
       {
-        descriptionStyle: "body"
-      }
-    ]
+        descriptionStyle: "body",
+      },
+    ],
   },
 };

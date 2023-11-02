@@ -9,7 +9,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
  */
 export const FooterIcons = () => {
   return (
-      <div className="m-auto max-w-7xl md:flex md:flex-grow md:justify-between">
+      <div className="m-auto max-w-7xl md:flex md:grow md:justify-between">
         <div className="my-2 flex gap-2">
           {/* todo: twitterのリンクを追加する */}
           <Link href="https://twitter.com/home" target="_blank">

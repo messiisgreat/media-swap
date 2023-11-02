@@ -1,5 +1,5 @@
 import { PaginationBar, ProductCard } from "@/components";
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ type HomeProps = {
 
 /**
  * TOPページ
- * @param param0.searchParams.page ページ番号 
+ * @param param0.searchParams.page ページ番号
  */
 export default async function Home({
   searchParams: { page = "1" },
@@ -32,17 +32,17 @@ export default async function Home({
   return (
     <>
       {currentPage === 1 && products[0] && (
-        <div className="hero rounded-xl bg-base-200">
-          <div className="hero-content flex-col lg:flex-row ">
+        <div className="m-3 w-full  rounded-xl bg-base-200 p-0">
+          <div className="hero-content flex-col lg:flex-row">
             <Image
               src={products[0].imageUrl}
               alt={products[0].name}
               width={400}
               height={800}
-              className="w-full max-w-sm rounded-lg shadow-2xl"
+              className="w-full  rounded-lg shadow-2xl"
               priority
             />
-            <div>
+            <div className="w-full">
               <h1 className="text-5xl font-bold">{products[0].name}</h1>
               <p className="py-6">{products[0].description}</p>
               <Link
@@ -63,12 +63,12 @@ export default async function Home({
       </div>
 
       <Link href="/add-product" className="btn btn-primary mb-4">
-        Add Product
+        出品する
       </Link>
 
       {totalPages > 1 && (
         <PaginationBar currentPage={currentPage} totalPages={totalPages} />
       )}
-  </>
+    </>
   );
 }
