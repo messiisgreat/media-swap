@@ -43,6 +43,12 @@ export const getComments = async (productId: string): Promise<CommentWithPartial
   return commentsWithUserNameAndImage;
 };
 
+/**
+ * コメントを追加する
+ * @param f コメントが含まれたFormData
+ * @param session NextAuthのセッション
+ * @param productId 商品ID
+ */
 export async function addComment(f: FormData, session: Session, productId: string) {
   await prisma.comment.create({
     data: {
