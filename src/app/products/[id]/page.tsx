@@ -52,7 +52,7 @@ export default async function ProductPage({
             alt={product.name}
 //            width={500}
 //            height={500}
-            className="!static rounded-lg object-contain lg:max-w-lg flex-1"
+            className="!static flex-1 rounded-lg object-contain lg:max-w-lg"
             fill
             priority
           />

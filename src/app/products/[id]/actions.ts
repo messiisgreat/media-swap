@@ -4,6 +4,7 @@ import { updateProductStatus } from "@/services/product";
 import { revalidatePath } from "next/cache";
 import { Comment, User } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { Session } from "next-auth";
 
 /**
  * 製品のステータスを更新し、関連するパスをrevalidate
@@ -22,7 +23,7 @@ export type CommentWithPartialUser = Comment & { user: Pick<User, "name" | "imag
  * @param productId 取得対象の製品のID
  * @returns 取得したコメント
  */
-export async function getComments(productId: string): Promise<CommentWithPartialUser[]> {
+export const getComments = async (productId: string): Promise<CommentWithPartialUser[]> => {
   const comments = await prisma.comment.findMany({
     where: { productId },
     orderBy: { createdAt: "desc" },
@@ -40,4 +41,14 @@ export async function getComments(productId: string): Promise<CommentWithPartial
   });
 
   return commentsWithUserNameAndImage;
+};
+
+export async function addComment(f: FormData, session: Session, productId: string) {
+  await prisma.comment.create({
+    data: {
+      productId,
+      userId: session.user.id,
+      body: f.get("text") as string,
+    },
+  });
 }

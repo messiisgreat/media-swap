@@ -1,10 +1,11 @@
 "use client";
 
-import { CommentWithPartialUser, getComments } from "@/app/products/[id]/actions";
+import { CommentWithPartialUser, addComment, getComments } from "@/app/products/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function Skeleton() {
   return (
@@ -33,30 +34,35 @@ export default function CommentSection({
   session: Session | null;
 }) {
   const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
+  const [posting, setPosting] = useState(false);
 
   useEffect(() => {
-    /*setComments([
-      {
-        id: "1",
-        user: {
-          name: "ユーザー1",
-          iconUrl: "https://picsum.photos/200",
-        },
-        comment: "コメント1",
-        createdAt: new Date(),
-      },
-    ]);*/
-
     getComments(productId).then((comments) => setComments(comments));
   }, [productId]);
+
+  const postComment = async (
+    f: FormData,
+    session: Session,
+    productId: string
+  ) => {
+    setPosting(true);
+    try {
+      await addComment(f, session, productId);
+      toast.success("コメントを書き込みました。");
+      setComments(await getComments(productId));
+    } catch (e) {
+      console.error(e);
+      toast.error("コメントの書き込みに失敗しました。");
+    }
+  }
 
   return (
     <div className="mx-auto w-full">
       <p className="mb-2 text-xl font-medium">コメント</p>
       {session ? (
-        <form className="flex flex-col items-start gap-4">
-          <textarea className="textarea textarea-bordered w-full resize-none"></textarea>
-          <button className="btn btn-secondary">コメントを書き込む</button>
+        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, session, productId)}>
+          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting}></textarea>
+          <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
         </form>
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
