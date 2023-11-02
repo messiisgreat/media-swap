@@ -1,6 +1,6 @@
 import "server-only";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Transaction } from "@prisma/client";
 import { cache } from "react";
 

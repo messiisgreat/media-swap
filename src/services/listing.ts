@@ -1,6 +1,6 @@
 import "server-only";
 
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
 
@@ -25,7 +25,7 @@ export const findListingById = cache(async (id: string) => {
   });
 });
 
-/** findListingByProductName用の並び順型付け */
+/** findListing用の並び順型 */
 export type ListingOrderBy =
   | {
       [P in keyof Listing]?: "asc" | "desc" | undefined;
@@ -33,15 +33,16 @@ export type ListingOrderBy =
   | undefined;
 
 /**
- * 商品の検索結果を取得する
- * @param query 検索クエリ
+ * 商品を取得する
+ * @param page ページ番号
+ * @param size 1ページあたりの商品数
  * @param order ソート順 例: { price: "asc" }
- * @returns 検索結果
  */
-export const findListingByProductName = cache(
-  async (query: string, order: ListingOrderBy) => {
+export const findListings = cache(
+  async (page: number, size: number, order: ListingOrderBy) => {
     return prisma.listing.findMany({
-      where: { productName: { contains: query } },
+      skip: (page - 1) * size,
+      take: size,
       include: {
         images: { include: { image: true } },
         tags: {
@@ -56,6 +57,39 @@ export const findListingByProductName = cache(
 );
 
 /**
+ * 商品の検索結果を取得する
+ * @param query 検索クエリ
+ * @param page ページ番号 (1始まり)
+ * @param size 1ページあたりの商品数
+ * @param order ソート順 例: { price: "asc" }
+ * @returns 検索結果
+ */
+export const findListingByProductName = cache(
+  async (query: string, page: number, size: number, order: ListingOrderBy) => {
+    return prisma.listing.findMany({
+      skip: (page - 1) * size,
+      take: size,
+      where: { productName: { contains: query } },
+      include: {
+        images: { include: { image: true } },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+      orderBy: order,
+    });
+  },
+);
+
+/** データベースいまだ未登録のListing型 */
+export type UnregisteredListing = Omit<
+  Listing,
+  "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId" | "pageView"
+>;
+
+/**
  * 商品を追加する
  * @param listing 商品情報
  * @param tagIds タグIDの配列
@@ -63,10 +97,7 @@ export const findListingByProductName = cache(
  * @returns 追加された商品
  */
 export const createListingWithTagsAndImages = async (
-  listing: Omit<
-    Listing,
-    "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId"
-  >,
+  listing: UnregisteredListing,
   tagIds: string[],
   images: string[],
 ) => {
