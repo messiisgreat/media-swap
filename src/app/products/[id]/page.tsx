@@ -1,13 +1,14 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
+import CommentSection from "@/app/products/[id]/CommentSection";
 import { Badge } from "@/components/Badge";
 import { findProduct } from "@/services/product";
 import { findTagsByIds } from "@/services/tag";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import BuyItemButton from "./BuyItemButton";
-import CommentSection from "@/app/products/[id]/CommentSection";
-import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type ProductPageProps = {
   params: {
@@ -41,7 +42,7 @@ export default async function ProductPage({
 }: ProductPageProps) {
   const product = await findProduct(id);
   const tags = await findTagsByIds(product.tagIds);
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <div>
@@ -50,8 +51,8 @@ export default async function ProductPage({
           <Image
             src={product.imageUrl}
             alt={product.name}
-//            width={500}
-//            height={500}
+            //            width={500}
+            //            height={500}
             className="!static flex-1 rounded-lg object-contain lg:max-w-lg"
             fill
             priority
