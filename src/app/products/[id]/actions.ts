@@ -17,7 +17,7 @@ export async function updateProduct(productId: string) {
   revalidatePath("/products/[id]");
 }
 
-export type CommentWithPartialUser = Comment & { user: Pick<User, "name" | "image"> };
+export type CommentWithPartialUser = Comment & { user: Partial<Pick<User, "name" | "image">> };
 /**
  * コメントを取得する
  * @param productId 取得対象の製品のID
@@ -34,8 +34,8 @@ export const getComments = async (productId: string): Promise<CommentWithPartial
     return {
       ...comment,
       user: {
-        name: comment.user.name,
-        image: comment.user.image,
+        name: comment.user?.name,
+        image: comment.user?.image,
       },
     };
   });
