@@ -1,6 +1,6 @@
 "use server";
 
-import { updateListingStatus } from "@/services/product";
+import { updateListingStatus } from "@/services/listing";
 import { revalidatePath } from "next/cache";
 
 /**

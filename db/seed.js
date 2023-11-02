@@ -27,9 +27,6 @@ async function main() {
   const listing = await prisma.listing.create({
     data: {
       description: "商品1の説明",
-      listingImages: {
-        create: [],
-      },
       productName: "商品1",
       price: 1000,
     },

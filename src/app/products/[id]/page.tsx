@@ -1,6 +1,6 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import { Badge } from "@/components/Badge";
-import { findListing } from "@/services/product";
+import { findListing } from "@/services/listing";
 import { findTagsByIds } from "@/services/tag";
 import { Metadata } from "next";
 import Image from "next/image";

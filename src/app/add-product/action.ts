@@ -2,7 +2,7 @@
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { createListing, unregisteredListing } from "@/services/product";
+import { createListing, unregisteredListing } from "@/services/listing";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";

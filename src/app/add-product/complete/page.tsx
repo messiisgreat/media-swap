@@ -15,11 +15,11 @@ export const metadata: Metadata = {
  * @returns page
  */
 const Page = ({ searchParams }: { searchParams: { product_id: string } }) => {
-  const productId = searchParams.product_id;
+  const listingId = searchParams.product_id;
   return (
     <>
       <div>出品が完了しました！</div>
-      <CompletedListing productId={productId} />
+      <CompletedListing listingId={listingId} />
     </>
   );
 };

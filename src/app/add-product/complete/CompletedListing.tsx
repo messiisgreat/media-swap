@@ -1,24 +1,24 @@
 import { Button } from "@/components/Button";
-import { findListing } from "@/services/product";
+import { findListing } from "@/services/listing";
 import Image from "next/image";
 import Link from "next/link";
 
 /**
  * 出品完了した商品の画像とリンク
- * @param productId 商品ID
+ * @param listingId 商品ID
  * @returns
  */
 export const CompletedListing = async ({
-  productId,
+  listingId,
 }: {
-  productId: string;
+  listingId: string;
 }) => {
-  const product = await findListing(productId);
+  const listing = await findListing(listingId);
   return (
-    <Link href={"/products/" + productId} className="grid justify-center gap-4">
+    <Link href={"/listings/" + listingId} className="grid justify-center gap-4">
       <Image
-        src={product.imageUrl}
-        alt={product.name}
+        src={listing.listingImages[0].image.imageURL}
+        alt={listing.productName!}
         width={400}
         height={400}
         className="w-40 rounded-full shadow-2xl"

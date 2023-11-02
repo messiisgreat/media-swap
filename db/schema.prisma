@@ -141,7 +141,7 @@ model Listing {
     isPublic           Boolean   @default(false) @map("is_public") // 公開フラグ
     description        String? // 説明
     isDeleted          Boolean   @default(false) @map("is_deleted") // 削除フラグ
-    listingDate        DateTime? @map("listing_date") // 出品日時
+    createdAt          DateTime? @map("listing_date") // 出品日時
     updatedAt          DateTime? @map("updated_at") // 更新日時
     sellerId           String    @map("seller_id") @db.ObjectId // 出品者ID外部キー
     shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
