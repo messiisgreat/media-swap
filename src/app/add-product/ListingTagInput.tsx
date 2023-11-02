@@ -24,6 +24,8 @@ type Props = Omit<
   tags: Tag[];
 };
 
+type NewTag = Omit<Tag, "createdAt">;
+
 /**
  * タグを入力するコンポーネント
  * formから認識できるようにhidden inputに値を設定している
@@ -33,7 +35,7 @@ type Props = Omit<
  * @todo 直接refを渡せなかったり、CSSが不自由なのでできれば別のライブラリの使用を検討する
  */
 export function ListingTagInput({ tags, name, ...props }: Props) {
-  const [enteredTags, setEnteredTags] = useState<Tag[]>([]);
+  const [enteredTags, setEnteredTags] = useState<NewTag[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export function ListingTagInput({ tags, name, ...props }: Props) {
     }
   }, [enteredTags]);
 
-  const handleAddition = useCallback((tag: Tag) => {
+  const handleAddition = useCallback((tag: NewTag) => {
     setEnteredTags((enteredTags) => [...enteredTags, tag]);
   }, []);
 
@@ -52,12 +54,12 @@ export function ListingTagInput({ tags, name, ...props }: Props) {
   }, []);
 
   const handleDrag = useCallback(
-    (tag: Tag, currPos: number, newPos: number) => {
+    (tag: NewTag, currPos: number, newPos: number) => {
       setEnteredTags((enteredTags) => {
-        const newTags = enteredTags.slice();
-        newTags.splice(currPos, 1);
-        newTags.splice(newPos, 0, tag);
-        return newTags;
+        const NewTags = enteredTags.slice();
+        NewTags.splice(currPos, 1);
+        NewTags.splice(newPos, 0, tag);
+        return NewTags;
       });
     },
     [],

@@ -1,7 +1,7 @@
 "use client";
 
 import { ListingTagInput } from "@/app/add-product/ListingTagInput";
-import { productFormAction } from "@/app/add-product/action";
+import { listingFormAction } from "@/app/add-product/action";
 import { ImageInput, Input, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
@@ -19,7 +19,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
 
   return (
     <form
-      action={(f) => productFormAction(f, verifiedValue)}
+      action={(f) => listingFormAction(f, verifiedValue)}
       className="flex flex-col gap-3"
     >
       <Input required name="name" placeholder="商品名" />
