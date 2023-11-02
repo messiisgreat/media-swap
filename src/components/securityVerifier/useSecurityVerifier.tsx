@@ -16,7 +16,7 @@ export const useSecurityVerifier = () => {
     <ReCAPTCHA
       sitekey={z
         .string()
-        .nonempty()
+        .min(1)
         .parse(process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY || "")}
       onChange={(value) => setVerifiedValue(value)}
     />
