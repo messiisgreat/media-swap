@@ -35,7 +35,7 @@ async function main() {
   // タグの作成
   const tag1 = await prisma.tag.create({
     data: {
-      name: "タグ1",
+      text: "タグ1",
     },
   });
 

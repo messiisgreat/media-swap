@@ -47,9 +47,6 @@ dependencies:
   postcss:
     specifier: 8.4.31
     version: 8.4.31
-  prisma:
-    specifier: ^5.5.2
-    version: 5.5.2
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -133,6 +130,9 @@ devDependencies:
   prettier-plugin-tailwindcss:
     specifier: ^0.5.6
     version: 0.5.6(prettier@3.0.3)
+  prisma:
+    specifier: ^5.5.2
+    version: 5.5.2
   prisma-erd-generator:
     specifier: ^1.11.1
     version: 1.11.1(@prisma/client@5.5.2)(typescript@5.2.2)

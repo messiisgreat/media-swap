@@ -11,27 +11,83 @@ import { cache } from "react";
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListing = cache(async (id: string) => {
+export const findListingById = cache(async (id: string) => {
   return prisma.listing.findUniqueOrThrow({
     where: { id },
-    include: { listingImages: { include: { image: true } } },
+    include: {
+      images: { include: { image: true } },
+      tags: {
+        include: {
+          tag: true,
+        },
+      },
+    },
   });
 });
 
-/**DB上で初期値を登録する値を除いたListing型 */
-export type unregisteredListing = Omit<
-  Listing,
-  "id" | "createdAt" | "updatedAt"
->;
+/** findListingByProductName用の並び順型付け */
+export type ListingOrderBy =
+  | {
+      [P in keyof Listing]?: "asc" | "desc" | undefined;
+    }
+  | undefined;
+
+/**
+ * 商品の検索結果を取得する
+ * @param query 検索クエリ
+ * @param order ソート順 例: { price: "asc" }
+ * @returns 検索結果
+ */
+export const findListingByProductName = cache(
+  async (query: string, order: ListingOrderBy) => {
+    return prisma.listing.findMany({
+      where: { productName: { contains: query } },
+      include: {
+        images: { include: { image: true } },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+      orderBy: order,
+    });
+  },
+);
 
 /**
  * 商品を追加する
  * @param listing 商品情報
+ * @param tagIds タグIDの配列
+ * @param images 画像のURLの配列
  * @returns 追加された商品
  */
-export const createListing = async (listing: unregisteredListing) => {
+export const createListingWithTagsAndImages = async (
+  listing: Omit<
+    Listing,
+    "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId"
+  >,
+  tagIds: string[],
+  images: string[],
+) => {
   return prisma.listing.create({
-    data: listing,
+    data: {
+      ...listing,
+      tags: {
+        connect: tagIds.map((id) => ({ id })),
+      },
+      images: {
+        create: {
+          ...images.map((image) => ({
+            image: {
+              create: {
+                imageURL: image,
+              },
+            },
+          })),
+        },
+      },
+    },
   });
 };
 
