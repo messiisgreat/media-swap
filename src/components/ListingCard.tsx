@@ -1,18 +1,17 @@
-import { findListing } from "@/services/listing";
+import { Badge } from "@/components/Badge";
+import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "./Badge";
 
 type Props = {
-  /**Listing型にリレーション先の型を含めた関数の戻り値の型 */
-  listing: Awaited<ReturnType<typeof findListing>>;
+  /**Listing型 表示に必要なリレーション先のテーブルをインクルード済み */
+  listing: Awaited<ReturnType<typeof findListingById>>;
 };
 
 /**
  * 商品のカード
  * @param param0.listing 商品
- * @param listing 商品
  * @returns 商品のカード
  */
 export function ListingCard({ listing }: Props) {
@@ -28,7 +27,7 @@ export function ListingCard({ listing }: Props) {
     >
       <figure>
         <Image
-          src={listing.listingImages[0].image.imageURL}
+          src={listing.images[0].image.imageURL}
           alt={listing.productName!}
           width={800}
           height={400}

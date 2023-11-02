@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { findListing } from "@/services/listing";
+import { findListingById } from "@/services/listing";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,11 +13,11 @@ export const CompletedListing = async ({
 }: {
   listingId: string;
 }) => {
-  const listing = await findListing(listingId);
+  const listing = await findListingById(listingId);
   return (
     <Link href={"/listings/" + listingId} className="grid justify-center gap-4">
       <Image
-        src={listing.listingImages[0].image.imageURL}
+        src={listing.images.filter((i) => i.order === 0)[0].image.imageURL}
         alt={listing.productName!}
         width={400}
         height={400}
