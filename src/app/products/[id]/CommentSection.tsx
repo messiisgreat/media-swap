@@ -2,10 +2,10 @@
 
 import { CommentWithPartialUser, addComment, getComments } from "@/app/products/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
-import { Session } from "next-auth";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Session } from "next-auth";
 
 function Skeleton() {
   return (
@@ -27,27 +27,27 @@ function Skeleton() {
  * @param param0.productId 商品ID
  */
 export default function CommentSection({
-  productId,
-  session,
+  listingId,
+  sessionUser,
 }: {
-  productId: string;
-  session: Session | null;
+  listingId: string;
+  sessionUser: Session["user"] | null;
 }) {
   const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
-    getComments(productId).then((comments) => setComments(comments));
-  }, [productId]);
+    getComments(listingId).then((comments) => setComments(comments));
+  }, [listingId]);
 
   const postComment = async (
     f: FormData,
-    session: Session,
+    sessionUser: Session["user"],
     productId: string
   ) => {
     setPosting(true);
     try {
-      await addComment(f, session, productId);
+      await addComment(f, sessionUser, productId);
       toast.success("コメントを書き込みました。");
       setComments(await getComments(productId));
     } catch (e) {
@@ -60,8 +60,8 @@ export default function CommentSection({
   return (
     <div className="mx-auto w-full">
       <p className="mb-2 text-xl font-medium">コメント</p>
-      {session ? (
-        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, session, productId)}>
+      {sessionUser ? (
+        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
           <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting}></textarea>
           <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
         </form>
@@ -81,7 +81,7 @@ export default function CommentSection({
             <li key={comment.id} className="flex flex-1 items-center gap-4">
               <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400">
                 <Image
-                  src={comment.user.image || ""}
+                  src={comment.user.iconImageUrl || ""}
                   alt={comment.user.name || "名無し"}
                   className="rounded-full"
                   width={64}
@@ -95,7 +95,7 @@ export default function CommentSection({
                     {parseRelativeTime(comment.createdAt)}
                   </p>
                 </div>
-                <p className="text-sm">{comment.body}</p>
+                <p className="text-sm">{comment.comment}</p>
               </div>
             </li>
           ))

@@ -2,8 +2,8 @@
 
 import { createTransaction } from "@/services/transaction";
 import { revalidatePath } from "next/cache";
-import { Comment, User } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { ListingComment, User } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { Session } from "next-auth";
 
 /**
@@ -22,15 +22,15 @@ export const purchasing = async (
   revalidatePath("/products/[id]");
 }
 
-export type CommentWithPartialUser = Comment & { user: Partial<Pick<User, "name" | "image">> };
+export type CommentWithPartialUser = ListingComment & { user: Partial<Pick<User, "name" | "iconImageUrl">> };
 /**
  * コメントを取得する
- * @param productId 取得対象の製品のID
+ * @param listingId 取得対象の製品のID
  * @returns 取得したコメント
  */
-export const getComments = async (productId: string): Promise<CommentWithPartialUser[]> => {
-  const comments = await prisma.comment.findMany({
-    where: { productId },
+export const getComments = async (listingId: string): Promise<CommentWithPartialUser[]> => {
+  const comments = await prisma.listingComment.findMany({
+    where: { listingId },
     orderBy: { createdAt: "desc" },
     include: { user: true },
   });
@@ -40,7 +40,7 @@ export const getComments = async (productId: string): Promise<CommentWithPartial
       ...comment,
       user: {
         name: comment.user?.name,
-        image: comment.user?.image,
+        iconImageUrl: comment.user?.iconImageUrl,
       },
     };
   });
@@ -51,15 +51,15 @@ export const getComments = async (productId: string): Promise<CommentWithPartial
 /**
  * コメントを追加する
  * @param f コメントが含まれたFormData
- * @param session NextAuthのセッション
- * @param productId 商品ID
+ * @param sessionUser NextAuthのセッション
+ * @param listingId 商品ID
  */
-export async function addComment(f: FormData, session: Session, productId: string) {
-  await prisma.comment.create({
+export async function addComment(f: FormData, sessionUser: Session["user"], listingId: string) {
+  await prisma.listingComment.create({
     data: {
-      productId,
-      userId: session.user.id,
-      body: f.get("text") as string,
+      listingId,
+      userId: sessionUser.id,
+      comment: f.get("text") as string,
     },
   });
 };

@@ -37,7 +37,7 @@ export default async function Home({
         <div className="m-3 w-full  rounded-xl bg-base-200 p-0">
           <div className="hero-content flex-col lg:flex-row">
             <Image
-              src={listings[0].images[0].image.imageURL}
+              src={listings[0].images[0]?.image.imageURL || ""}
               alt={listings[0].productName!}
               width={400}
               height={800}

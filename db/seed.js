@@ -29,6 +29,7 @@ async function main() {
       description: "商品1の説明",
       productName: "商品1",
       price: 1000,
+      sellerId: user1.id,
     },
   });
 
