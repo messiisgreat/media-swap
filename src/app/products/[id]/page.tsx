@@ -1,16 +1,15 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import CommentSection from "@/app/products/[id]/CommentSection";
+import { PurchaseButton } from "@/app/products/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
-import { findProduct } from "@/services/product";
-import { findTagsByIds } from "@/services/tag";
+import { H } from "@/components/structure/H";
+import { findListingById } from "@/services/listing";
+import { getSessionUser } from "@/utils/getSession";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import BuyItemButton from "./BuyItemButton";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-type ProductPageProps = {
+type ListingPageProps = {
   params: {
     id: string;
   };
@@ -21,14 +20,14 @@ type ProductPageProps = {
  */
 export async function generateMetadata({
   params: { id },
-}: ProductPageProps): Promise<Metadata> {
-  const product = await findProduct(id);
+}: ListingPageProps): Promise<Metadata> {
+  const listing = await findListingById(id);
 
   return {
-    title: product.name,
-    description: product.description,
+    title: listing.productName,
+    description: listing.description,
     openGraph: {
-      images: [{ url: product.imageUrl }],
+      images: [{ url: listing.images[0].image.imageURL }],
     },
   };
 }
@@ -37,49 +36,47 @@ export async function generateMetadata({
  * 商品ページ
  * @param param0.params.id 商品ID
  */
-export default async function ProductPage({
+export default async function ListingPage({
   params: { id },
-}: ProductPageProps) {
-  const product = await findProduct(id);
-  const tags = await findTagsByIds(product.tagIds);
-  const session = await getServerSession(authOptions);
+}: ListingPageProps) {
+  const listing = await findListingById(id);
+  const tags = listing.tags.map((t) => t.tag);
+  const images = listing.images.map((i) => i.image.imageURL);
+  const user = await getSessionUser();
+  const userId = user?.id;
+  const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
 
   return (
-    <div>
-      <div className="hero">
-        <div className="hero-content flex-col gap-8 lg:flex-row lg:items-center">
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            //            width={500}
-            //            height={500}
-            className="!static flex-1 rounded-lg object-contain lg:max-w-lg"
-            fill
-            priority
-          />
-
-          <div className="flex-1">
-            <h1 className="text-5xl font-bold">{product.name}</h1>
-            {/* <div className="mt-4 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span key={tag.id} className="bg-yellow-400 px-3 py-1 rounded-full font-medium shadow-md">
-              {tag.name}
-            </span>
-          ))}
-        </div> */}
-            <div className="mt-4 flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-                  <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
-                    {tag.text}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-            <Badge className="mt-4">¥{product.price}</Badge>
-            <p className="py-6">{product.description}</p>
-            <BuyItemButton productId={product.id} />
+    <div className="hero">
+      <div className="hero-content flex-col lg:-ml-[12%] lg:flex-row lg:items-center">
+        {/* TODO: カルーセルにしてimagesをmapで展開する */}
+        <Image
+          src={images[0]}
+          alt={listing.productName!}
+          width={500}
+          height={500}
+          className="rounded-lg"
+          priority
+        />
+        <div>
+          <H className="text-5xl font-bold">{listing.productName}</H>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
+                <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
+                  {tag.text}
+                </Badge>
+              </Link>
+            ))}
           </div>
+          <Badge className="mt-4">¥{listing.price}</Badge>
+          <p className="py-6">{listing.description}</p>
+          <PurchaseButton
+            disabled={!userId || isOwner}
+            listingId={listing.id}
+            buyerId={userId!}
+            userCouponId=""
+          />
         </div>
       </div>
       <CommentSection productId={product.id} session={session} />

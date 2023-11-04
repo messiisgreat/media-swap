@@ -1,5 +1,5 @@
-import { links } from "@/app/_layout/LinkContents";
 import { FooterIcons } from "@/app/_layout/footer/FooterIcons";
+import { links } from "@/app/_layout/footer/LinkContents";
 import Link from "next/link";
 
 /**

@@ -1,19 +1,24 @@
 "use server";
 
-import { updateProductStatus } from "@/services/product";
+import { createTransaction } from "@/services/transaction";
 import { revalidatePath } from "next/cache";
 import { Comment, User } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { Session } from "next-auth";
 
 /**
- * 製品のステータスを更新し、関連するパスをrevalidate
- *
- * @param {string} productId - 更新対象の製品のID
+ * 購入ボタンを押したときのサーバー側処理
+ * 取引を追加し、商品ページをrevalidateする
+ * @param listingId - 購入対象の出品ID
+ * @param buyerId - 購入対象のユーザーID
+ * @param userCouponId - 購入対象のクーポンID
  */
-export async function updateProduct(productId: string) {
-  await updateProductStatus(productId);
-
+export const purchasing = async (
+  listingId: string,
+  buyerId: string,
+  userCouponId: string,
+) => {
+  await createTransaction(listingId, buyerId, userCouponId);
   revalidatePath("/products/[id]");
 }
 
@@ -57,4 +62,4 @@ export async function addComment(f: FormData, session: Session, productId: strin
       body: f.get("text") as string,
     },
   });
-}
+};
