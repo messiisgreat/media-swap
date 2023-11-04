@@ -1,26 +1,26 @@
 import { ListingCard } from "@/components";
 import { ListingOrderBy, findListingByProductName } from "@/services/listing";
+import { Listing } from "@prisma/client";
 import { Metadata } from "next";
-// TODO: 日本語クエリにも対応する
 
 type SearchPageProps = {
   searchParams: {
     query: string;
     page: number;
     size: number;
-    sort: string;
+    sort: keyof Listing;
     order: "asc" | "desc";
   };
 };
 
 /**
- * OGP生成
+ * 検索結果ページのメタデータ生成
  */
 export function generateMetadata({
   searchParams: { query },
 }: SearchPageProps): Metadata {
   return {
-    title: `検索結果: ${query}`,
+    title: `${query}の検索結果`,
   };
 }
 
@@ -40,11 +40,15 @@ export default async function SearchPage({
   const orderBy: ListingOrderBy = {
     [sort]: order,
   };
-  const listings = await findListingByProductName(query, page, size, orderBy);
+  const listings = await findListingByProductName(
+    decodeURIComponent(query),
+    page,
+    size,
+    orderBy,
+  );
   if (listings.length === 0) {
     return <div className="text-center">商品が見つかりません</div>;
   }
-
   return (
     <div className="my-4 px-4 lg:px-0">
       <p className="mb-4 text-lg font-medium">検索結果</p>
