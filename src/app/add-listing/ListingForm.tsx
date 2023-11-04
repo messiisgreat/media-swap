@@ -1,6 +1,6 @@
 "use client";
 
-import { listingFormAction } from "@/app/add-listing/action";
+import { listingFormAction } from "@/app/add-listing/actions";
 import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
 import { ImageInput, Input, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
