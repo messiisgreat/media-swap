@@ -2,7 +2,10 @@
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
-import { createProduct, unregisteredProduct } from "@/services/product";
+import {
+  UnregisteredListing,
+  createListingWithTagsAndImages,
+} from "@/services/listing";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";
@@ -46,20 +49,26 @@ async function processTags(tagsString?: string | null): Promise<string[]> {
  * @param formData 商品情報が入力されたFormData
  * @param captchaValue reCAPTCHAのトークン
  */
-export const addProduct = async (
+export const addListing = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
-  const name = formData.get("name")?.toString();
-  const description = formData.get("description")?.toString();
+  const productName = formData.get("productName")?.toString();
   const price = Number(formData.get("price"));
+  const previousPrice = null;
+  const isPublic = true;
+  const description = formData.get("description")?.toString();
+
   const tagsString = formData.get("tags")?.toString();
   const imageFile = formData.get("imageFile") as File;
   const session = await getSession();
   const userId = session?.user.id;
+  const shippingDaysId = null;
+  const shippingMethodId = null;
+  const productConditionId = null;
 
   if (!userId) throw new Error("User is not authenticated");
-  if (!name) return "商品名を入力してください";
+  if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
   if (!imageFile) return "画像を選択してください";
   if (!price) return "価格を入力してください";
@@ -69,25 +78,29 @@ export const addProduct = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const imageUrl = await uploadToS3(imageFile, `products/${createId()}`);
+  const images = await Promise.all(
+    await uploadToS3(imageFile, `products/${createId()}`),
+  );
 
-  const product: unregisteredProduct = {
-    name,
-    description,
-    imageUrl,
+  const listing: UnregisteredListing = {
+    productName,
     price,
-    tagIds,
-    userId,
-    status: "selling",
-    condition: null,
-    shippingCost: null,
-    daysToShip: null,
-    shippingMethod: null,
-    sellingPrice: null,
+    previousPrice,
+    description,
+    sellerId: userId,
+    isPublic,
+    shippingDaysId,
+    shippingMethodId,
+    productConditionId,
   };
 
-  const insertedProduct = await createProduct(product);
-  redirect(`/products/complete?product_id=${insertedProduct.id}`);
+  const insertedListing = await createListingWithTagsAndImages(
+    listing,
+    tagIds,
+    images,
+  );
+
+  redirect(`/products/complete?listing_id=${insertedListing.id}`);
 };
 
 /**
@@ -95,11 +108,11 @@ export const addProduct = async (
  * @param formData フォームデータ
  * @param verifiedValue reCAPTCHAのトークン
  */
-export const productFormAction = async (
+export const listingFormAction = async (
   formData: FormData,
   verifiedValue: string | null,
 ) => {
-  const e = await addProduct(formData, verifiedValue);
+  const e = await addListing(formData, verifiedValue);
   if (typeof e === "string") {
     toast.error(e);
   }

@@ -1,10 +1,17 @@
-import { PaginationBar, ProductCard } from "@/components";
-import { prisma } from "@/lib/prisma";
+import { ListingCard, PaginationBar } from "@/components";
+import prisma from "@/lib/prisma";
+import { ListingOrderBy, findListings } from "@/services/listing";
 import Image from "next/image";
 import Link from "next/link";
 
 type HomeProps = {
-  searchParams: { page: string };
+  searchParams: {
+    query: string;
+    page: number;
+    size: number;
+    sort: string;
+    order: "asc" | "desc";
+  };
 };
 
 /**
@@ -12,41 +19,36 @@ type HomeProps = {
  * @param param0.searchParams.page ページ番号
  */
 export default async function Home({
-  searchParams: { page = "1" },
+  searchParams: { page = 1, size = 27, sort = "pageView", order = "desc" },
 }: HomeProps) {
-  const currentPage = parseInt(page);
-
-  const pageSize = 6;
+  const orderBy: ListingOrderBy = {
+    [sort]: order,
+  };
   const heroItemCount = 1;
 
-  const totalItemCount = await prisma.product.count();
+  const totalItemCount = await prisma.listing.count();
 
-  const totalPages = Math.ceil((totalItemCount - heroItemCount) / pageSize);
+  const totalPages = Math.ceil((totalItemCount - heroItemCount) / size);
 
-  const products = await prisma.product.findMany({
-    orderBy: { id: "desc" },
-    skip:
-      (currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
-    take: pageSize + (currentPage === 1 ? heroItemCount : 0),
-  });
+  const listings = await findListings(page, size, orderBy);
   return (
     <>
-      {currentPage === 1 && products[0] && (
+      {page === 1 && listings[0] && (
         <div className="m-3 w-full  rounded-xl bg-base-200 p-0">
           <div className="hero-content flex-col lg:flex-row">
             <Image
-              src={products[0].imageUrl}
-              alt={products[0].name}
+              src={listings[0].images[0].image.imageURL}
+              alt={listings[0].productName!}
               width={400}
               height={800}
               className="w-full  rounded-lg shadow-2xl"
               priority
             />
             <div className="w-full">
-              <h1 className="text-5xl font-bold">{products[0].name}</h1>
-              <p className="py-6">{products[0].description}</p>
+              <h1 className="text-5xl font-bold">{listings[0].productName}</h1>
+              <p className="py-6">{listings[0].description}</p>
               <Link
-                href={"/products/" + products[0].id}
+                href={"/listings/" + listings[0].id}
                 className="btn btn-primary"
               >
                 詳細を見る
@@ -57,17 +59,17 @@ export default async function Home({
       )}
 
       <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {(currentPage === 1 ? products.slice(1) : products).map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {(page === 1 ? listings.slice(1) : listings).map((listing) => (
+          <ListingCard key={listing.id} listing={listing} />
         ))}
       </div>
 
-      <Link href="/add-product" className="btn btn-primary mb-4">
+      <Link href="/add-listing" className="btn btn-primary mb-4">
         出品する
       </Link>
 
       {totalPages > 1 && (
-        <PaginationBar currentPage={currentPage} totalPages={totalPages} />
+        <PaginationBar currentPage={page} totalPages={totalPages} />
       )}
     </>
   );

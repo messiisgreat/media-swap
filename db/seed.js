@@ -8,18 +8,9 @@ async function main() {
     data: {
       name: "ユーザー1",
       email: "user1@example.com",
-      image: "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
-      Products: {
-        create: [
-          {
-            description: "商品1の説明",
-            imageUrl: "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
-            name: "商品1",
-            price: 1000,
-            tagIds: ["tag1"],
-          },
-        ],
-      },
+      birthDate: new Date("2000-01-01"),
+      iconImageUrl:
+        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
     },
   });
 
@@ -27,7 +18,17 @@ async function main() {
     data: {
       name: "ユーザー2",
       email: "user2@example.com",
-      image: "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
+      birthDate: new Date("2000-01-01"),
+      iconImageUrl:
+        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
+    },
+  });
+
+  const listing = await prisma.listing.create({
+    data: {
+      description: "商品1の説明",
+      productName: "商品1",
+      price: 1000,
     },
   });
 
@@ -39,24 +40,11 @@ async function main() {
   });
 
   // 会話とメッセージの作成
-  const conversation = await prisma.conversation.create({
+  const listingComment = await prisma.listingComment.create({
     data: {
-      users: {
-        connect: [
-          { id: user1.id },
-          { id: user2.id },
-        ],
-      },
-      messages: {
-        create: [
-          {
-            body: "こんにちは、商品1に興味があります。",
-            sender: {
-              connect: { id: user2.id },
-            },
-          },
-        ],
-      },
+      listingId: listing.id,
+      userId: user1.id,
+      comment: "コメント1",
     },
   });
 }

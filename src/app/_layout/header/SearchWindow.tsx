@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-async function searchProducts(formData: FormData) {
+async function searchListings(formData: FormData) {
   "use server";
   const searchQuery = formData.get("searchQuery")?.toString();
   if (searchQuery) {
@@ -14,7 +14,7 @@ async function searchProducts(formData: FormData) {
  */
 export const SearchWindow = () => {
   return (
-    <form action={searchProducts}>
+    <form action={searchListings}>
       <div className="form-control">
         <input
           name="searchQuery"

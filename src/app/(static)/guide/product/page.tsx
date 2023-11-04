@@ -3,7 +3,7 @@ import { SITE_NAME } from "@/constants";
 /**
  * ガイドページ(出品)
  */
-export default function GuideProductPage() {
+export default function GuideListingPage() {
   return (
     <div>
       <div className="border-2">

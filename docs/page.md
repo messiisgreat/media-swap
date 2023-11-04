@@ -134,7 +134,7 @@ TODO: 住所登録のみ必須。他はとりあえずいらないかな。
 
 </details>
 
-### 商品購入後の取引ページ("/conversation/[id]")
+### 商品購入後の取引ページ("/listingComment/[id]")
 
 <details><summary>画像</summary>
 
