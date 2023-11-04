@@ -1,7 +1,7 @@
 "use client";
 
-import { ListingTagInput } from "@/app/add-product/ListingTagInput";
-import { listingFormAction } from "@/app/add-product/action";
+import { listingFormAction } from "@/app/add-listing/action";
+import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
 import { ImageInput, Input, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";

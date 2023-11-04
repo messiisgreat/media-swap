@@ -1,4 +1,4 @@
-import { CompletedListing } from "@/app/add-product/complete/CompletedListing";
+import { CompletedListing } from "@/app/add-listing/complete/CompletedListing";
 import { Metadata } from "next";
 
 /** キャッシュしない */
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
  * /add-product/complete
  * @returns page
  */
-const Page = ({ searchParams }: { searchParams: { product_id: string } }) => {
-  const listingId = searchParams.product_id;
+const Page = ({ searchParams }: { searchParams: { listing_id: string } }) => {
+  const listingId = searchParams.listing_id;
   return (
     <>
       <div>出品が完了しました！</div>
