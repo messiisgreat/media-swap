@@ -1,14 +1,26 @@
 import prisma from "@/lib/prisma";
 import { env } from "@/utils/env";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
-import { Adapter } from "next-auth/adapters";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
+const prismaAdapter = PrismaAdapter(prisma);
+
+// @ts-expect-error 一部のプロパティの名前を変更する
+prismaAdapter.createUser = (data) => {
+  return prisma.user.create({
+    data: {
+      email: data.email,
+      image: data.image,
+      name: data.name,
+      isEmailVerified: data.emailVerified == undefined ? undefined : Boolean(data.emailVerified),
+    }
+  });
+};
+
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma as PrismaClient) as Adapter,
+  adapter: prismaAdapter,
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
