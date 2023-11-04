@@ -1,7 +1,8 @@
-import PriceBadge from "@/components/PriceBadge";
-import { formatPrice } from "@/utils/format";
 import { Product } from "@prisma/client";
 import Link from "next/link";
+import React from "react";
+import { formatPrice } from "../utils/format";
+import PriceBadge from "./PriceBadge";
 
 type ProductCardProps = {
   product: Product;
@@ -15,25 +16,19 @@ type ProductCardProps = {
  * <ProductCard product={sampleProduct} />
  */
 export function ProductCard({ product }: ProductCardProps) {
-  // 製品が作成されて7日以内
-  const isNew =
-    Date.now() - new Date(product.createdAt).getTime() <
-    1000 * 60 * 60 * 24 * 7;
-
   return (
     <div className="">
-      <div className="relative flex items-center justify-center rounded-lg bg-gray-300 p-2">
+      <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
         <Link href={"/products/" + product.id}>
           <div
-            className="h-24 w-24 cursor-pointer rounded-lg object-cover sm:h-48 sm:w-48"
+            className="h-32 w-32 cursor-pointer rounded-lg object-cover sm:h-48 sm:w-48"
             style={{
               backgroundImage: `url(${product.imageUrl})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
           >
-            <PriceBadge className="absolute bottom-2 left-4 rounded-lg pb-2 text-xs">
+            <PriceBadge className="absolute bottom-2  rounded-r-lg pb-2 text-xs w-16 h-6 bg-black bg-opacity-40 inline-flex items-baseline overflow-hidden whitespace-nowrap">
               {formatPrice(product.price)}
             </PriceBadge>
           </div>

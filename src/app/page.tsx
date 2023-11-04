@@ -1,7 +1,8 @@
-import { PaginationBar, ProductCard } from "@/components";
-import { prisma } from "@/lib/prisma";
-import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import { PaginationBar } from "../components/PaginationBar";
+import { ProductCard } from "../components/ProductCard";
+import { prisma } from "../lib/prisma";
 
 type HomeProps = {
   searchParams: { page: string };
@@ -32,32 +33,7 @@ export default async function Home({
 
   return (
     <>
-      {currentPage === 1 && products[0] && (
-        <div className="m-3 w-full  rounded-xl bg-base-200 p-0">
-          <div className="hero-content flex-col lg:flex-row">
-            <Image
-              src={products[0].imageUrl}
-              alt={products[0].name}
-              width={400}
-              height={800}
-              className="w-full  rounded-lg shadow-2xl"
-              priority
-            />
-            <div className="w-full">
-              <h1 className="text-5xl font-bold">{products[0].name}</h1>
-              <p className="py-6">{products[0].description}</p>
-              <Link
-                href={"/products/" + products[0].id}
-                className="btn btn-primary"
-              >
-                詳細を見る
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="my-4 grid grid-cols-3 gap-1">
         {(currentPage === 1 ? products.slice(1) : products).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
