@@ -62,7 +62,7 @@ export default function CommentSection({
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
         <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
-          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting}></textarea>
+          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="text"></textarea>
           <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
         </form>
       ) : (
@@ -81,7 +81,7 @@ export default function CommentSection({
             <li key={comment.id} className="flex flex-1 items-center gap-4">
               <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400">
                 <Image
-                  src={comment.user.iconImageUrl || ""}
+                  src={comment.user.image || ""}
                   alt={comment.user.name || "名無し"}
                   className="rounded-full"
                   width={64}
