@@ -1,58 +1,61 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 
 async function main() {
-  // ユーザーの作成
-  const user1 = await prisma.user.create({
+  // 出品者をシードする
+  const seller = await prisma.user.create({
     data: {
-      name: "ユーザー1",
-      email: "user1@example.com",
-      birthDate: new Date("2000-01-01"),
-      iconImageUrl:
-        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
+      name: "Alice",
+      email: "alice@example.com",
+      // その他の必要な User フィールド
     },
   });
 
-  const user2 = await prisma.user.create({
-    data: {
-      name: "ユーザー2",
-      email: "user2@example.com",
-      birthDate: new Date("2000-01-01"),
-      iconImageUrl:
-        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
-    },
-  });
-
+  // 商品情報をシードする
   const listing = await prisma.listing.create({
     data: {
-      description: "商品1の説明",
-      productName: "商品1",
-      price: 1000,
+      productName: "Super Banana",
+      price: 5000,
+      description: "An excellent delicious banana.",
+      isPublic: true,
+      seller: {
+        connect: { id: seller.id }, // 出品者として先に作成した User を接続
+      },
+      // その他の必要な Listing フィールド
     },
   });
 
-  // タグの作成
-  const tag1 = await prisma.tag.create({
+  // 画像情報をシードする
+  const image = await prisma.image.create({
     data: {
-      text: "タグ1",
+      imageURL:
+        "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
+      caption: "Very delicious banana.",
+      // その他の必要な Image フィールド
     },
   });
 
-  // 会話とメッセージの作成
-  const listingComment = await prisma.listingComment.create({
+  // 出品情報と画像のリレーションを作成する
+  const listingImage = await prisma.listingImage.create({
     data: {
-      listingId: listing.id,
-      userId: user1.id,
-      comment: "コメント1",
+      listing: {
+        connect: { id: listing.id }, // Listing モデルと接続
+      },
+      image: {
+        connect: { id: image.id }, // Image モデルと接続
+      },
+      order: 1,
     },
   });
+
+  console.log(`Created listing with id: ${listing.id}`);
+  console.log(`Created image with id: ${image.id}`);
+  console.log(`Created listingImage with id: ${listingImage.id}`);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    throw e;
   })
   .finally(async () => {
     await prisma.$disconnect();
