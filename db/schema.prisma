@@ -14,12 +14,11 @@ generator erd {
 // ユーザーテーブル
 model User {
     id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-    name               String   @unique // ユーザー名
-    email              String // メールアドレス
+    name               String?  // ユーザー名
+    email              String   @unique // メールアドレス
     isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
     isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
-    birthDate          DateTime // 生年月日
-    iconImageUrl       String?  @map("icon_image_url") // アイコン画像URL
+    image              String?  @map("image") // アイコン画像URL
     balance            Int      @default(0) // 残高
     points             Int      @default(0) // ポイント
     createdAt          DateTime @default(now()) @map("created_at") // アカウント作成日時
