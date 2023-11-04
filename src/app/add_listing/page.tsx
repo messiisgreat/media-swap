@@ -1,4 +1,4 @@
-import { ListingForm } from "@/app/add-product/ListingForm";
+import { ListingForm } from "@/app/add_listing/ListingForm";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { H } from "@/components/structure/H";
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/add-product");
+    redirect("/api/auth/signin?callbackUrl=/add_listing");
   }
 
   const tags = await findTags();
