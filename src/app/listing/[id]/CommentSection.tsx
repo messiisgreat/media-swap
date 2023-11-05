@@ -37,7 +37,12 @@ export default function CommentSection({
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
-    getComments(listingId).then((comments) => setComments(comments));
+    getComments(listingId)
+      .then((comments) => setComments(comments))
+      .catch((error) => {
+        console.error(error);
+        toast.error("コメントの取得に失敗しました。");
+      });
   }, [listingId]);
 
   const postComment = async (
