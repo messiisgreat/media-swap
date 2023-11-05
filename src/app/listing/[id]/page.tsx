@@ -1,5 +1,5 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
-import { PurchaseButton } from "@/app/products/[id]/PurchaseButton";
+import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
