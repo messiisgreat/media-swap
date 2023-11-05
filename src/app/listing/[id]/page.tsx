@@ -1,6 +1,6 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
-import CommentSection from "@/app/products/[id]/CommentSection";
-import { PurchaseButton } from "@/app/products/[id]/PurchaseButton";
+import CommentSection from "@/app/listing/[id]/CommentSection";
+import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";

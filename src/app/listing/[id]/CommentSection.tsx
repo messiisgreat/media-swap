@@ -1,6 +1,6 @@
 "use client";
 
-import { CommentWithPartialUser, addComment, getComments } from "@/app/products/[id]/actions";
+import { CommentWithPartialUser, addComment, getComments } from "@/app/listing/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import Image from "next/image";
 import { useEffect, useState } from "react";
