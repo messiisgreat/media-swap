@@ -45,9 +45,18 @@ export default function CommentSection({
     sessionUser: Session["user"],
     productId: string
   ) => {
+    const text = f.get("comment");
+
+    if (!text || typeof text !== "string") return;
+
+    if (text.length > 300) {
+      toast.error("300文字以内で入力してください");
+      return;
+    }
+
     setPosting(true);
     try {
-      await addComment(f, sessionUser, productId);
+      await addComment(text, sessionUser, productId);
       toast.success("コメントを書き込みました。");
       setComments(await getComments(productId));
     } catch (e) {
@@ -58,7 +67,7 @@ export default function CommentSection({
   }
 
   return (
-    <div className="mx-auto w-full">
+    <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
         <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
@@ -68,7 +77,7 @@ export default function CommentSection({
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
       )}
-      <ul className="mt-8 flex w-full">
+      <ul className="mt-8 flex w-full flex-col gap-6">
         {!comments ? (
           <div className="flex w-full flex-col gap-6">
             <Skeleton />

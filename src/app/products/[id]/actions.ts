@@ -50,16 +50,17 @@ export const getComments = async (listingId: string): Promise<CommentWithPartial
 
 /**
  * コメントを追加する
- * @param f コメントが含まれたFormData
+ * @param text コメントの内容
  * @param sessionUser NextAuthのセッション
  * @param listingId 商品ID
  */
-export async function addComment(f: FormData, sessionUser: Session["user"], listingId: string) {
+export async function addComment(text: string, sessionUser: Session["user"], listingId: string) {
+  if (text.length > 300) throw new Error("コメントは300文字以内で入力してください");
   await prisma.listingComment.create({
     data: {
       listingId,
       userId: sessionUser.id,
-      comment: f.get("text") as string,
+      comment: text,
     },
   });
 };

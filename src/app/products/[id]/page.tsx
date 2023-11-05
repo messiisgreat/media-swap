@@ -49,7 +49,7 @@ export default async function ListingPage({
   return (
     <div>
       <div className="hero">
-        <div className="hero-content flex-col lg:-ml-[12%] lg:flex-row lg:items-center">
+        <div className="hero-content flex-col lg:flex-row lg:items-center">
           {/* TODO: カルーセルにしてimagesをmapで展開する */}
           <Image
             src={images[0]}
