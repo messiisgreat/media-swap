@@ -1,11 +1,12 @@
 "use client";
 
-import { CommentWithPartialUser, addComment, getComments } from "@/app/listing/[id]/actions";
+import { addComment, fetchComments } from "@/app/listing/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Session } from "next-auth";
+import { CommentWithPartialUser } from "@/services/listingComment";
 
 function Skeleton() {
   return (
@@ -37,7 +38,7 @@ export default function CommentSection({
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
-    getComments(listingId)
+    fetchComments(listingId)
       .then((comments) => setComments(comments))
       .catch((error) => {
         console.error(error);
@@ -63,7 +64,7 @@ export default function CommentSection({
     try {
       await addComment(text, sessionUser, productId);
       toast.success("コメントを書き込みました。");
-      setComments(await getComments(productId));
+      setComments(await fetchComments(productId));
     } catch (e) {
       console.error(e);
       toast.error("コメントの書き込みに失敗しました。");

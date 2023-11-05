@@ -1,10 +1,9 @@
 "use server";
 
+import { createComment, getComments } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
-import { revalidatePath } from "next/cache";
-import { ListingComment, User } from "@prisma/client";
-import prisma from "@/lib/prisma";
 import { Session } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 /**
  * 購入ボタンを押したときのサーバー側処理
@@ -22,45 +21,22 @@ export const purchasing = async (
   revalidatePath("/products/[id]");
 }
 
-export type CommentWithPartialUser = ListingComment & { user: Partial<Pick<User, "name" | "image">> };
 /**
- * コメントを取得する
- * @param listingId 取得対象の製品のID
- * @returns 取得したコメント
- */
-export const getComments = async (listingId: string): Promise<CommentWithPartialUser[]> => {
-  const comments = await prisma.listingComment.findMany({
-    where: { listingId },
-    orderBy: { createdAt: "desc" },
-    include: { user: true },
-  });
-
-  const commentsWithUserNameAndImage = comments.map((comment) => {
-    return {
-      ...comment,
-      user: {
-        name: comment.user?.name,
-        image: comment.user?.image,
-      },
-    };
-  });
-
-  return commentsWithUserNameAndImage;
-};
-
-/**
- * コメントを追加する
- * @param text コメントの内容
- * @param sessionUser NextAuthのセッション
+ * コメントを書く
+ * @param text コメント
+ * @param sessionUser セッションユーザー
  * @param listingId 商品ID
  */
-export async function addComment(text: string, sessionUser: Session["user"], listingId: string) {
+export const addComment = async (text: string, sessionUser: Session["user"], listingId: string) => {
   if (text.length > 300) throw new Error("コメントは300文字以内で入力してください");
-  await prisma.listingComment.create({
-    data: {
-      listingId,
-      userId: sessionUser.id,
-      comment: text,
-    },
-  });
-};
+  await createComment(text, sessionUser.id, listingId);
+}
+
+/**
+ * コメントを取得
+ * @param listingId 商品ID
+ * @returns 
+ */
+export const fetchComments = async (listingId: string) => {
+  return await getComments(listingId);
+}
