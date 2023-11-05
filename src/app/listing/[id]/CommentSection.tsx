@@ -24,7 +24,7 @@ function Skeleton() {
 
 /**
  * コメント(+コメントを書き込むフォーム)
- * @param param0.productId 商品ID
+ * @param param0.listingId 商品ID
  */
 export default function CommentSection({
   listingId,
