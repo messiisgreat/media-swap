@@ -14,7 +14,7 @@ generator erd {
 // ユーザーテーブル
 model User {
     id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-    name               String?  // ユーザー名
+    name               String? // ユーザー名
     email              String   @unique // メールアドレス
     isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
     isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
@@ -146,7 +146,7 @@ model Listing {
     shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
     shippingMethodId   String?   @map("shipping_method_id") @db.ObjectId // 配送方法ID外部キー
     productConditionId String?   @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
-    transactionId      String?   @unique @map("transaction_id") @db.ObjectId // 取引ID外部キー
+    transactionId      String?   @map("transaction_id") @db.ObjectId // 取引ID外部キー
     pageView           Int       @default(0) @map("page_view") // ページ閲覧数
 
     seller           User?             @relation("seller", fields: [sellerId], references: [id])

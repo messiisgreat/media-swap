@@ -9,8 +9,6 @@ import {
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";
-import { Tag } from "@prisma/client";
-
 import { redirect } from "next/navigation";
 
 /**
@@ -23,20 +21,22 @@ import { redirect } from "next/navigation";
 async function processTags(tagsString?: string | null): Promise<string[]> {
   if (!tagsString) return [];
   try {
-    const tags: Tag[] = JSON.parse(tagsString);
+    const tags: { id: string; text: string }[] = JSON.parse(tagsString);
     const [newTags, existingTags] = tags.reduce(
       (acc, tag) => {
         tag.id === tag.text ? acc[0].push(tag) : acc[1].push(tag);
         return acc;
       },
-      [[], []] as [Tag[], Tag[]],
+      [[], []] as [
+        { id: string; text: string }[],
+        { id: string; text: string }[],
+      ],
     );
 
-    const createdTags = await Promise.all(
+    const createdTagIds = await Promise.all(
       newTags.map(async (tag) => await createTag(tag.text)),
-    );
-    console.log(createdTags);
-    return [...existingTags, ...createdTags].map((tag) => tag.id);
+    ).then((tags) => tags.map((tag) => tag.id));
+    return [...existingTags.map((tag) => tag.id), ...createdTagIds];
   } catch (e) {
     return [];
   }
@@ -77,12 +77,11 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  // 各画像ファイルに対してアップロードのプロミスを作成
+
   const uploadPromises = imageFiles.map((file) =>
     uploadToS3(file, `products/${createId()}`),
   );
 
-  // すべての画像のアップロードが完了するのを待つ
   const images = await Promise.all(uploadPromises);
 
   const listing: UnregisteredListing = {
@@ -103,21 +102,5 @@ export const addListing = async (
     images,
   );
 
-  redirect(`/products/complete?listing_id=${insertedListing.id}`);
-};
-
-/**
- * 商品を登録する。エラーが発生した場合はトーストを表示する。
- * @param formData フォームデータ
- * @param verifiedValue reCAPTCHAのトークン
- */
-export const listingFormAction = async (
-  formData: FormData,
-  verifiedValue: string | null,
-) => {
-  const e = await addListing(formData, verifiedValue);
-  if (typeof e === "string") {
-    // toast.error(e);
-    console.log(e);
-  }
+  redirect(`/listing/complete?listing_id=${insertedListing.id}`);
 };
