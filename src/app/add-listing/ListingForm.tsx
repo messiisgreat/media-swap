@@ -7,6 +7,7 @@ import FormSubmitButton from "@/components/FormSubmitButton";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
+import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -19,7 +20,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
 
   return (
     <form
-      action={(f) => addListing(f, verifiedValue)}
+      action={async (f) => {
+        const e = await addListing(f, verifiedValue);
+        typeof e === "string" && toast.error(e);
+      }}
       className="flex flex-col gap-3"
     >
       <Input required name="productName" placeholder="商品名" />
