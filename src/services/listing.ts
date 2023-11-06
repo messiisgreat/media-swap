@@ -96,45 +96,77 @@ export type UnregisteredListing = Omit<
  * @param images 画像のURLの配列
  * @returns 追加された商品
  */
+// export const createListingWithTagsAndImages = async (
+//   listing: UnregisteredListing,
+//   tagIds: string[],
+//   images: string[],
+// ) => {
+//   // データベースに存在するタグIDのみをフィルタリング
+//   const existingTags = await prisma.tag.findMany({
+//     where: {
+//       id: {
+//         in: tagIds,
+//       },
+//     },
+//   });
+
+//   // データベースに存在するタグIDの配列を作成
+//   const existingTagIds = existingTags.map((tag) => tag.id);
+
+//   // 全ての提供されたタグIDがデータベースに存在することを確認
+//   if (existingTagIds.length !== tagIds.length) {
+//     throw new Error("One or more tag IDs do not exist in the database");
+//   }
+
+//   return prisma.listing.create({
+//     data: {
+//       ...listing,
+//       tags: {
+//         connect: existingTagIds.map((id) => ({ id })),
+//       },
+//       // images: {
+//       //   create: {
+//       //     ...images.map((image) => ({
+//       //       image: {
+//       //         create: {
+//       //           imageURL: image,
+//       //         },
+//       //       },
+//       //     })),
+//       //   },
+//       // },
+//       images: {
+//         create: images.map((imageURL) => ({
+//           image: {
+//             // このようにさらにネストされたオブジェクト構造が必要な場合
+//             create: {
+//               imageURL: imageURL,
+//             },
+//           },
+//         })),
+//       },
+//     },
+//   });
+// };
+
+/**
+ * 商品を追加する
+ * @param listing 商品情報
+ * @param tagIds タグIDの配列
+ * @param images 画像のURLの配列
+ * @returns 追加された商品
+ */
 export const createListingWithTagsAndImages = async (
   listing: UnregisteredListing,
   tagIds: string[],
   images: string[],
 ) => {
-  // データベースに存在するタグIDのみをフィルタリング
-  const existingTags = await prisma.tag.findMany({
-    where: {
-      id: {
-        in: tagIds,
-      },
-    },
-  });
-
-  // データベースに存在するタグIDの配列を作成
-  const existingTagIds = existingTags.map((tag) => tag.id);
-
-  // 全ての提供されたタグIDがデータベースに存在することを確認
-  if (existingTagIds.length !== tagIds.length) {
-    throw new Error("One or more tag IDs do not exist in the database");
-  }
-
   return prisma.listing.create({
     data: {
       ...listing,
       tags: {
-        connect: existingTagIds.map((id) => ({ id })),
+        connect: tagIds.map((id) => ({ id })),
       },
-      // images: {
-      //   create: {
-      //     ...images.map((image) => ({
-      //       image: {
-      //         create: {
-      //           imageURL: image,
-      //         },
-      //       },
-      //     })),
-      //   },
-      // },
       images: {
         create: images.map((imageURL) => ({
           image: {
