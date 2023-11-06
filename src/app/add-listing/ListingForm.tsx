@@ -22,7 +22,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       action={(f) => listingFormAction(f, verifiedValue)}
       className="flex flex-col gap-3"
     >
-      <Input required name="name" placeholder="商品名" />
+      <Input required name="productName" placeholder="商品名" />
       <Textarea required name="description" placeholder="説明文"></Textarea>
       <ImageInput id={imageInputId} name="imageFile" />
       <Input

@@ -12,7 +12,6 @@ import { createId } from "@paralleldrive/cuid2";
 import { Tag } from "@prisma/client";
 
 import { redirect } from "next/navigation";
-import toast from "react-hot-toast";
 
 /**
  * タグ文字列の処理を行う。
@@ -114,6 +113,7 @@ export const listingFormAction = async (
 ) => {
   const e = await addListing(formData, verifiedValue);
   if (typeof e === "string") {
-    toast.error(e);
+    // toast.error(e);
+    console.log(e);
   }
 };

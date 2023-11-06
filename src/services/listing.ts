@@ -108,15 +108,7 @@ export const createListingWithTagsAndImages = async (
         connect: tagIds.map((id) => ({ id })),
       },
       images: {
-        create: {
-          ...images.map((image) => ({
-            image: {
-              create: {
-                imageURL: image,
-              },
-            },
-          })),
-        },
+        create: images.map((imageURL) => ({ imageURL })),
       },
     },
   });
