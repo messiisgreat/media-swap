@@ -101,14 +101,49 @@ export const createListingWithTagsAndImages = async (
   tagIds: string[],
   images: string[],
 ) => {
+  // データベースに存在するタグIDのみをフィルタリング
+  const existingTags = await prisma.tag.findMany({
+    where: {
+      id: {
+        in: tagIds,
+      },
+    },
+  });
+
+  // データベースに存在するタグIDの配列を作成
+  const existingTagIds = existingTags.map((tag) => tag.id);
+
+  // 全ての提供されたタグIDがデータベースに存在することを確認
+  if (existingTagIds.length !== tagIds.length) {
+    throw new Error("One or more tag IDs do not exist in the database");
+  }
+
   return prisma.listing.create({
     data: {
       ...listing,
       tags: {
-        connect: tagIds.map((id) => ({ id })),
+        connect: existingTagIds.map((id) => ({ id })),
       },
+      // images: {
+      //   create: {
+      //     ...images.map((image) => ({
+      //       image: {
+      //         create: {
+      //           imageURL: image,
+      //         },
+      //       },
+      //     })),
+      //   },
+      // },
       images: {
-        create: images.map((imageURL) => ({ imageURL })),
+        create: images.map((imageURL) => ({
+          image: {
+            // このようにさらにネストされたオブジェクト構造が必要な場合
+            create: {
+              imageURL: imageURL,
+            },
+          },
+        })),
       },
     },
   });

@@ -59,7 +59,7 @@ export const addListing = async (
   const description = formData.get("description")?.toString();
 
   const tagsString = formData.get("tags")?.toString();
-  const imageFile = formData.get("imageFile") as File;
+  const imageFiles = formData.getAll("imageFile") as File[];
   const session = await getSession();
   const userId = session?.user.id;
   const shippingDaysId = null;
@@ -69,7 +69,7 @@ export const addListing = async (
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
-  if (!imageFile) return "画像を選択してください";
+  if (!imageFiles.length) return "画像を選択してください";
   if (!price) return "価格を入力してください";
   if (!captchaValue) return "reCAPTCHAを通してください";
 
@@ -77,9 +77,13 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const images = await Promise.all(
-    await uploadToS3(imageFile, `products/${createId()}`),
+  // 各画像ファイルに対してアップロードのプロミスを作成
+  const uploadPromises = imageFiles.map((file) =>
+    uploadToS3(file, `products/${createId()}`),
   );
+
+  // すべての画像のアップロードが完了するのを待つ
+  const images = await Promise.all(uploadPromises);
 
   const listing: UnregisteredListing = {
     productName,
