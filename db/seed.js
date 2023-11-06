@@ -1,59 +1,341 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 
 async function main() {
-  // ユーザーの作成
-  const user1 = await prisma.user.create({
+  // 出品者をシードする
+  const seller = await prisma.user.create({
     data: {
-      name: "ユーザー1",
-      email: "user1@example.com",
-      birthDate: new Date("2000-01-01"),
-      iconImageUrl:
-        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
+      name: "Alice",
+      email: "alice@example.com",
     },
   });
 
-  const user2 = await prisma.user.create({
+  const buyer = await prisma.user.create({
     data: {
-      name: "ユーザー2",
-      email: "user2@example.com",
-      birthDate: new Date("2000-01-01"),
-      iconImageUrl:
-        "https://media-swap-image-storage.s3.amazonaws.com/products/1695809991830_test",
+      name: "Bob",
+      email: "bob@example.com",
     },
   });
 
+  // 商品情報をシードする
   const listing = await prisma.listing.create({
     data: {
-      description: "商品1の説明",
-      productName: "商品1",
-      price: 1000,
-      sellerId: user1.id,
+      productName: "Super Banana",
+      price: 5000,
+      description: "An excellent delicious banana.",
+      isPublic: true,
+      seller: {
+        connect: { id: seller.id }, // 出品者として先に作成した User を接続
+      },
+      // その他の必要な Listing フィールド
     },
   });
 
-  // タグの作成
-  const tag1 = await prisma.tag.create({
+  // 画像情報をシードする
+  const image = await prisma.image.create({
     data: {
-      text: "タグ1",
+      imageURL:
+        "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
+      caption: "Very delicious banana.",
+      // その他の必要な Image フィールド
     },
   });
 
-  // 会話とメッセージの作成
-  const listingComment = await prisma.listingComment.create({
+  // 出品情報と画像のリレーションを作成する
+  const listingImage = await prisma.listingImage.create({
+    data: {
+      listing: {
+        connect: { id: listing.id }, // Listing モデルと接続
+      },
+      image: {
+        connect: { id: image.id }, // Image モデルと接続
+      },
+      order: 1,
+    },
+  });
+
+  // 商品状態を作成
+  const newCondition = await prisma.productCondition.create({
+    data: {
+      name: "New",
+      listings: {
+        connect: { id: listing.id },
+      },
+    },
+  });
+
+  // カテゴリーを作成（親子関係もここで設定）
+  const parentCategory = await prisma.category.create({
+    data: {
+      categoryName: "Electronics",
+    },
+  });
+
+  const childCategory = await prisma.category.create({
+    data: {
+      categoryName: "Computers",
+      parentId: parentCategory.id,
+    },
+  });
+
+  // タグを作成
+  const tag = await prisma.tag.create({
+    data: {
+      text: "Innovative",
+    },
+  });
+
+  const like = await prisma.like.create({
+    data: {
+      userId: seller.id,
+      listingId: listing.id,
+    },
+  });
+
+  const listingCategory = await prisma.listingCategory.create({
     data: {
       listingId: listing.id,
-      userId: user1.id,
-      comment: "コメント1",
+      categoryId: childCategory.id,
+    },
+  });
+
+  const listingTag = await prisma.listingTag.create({
+    data: {
+      listingId: listing.id,
+      tagId: tag.id,
+    },
+  });
+
+  // 配送日数データの作成
+  const shippingDay = await prisma.shippingDays.create({
+    data: {
+      name: "1 to 3 days",
+      maxDays: 3,
+      listing: {
+        connect: { id: listing.id },
+      },
+    },
+  });
+
+  // 配送方法データの作成
+  const shippingMethod = await prisma.shippingMethod.create({
+    data: {
+      name: "Express",
+      amount: 500,
+      listings: {
+        connect: { id: listing.id },
+      },
+    },
+  });
+
+  // 出品情報コメントの作成
+  // 'userId' と 'listingId' は実際のデータに置き換える必要があります。
+  const listingComment = await prisma.listingComment.create({
+    data: {
+      userId: seller.id,
+      listingId: listing.id,
+      comment: "Great product!",
+    },
+  });
+
+  // 取引ステータスデータの作成
+  const transactionStatus = await prisma.transactionStatus.create({
+    data: {
+      step: 1,
+      name: "Pending",
+    },
+  });
+
+  // 取引データの作成
+  // 'buyerId' と 'listingId' は実際のデータに置き換える必要があります。
+  const transaction = await prisma.transaction.create({
+    data: {
+      listingId: listing.id,
+      buyerId: seller.id,
+      transactionStatusId: transactionStatus.id, // このIDは先に作成したtransactionStatusから取得
+    },
+  });
+
+  // 取引コメントデータの作成
+  // 'userId' と 'transactionId' は実際のデータに置き換える必要があります。
+  const transactionComment = await prisma.transactionComment.create({
+    data: {
+      transactionId: transaction.id,
+      userId: seller.id,
+      comment: "Looking forward to receiving the item.",
+    },
+  });
+
+  const transactionRating = await prisma.transactionRating.create({
+    data: {
+      // transactionId, raterId, ratedIdは適切なObjectId文字列を使用してください
+      transactionId: transaction.id,
+      raterId: seller.id,
+      ratedId: buyer.id,
+      // transactionRatingOptionIdはオプショナルです
+      comment: "素晴らしい取引でした。",
+    },
+  });
+
+  // TransactionRatingOptionのシードデータ
+  const transactionRatingOption = await prisma.transactionRatingOption.create({
+    data: {
+      name: "Excellent",
+      rating: 5,
+    },
+  });
+
+  // UserViewHistoryのシードデータ
+  const userViewHistory = await prisma.userViewHistory.create({
+    data: {
+      // userId, listingIdは適切なObjectId文字列を使用してください
+      userId: seller.id,
+      listingId: listing.id,
+      // viewedAtは自動的に設定されます
+    },
+  });
+
+  // NotificationTypeのシードデータ
+  const notificationType = await prisma.notificationType.create({
+    data: {
+      name: "取引通知",
+      defaultPermit: true,
+    },
+  });
+
+  // Notificationのシードデータ
+  const notification = await prisma.notification.create({
+    data: {
+      // notificationTypeIdは適切なObjectId文字列を使用してください
+      notificationTypeId: notificationType.id,
+      content: "新しい取引が利用可能です。",
+    },
+  });
+
+  // UserNotificationReadのシードデータ
+  const userNotificationRead = await prisma.userNotificationRead.create({
+    data: {
+      // notificationId, userIdは適切なObjectId文字列を使用してください
+      notificationId: notification.id,
+      userId: seller.id,
+    },
+  });
+
+  // UserNotificationPermitのシードデータ
+  const userNotificationPermit = await prisma.userNotificationPermit.create({
+    data: {
+      // userId, notificationTypeIdは適切なObjectId文字列を使用してください
+      userId: seller.id,
+      notificationTypeId: notificationType.id,
+      isPermit: true,
+    },
+  });
+
+  // Accountのシードデータ
+  const account = await prisma.account.create({
+    data: {
+      // userIdは適切なObjectId文字列を使用してください
+      userId: seller.id,
+      type: "oauth",
+      provider: "google",
+      providerAccountId: "provider-specific-account-id",
+    },
+  });
+
+  // Sessionのシードデータ
+  const session = await prisma.session.create({
+    data: {
+      // userIdは適切なObjectId文字列を使用してください
+      userId: seller.id,
+      sessionToken: "session-token-string",
+      // expiresは具体的なDateTime値を使用してください
+      expires: new Date("2023-12-31T23:59:59Z"),
+    },
+  });
+
+  // VerificationTokenのシードデータ
+  const verificationToken = await prisma.verificationToken.create({
+    data: {
+      identifier: "user-email@example.com",
+      token: "verification-token-string",
+      // expiresは具体的なDateTime値を使用してください
+      expires: new Date("2023-12-31T23:59:59Z"),
+    },
+  });
+
+  // Addressのシードデータ
+  const address = await prisma.address.create({
+    data: {
+      userId: seller.id, // 既存のユーザーID
+      postalCode: "123-4567",
+      prefecture: "東京都",
+      city: "新宿区",
+      addressLine1: "〇〇ビルディング101",
+      addressLine2: "その他の住所情報",
+      phoneNumber: "03-1234-5678",
+    },
+  });
+
+  // Couponのシードデータ
+  const coupon = await prisma.coupon.create({
+    data: {
+      name: "10%オフ",
+      discountRate: 10,
+      startDate: new Date("2023-01-01T00:00:00Z"),
+      endDate: new Date("2023-12-31T23:59:59Z"),
+    },
+  });
+
+  // ListingReportのシードデータ
+  const listingReport = await prisma.listingReport.create({
+    data: {
+      listingId: listing.id, // 既存の出品情報ID
+      userId: seller.id, // 既存のユーザーID
+      comment: "不適切な内容があります。",
+    },
+  });
+
+  // PointChangeのシードデータ
+  const pointChange = await prisma.pointChange.create({
+    data: {
+      userId: seller.id, // 既存のユーザーID
+      amount: 1000,
+      date: new Date(), // 現在の日時
+      description: "初回登録ボーナス",
+    },
+  });
+
+  // PointChangeEventのシードデータ
+  const pointChangeEvent = await prisma.pointChangeEvent.create({
+    data: {
+      name: "新年のボーナスポイント",
+      amount: 500,
+    },
+  });
+
+  // TransferRequestのシードデータ
+  const transferRequest = await prisma.transferRequest.create({
+    data: {
+      userId: seller.id, // 既存のユーザーID
+      amount: 1500,
+      date: new Date(), // 現在の日時
+      isTransferred: false,
+    },
+  });
+
+  // UserCouponのシードデータ
+  const userCoupon = await prisma.userCoupon.create({
+    data: {
+      userId: seller.id, // 既存のユーザーID
+      couponId: coupon.id, // 既存のクーポンID
+      isUsed: false,
     },
   });
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    throw e;
   })
   .finally(async () => {
     await prisma.$disconnect();
