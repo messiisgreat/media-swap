@@ -1,0 +1,507 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator erd {
+    provider = "prisma-erd-generator"
+}
+
+// ユーザーテーブル
+model User {
+    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    name               String   @unique // ユーザー名
+    email              String // メールアドレス
+    isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
+    isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
+    birthDate          DateTime // 生年月日
+    iconImageUrl       String?  @map("icon_image_url") // アイコン画像URL
+    balance            Int      @default(0) // 残高
+    points             Int      @default(0) // ポイント
+    createdAt          DateTime @default(now()) @map("created_at") // アカウント作成日時
+    updatedAt          DateTime @default(now()) @map("updated_at") // アカウント更新日時
+    lastLoginDate      DateTime @default(now()) @map("last_login_date") // 最終ログイン日時
+    isDeleted          Boolean  @default(false) @map("is_deleted") // 削除フラグ
+    isBanned           Boolean  @default(false) @map("is_banned") // 凍結フラグ
+
+    accounts                Account[]
+    sessions                Session[]
+    addresses               Address[]
+    transferRequests        TransferRequest[]
+    pointChanges            PointChange[]
+    userViewHistories       UserViewHistory[]
+    listingComments         ListingComment[]
+    likes                   Like[]
+    userNotificationReads   UserNotificationRead[]
+    sellListings            Listing[]                @relation("seller")
+    transactions            Transaction[]            @relation("buyer")
+    raterTransactions       TransactionRating[]      @relation("rater")
+    ratedTransactions       TransactionRating[]      @relation("rated")
+    transactionComments     TransactionComment[]
+    userCoupons             UserCoupon[]
+    userNotificationPermits UserNotificationPermit[]
+    listingReports          ListingReport[]
+
+    @@map("users")
+}
+
+// ユーザー住所テーブル
+model Address {
+    id           String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId       String  @map("user_id") @db.ObjectId // ユーザーID外部キー
+    postalCode   String  @map("postal_code") // 郵便番号
+    prefecture   String // 都道府県
+    city         String // 市区町村
+    addressLine1 String  @map("address_line1") // 住所1
+    addressLine2 String? @map("address_line2") // 住所2
+    phoneNumber  String  @map("phone_number") // 電話番号
+
+    user User @relation(fields: [userId], references: [id])
+
+    @@map("addresses")
+}
+
+// 振込申請テーブル
+model TransferRequest {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId        String   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    amount        Int // 金額
+    date          DateTime @default(now()) // 申請日時
+    isTransferred Boolean  @default(false) @map("is_transferred") // 振込済みフラグ
+
+    user User @relation(fields: [userId], references: [id])
+
+    @@map("transfer_requests")
+}
+
+// ポイント増減テーブル
+model PointChange {
+    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId             String   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    amount             Int // 金額
+    date               DateTime @default(now()) // 日時
+    description        String? // 説明
+    pointChangeEventId String?  @map("point_change_event_id") @db.ObjectId // ポイント増減イベントID外部キー
+
+    user             User              @relation(fields: [userId], references: [id])
+    pointChangeEvent PointChangeEvent? @relation(fields: [pointChangeEventId], references: [id])
+
+    @@map("point_changes")
+}
+
+// ポイント増減イベントテーブル
+model PointChangeEvent {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    name   String // イベント名
+    amount Int?   @default(0) // 金額
+
+    PointChanges PointChange[]
+
+    @@map("point_change_events")
+}
+
+// クーポン種別テーブル
+model Coupon {
+    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    name           String // クーポン名
+    discountAmount Int?      @map("discount_amount") // 割引金額
+    discountRate   Int?      @map("discount_rate") // 割引率
+    startDate      DateTime? @map("start_date") // 開始日時
+    endDate        DateTime? @map("end_date") // 終了日時
+
+    userCoupons UserCoupon[]
+
+    @@map("coupons")
+}
+
+// クーポンテーブル
+model UserCoupon {
+    id       String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId   String  @map("user_id") @db.ObjectId // ユーザーID外部キー
+    couponId String  @map("coupon_id") @db.ObjectId // クーポンID外部キー
+    isUsed   Boolean @default(false) @map("is_used") // 使用済みフラグ
+
+    user        User         @relation(fields: [userId], references: [id])
+    coupon      Coupon       @relation(fields: [couponId], references: [id])
+    Transaction Transaction?
+
+    @@map("user_coupons")
+}
+
+// 出品情報テーブル
+model Listing {
+    id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+    productName        String?   @map("product_name") // 商品名
+    price              Int? // 価格
+    previousPrice      Int?      @map("previous_price") // 変更前価格
+    description        String? // 説明
+    isPublic           Boolean   @default(false) @map("is_public") // 公開フラグ
+    isDeleted          Boolean   @default(false) @map("is_deleted") // 削除フラグ
+    createdAt          DateTime? @map("listing_date") // 出品日時
+    updatedAt          DateTime? @map("updated_at") // 更新日時
+    sellerId           String    @map("seller_id") @db.ObjectId // 出品者ID外部キー
+    shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
+    shippingMethodId   String?   @map("shipping_method_id") @db.ObjectId // 配送方法ID外部キー
+    productConditionId String?   @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
+    transactionId      String?   @unique @map("transaction_id") @db.ObjectId // 取引ID外部キー
+    pageView           Int       @default(0) @map("page_view") // ページ閲覧数
+
+    seller           User?             @relation("seller", fields: [sellerId], references: [id])
+    shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
+    shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
+    productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
+
+    transaction  Transaction?
+    images       ListingImage[]
+    viewHistorys UserViewHistory[]
+    comments     ListingComment[]
+    likes        Like[]
+    categories   ListingCategory[]
+    tags         ListingTag[]
+    reports      ListingReport[]
+
+    @@map("listings")
+}
+
+// 出品情報通報テーブル
+model ListingReport {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    userId    String @map("user_id") @db.ObjectId // ユーザーID外部キー
+    comment   String // 通報コメント
+
+    listing Listing @relation(fields: [listingId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+
+    @@unique([listingId, userId])
+    @@map("listing_reports")
+}
+
+// 画像テーブル
+model Image {
+    id       String  @id @default(auto()) @map("_id") @db.ObjectId
+    imageURL String  @map("image_url") // 画像URL
+    caption  String? // キャプション
+
+    listingImages ListingImage[]
+
+    @@map("images")
+}
+
+// 出品情報画像テーブル
+model ListingImage {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    imageId   String @map("image_id") @db.ObjectId // 画像ID外部キー
+    order     Int    @default(0) // 並び順
+
+    listing Listing @relation(fields: [listingId], references: [id])
+    image   Image   @relation(fields: [imageId], references: [id])
+
+    @@unique([listingId, imageId])
+    @@map("listing_images")
+}
+
+// 商品状態テーブル
+model ProductCondition {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    name String @unique // 商品状態名
+
+    listings Listing[]
+
+    @@map("product_conditions")
+}
+
+// カテゴリーテーブル
+model Category {
+    id           String  @id @default(auto()) @map("_id") @db.ObjectId
+    parentId     String? @map("parent_id") @db.ObjectId // 親カテゴリーID外部キー
+    categoryName String  @map("category_name") // カテゴリー名
+
+    parentCategory Category? @relation("parentCategory", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+    listingCategories ListingCategory[]
+    children          Category[]        @relation("parentCategory")
+
+    @@map("categories")
+}
+
+// 商品カテゴリーテーブル
+model ListingCategory {
+    id         String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId  String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    categoryId String @map("category_id") @db.ObjectId // カテゴリーID外部キー
+
+    listing  Listing  @relation(fields: [listingId], references: [id])
+    category Category @relation(fields: [categoryId], references: [id])
+
+    @@unique([listingId, categoryId])
+    @@map("listing_categories")
+}
+
+// いいねテーブル
+model Like {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    userId    String @map("user_id") @db.ObjectId // ユーザーID外部キー
+
+    user    User    @relation(fields: [userId], references: [id])
+    listing Listing @relation(fields: [listingId], references: [id])
+
+    @@unique([userId, listingId])
+    @@map("likes")
+}
+
+// タグテーブル
+model Tag {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    text      String   @unique // タグ名
+    createdAt DateTime @default(now()) @map("created_at") // 作成日時
+
+    listingTags ListingTag[]
+
+    @@map("tags")
+}
+
+// 出品情報タグテーブル
+model ListingTag {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    tagId     String @map("tag_id") @db.ObjectId // タグID外部キー
+
+    listing Listing @relation(fields: [listingId], references: [id])
+    tag     Tag     @relation(fields: [tagId], references: [id])
+
+    @@unique([listingId, tagId])
+    @@map("listing_tags")
+}
+
+// 配送日数テーブル
+model ShippingDays {
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    name    String @unique
+    maxDays Int    @map("max_days") // 最大日数
+
+    listing Listing[]
+
+    @@map("shipping_days")
+}
+
+// 配送方法テーブル
+model ShippingMethod {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    name   String @unique // 配送方法名
+    amount Int // 金額
+
+    listings Listing[]
+
+    @@map("shipping_methods")
+}
+
+// 出品情報コメントテーブル
+model ListingComment {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    userId    String @map("user_id") @db.ObjectId // ユーザーID外部キー
+    comment   String // コメント
+
+    user    User    @relation(fields: [userId], references: [id])
+    listing Listing @relation(fields: [listingId], references: [id])
+
+    @@unique([userId, listingId])
+    @@map("listing_comments")
+}
+
+// 取引テーブル
+model Transaction {
+    id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+    listingId           String   @unique @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    buyerId             String   @map("buyer_id") @db.ObjectId // 購入者ID外部キー
+    externalPaymentId   String?  @map("external_payment_id") // 外部決済ID
+    transactionStatusId String?  @map("transaction_status_id") @db.ObjectId // 取引ステータスID外部キー 本来は必須だが、完成するまでNULL許可
+    isCanceled          Boolean  @default(false) @map("is_canceled") // 取引キャンセルフラグ
+    userCouponId        String?  @unique @map("user_coupon_id") @db.ObjectId // ユーザークーポンID外部キー
+    purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
+    transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
+
+    buyer             User               @relation("buyer", fields: [buyerId], references: [id])
+    listing           Listing            @relation(fields: [listingId], references: [id])
+    transactionStatus TransactionStatus? @relation(fields: [transactionStatusId], references: [id]) // 本来は必須だが、完成するまでNULL許可
+    userCoupon        UserCoupon?        @relation(fields: [userCouponId], references: [id])
+
+    transactionRating   TransactionRating[]
+    transactionComments TransactionComment[]
+
+    @@unique([listingId, buyerId])
+    @@map("transactions")
+}
+
+// 取引ステータステーブル
+model TransactionStatus {
+    id   String @id @default(auto()) @map("_id") @db.ObjectId
+    step Int    @unique // ステップ
+    name String @unique // ステータス名
+
+    transactions Transaction[]
+
+    @@map("transaction_statuses")
+}
+
+// 取引コメントテーブル
+model TransactionComment {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    transactionId String   @map("transaction_id") @db.ObjectId // 取引ID外部キー
+    userId        String   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    comment       String // コメント
+    isRead        Boolean  @default(false) @map("is_read") // 既読フラグ
+    createdAt     DateTime @default(now()) @map("created_at") // 作成日時
+
+    user        User        @relation(fields: [userId], references: [id])
+    transaction Transaction @relation(fields: [transactionId], references: [id])
+
+    @@unique([userId, transactionId])
+    @@map("transaction_comments")
+}
+
+// 取引評価テーブル
+model TransactionRating {
+    id                        String  @id @default(auto()) @map("_id") @db.ObjectId
+    transactionId             String  @map("transaction_id") @db.ObjectId // 取引ID外部キー
+    raterId                   String  @map("rater_id") @db.ObjectId // 評価者ID外部キー
+    ratedId                   String  @map("rated_id") @db.ObjectId // 評価されたユーザーID外部キー
+    transactionRatingOptionId String? @map("transaction_rating_option_id") @db.ObjectId // 取引評価選択肢ID外部キー
+    comment                   String? // コメント
+
+    rater                   User                     @relation("rater", fields: [raterId], references: [id])
+    rated                   User                     @relation("rated", fields: [ratedId], references: [id])
+    transaction             Transaction              @relation(fields: [transactionId], references: [id])
+    transactionRatingOption TransactionRatingOption? @relation(fields: [transactionRatingOptionId], references: [id])
+
+    @@unique([transactionId, raterId, ratedId])
+    @@map("user_transaction_ratings")
+}
+
+// 取引評価選択肢テーブル
+model TransactionRatingOption {
+    id     String @id @default(auto()) @map("_id") @db.ObjectId
+    name   String @unique // 選択肢名
+    rating Int    @unique // 評価
+
+    transactionRatings TransactionRating[]
+
+    @@map("transaction_ratings")
+}
+
+// ユーザー出品閲覧履歴テーブル
+model UserViewHistory {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    listingId String   @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    viewedAt  DateTime @default(now()) @map("viewed_at") // 閲覧日時
+
+    user    User    @relation(fields: [userId], references: [id])
+    listing Listing @relation(fields: [listingId], references: [id])
+
+    @@unique([userId, listingId])
+    @@map("user_view_history")
+}
+
+// お知らせテーブル
+model Notification {
+    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    date               DateTime @default(now()) // お知らせ日時
+    content            String // 内容
+    notificationTypeId String   @map("notification_type_id") @db.ObjectId // お知らせ種別ID外部キー
+
+    notificationType NotificationType @relation(fields: [notificationTypeId], references: [id])
+
+    userNotificationRead UserNotificationRead[]
+
+    @@map("notifications")
+}
+
+// ユーザーお知らせ既読情報テーブル
+model UserNotificationRead {
+    id             String @id @default(auto()) @map("_id") @db.ObjectId
+    notificationId String @map("notification_id") @db.ObjectId // お知らせID外部キー
+    userId         String @map("user_id") @db.ObjectId // ユーザーID外部キー
+
+    user         User         @relation(fields: [userId], references: [id])
+    notification Notification @relation(fields: [notificationId], references: [id])
+
+    @@unique([notificationId, userId])
+    @@map("user_notification_reads")
+}
+
+// お知らせ種別テーブル
+model NotificationType {
+    id            String  @id @default(auto()) @map("_id") @db.ObjectId
+    name          String  @unique // お知らせ種別名
+    defaultPermit Boolean @default(false) @map("default_permit") // デフォルト許可フラグ
+
+    notifications           Notification[]
+    userNotificationPermits UserNotificationPermit[]
+
+    @@map("notification_types")
+}
+
+// ユーザーお知らせ許可情報テーブル
+model UserNotificationPermit {
+    id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId             String  @map("user_id") @db.ObjectId // ユーザーID外部キー
+    notificationTypeId String  @map("notification_type_id") @db.ObjectId // お知らせ種別ID外部キー
+    isPermit           Boolean @default(false) @map("is_permit") // 通知許可フラグ
+
+    user             User             @relation(fields: [userId], references: [id])
+    notificationType NotificationType @relation(fields: [notificationTypeId], references: [id])
+
+    @@unique([userId, notificationTypeId])
+    @@map("user_notification_permits")
+}
+
+// Auth.js認証情報テーブル
+model Account {
+    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId            String  @map("user_id") @db.ObjectId
+    type              String
+    provider          String
+    providerAccountId String  @map("provider_account_id")
+    refresh_token     String? @db.String
+    access_token      String? @db.String
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.String
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@map("accounts")
+}
+
+// Auth.jsセッションテーブル
+model Session {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    sessionToken String   @unique @map("session_token")
+    userId       String   @map("user_id") @db.ObjectId
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("sessions")
+}
+
+// Auth.js認証トークンテーブル
+model VerificationToken {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+    @@map("verification_tokens")
+}

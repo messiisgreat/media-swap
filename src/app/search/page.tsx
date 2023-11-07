@@ -1,10 +1,16 @@
-import { ProductCard } from "@/components";
-import { prisma } from "@/lib/prisma";
+import { ListingCard } from "@/components";
+import { ListingOrderBy, findListingByProductName } from "@/services/listing";
 import { Metadata } from "next";
 // TODO: 日本語クエリにも対応する
 
 type SearchPageProps = {
-  searchParams: { query: string; tagid: string };
+  searchParams: {
+    query: string;
+    page: number;
+    size: number;
+    sort: string;
+    order: "asc" | "desc";
+  };
 };
 
 /**
@@ -21,22 +27,21 @@ export function generateMetadata({
 /**
  * 検索ページ
  * @param param0.searchParams.query 検索クエリ
- * @param param0.searchParams.tagid タグID
  */
 export default async function SearchPage({
-  searchParams: { query, tagid },
+  searchParams: {
+    query,
+    page = 1,
+    size = 27,
+    sort = "pageView",
+    order = "desc",
+  },
 }: SearchPageProps) {
-  const products = await prisma.product.findMany({
-    where: {
-      OR: [
-        { name: { contains: query, mode: "insensitive" } },
-        { description: { contains: query, mode: "insensitive" } },
-        { tagIds: { has: tagid } },
-      ],
-    },
-    orderBy: { id: "desc" },
-  });
-  if (products.length === 0) {
+  const orderBy: ListingOrderBy = {
+    [sort]: order,
+  };
+  const listings = await findListingByProductName(query, page, size, orderBy);
+  if (listings.length === 0) {
     return <div className="text-center">商品が見つかりません</div>;
   }
 
@@ -45,8 +50,8 @@ export default async function SearchPage({
       <p className="mb-4 text-lg font-medium">検索結果</p>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {products.map((product) => (
-          <ProductCard product={product} key={product.id} />
+        {listings.map((listing) => (
+          <ListingCard listing={listing} key={listing.id} />
         ))}
       </div>
     </div>
