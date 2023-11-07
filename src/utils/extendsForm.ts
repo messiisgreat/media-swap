@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-type FormObject = { [key: string]: string | number | File };
+type FormObject = { [key: string]: string | number | File | File[] };
 
 /**
  * FormData を型安全に扱うための型
@@ -41,11 +41,10 @@ export interface TypedFormData<T extends FormObject> extends FormData {
 export const getFormValues = <T extends FormObject>(
   formData: TypedFormData<T>,
 ) =>
-  Object.keys(formData).reduce(
-    (acc, key) => {
-      const value = formData.get(key);
-      if (value) acc[key] = value;
-      return acc;
-    },
-    {} as { [key: string]: string | number | File },
-  ) as T;
+  Object.keys(formData).reduce((acc, cur) => {
+    const value = formData.get(cur) as T[keyof T];
+    if (value) {
+      return { ...acc, [cur]: value };
+    }
+    return acc;
+  }, {} as T);
