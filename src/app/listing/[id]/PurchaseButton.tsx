@@ -1,6 +1,6 @@
 "use client";
 
-import { purchasing } from "@/app/products/[id]/actions";
+import { purchasing } from "@/app/listing/[id]/actions";
 import { Button } from "@/components/Button";
 import { ComponentProps, useCallback } from "react";
 
