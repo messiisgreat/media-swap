@@ -154,6 +154,7 @@ export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function ImageInput({ id, labelText, ...props }, ref) {
+
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const onDrop = useCallback(
