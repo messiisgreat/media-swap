@@ -153,7 +153,7 @@ type FileWithPreview = File & { preview: string };
 export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function ImageInput({ className, id, labelText, ...props }, ref) {
+>(function ImageInput({ id, labelText, ...props }, ref) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const onDrop = useCallback(
@@ -197,12 +197,12 @@ export const ImageInput = forwardRef<
   return (
     <div>
       {labelText && <label>{labelText}</label>}
-      <ul className="grid grid-cols-4 gap-2">
+      <ul className="grid grid-cols-3 gap-2">
         {files.map((file) => (
           <li key={file.name} className="relative">
             <button
               type="button"
-              className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
+              className="absolute right-4 top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
               onClick={() => removeFile(file.name)}
             >
               <FaTimes color="white" />
@@ -210,10 +210,9 @@ export const ImageInput = forwardRef<
             <Image
               src={file.preview}
               alt={file.name}
-              layout="responsive"
               width={80}
               height={80}
-              className="object-contain p-2"
+              className="p-2"
             />
           </li>
         ))}
