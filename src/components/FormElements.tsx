@@ -158,13 +158,16 @@ export const ImageInput = forwardRef<
 
   const onDrop = useCallback(
     (droppedFiles: File[]) => {
-      const acceptedFiles = droppedFiles.slice(0, 10 - files.length);
+      setFiles((previousFiles) => {
+      const spaceLeft = 10 - previousFiles.length;
+      const acceptedFiles = droppedFiles.slice(0, spaceLeft);
       const filesWithPreview = acceptedFiles.map((file: File) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         }),
       ) as FileWithPreview[];
-      setFiles((previousFiles) => [...previousFiles, ...filesWithPreview]);
+      return [...previousFiles, ...filesWithPreview];
+      });
     },
     [files],
   );
