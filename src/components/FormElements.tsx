@@ -114,7 +114,7 @@ export const Textarea = forwardRef<
  * Selectの型宣言
  */
 type SelectProps = FormCommonProps & {
-  optionItems: (string | number)[];
+  options: (string | number)[];
 };
 
 /**
@@ -123,15 +123,18 @@ type SelectProps = FormCommonProps & {
 export const Select = forwardRef<
   HTMLSelectElement,
   ComponentPropsWithoutRef<"select"> & SelectProps
->(function Select({ className, labelText, optionItems, ...props }, ref) {
+>(function Select(
+  { className, labelText, options: optionItems, ...props },
+  ref,
+) {
   const selectClass = `select select-bordered ${className ?? ""}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <select className={selectClass} {...props} ref={ref}>
-        {optionItems?.map((optionItem, index) => (
-          <option key={optionItem} disabled={index === 0}>
-            {optionItem}
+        {optionItems?.map((option, index) => (
+          <option key={option} disabled={index === 0}>
+            {option}
           </option>
         ))}
       </select>
