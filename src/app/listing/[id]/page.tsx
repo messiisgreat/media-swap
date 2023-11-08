@@ -76,7 +76,7 @@ export default async function ListingPage({
               disabled={!userId || isOwner}
               listingId={listing.id}
               buyerId={userId!}
-              userCouponId=""
+              userCouponId={null}
             />
           </div>
         </div>

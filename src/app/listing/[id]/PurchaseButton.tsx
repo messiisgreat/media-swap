@@ -7,7 +7,7 @@ import { ComponentProps, useCallback } from "react";
 type Props = ComponentProps<typeof Button> & {
   listingId: string;
   buyerId: string;
-  userCouponId: string;
+  userCouponId: string | null;
 };
 
 /**
