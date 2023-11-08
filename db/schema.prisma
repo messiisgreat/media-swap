@@ -148,6 +148,7 @@ model Listing {
     productConditionId String?  @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
     transactionId      String?  @map("transaction_id") @db.ObjectId // 取引ID外部キー
     pageView           Int      @default(0) @map("page_view") // ページ閲覧数
+    postageIsIncluded  Boolean  @default(false) @map("postage_is_included")
 
     seller           User              @relation("seller", fields: [sellerId], references: [id])
     shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
