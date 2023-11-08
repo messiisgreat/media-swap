@@ -37,7 +37,7 @@ export default async function Home({
         <div className="m-3 w-full  rounded-xl bg-base-200 p-0">
           <div className="hero-content flex-col lg:flex-row">
             <Image
-              src={listings[0].images[0]?.image.imageURL}
+              src={listings[0].images[0]?.image.imageURL || ""}
               alt={listings[0].productName!}
               width={400}
               height={800}
@@ -48,7 +48,7 @@ export default async function Home({
               <h1 className="text-5xl font-bold">{listings[0].productName}</h1>
               <p className="py-6">{listings[0].description}</p>
               <Link
-                href={"/listings/" + listings[0].id}
+                href={`/listing/${listings[0].id}`}
                 className="btn btn-primary"
               >
                 詳細を見る

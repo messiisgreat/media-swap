@@ -22,7 +22,7 @@ export function ListingCard({ listing }: Props) {
 
   return (
     <Link
-      href={"/listings/" + listing.id}
+      href={"/listing/" + listing.id}
       className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
     >
       <figure>

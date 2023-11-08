@@ -1,12 +1,13 @@
 "use client";
 
-import { listingFormAction } from "@/app/add-listing/actions";
+import { addListing } from "@/app/add-listing/actions";
 import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
 import { ImageInput, Input, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
+import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -19,10 +20,13 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
 
   return (
     <form
-      action={(f) => listingFormAction(f, verifiedValue)}
+      action={async (f) => {
+        const e = await addListing(f, verifiedValue);
+        typeof e === "string" && toast.error(e);
+      }}
       className="flex flex-col gap-3"
     >
-      <Input required name="name" placeholder="商品名" />
+      <Input required name="productName" placeholder="商品名" />
       <Textarea required name="description" placeholder="説明文"></Textarea>
       <ImageInput id={imageInputId} name="imageFile" />
       <Input
