@@ -1,6 +1,6 @@
 "use server";
 
-import { ProductFormData } from "@/app/add-listing/types";
+import { productFormData } from "@/app/add-listing/types";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
 import {
@@ -54,10 +54,14 @@ export const addListing = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
-  const formValues = getFormValues<ProductFormData>(formData);
-  console.log(formValues);
+  const formValues = getFormValues(formData, productFormData);
   const { productName, price, description, imageFiles, tags, ...rest } =
     formValues;
+  // const productName = formData.get("productName") as string;
+  // const price = Number(formData.get("price"));
+  // const description = formData.get("description") as string;
+  // const imageFiles = formData.getAll("imageFiles") as File[];
+  // const tags = formData.get("tags") as string;
   const previousPrice = null;
 
   const session = await getSession();
