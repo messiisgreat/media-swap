@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 /**
  * トップページにページをリダイレクトする
- * /products
+ * /listing
  */
 const Page = () => {
   const router = useRouter();
