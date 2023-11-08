@@ -57,7 +57,7 @@ export const addListing = async (
   const isPublic = true;
   const description = formData.get("description")?.toString();
   const tagsString = formData.get("tags")?.toString();
-  const imageFile = formData.getAll("imageFile") as File[];
+  const imageFiles = formData.getAll("imageFiles") as File[];
   const session = await getSession();
   const userId = session?.user.id;
   const shippingDaysId = null;
@@ -67,7 +67,7 @@ export const addListing = async (
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
-  if (!imageFile) return "画像を選択してください";
+  if (!imageFiles) return "画像を選択してください";
   if (!price) return "価格を入力してください";
   if (!captchaValue) return "reCAPTCHAを通してください";
 
@@ -75,7 +75,7 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const images = await uploadToCloudinary(imageFile);
+  const images = await uploadToCloudinary(imageFiles);
 
   const listing: UnregisteredListing = {
     productName,

@@ -28,7 +28,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
     >
       <Input required name="productName" placeholder="商品名" />
       <Textarea required name="description" placeholder="説明文"></Textarea>
-      <ImageInput id={imageInputId} name="imageFile" />
+      <ImageInput id={imageInputId} name="imageFiles" />
       <Input
         required
         name="price"
