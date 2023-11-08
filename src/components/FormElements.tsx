@@ -155,23 +155,22 @@ export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function ImageInput({ id, labelText, ...props }, ref) {
-
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
   const onDrop = useCallback(
     (droppedFiles: File[]) => {
       setFiles((previousFiles) => {
-      const spaceLeft = 10 - previousFiles.length;
-      const acceptedFiles = droppedFiles.slice(0, spaceLeft);
-      const filesWithPreview = acceptedFiles.map((file: File) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        }),
-      ) as FileWithPreview[];
-      return [...previousFiles, ...filesWithPreview];
+        const spaceLeft = 10 - previousFiles.length;
+        const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+        const filesWithPreview = acceptedFiles.map((file: File) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        ) as FileWithPreview[];
+        return [...previousFiles, ...filesWithPreview];
       });
     },
-    [files],
+    [],
   );
 
   const { getRootProps, getInputProps } = useDropzone({

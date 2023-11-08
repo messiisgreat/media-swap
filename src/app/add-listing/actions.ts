@@ -8,7 +8,6 @@ import {
 } from "@/services/listing";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
-import { createId } from "@paralleldrive/cuid2";
 import { Tag } from "@prisma/client";
 
 import { redirect } from "next/navigation";
@@ -77,7 +76,7 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const images = await uploadToCloudinary(imageFile)
+  const images = await uploadToCloudinary(imageFile);
 
   const listing: UnregisteredListing = {
     productName,
