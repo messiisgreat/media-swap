@@ -38,7 +38,7 @@ async function uploadSingleFile(
   timestamp: number,
   signature: string,
   apiKey: string,
-  uploadUrl: string
+  uploadUrl: string,
 ): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
