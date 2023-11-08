@@ -20,6 +20,9 @@ dependencies:
   aws-sdk:
     specifier: ^2.1485.0
     version: 2.1485.0
+  cloudinary:
+    specifier: ^1.41.0
+    version: 1.41.0
   daisyui:
     specifier: ^3.9.4
     version: 3.9.4
@@ -47,6 +50,9 @@ dependencies:
   next-auth:
     specifier: ^4.24.4
     version: 4.24.4(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
+  next-cloudinary:
+    specifier: ^5.3.0
+    version: 5.3.0(next@13.5.6)(react@18.2.0)
   postcss:
     specifier: 8.4.31
     version: 8.4.31
@@ -511,6 +517,29 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@cloudinary-util/url-loader@3.14.1:
+    resolution: {integrity: sha512-XHzD/k3iHTsp2RlJ0RPx4Jh2D9DA4b0QhMdquman57n27wLe+urXA8hsCprOK84Hs5plmQjxIuR7+1525bgl8Q==}
+    dependencies:
+      '@cloudinary-util/util': 2.2.1
+      '@cloudinary/url-gen': 1.12.1
+    dev: false
+
+  /@cloudinary-util/util@2.2.1:
+    resolution: {integrity: sha512-MEIqn5WtPP3mxSMTNNfpqlGS1UquAXcjmVdY/t/edD/ZWVjI85viBiOMIuF0W6n6UF5gTstLymfQNYx0YO/GZg==}
+    dev: false
+
+  /@cloudinary/transformation-builder-sdk@1.8.0:
+    resolution: {integrity: sha512-/QLSDDI+rfYH3bFH+DpgEk8NgSoeqwiea9GW5VXplcpebQOOcFqOzNFM6Hlik3PDqq4JMP4s3E7BoPZ1Rdk/IQ==}
+    dependencies:
+      '@cloudinary/url-gen': 1.12.1
+    dev: false
+
+  /@cloudinary/url-gen@1.12.1:
+    resolution: {integrity: sha512-TWV2MEZeYuPUt6kmZ9T7AhOq+HpDqkZcoULSGATNMpuq9PAiWUZS58+kas4a4YGinUeDSpfFivZ8KOMkREn1lQ==}
+    dependencies:
+      '@cloudinary/transformation-builder-sdk': 1.8.0
+    dev: false
 
   /@es-joy/jsdoccomment@0.40.1:
     resolution: {integrity: sha512-YORCdZSusAlBrFpZ77pJjc5r1bQs5caPWtAu+WWmiSo+8XaUzseapVrfAtiRFbQWnrBxxLLEwF6f6ZG/UgCQCg==}
@@ -1952,6 +1981,24 @@ packages:
       wrap-ansi: 7.0.0
     dev: true
 
+  /cloudinary-core@2.13.0(lodash@4.17.21):
+    resolution: {integrity: sha512-Nt0Q5I2FtenmJghtC4YZ3MZZbGg1wLm84SsxcuVwZ83OyJqG9CNIGp86CiI6iDv3QobaqBUpOT7vg+HqY5HxEA==}
+    peerDependencies:
+      lodash: '>=4.0'
+    dependencies:
+      lodash: 4.17.21
+    dev: false
+
+  /cloudinary@1.41.0:
+    resolution: {integrity: sha512-qFf2McjvILJITePf4VF1PrY/8c2zy+/q5FVV6V3VWrP/gpIZsusPqXL4QZ6ZKXibPRukzMYqsQEhaSQgJHKKow==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      cloudinary-core: 2.13.0(lodash@4.17.21)
+      core-js: 3.33.2
+      lodash: 4.17.21
+      q: 1.5.1
+    dev: false
+
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -2028,6 +2075,11 @@ packages:
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /core-js@3.33.2:
+    resolution: {integrity: sha512-XeBzWI6QL3nJQiHmdzbAOiMYqjrb7hwU7A39Qhvd/POSa/t9E1AeZyEZx3fNvp/vtM8zXwhoL0FsiS0hD0pruQ==}
+    requiresBuild: true
     dev: false
 
   /cosmiconfig@8.1.3:
@@ -4315,6 +4367,18 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /next-cloudinary@5.3.0(next@13.5.6)(react@18.2.0):
+    resolution: {integrity: sha512-i1J8wSvb8ptEjWSr6KOMQ6kLtFPsI6zSy4GcgENt8dgidshTgcCcg/JQGqC0sGI4cR28umqEjB09tNXmT9GYKw==}
+    peerDependencies:
+      next: ^12 || ^13 || ^14
+      react: ^17 || ^18
+    dependencies:
+      '@cloudinary-util/url-loader': 3.14.1
+      '@cloudinary-util/util': 2.2.1
+      next: 13.5.6(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
   /next@13.5.6(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Y2wTcTbO4WwEsVb4A8VSnOsG1I9ok+h74q0ZdxkwM3EODqrs4pasq7O0iUxbcS9VtWMicG7f3+HAj0r1+NtKSw==}
     engines: {node: '>=16.14.0'}
@@ -4951,6 +5015,11 @@ packages:
   /pure-rand@6.0.4:
     resolution: {integrity: sha512-LA0Y9kxMYv47GIPJy6MI84fqTd2HmYZI83W/kM/SkKfDlajnZYfmXFTxkbY+xSBPkLJxltMa9hIkmdc29eguMA==}
     dev: true
+
+  /q@1.5.1:
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
+    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    dev: false
 
   /querystring@0.2.0:
     resolution: {integrity: sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==}
