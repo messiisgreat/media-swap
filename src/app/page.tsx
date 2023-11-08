@@ -48,7 +48,7 @@ export default async function Home({
               <h1 className="text-5xl font-bold">{listings[0].productName}</h1>
               <p className="py-6">{listings[0].description}</p>
               <Link
-                href={"/listing/" + listings[0].id}
+                href={`/listing/${listings[0].id}`}
                 className="btn btn-primary"
               >
                 詳細を見る
