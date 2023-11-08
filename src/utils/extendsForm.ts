@@ -19,7 +19,6 @@ export const getFormValues = <T extends FormObject>(
       : Number.isInteger(formObject[key])
       ? Number(formData.get(key))
       : (formData.get(key) as T[typeof key]);
-    console.log(value);
     return { ...acc, [key]: value };
   }, {} as T);
 };
