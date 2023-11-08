@@ -68,7 +68,7 @@ export const addListing = async (
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
-  if (!imageFiles.length) return "画像を選択してください";
+  if (!imageFile) return "画像を選択してください";
   if (!price) return "価格を入力してください";
   if (!captchaValue) return "reCAPTCHAを通してください";
 
