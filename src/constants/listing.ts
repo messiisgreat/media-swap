@@ -6,6 +6,9 @@ import {
   TransactionStatus,
 } from "@prisma/client";
 
+// 注意: このファイルは自動生成されます。本番環境に影響してしまうため、リリース後の変更は行わないでください。
+// 項目を差し替えたい場合は、変更するのではなく、使用しなくなった項目をコメントアウトし、新しい採番で追加を行ってください。
+
 /** 商品の状態 */
 export const PRODUCT_CONDITION: ProductCondition[] = [
   { id: "0".padStart(24, "0"), name: "新品または未使用" },

@@ -9,8 +9,12 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+/**
+ * 定数のシードを行う
+ * idが一致するものがあれば更新、無ければ新規作成する
+ */
 async function main() {
-  Promise.all(
+  await Promise.all(
     PRODUCT_CONDITION.map((condition) => {
       const { id, ...rest } = condition;
       return prisma.productCondition.upsert({
@@ -23,7 +27,7 @@ async function main() {
     }),
   );
 
-  Promise.all(
+  await Promise.all(
     SHIPPING_METHOD.map((method) => {
       const { id, ...rest } = method;
       return prisma.shippingMethod.upsert({
@@ -36,7 +40,7 @@ async function main() {
     }),
   );
 
-  Promise.all(
+  await Promise.all(
     SHIPPING_DAYS.map((days) => {
       const { id, ...rest } = days;
       return prisma.shippingDays.upsert({
@@ -49,7 +53,7 @@ async function main() {
     }),
   );
 
-  Promise.all(
+  await Promise.all(
     TRANSACTION_STATUS.map((status) => {
       const { id, ...rest } = status;
       return prisma.transactionStatus.upsert({
@@ -62,7 +66,7 @@ async function main() {
     }),
   );
 
-  Promise.all(
+  await Promise.all(
     TRANSACTION_RATING_OPTION.map((option) => {
       const { id, ...rest } = option;
       return prisma.transactionRatingOption.upsert({
@@ -78,7 +82,8 @@ async function main() {
 
 main()
   .catch((e) => {
-    throw e;
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
