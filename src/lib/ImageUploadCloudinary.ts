@@ -1,9 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 
 const cloudinaryConfig = {
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME!,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!,
-  api_secret: process.env.CLOUDINARY_API_SECRET!,
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME ?? (() => { throw new Error("Cloudinary cloud name is not set"); })(),
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY ?? (() => { throw new Error("Cloudinary API key is not set"); })(),
+  api_secret: process.env.CLOUDINARY_API_SECRET ?? (() => { throw new Error("Cloudinary API secret is not set"); })(),
   secure: true,
 };
 
