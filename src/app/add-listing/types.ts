@@ -3,9 +3,21 @@ export type ProductFormData = {
   productConditionId: string;
   price: number;
   description: string;
-  postageId: string;
+  postageIsIncluded: string;
   shippingDaysId: string;
   shippingMethodId: string;
   imageFiles: File[];
   tags: string;
+};
+
+export const productFormData: ProductFormData = {
+  productName: "",
+  productConditionId: "",
+  price: 0,
+  description: "",
+  postageIsIncluded: "",
+  shippingDaysId: "",
+  shippingMethodId: "",
+  imageFiles: [],
+  tags: "",
 };
