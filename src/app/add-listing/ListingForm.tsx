@@ -36,7 +36,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       <ImageInput
         labelText="出品画像(最大10枚)"
         id={imageInputId}
-        name="imageFile"
+        name="imageFiles"
       />
       <Input
         labelText="商品名"
