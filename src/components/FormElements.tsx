@@ -148,6 +148,37 @@ export const Select = forwardRef<
 });
 
 /**
+ * ラジオボタン
+ * @param props inputタグのattribute
+ * @returns div
+ */
+export const RadioGroup = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & SelectProps
+>(function RadioGroup({ className, labelText, options, ...props }, ref) {
+  const radioClass = `radio radio-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <div className="flex flex-row gap-2">
+        {Object.keys(options)?.map((option, i) => (
+          <label key={i} className={radioClass}>
+            <input
+              type="radio"
+              value={option}
+              {...props}
+              ref={ref}
+              className="radio"
+            />
+            <span className="ml-2">{options[option]}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+/**
  * ファイルの型宣言
  */
 type FileWithPreview = File & { preview: string };
