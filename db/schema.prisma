@@ -133,21 +133,21 @@ model UserCoupon {
 
 // 出品情報テーブル
 model Listing {
-    id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-    productName        String?   @map("product_name") // 商品名
+    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    productName        String?  @map("product_name") // 商品名
     price              Int? // 価格
-    previousPrice      Int?      @map("previous_price") // 変更前価格
+    previousPrice      Int?     @map("previous_price") // 変更前価格
     description        String? // 説明
-    isPublic           Boolean   @default(false) @map("is_public") // 公開フラグ
-    isDeleted          Boolean   @default(false) @map("is_deleted") // 削除フラグ
-    createdAt          DateTime? @map("listing_date") // 出品日時
-    updatedAt          DateTime? @map("updated_at") // 更新日時
-    sellerId           String    @map("seller_id") @db.ObjectId // 出品者ID外部キー
-    shippingDaysId     String?   @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
-    shippingMethodId   String?   @map("shipping_method_id") @db.ObjectId // 配送方法ID外部キー
-    productConditionId String?   @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
-    transactionId      String?   @map("transaction_id") @db.ObjectId // 取引ID外部キー
-    pageView           Int       @default(0) @map("page_view") // ページ閲覧数
+    isPublic           Boolean  @default(false) @map("is_public") // 公開フラグ
+    isDeleted          Boolean  @default(false) @map("is_deleted") // 削除フラグ
+    createdAt          DateTime @default(now()) @map("created_at") // 出品日時
+    updatedAt          DateTime @default(now()) @map("updated_at") // 商品更新日時
+    sellerId           String   @map("seller_id") @db.ObjectId // 出品者ID外部キー
+    shippingDaysId     String?  @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
+    shippingMethodId   String?  @map("shipping_method_id") @db.ObjectId // 配送方法ID外部キー
+    productConditionId String?  @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
+    transactionId      String?  @map("transaction_id") @db.ObjectId // 取引ID外部キー
+    pageView           Int      @default(0) @map("page_view") // ページ閲覧数
 
     seller           User?             @relation("seller", fields: [sellerId], references: [id])
     shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
@@ -303,9 +303,9 @@ model ShippingMethod {
 
 // 出品情報コメントテーブル
 model ListingComment {
-    id        String @id @default(auto()) @map("_id") @db.ObjectId
-    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
-    userId    String @map("user_id") @db.ObjectId // ユーザーID外部キー
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String   @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    userId    String   @map("user_id") @db.ObjectId // ユーザーID外部キー
     comment   String // コメント
     createdAt DateTime @default(now()) @map("created_at") // 作成日時
 

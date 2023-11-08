@@ -25,36 +25,29 @@ export const findListingById = cache(async (id: string) => {
   });
 });
 
-/** findListing用の並び順型 */
-export type ListingOrderBy =
-  | {
-      [P in keyof Listing]?: "asc" | "desc" | undefined;
-    }
-  | undefined;
-
 /**
  * 商品を取得する
  * @param page ページ番号
  * @param size 1ページあたりの商品数
  * @param order ソート順 例: { price: "asc" }
  */
-export const findListings = cache(
-  async (page: number, size: number, order: ListingOrderBy) => {
-    return prisma.listing.findMany({
-      skip: (page - 1) * size,
-      take: size,
-      include: {
-        images: { include: { image: true } },
-        tags: {
-          include: {
-            tag: true,
-          },
+export const findListings = cache(async (page: number, size: number) => {
+  return prisma.listing.findMany({
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      images: { include: { image: true } },
+      tags: {
+        include: {
+          tag: true,
         },
       },
-      orderBy: order,
-    });
-  },
-);
+    },
+    orderBy: {
+      createdAt: "desc", // createdAtで降順に設定
+    },
+  });
+});
 
 /**
  * 商品の検索結果を取得する
@@ -65,7 +58,7 @@ export const findListings = cache(
  * @returns 検索結果
  */
 export const findListingByProductName = cache(
-  async (query: string, page: number, size: number, order: ListingOrderBy) => {
+  async (query: string, page: number, size: number) => {
     return prisma.listing.findMany({
       skip: (page - 1) * size,
       take: size,
@@ -78,7 +71,9 @@ export const findListingByProductName = cache(
           },
         },
       },
-      orderBy: order,
+      orderBy: {
+        createdAt: "desc", // createdAtで降順に設定
+      },
     });
   },
 );

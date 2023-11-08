@@ -1,6 +1,6 @@
 import { ListingCard, PaginationBar } from "@/components";
 import prisma from "@/lib/prisma";
-import { ListingOrderBy, findListings } from "@/services/listing";
+import { findListings } from "@/services/listing";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,18 +19,15 @@ type HomeProps = {
  * @param param0.searchParams.page ページ番号
  */
 export default async function Home({
-  searchParams: { page = 1, size = 27, sort = "pageView", order = "desc" },
+  searchParams: { page = 1, size = 27 },
 }: HomeProps) {
-  const orderBy: ListingOrderBy = {
-    [sort]: order,
-  };
   const heroItemCount = 1;
 
   const totalItemCount = await prisma.listing.count();
 
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / size);
 
-  const listings = await findListings(page, size, orderBy);
+  const listings = await findListings(page, size);
   return (
     <>
       {page === 1 && listings[0] && (
