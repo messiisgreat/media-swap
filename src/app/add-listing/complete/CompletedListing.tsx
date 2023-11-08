@@ -15,7 +15,10 @@ export const CompletedListing = async ({
 }) => {
   const listing = await findListingById(listingId);
   return (
-    <Link href={"/listings/" + listingId} className="grid justify-center gap-4">
+    <Link
+      href={`/listing/${encodeURIComponent(listingId)}`}
+      className="grid justify-center gap-4"
+    >
       <Image
         src={listing.images.filter((i) => i.order === 0)[0].image.imageURL}
         alt={listing.productName!}
