@@ -312,7 +312,6 @@ model ListingComment {
     user    User    @relation(fields: [userId], references: [id])
     listing Listing @relation(fields: [listingId], references: [id])
 
-    @@unique([userId, listingId])
     @@map("listing_comments")
 }
 
