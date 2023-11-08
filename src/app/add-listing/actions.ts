@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
-import { uploadToS3 } from "@/lib/ImageUploadS3";
+import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
   createListingWithTagsAndImages,
@@ -58,9 +58,8 @@ export const addListing = async (
   const previousPrice = null;
   const isPublic = true;
   const description = formData.get("description")?.toString();
-
   const tagsString = formData.get("tags")?.toString();
-  const imageFile = formData.get("imageFile") as File;
+  const imageFile = formData.getAll("imageFile") as File[];
   const session = await getSession();
   const userId = session?.user.id;
   const shippingDaysId = null;
@@ -78,9 +77,7 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tagsString);
-  const images = await Promise.all(
-    await uploadToS3(imageFile, `products/${createId()}`),
-  );
+  const images = await uploadToCloudinary(imageFile)
 
   const listing: UnregisteredListing = {
     productName,
