@@ -5,7 +5,7 @@
   "scripts": {
     "package:install": "pnpm install",
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "ts-node --project tsconfig.build.json -r tsconfig-paths/register src/constants/constantsSeed.ts && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -43,6 +43,7 @@
     "server-only": "^0.0.1",
     "sharp": "^0.32.6",
     "tailwindcss": "3.3.3",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
