@@ -63,8 +63,8 @@ async function uploadSingleFile(
     } else {
       throw new Error("Cloudinary upload failed");
     }
-  } catch (error: any) {
-    throw new Error(`Failed to upload file: ${error.message}`);
+  } catch {
+    throw new Error("Failed to upload file");
   }
 }
 
