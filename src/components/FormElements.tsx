@@ -1,12 +1,12 @@
 "use client";
+import Image from "next/image";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
-  useState,
   useCallback,
   useEffect,
+  useState,
 } from "react";
-import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
@@ -154,12 +154,10 @@ export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function ImageInput({ id, labelText, ...props }, ref) {
-
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-  const onDrop = useCallback(
-    (droppedFiles: File[]) => {
-      setFiles((previousFiles) => {
+  const onDrop = useCallback((droppedFiles: File[]) => {
+    setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = droppedFiles.slice(0, spaceLeft);
       const filesWithPreview = acceptedFiles.map((file: File) =>
@@ -168,10 +166,8 @@ export const ImageInput = forwardRef<
         }),
       ) as FileWithPreview[];
       return [...previousFiles, ...filesWithPreview];
-      });
-    },
-    [files],
-  );
+    });
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
