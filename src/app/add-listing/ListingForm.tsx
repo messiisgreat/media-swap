@@ -7,11 +7,12 @@ import FormSubmitButton from "@/components/FormSubmitButton";
 import { TitleUnderbar } from "@/components/TitleUnderbar";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import {
-  POSTAGE,
+  POSTAGE_IS_INCLUDED,
   PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
 } from "@/constants/listing";
+import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
 import toast from "react-hot-toast";
@@ -45,7 +46,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         required
       />
       <TitleUnderbar title="商品の説明" />
-      <Select labelText="商品の状態" options={PRODUCT_CONDITION} />
+      <Select
+        labelText="商品の状態"
+        options={objToAssociative(PRODUCT_CONDITION)}
+      />
       <Textarea
         labelText="商品の説明"
         characterLimit={1000}
@@ -58,16 +62,20 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         placeholder="タグ名を入力してください"
       />
       <TitleUnderbar title="配送について" />
-      <Select name="postageId" labelText="配送料の負担" options={POSTAGE} />
+      <Select
+        name="postageId"
+        labelText="配送料の負担"
+        options={objToAssociative(POSTAGE_IS_INCLUDED)}
+      />
       <Select
         name="shippingMethodId"
         labelText="配送の方法"
-        options={SHIPPING_METHOD}
+        options={objToAssociative(SHIPPING_METHOD)}
       />
       <Select
         name="shippingDaysId"
         labelText="発送までの日数"
-        options={SHIPPING_DAYS}
+        options={objToAssociative(SHIPPING_DAYS)}
       />
       <label className="text-lg">販売価格</label>
       <Input

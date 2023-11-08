@@ -1,33 +1,56 @@
+import {
+  ProductCondition,
+  ShippingDays,
+  ShippingMethod,
+  TransactionRatingOption,
+  TransactionStatus,
+} from "@prisma/client";
+
 /** 商品の状態 */
-export const PRODUCT_CONDITION = {
-  1: "新品、未使用",
-  2: "目立った傷や汚れなし",
-  3: "やや傷や汚れあり",
-  4: "傷や汚れあり",
-};
+export const PRODUCT_CONDITION: ProductCondition[] = [
+  { id: "0", name: "新品または未使用" },
+  { id: "1", name: "目立った傷や汚れなし" },
+  { id: "2", name: "やや傷や汚れあり" },
+  { id: "3", name: "傷や汚れあり" },
+  { id: "4", name: "全体的に状態が悪い" },
+];
 
 /** 配送料の負担 */
-export const POSTAGE = {
-  1: "送料込み(出品者負担)",
-  2: "着払い(購入者負担)",
-};
-
+export const POSTAGE_IS_INCLUDED = [
+  { id: 1, name: "送料込み(出品者負担)" },
+  { id: 0, name: "着払い(購入者負担)" },
+];
 /** 配送方法 */
-export const SHIPPING_METHOD = {
-  1: "未定",
-  2: "らくらくメルカリ便",
-  3: "ゆうメール",
-  4: "レターパック",
-  5: "普通郵便(定形、定形外)",
-  6: "クロネコヤマト",
-  7: "ゆうパック",
-  8: "クリックポスト",
-  9: "ゆうパケット",
-};
-
+export const SHIPPING_METHOD: ShippingMethod[] = [
+  { id: "0", name: "未定", amount: null },
+  { id: "1", name: "らくらくメルカリ便", amount: 500 },
+  { id: "2", name: "ゆうメール", amount: 200 },
+  { id: "3", name: "レターパック", amount: 500 },
+  { id: "4", name: "普通郵便(定形、定形外)", amount: null },
+  { id: "5", name: "クロネコヤマト", amount: 800 },
+  { id: "6", name: "ゆうパック", amount: 800 },
+  { id: "7", name: "クリックポスト", amount: 200 },
+  { id: "8", name: "ゆうパケット", amount: 200 },
+];
 /** 配送日の目安 */
-export const SHIPPING_DAYS = {
-  1: "1~2日で発送",
-  2: "2~3日で発送",
-  3: "4~7日で発送",
-};
+export const SHIPPING_DAYS: ShippingDays[] = [
+  { id: "0", name: "1~2日で発送", maxDays: 2 },
+  { id: "1", name: "2~3日で発送", maxDays: 3 },
+  { id: "2", name: "4~7日で発送", maxDays: 7 },
+];
+
+/** 取引ステータス */
+export const TRANSACTION_STATUS: TransactionStatus[] = [
+  { id: "0", name: "支払い前", step: 0 },
+  { id: "1", name: "支払い完了", step: 1 },
+  { id: "2", name: "発送済み", step: 2 },
+  { id: "3", name: "受け取り完了", step: 3 },
+  { id: "4", name: "取引キャンセル", step: 4 },
+];
+
+/** 取引評価選択肢 */
+export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
+  { id: "1", name: "良い", rating: 1 },
+  { id: "2", name: "普通", rating: 0 },
+  { id: "3", name: "悪い", rating: -1 },
+];

@@ -294,7 +294,7 @@ model ShippingDays {
 model ShippingMethod {
     id     String @id @default(auto()) @map("_id") @db.ObjectId
     name   String @unique // 配送方法名
-    amount Int // 金額
+    amount Int? // 金額
 
     listings Listing[]
 
