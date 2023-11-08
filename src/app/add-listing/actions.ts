@@ -102,5 +102,5 @@ export const addListing = async (
     images,
   );
 
-  redirect(`/listing/complete?listing_id=${insertedListing.id}`);
+  redirect(`/add-listing/complete?listing_id=${insertedListing.id}`);
 };
