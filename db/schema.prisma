@@ -149,7 +149,7 @@ model Listing {
     transactionId      String?  @map("transaction_id") @db.ObjectId // 取引ID外部キー
     pageView           Int      @default(0) @map("page_view") // ページ閲覧数
 
-    seller           User?             @relation("seller", fields: [sellerId], references: [id])
+    seller           User              @relation("seller", fields: [sellerId], references: [id])
     shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
     shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
     productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
