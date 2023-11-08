@@ -15,7 +15,7 @@
 ![screencapture-jp-mercari-sell-create-2023-10-26-14_26_46](https://github.com/developerhost/media-swap/assets/50170789/d9a6cb59-703e-4b12-955f-9ce5aea868df)
 </details>
 
-### 商品詳細ページ("/products/[id]")
+### 商品詳細ページ("/listing/[id]")
 
 <details><summary>画像</summary>
 
@@ -30,7 +30,7 @@
 
 </details>
 
-### 商品出品ページ("/add-product")
+### 商品出品ページ("/add-listing")
 
 <details><summary>画像</summary>
 
@@ -105,7 +105,7 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 
 </details>
 
-### 出品した商品ページ("mypage/listings")
+### 出品した商品ページ("mypage/listing")
 
 <details><summary>画像</summary>
 

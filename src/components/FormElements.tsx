@@ -1,12 +1,12 @@
 "use client";
+import Image from "next/image";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
-  useState,
   useCallback,
   useEffect,
+  useState,
 } from "react";
-import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";

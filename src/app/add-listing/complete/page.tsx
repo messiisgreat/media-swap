@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 /**
  * 出品完了ページ
- * /add-product/complete
+ * /add-listing/complete
  * @returns page
  */
 const Page = ({ searchParams }: { searchParams: { listing_id: string } }) => {
