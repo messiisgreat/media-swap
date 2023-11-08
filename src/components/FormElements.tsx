@@ -48,6 +48,7 @@ function useCharacterLimit(
   };
   return { value, characterCount, handleChange };
 }
+
 /**
  * inputタグにCSSを適用したラッパー
  */
@@ -228,6 +229,7 @@ export const ImageInput = forwardRef<
           id={id}
           type="file"
           ref={ref}
+          multiple
           className="hidden"
         />
         <div
