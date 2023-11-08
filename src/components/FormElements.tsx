@@ -178,6 +178,22 @@ export const RadioGroup = forwardRef<
   );
 });
 
+export const Toggle = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & FormCommonProps
+>(function Toggle({ className, labelText, ...props }, ref) {
+  const toggleClass = `toggle toggle-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <label className={toggleClass}>
+        <input type="checkbox" {...props} ref={ref} className="toggle" />
+        <span className="toggle-mark"></span>
+      </label>
+    </div>
+  );
+});
+
 /**
  * ファイルの型宣言
  */
