@@ -27,7 +27,10 @@ async function getSignature(): Promise<{
 
   const signature = cloudinary.utils.api_sign_request(
     { timestamp, folder: "swappy" },
-    cloudinaryConfig.api_secret!,
+    cloudinaryConfig.api_secret ??
+      (() => {
+        throw new Error("Cloudinary API secret is not set");
+      })(),
   );
 
   return { timestamp, signature };
@@ -83,8 +86,11 @@ export async function uploadToCloudinary(files: File[]): Promise<string[]> {
       file,
       timestamp,
       signature,
-      cloudinaryConfig.api_key!,
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL!,
+      cloudinaryConfig.api_key,
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL ??
+        (() => {
+          throw new Error("Cloudinary upload URL is not set");
+        })(),
     );
 
     uploadPromises.push(uploadPromise);
