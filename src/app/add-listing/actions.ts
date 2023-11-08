@@ -55,13 +55,15 @@ export const addListing = async (
   captchaValue: string | null | undefined,
 ) => {
   const formValues = getFormValues(formData, productFormData);
-  const { productName, price, description, imageFiles, tags, ...rest } =
-    formValues;
-  // const productName = formData.get("productName") as string;
-  // const price = Number(formData.get("price"));
-  // const description = formData.get("description") as string;
-  // const imageFiles = formData.getAll("imageFiles") as File[];
-  // const tags = formData.get("tags") as string;
+  const {
+    productName,
+    price,
+    description,
+    imageFiles,
+    tags,
+    postageIsIncluded,
+    ...rest
+  } = formValues;
   const previousPrice = null;
 
   const session = await getSession();
@@ -92,6 +94,7 @@ export const addListing = async (
     description,
     sellerId: userId,
     isPublic: true,
+    postageIsIncluded: Boolean(postageIsIncluded),
     ...rest,
   };
 
