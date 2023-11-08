@@ -77,7 +77,7 @@ export default function CommentSection({
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
         <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
-          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="text" maxLength={300}></textarea>
+          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="comment" maxLength={300}></textarea>
           <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
         </form>
       ) : (
