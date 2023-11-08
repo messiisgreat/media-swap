@@ -8,10 +8,8 @@ import {
 } from "@/services/listing";
 import { createTag } from "@/services/tag";
 import getSession from "@/utils/getSession";
-import { Tag } from "@prisma/client";
-
+import { createId } from "@paralleldrive/cuid2";
 import { redirect } from "next/navigation";
-import toast from "react-hot-toast";
 
 /**
  * タグ文字列の処理を行う。
@@ -23,20 +21,22 @@ import toast from "react-hot-toast";
 async function processTags(tagsString?: string | null): Promise<string[]> {
   if (!tagsString) return [];
   try {
-    const tags: Tag[] = JSON.parse(tagsString);
+    const tags: { id: string; text: string }[] = JSON.parse(tagsString);
     const [newTags, existingTags] = tags.reduce(
       (acc, tag) => {
         tag.id === tag.text ? acc[0].push(tag) : acc[1].push(tag);
         return acc;
       },
-      [[], []] as [Tag[], Tag[]],
+      [[], []] as [
+        { id: string; text: string }[],
+        { id: string; text: string }[],
+      ],
     );
 
-    const createdTags = await Promise.all(
+    const createdTagIds = await Promise.all(
       newTags.map(async (tag) => await createTag(tag.text)),
-    );
-    console.log(createdTags);
-    return [...existingTags, ...createdTags].map((tag) => tag.id);
+    ).then((tags) => tags.map((tag) => tag.id));
+    return [...existingTags.map((tag) => tag.id), ...createdTagIds];
   } catch (e) {
     return [];
   }
@@ -68,7 +68,7 @@ export const addListing = async (
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
-  if (!imageFile) return "画像を選択してください";
+  if (!imageFiles.length) return "画像を選択してください";
   if (!price) return "価格を入力してください";
   if (!captchaValue) return "reCAPTCHAを通してください";
 
@@ -96,20 +96,5 @@ export const addListing = async (
     images,
   );
 
-  redirect(`/products/complete?listing_id=${insertedListing.id}`);
-};
-
-/**
- * 商品を登録する。エラーが発生した場合はトーストを表示する。
- * @param formData フォームデータ
- * @param verifiedValue reCAPTCHAのトークン
- */
-export const listingFormAction = async (
-  formData: FormData,
-  verifiedValue: string | null,
-) => {
-  const e = await addListing(formData, verifiedValue);
-  if (typeof e === "string") {
-    toast.error(e);
-  }
+  redirect(`/add-listing/complete?listing_id=${insertedListing.id}`);
 };
