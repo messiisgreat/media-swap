@@ -1,10 +1,11 @@
 export type ProductFormData = {
   productName: string;
+  productConditionId: string;
   price: number;
   description: string;
-  shippingDays: string;
-  shippingMethod: string;
-  productCondition: string;
-  imageFile: File;
+  postageId: string;
+  shippingDaysId: string;
+  shippingMethodId: string;
+  imageFiles: File[];
   tags: string;
 };

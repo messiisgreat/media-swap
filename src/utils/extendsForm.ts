@@ -38,13 +38,14 @@ export interface TypedFormData<T extends FormObject> extends FormData {
  * formDataから全ての値を取得する
  * @param formData 型情報を含んだFormData
  */
-export const getFormValues = <T extends FormObject>(
-  formData: TypedFormData<T>,
-) =>
-  Object.keys(formData).reduce((acc, cur) => {
+export const getFormValues = <T extends FormObject>(formData: FormData) => {
+  const tFormData = formData as TypedFormData<T>;
+
+  return Object.keys(tFormData).reduce((acc, cur) => {
     const value = formData.get(cur) as T[keyof T];
     if (value) {
       return { ...acc, [cur]: value };
     }
     return acc;
   }, {} as T);
+};

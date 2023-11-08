@@ -1,11 +1,17 @@
 "use client";
 
-import { addListing } from "@/app/add-listing/actions";
 import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
+import { addListing } from "@/app/add-listing/actions";
 import { ImageInput, Input, Select, Textarea } from "@/components/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { TitleUnderbar } from "@/components/TitleUnderbar";
+import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
+import {
+  POSTAGE,
+  PRODUCT_CONDITION,
+  SHIPPING_DAYS,
+  SHIPPING_METHOD,
+} from "@/constants/listing";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
 import toast from "react-hot-toast";
@@ -14,33 +20,17 @@ import toast from "react-hot-toast";
  * 商品を登録するためのフォーム
  * @param param0.tags タグ
  * @returns form
+ * @todo 選択肢を定数として切り出す
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
-  const productState = [
-    "選択してください",
-    "未使用品",
-    "大きな傷有り",
-    "その他",
-  ];
-  const postage = [
-    "選択してください",
-    "送料込み(出品者負担)",
-    "着払い(購入者負担)",
-  ];
-  const shippingMethod = ["選択してください", "クリックポスト"];
-  const deliveryTime = [
-    "選択してください",
-    "1~2日で発送",
-    "2~3日で発送",
-    "4~7日で発送",
-  ];
 
   const action = async (formData: FormData) => {
     const e = await addListing(formData, verifiedValue);
     typeof e === "string" && toast.error(e);
   };
+
   return (
     <form action={action} className="flex flex-col gap-3">
       <ImageInput
@@ -48,9 +38,14 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         id={imageInputId}
         name="imageFile"
       />
-      <Input labelText="商品名" characterLimit={10} name="name" required />
+      <Input
+        labelText="商品名"
+        characterLimit={10}
+        name="productName"
+        required
+      />
       <TitleUnderbar title="商品の説明" />
-      <Select labelText="商品の状態" options={productState} />
+      <Select labelText="商品の状態" options={PRODUCT_CONDITION} />
       <Textarea
         labelText="商品の説明"
         characterLimit={1000}
@@ -63,9 +58,17 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         placeholder="タグ名を入力してください"
       />
       <TitleUnderbar title="配送について" />
-      <Select labelText="配送料の負担" options={postage} />
-      <Select labelText="配送の方法" options={shippingMethod} />
-      <Select labelText="発送までの日数" options={deliveryTime} />
+      <Select name="postageId" labelText="配送料の負担" options={POSTAGE} />
+      <Select
+        name="shippingMethodId"
+        labelText="配送の方法"
+        options={SHIPPING_METHOD}
+      />
+      <Select
+        name="shippingDaysId"
+        labelText="発送までの日数"
+        options={SHIPPING_DAYS}
+      />
       <label className="text-lg">販売価格</label>
       <Input
         labelText="販売価格"
