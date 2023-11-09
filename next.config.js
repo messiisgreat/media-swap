@@ -11,9 +11,10 @@ const nextConfig = {
       { hostname: "picsum.photos" },
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
+  // next14では必要なし
+  // experimental: {
+  //   serverActions: true,
+  // },
 };
 
 module.exports = nextConfig;
