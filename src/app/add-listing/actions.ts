@@ -2,7 +2,7 @@
 
 import { productFormData } from "@/app/add-listing/types";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
-import { uploadToS3 } from "@/lib/ImageUploadS3";
+import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
   createListingWithTagsAndImages,
@@ -10,7 +10,6 @@ import {
 import { createTag } from "@/services/tag";
 import { getFormValues } from "@/utils/extendsForm";
 import getSession from "@/utils/getSession";
-import { createId } from "@paralleldrive/cuid2";
 import { redirect } from "next/navigation";
 
 /**
@@ -72,7 +71,7 @@ export const addListing = async (
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
   if (!description) return "商品説明を入力してください";
-  if (!imageFiles.length) return "画像を選択してください";
+  if (!imageFiles) return "画像を選択してください";
   if (!price) return "価格を入力してください";
   if (!captchaValue) return "reCAPTCHAを通してください";
 
@@ -80,12 +79,7 @@ export const addListing = async (
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
   const tagIds = await processTags(tags);
-
-  const uploadPromises = imageFiles.map((file) =>
-    uploadToS3(file, `products/${createId()}`),
-  );
-
-  const images = await Promise.all(uploadPromises);
+  const images = await uploadToCloudinary(imageFiles);
 
   const listing: UnregisteredListing = {
     productName,

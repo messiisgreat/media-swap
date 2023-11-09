@@ -130,7 +130,7 @@ export const createListingWithTagsAndImages = async (
         create: images.map((imageURL) => ({
           image: {
             create: {
-              imageURL: imageURL,
+              imageURL,
             },
           },
         })),
