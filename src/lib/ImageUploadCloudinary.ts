@@ -2,8 +2,8 @@ import { v2 as cloudinary } from "cloudinary";
 import { env } from "@/utils/env";
 
 const cloudinaryConfig = {
-  cloud_name: env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
-  api_key: env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  cloud_name: env.CLOUDINARY_CLOUDNAME,
+  api_key: env.CLOUDINARY_API_KEY,
   api_secret: env.CLOUDINARY_API_SECRET,
   secure: true,
 };
@@ -73,7 +73,7 @@ export async function uploadToCloudinary(files: File[]): Promise<string[]> {
       timestamp,
       signature,
       cloudinaryConfig.api_key,
-      env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_URL,
+      env.CLOUDINARY_UPLOAD_URL,
     );
 
     uploadPromises.push(uploadPromise);
