@@ -49,7 +49,7 @@ dependencies:
     version: 4.24.4(next@14.0.1)(react-dom@18.2.0)(react@18.2.0)
   next-cloudinary:
     specifier: ^5.3.0
-    version: 5.3.0(next@13.5.6)(react@18.2.0)
+    version: 5.3.0(next@14.0.1)(react@18.2.0)
   postcss:
     specifier: 8.4.31
     version: 8.4.31
@@ -4323,10 +4323,7 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next@14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-s4YaLpE4b0gmb3ggtmpmV+wt+lPRuGtANzojMQ2+gmBpgX9w5fTbjsy6dXByBuENsdCX5pukZH/GxdFgO62+pA==}
-    engines: {node: '>=18.17.0'}
-  /next-cloudinary@5.3.0(next@13.5.6)(react@18.2.0):
+  /next-cloudinary@5.3.0(next@14.0.1)(react@18.2.0):
     resolution: {integrity: sha512-i1J8wSvb8ptEjWSr6KOMQ6kLtFPsI6zSy4GcgENt8dgidshTgcCcg/JQGqC0sGI4cR28umqEjB09tNXmT9GYKw==}
     peerDependencies:
       next: ^12 || ^13 || ^14
@@ -4334,13 +4331,13 @@ packages:
     dependencies:
       '@cloudinary-util/url-loader': 3.14.1
       '@cloudinary-util/util': 2.2.1
-      next: 13.5.6(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /next@13.5.6(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Y2wTcTbO4WwEsVb4A8VSnOsG1I9ok+h74q0ZdxkwM3EODqrs4pasq7O0iUxbcS9VtWMicG7f3+HAj0r1+NtKSw==}
-    engines: {node: '>=16.14.0'}
+  /next@14.0.1(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-s4YaLpE4b0gmb3ggtmpmV+wt+lPRuGtANzojMQ2+gmBpgX9w5fTbjsy6dXByBuENsdCX5pukZH/GxdFgO62+pA==}
+    engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
