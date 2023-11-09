@@ -1,4 +1,4 @@
-const PREFCTURE = [
+const PREFECTURE = [
   "北海道",
   "青森県",
   "岩手県",
@@ -59,7 +59,7 @@ const PrefectureSelectForm = () => {
       className="rounded-md border border-gray-300 px-3 py-2"
       defaultValue={"東京都"}
     >
-      {PREFCTURE.map((prf) => {
+      {PREFECTURE.map((prf) => {
         return (
           <option key={prf} value={prf}>
             {prf}
