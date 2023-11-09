@@ -1,5 +1,6 @@
 "use server";
 
+import { productFormData } from "@/app/add-listing/types";
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToS3 } from "@/lib/ImageUploadS3";
 import {
@@ -7,6 +8,7 @@ import {
   createListingWithTagsAndImages,
 } from "@/services/listing";
 import { createTag } from "@/services/tag";
+import { getFormValues } from "@/utils/extendsForm";
 import getSession from "@/utils/getSession";
 import { createId } from "@paralleldrive/cuid2";
 import { redirect } from "next/navigation";
@@ -52,19 +54,20 @@ export const addListing = async (
   formData: FormData,
   captchaValue: string | null | undefined,
 ) => {
-  const productName = formData.get("productName")?.toString();
-  const price = Number(formData.get("price"));
+  const formValues = getFormValues(formData, productFormData);
+  const {
+    productName,
+    price,
+    description,
+    imageFiles,
+    tags,
+    postageIsIncluded,
+    ...rest
+  } = formValues;
   const previousPrice = null;
-  const isPublic = true;
-  const description = formData.get("description")?.toString();
 
-  const tagsString = formData.get("tags")?.toString();
-  const imageFiles = formData.getAll("imageFile") as File[];
   const session = await getSession();
   const userId = session?.user.id;
-  const shippingDaysId = null;
-  const shippingMethodId = null;
-  const productConditionId = null;
 
   if (!userId) throw new Error("User is not authenticated");
   if (!productName) return "商品名を入力してください";
@@ -76,7 +79,7 @@ export const addListing = async (
   const isVerified = await fetchVerifyResult(captchaValue);
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
-  const tagIds = await processTags(tagsString);
+  const tagIds = await processTags(tags);
 
   const uploadPromises = imageFiles.map((file) =>
     uploadToS3(file, `products/${createId()}`),
@@ -90,10 +93,9 @@ export const addListing = async (
     previousPrice,
     description,
     sellerId: userId,
-    isPublic,
-    shippingDaysId,
-    shippingMethodId,
-    productConditionId,
+    isPublic: true,
+    postageIsIncluded: Boolean(postageIsIncluded),
+    ...rest,
   };
 
   const insertedListing = await createListingWithTagsAndImages(

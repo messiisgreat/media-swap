@@ -1,4 +1,4 @@
-import { SITE_NAME } from "@/constants";
+import { SITE_NAME } from "@/constants/site";
 
 /**
  * 電磁交付規約ページ

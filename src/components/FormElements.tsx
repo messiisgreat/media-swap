@@ -114,7 +114,7 @@ export const Textarea = forwardRef<
  * Selectの型宣言
  */
 type SelectProps = FormCommonProps & {
-  optionItems: (string | number)[];
+  options: { [key: string | number]: string | number };
 };
 
 /**
@@ -123,18 +123,73 @@ type SelectProps = FormCommonProps & {
 export const Select = forwardRef<
   HTMLSelectElement,
   ComponentPropsWithoutRef<"select"> & SelectProps
->(function Select({ className, labelText, optionItems, ...props }, ref) {
+>(function Select({ className, labelText, options, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <select className={selectClass} {...props} ref={ref}>
-        {optionItems?.map((optionItem, index) => (
-          <option key={optionItem} disabled={index === 0}>
-            {optionItem}
+      <select
+        className={selectClass}
+        defaultValue={undefined}
+        {...props}
+        ref={ref}
+      >
+        <option disabled value={undefined}>
+          選択してください
+        </option>
+        {Object.keys(options)?.map((option, i) => (
+          <option key={i} value={option}>
+            {options[option]}
           </option>
         ))}
       </select>
+    </div>
+  );
+});
+
+/**
+ * ラジオボタン
+ * @param props inputタグのattribute
+ * @returns div
+ */
+export const RadioGroup = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & SelectProps
+>(function RadioGroup({ className, labelText, options, ...props }, ref) {
+  const radioClass = `radio radio-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <div className="flex flex-row gap-2">
+        {Object.keys(options)?.map((option, i) => (
+          <label key={i} className={radioClass}>
+            <input
+              type="radio"
+              value={option}
+              {...props}
+              ref={ref}
+              className="radio"
+            />
+            <span className="ml-2">{options[option]}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+export const Toggle = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & FormCommonProps
+>(function Toggle({ className, labelText, ...props }, ref) {
+  const toggleClass = `toggle toggle-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <label className={toggleClass}>
+        <input type="checkbox" {...props} ref={ref} className="toggle" />
+        <span className="toggle-mark"></span>
+      </label>
     </div>
   );
 });
