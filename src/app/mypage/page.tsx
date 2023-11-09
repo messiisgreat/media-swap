@@ -9,9 +9,8 @@ import Link from "next/link";
  */
 export default async function Page() {
   const session = await getServerSession(authOptions);
-
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/mypage");
+    redirect("/");
   }
   return (
     <div className="w-full">
