@@ -64,11 +64,7 @@ export const addListing = async (
     ...rest
   } = formValues;
   const previousPrice = null;
-  const isPublic = true;
-  const description = formData.get("description")?.toString();
 
-  const tagsString = formData.get("tags")?.toString();
-  const imageFiles = formData.getAll("imageFile") as File[];
   const session = await getSession();
   const userId = session?.user.id;
 
