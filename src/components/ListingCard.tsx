@@ -1,10 +1,10 @@
 import { formatPrice } from "@/utils/format";
+import Image from "next/image";
 import Link from "next/link";
 import { findListingById } from "../services/listing";
 import PriceBadge from "./PriceBadge";
 
 type Props = {
-  /**Listing型 表示に必要なリレーション先のテーブルをインクルード済み */
   listing: Awaited<ReturnType<typeof findListingById>>;
 };
 
@@ -21,26 +21,24 @@ export function ListingCard({ listing }: Props) {
     listing.price != null ? formatPrice(listing.price) : "N/A";
 
   return (
-    <div className="">
-      <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
-        <Link
-          href={"/listings/" + listing.id}
-          className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
-        >
-          <div
-            className="h-32 w-32 cursor-pointer rounded-lg object-cover sm:h-48 sm:w-48"
-            style={{
-              backgroundImage: `url(${listing.images[0].image.imageURL})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <PriceBadge className="absolute bottom-2  inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
-              {formattedPrice}
-            </PriceBadge>
-          </div>
-        </Link>
-      </div>
+    <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
+      <Link
+        href={"/listings/" + listing.id}
+        className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
+      >
+        <div className="relative h-32 w-32 cursor-pointer rounded-lg sm:h-48 sm:w-48">
+          <Image
+            src={listing.images[0].image.imageURL}
+            alt={listing.productName || "Product Image"}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
+          />
+          <PriceBadge className="absolute bottom-2  inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
+            {formattedPrice}
+          </PriceBadge>
+        </div>
+      </Link>
     </div>
   );
 }
