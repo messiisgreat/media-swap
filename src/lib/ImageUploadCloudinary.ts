@@ -1,8 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { env } from "@/utils/env";
 
-// env.GOOGLE_RECAPTCHA_SECRET_KEY
-
 const cloudinaryConfig = {
   cloud_name: env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
   api_key: env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
