@@ -21,7 +21,6 @@ import toast from "react-hot-toast";
  * 商品を登録するためのフォーム
  * @param param0.tags タグ
  * @returns form
- * @todo 選択肢を定数として切り出す
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
