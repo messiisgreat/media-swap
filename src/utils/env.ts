@@ -1,4 +1,4 @@
-import zod, { ZodEffects } from "zod";
+import zod from "zod";
 
 const envSchema = zod.object({
   DATABASE_URL: zod.string().min(1),
