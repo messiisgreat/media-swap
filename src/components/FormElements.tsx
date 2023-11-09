@@ -1,6 +1,15 @@
 "use client";
-import { ComponentPropsWithoutRef, forwardRef, useState } from "react";
+import Image from "next/image";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 
 /**
  * Formの共通型
@@ -39,6 +48,7 @@ function useCharacterLimit(
   };
   return { value, characterCount, handleChange };
 }
+
 /**
  * inputタグにCSSを適用したラッパー
  */
@@ -105,7 +115,7 @@ export const Textarea = forwardRef<
  * Selectの型宣言
  */
 type SelectProps = FormCommonProps & {
-  optionItems: (string | number)[];
+  options: { [key: string | number]: string | number };
 };
 
 /**
@@ -114,21 +124,81 @@ type SelectProps = FormCommonProps & {
 export const Select = forwardRef<
   HTMLSelectElement,
   ComponentPropsWithoutRef<"select"> & SelectProps
->(function Select({ className, labelText, optionItems, ...props }, ref) {
+>(function Select({ className, labelText, options, ...props }, ref) {
   const selectClass = `select select-bordered ${className ?? ""}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <select className={selectClass} {...props} ref={ref}>
-        {optionItems?.map((optionItem, index) => (
-          <option key={optionItem} disabled={index === 0}>
-            {optionItem}
+      <select
+        className={selectClass}
+        defaultValue={undefined}
+        {...props}
+        ref={ref}
+      >
+        <option disabled value={undefined}>
+          選択してください
+        </option>
+        {Object.keys(options)?.map((option, i) => (
+          <option key={i} value={option}>
+            {options[option]}
           </option>
         ))}
       </select>
     </div>
   );
 });
+
+/**
+ * ラジオボタン
+ * @param props inputタグのattribute
+ * @returns div
+ */
+export const RadioGroup = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & SelectProps
+>(function RadioGroup({ className, labelText, options, ...props }, ref) {
+  const radioClass = `radio radio-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <div className="flex flex-row gap-2">
+        {Object.keys(options)?.map((option, i) => (
+          <label key={i} className={radioClass}>
+            <input
+              type="radio"
+              value={option}
+              {...props}
+              ref={ref}
+              className="radio"
+            />
+            <span className="ml-2">{options[option]}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+});
+
+export const Toggle = forwardRef<
+  HTMLInputElement,
+  ComponentPropsWithoutRef<"input"> & FormCommonProps
+>(function Toggle({ className, labelText, ...props }, ref) {
+  const toggleClass = `toggle toggle-primary ${className ?? ""}`;
+  return (
+    <div className="flex flex-col">
+      {labelText && <label>{labelText}</label>}
+      <label className={toggleClass}>
+        <input type="checkbox" {...props} ref={ref} className="toggle" />
+        <span className="toggle-mark"></span>
+      </label>
+    </div>
+  );
+});
+
+/**
+ * ファイルの型宣言
+ */
+type FileWithPreview = File & { preview: string };
 
 /**
  * 画像を選択するinputタグにCSSを適用したラッパー
@@ -139,26 +209,90 @@ export const Select = forwardRef<
 export const ImageInput = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function ImageInput({ className, id, labelText, ...props }, ref) {
-  const labelClass = `flex cursor-pointer items-center justify-center 
-  gap-1 rounded-md border border-red-500 bg-white 
-  py-3.5 text-red-500
-  hover:bg-red-50 ${className ?? ""}`;
+>(function ImageInput({ id, labelText, ...props }, ref) {
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
+
+  const onDrop = useCallback(
+    (droppedFiles: File[]) => {
+      setFiles((previousFiles) => {
+        const spaceLeft = 10 - previousFiles.length;
+        const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+        const filesWithPreview = acceptedFiles.map((file: File) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          }),
+        ) as FileWithPreview[];
+        return [...previousFiles, ...filesWithPreview];
+      });
+    },
+    [],
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [],
+    },
+    multiple: true,
+    noClick: true,
+  });
+
+  useEffect(() => {
+    return () =>
+      files.forEach((file: FileWithPreview) =>
+        URL.revokeObjectURL(file.preview),
+      );
+  }, [files]);
+
+  const removeFile = (name: string) => {
+    setFiles(files.filter((file) => file.name !== name));
+  };
+
+  const labelClass =
+    files?.length < 10
+      ? "flex cursor-pointer items-center justify-center gap-1 rounded-md border border-red-500 bg-white text-red-500 hover:bg-red-50"
+      : "flex cursor-no-drop items-center justify-center rounded-md border border-neutral-300 bg-white text-neutral-300";
+
   return (
     <div>
       {labelText && <label>{labelText}</label>}
+      <ul className="grid grid-cols-3 gap-2">
+        {files.map((file) => (
+          <li key={file.name} className="relative">
+            <button
+              type="button"
+              className="absolute right-4 top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
+              onClick={() => removeFile(file.name)}
+            >
+              <FaTimes color="white" />
+            </button>
+            <Image
+              src={file.preview}
+              alt={file.name}
+              width={80}
+              height={80}
+              className="p-2"
+            />
+          </li>
+        ))}
+      </ul>
       <label className={labelClass} htmlFor={id}>
-        <BiSolidCamera size={20} />
-        <p className="font-bold">画像を選択する</p>
         <input
-          required
-          type="file"
-          accept="image/*"
-          id={id}
-          className="hidden"
-          ref={ref}
           {...props}
+          {...getInputProps()}
+          id={id}
+          type="file"
+          ref={ref}
+          multiple
+          className="hidden"
         />
+        <div
+          {...getRootProps()}
+          className="flex flex-row items-center justify-center gap-1 px-3 py-3.5"
+        >
+          <BiSolidCamera size={20} />
+          <p className="font-bold">画像を選択する</p>
+        </div>
       </label>
     </div>
   );

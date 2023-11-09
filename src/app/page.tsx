@@ -20,7 +20,7 @@ type HomeProps = {
  * @param param0.searchParams.page ページ番号
  */
 export default async function Home({
-  searchParams: { page = 1, size = 27, sort = "pageView", order = "desc" },
+  searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
 }: HomeProps) {
   const orderBy: ListingOrderBy = {
     [sort]: order,

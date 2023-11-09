@@ -1,4 +1,4 @@
-import { SITE_NAME } from "@/constants";
+import { SITE_NAME } from "@/constants/site";
 
 export type LinkObject = {
   text: string;

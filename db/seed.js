@@ -135,6 +135,7 @@ async function main() {
       userId: seller.id,
       listingId: listing.id,
       comment: "Great product!",
+      createdAt: new Date("2023-01-01T00:00:00Z"),
     },
   });
 
