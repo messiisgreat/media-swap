@@ -96,14 +96,33 @@ export type UnregisteredListing = Omit<
  * @param images 画像のURLの配列
  * @returns 追加された商品
  */
+// `UnregisteredListing`から`sellerId`を分割代入し、それを使用してsellerを接続します。
 export const createListingWithTagsAndImages = async (
-  listing: UnregisteredListing,
+  {
+    sellerId,
+    shippingDaysId, // このフィールドは `string | null` 型です
+    shippingMethodId, // 同上
+    productConditionId, // 同上
+    ...restOfListing
+  }: UnregisteredListing,
   tagIds: string[],
   images: string[],
 ) => {
   return prisma.listing.create({
     data: {
-      ...listing,
+      ...restOfListing, // 残りのリストの詳細を展開
+      seller: {
+        connect: { id: sellerId }, // 分割代入した`sellerId`を使用してsellerを接続
+      },
+      shippingDays: shippingDaysId
+        ? { connect: { id: shippingDaysId } }
+        : undefined,
+      shippingMethod: shippingMethodId
+        ? { connect: { id: shippingMethodId } }
+        : undefined,
+      productCondition: productConditionId
+        ? { connect: { id: productConditionId } }
+        : undefined,
       tags: {
         connect: tagIds.map((id) => ({ id })),
       },

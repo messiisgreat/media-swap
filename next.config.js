@@ -10,6 +10,7 @@ const nextConfig = {
       { hostname: "res.cloudinary.com" },
       // デバッグ用のサンプル画像ジェネレーター
       { hostname: "picsum.photos" },
+      { hostname: "res.cloudinary.com" },
     ],
   },
 };
