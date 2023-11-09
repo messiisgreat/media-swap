@@ -9,6 +9,7 @@ const nextConfig = {
       { hostname: "lh3.googleusercontent.com" },
       // デバッグ用のサンプル画像ジェネレーター
       { hostname: "picsum.photos" },
+      { hostname: "res.cloudinary.com" },
     ],
   },
 };
