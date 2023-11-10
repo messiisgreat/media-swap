@@ -10,6 +10,8 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
+import { useCharacterLimit } from "@/components/formElements/FormElementsHooks";
+
 
 /**
  * Formの共通型
@@ -18,36 +20,6 @@ type FormCommonProps = {
   labelText?: string;
   characterLimit?: number;
 };
-
-/**
- * テキスト入力フィールドの文字数制限を扱うためのフックス
- * @param {string} initialValue - テキスト入力フィールドの初期値
- * @param {number} limit - テキスト入力フィールドで許可される最大文字数（オプション）
- * @returns {object} - テキスト入力フィールドの現在の値、文字数カウント、および値を更新するためのhandleChange関数を含むオブジェクト
- */
-function useCharacterLimit(
-  initialValue: string,
-  limit?: number,
-): {
-  value: string;
-  characterCount: number;
-  handleChange: (newValue: string) => void;
-} {
-  const [value, setValue] = useState(initialValue);
-  const [characterCount, setCharacterCount] = useState(
-    initialValue.length || 0,
-  );
-  const handleChange = (newValue: string) => {
-    if (limit && newValue.length > limit) {
-      setValue(newValue.substring(0, limit));
-      setCharacterCount(limit);
-    } else {
-      setValue(newValue);
-      setCharacterCount(newValue.length);
-    }
-  };
-  return { value, characterCount, handleChange };
-}
 
 /**
  * inputタグにCSSを適用したラッパー

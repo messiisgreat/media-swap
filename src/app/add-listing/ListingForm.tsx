@@ -2,7 +2,7 @@
 
 import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
 import { addListing } from "@/app/add-listing/actions";
-import { ImageInput, Input, Select, Textarea } from "@/components/FormElements";
+import { ImageInput, Input, Select, Textarea } from "@/components/formElements/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { TitleUnderbar } from "@/components/TitleUnderbar";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
