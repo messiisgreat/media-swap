@@ -108,12 +108,11 @@ export const createListingWithTagsAndImages = async (
   tagIds: string[],
   images: string[],
 ) => {
-  return prisma.listing.create({
+  // まずリスティングを作成
+  const createdListing = await prisma.listing.create({
     data: {
-      ...restOfListing, // 残りのリストの詳細を展開
-      seller: {
-        connect: { id: sellerId }, // 分割代入した`sellerId`を使用してsellerを接続
-      },
+      ...restOfListing,
+      seller: { connect: { id: sellerId } },
       shippingDays: shippingDaysId
         ? { connect: { id: shippingDaysId } }
         : undefined,
@@ -123,20 +122,41 @@ export const createListingWithTagsAndImages = async (
       productCondition: productConditionId
         ? { connect: { id: productConditionId } }
         : undefined,
-      tags: {
-        connect: tagIds.map((id) => ({ id })),
-      },
-      images: {
-        create: images.map((imageURL) => ({
-          image: {
-            create: {
-              imageURL,
-            },
-          },
-        })),
-      },
+      // タグと画像は後で追加
     },
   });
+
+  // タグとの関連付け
+  await Promise.all(
+    tagIds.map((tagId) =>
+      prisma.listingTag.create({
+        data: {
+          listingId: createdListing.id,
+          tagId: tagId,
+        },
+      }),
+    ),
+  );
+
+  // 画像の保存とリスティングとの関連付け
+  await Promise.all(
+    images.map(async (imageURL) => {
+      // まず `Image` モデルに画像を保存
+      const image = await prisma.image.create({
+        data: { imageURL },
+      });
+
+      // 次に `ListingImage` モデルに関連付け
+      return prisma.listingImage.create({
+        data: {
+          listingId: createdListing.id,
+          imageId: image.id,
+        },
+      });
+    }),
+  );
+
+  return createdListing;
 };
 
 /**
