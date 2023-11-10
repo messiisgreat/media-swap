@@ -62,7 +62,7 @@ export const findListingById = cache(async (id: string) => {
   return prisma.listing.findUniqueOrThrow({
     where: { id },
     include: {
-      images: { select: { imageURL: true, order: true } },
+      images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
         include: {
           tag: true,
@@ -91,7 +91,7 @@ export const findListings = cache(
       skip: (page - 1) * size,
       take: size,
       include: {
-        images: { select: { imageURL: true, order: true } },
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
         tags: {
           include: {
             tag: true,
@@ -118,7 +118,7 @@ export const findListingByProductName = cache(
       take: size,
       where: { productName: { contains: query } },
       include: {
-        images: { select: { imageURL: true, order: true } },
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
         tags: {
           include: {
             tag: true,
