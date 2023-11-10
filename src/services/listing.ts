@@ -127,16 +127,18 @@ export const createListingWithTagsAndImages = async (
   });
 
   // タグとの関連付け
-  await Promise.all(
-    tagIds.map((tagId) =>
-      prisma.listingTag.create({
-        data: {
-          listingId: createdListing.id,
-          tagId: tagId,
-        },
-      }),
-    ),
-  );
+  if (tagIds.length > 0) {
+    await Promise.all(
+      tagIds.map((tagId) =>
+        prisma.listingTag.create({
+          data: {
+            listingId: createdListing.id,
+            tagId: tagId,
+          },
+        }),
+      ),
+    );
+  }
 
   // 画像の保存とリスティングとの関連付け
   await Promise.all(
