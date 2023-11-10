@@ -1,8 +1,8 @@
+import PriceBadge from "@/components/PriceBadge";
+import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";
-import { findListingById } from "../services/listing";
-import PriceBadge from "./PriceBadge";
 
 type Props = {
   listing: Awaited<ReturnType<typeof findListingById>>;
@@ -28,7 +28,7 @@ export function ListingCard({ listing }: Props) {
       >
         <div className="relative h-32 w-32 cursor-pointer rounded-lg sm:h-48 sm:w-48">
           <Image
-            src={listing.images[0].image.imageURL}
+            src={listing.images[0].imageURL}
             alt={listing.productName || "Product Image"}
             layout="fill"
             objectFit="cover"
