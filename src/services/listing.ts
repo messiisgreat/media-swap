@@ -140,6 +140,13 @@ export const findListingByProductName = cache(
 );
 
 /**
+ * 商品の総数を取得する
+ */
+export const countListings = cache(async () => {
+  return prisma.listing.count();
+});
+
+/**
  * 商品を削除する
  *
  * @param id - 削除対象の商品のID
