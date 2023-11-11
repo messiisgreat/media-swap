@@ -11,7 +11,7 @@ import { z } from "zod";
 export const AddressFormSchema = z.object({
   postalCode: z
     .string()
-    .regex(/^\d{7}$/, { message: "ハイフンなしの7文字で入力してください。" }),
+    .length(7, { message: "ハイフンなしの7文字で入力してください。" }),
   prefecture: z.string().min(1, { message: "必須項目です" }),
   city: z.string().min(1, { message: "必須項目です" }),
   addressLine1: z.string().min(1, { message: "必須項目です" }),
@@ -66,7 +66,7 @@ export default function Page() {
         <span>郵便番号</span>
         <div>
           <input
-            type="text"
+            type="number"
             autoComplete="shipping postal-code"
             className="rounded-md border border-gray-300 px-3 py-2"
             placeholder="例: 1234567"
