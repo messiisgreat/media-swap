@@ -10,8 +10,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import { useCharacterLimit } from "@/components/formElements/FormElementsHooks";
-
+import { useCharacterLimit, useCharacterLimit2 } from "@/components/formElements/FormElementsHooks";
 
 /**
  * Formの共通型
@@ -29,10 +28,11 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input({ className, labelText, characterLimit, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
-  const { value, characterCount, handleChange } = useCharacterLimit(
+  const { value, error, handleChange } = useCharacterLimit2(
     "",
     characterLimit,
   );
+
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
@@ -43,9 +43,13 @@ export const Input = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
+      <div>
+        { error }
+      </div>
       {characterLimit && (
         <label className="label-text-alt self-end">
-          {characterCount}/{characterLimit}
+          /{characterLimit}
+          {/* {characterCount}/{characterLimit} */}
         </label>
       )}
     </div>

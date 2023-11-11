@@ -4,11 +4,34 @@ import { z } from "zod";
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export function useCharacterLimit2(
-  data: string,
-  limit: number
-): void {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const characterLimitSchema = z.string().max(limit);
+  initialValue : string,
+  limit?: number,
+): {
+  value: string;
+  error: string;
+  handleChange: (newValue: string) => void;
+} {
+  const [value, setValue] = useState(initialValue);
+  const [error, setError] = useState('');
+
+  if(limit === undefined) {
+    return { value, error, handleChange: (newValue: string) => setValue(newValue) };
+  }
+  const limitSchema = z
+    .string()
+    .max(limit, { message: `文字数は${limit}文字以下にしてください` })
+    .or(z.number());
+
+  const handleChange = (newValue: string) => {
+    const result = limitSchema.safeParse(newValue);
+    if (result.success) {
+      setValue(newValue);
+      setError('');
+    } else {
+      setError(result.error.errors[0].message);
+    }
+  }
+  return { value, error, handleChange };
 }
 
 /**
