@@ -1,4 +1,4 @@
-const PREFECTURE = [
+export const PREFECTURE = [
   "北海道",
   "青森県",
   "岩手県",
@@ -47,27 +47,3 @@ const PREFECTURE = [
   "鹿児島県",
   "沖縄県",
 ];
-
-/**
- * 都道府県フォームコンポーネント
- */
-const PrefectureSelectForm = () => {
-  return (
-    <select
-      name="prefecture"
-      autoComplete="shipping address-level1"
-      className="rounded-md border border-gray-300 px-3 py-2"
-      defaultValue={"東京都"}
-    >
-      {PREFECTURE.map((prf) => {
-        return (
-          <option key={prf} value={prf}>
-            {prf}
-          </option>
-        );
-      })}
-    </select>
-  );
-};
-
-export default PrefectureSelectForm;
