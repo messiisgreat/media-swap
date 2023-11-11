@@ -1,5 +1,15 @@
 import { useState } from "react";
+import { z } from "zod";
 
+
+// eslint-disable-next-line jsdoc/require-jsdoc
+export function useCharacterLimit2(
+  data: string,
+  limit: number
+): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const characterLimitSchema = z.string().max(limit);
+}
 
 /**
  * テキスト入力フィールドの文字数制限を扱うためのフックス
