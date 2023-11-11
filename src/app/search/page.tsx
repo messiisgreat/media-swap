@@ -1,4 +1,5 @@
-import { ListingCard } from "@/components";
+import ItemsList from "@/components/itemsList";
+import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
 import { ListingOrderBy, findListingByProductName } from "@/services/listing";
 import { Listing } from "@prisma/client";
 import { Metadata } from "next";
@@ -50,14 +51,9 @@ export default async function SearchPage({
     return <div className="text-center">商品が見つかりません</div>;
   }
   return (
-    <div className="my-4 px-4 lg:px-0">
-      <p className="mb-4 text-lg font-medium">検索結果</p>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {listings.map((listing) => (
-          <ListingCard listing={listing} key={listing.id} />
-        ))}
-      </div>
-    </div>
+    <>
+      <TitleUnderbar title={`${query}の検索結果`} />
+      <ItemsList listings={listings} />
+    </>
   );
 }
