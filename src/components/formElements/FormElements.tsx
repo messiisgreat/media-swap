@@ -10,10 +10,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import {
-  useCharacterLimit,
-  useCharacterLimit2,
-} from "@/components/formElements/FormElementsHooks";
+import { useCharacterLimit } from "@/components/formElements/FormElementsHooks";
 
 /**
  * Formの共通型
@@ -31,7 +28,10 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input({ className, labelText, characterLimit, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
-  const { value, error, handleChange } = useCharacterLimit2("", characterLimit);
+  const { value, error, characterCount, handleChange } = useCharacterLimit(
+    "",
+    characterLimit,
+  );
 
   return (
     <div className="flex flex-col">
@@ -43,20 +43,17 @@ export const Input = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
-      {characterLimit && !error && (
-        <label className="label-text-alt self-end">
-          /{characterLimit}
-          {/* {characterCount}/{characterLimit} */}
-        </label>
-      )}
-      {characterLimit && error && (
+      {characterLimit && error ? (
         <div className="flex justify-between">
           <label className="label-text-alt text-error">{error}</label>
           <label className="label-text-alt self-end">
-            /{characterLimit}
-            {/* {characterCount}/{characterLimit} */}
+            {characterCount}/{characterLimit}
           </label>
         </div>
+      ) : (
+        <label className="label-text-alt self-end">
+          {characterCount}/{characterLimit}
+        </label>
       )}
     </div>
   );
@@ -70,7 +67,7 @@ export const Textarea = forwardRef<
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
 >(function Textarea({ className, labelText, characterLimit, ...props }, ref) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
-  const { value, characterCount, handleChange } = useCharacterLimit(
+  const { value, error, characterCount, handleChange } = useCharacterLimit(
     "",
     characterLimit,
   );
@@ -84,7 +81,14 @@ export const Textarea = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
-      {characterLimit && (
+      {characterLimit && error ? (
+        <div className="flex justify-between">
+          <label className="label-text-alt text-error">{error}</label>
+          <label className="label-text-alt self-end">
+            {characterCount}/{characterLimit}
+          </label>
+        </div>
+      ) : (
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
