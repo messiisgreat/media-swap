@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { z } from "zod";
 
-
 // eslint-disable-next-line jsdoc/require-jsdoc
 export function useCharacterLimit2(
-  initialValue : string,
+  initialValue: string,
   limit?: number,
 ): {
   value: string;
@@ -12,10 +11,14 @@ export function useCharacterLimit2(
   handleChange: (newValue: string) => void;
 } {
   const [value, setValue] = useState(initialValue);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  if(limit === undefined) {
-    return { value, error, handleChange: (newValue: string) => setValue(newValue) };
+  if (limit === undefined) {
+    return {
+      value,
+      error,
+      handleChange: (newValue: string) => setValue(newValue),
+    };
   }
   const limitSchema = z
     .string()
@@ -26,11 +29,11 @@ export function useCharacterLimit2(
     const result = limitSchema.safeParse(newValue);
     if (result.success) {
       setValue(newValue);
-      setError('');
+      setError("");
     } else {
       setError(result.error.errors[0].message);
     }
-  }
+  };
   return { value, error, handleChange };
 }
 

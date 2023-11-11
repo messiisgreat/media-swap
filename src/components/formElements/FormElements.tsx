@@ -10,7 +10,10 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import { useCharacterLimit, useCharacterLimit2 } from "@/components/formElements/FormElementsHooks";
+import {
+  useCharacterLimit,
+  useCharacterLimit2,
+} from "@/components/formElements/FormElementsHooks";
 
 /**
  * Formの共通型
@@ -28,10 +31,7 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input({ className, labelText, characterLimit, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
-  const { value, error, handleChange } = useCharacterLimit2(
-    "",
-    characterLimit,
-  );
+  const { value, error, handleChange } = useCharacterLimit2("", characterLimit);
 
   return (
     <div className="flex flex-col">
@@ -43,14 +43,20 @@ export const Input = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
-      <div>
-        { error }
-      </div>
-      {characterLimit && (
+      {characterLimit && !error && (
         <label className="label-text-alt self-end">
           /{characterLimit}
           {/* {characterCount}/{characterLimit} */}
         </label>
+      )}
+      {characterLimit && error && (
+        <div className="flex justify-between">
+          <label className="label-text-alt text-error">{error}</label>
+          <label className="label-text-alt self-end">
+            /{characterLimit}
+            {/* {characterCount}/{characterLimit} */}
+          </label>
+        </div>
       )}
     </div>
   );
@@ -188,21 +194,18 @@ export const ImageInput = forwardRef<
 >(function ImageInput({ id, labelText, ...props }, ref) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-  const onDrop = useCallback(
-    (droppedFiles: File[]) => {
-      setFiles((previousFiles) => {
-        const spaceLeft = 10 - previousFiles.length;
-        const acceptedFiles = droppedFiles.slice(0, spaceLeft);
-        const filesWithPreview = acceptedFiles.map((file: File) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
-        ) as FileWithPreview[];
-        return [...previousFiles, ...filesWithPreview];
-      });
-    },
-    [],
-  );
+  const onDrop = useCallback((droppedFiles: File[]) => {
+    setFiles((previousFiles) => {
+      const spaceLeft = 10 - previousFiles.length;
+      const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+      const filesWithPreview = acceptedFiles.map((file: File) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      ) as FileWithPreview[];
+      return [...previousFiles, ...filesWithPreview];
+    });
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
