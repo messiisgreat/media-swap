@@ -33,7 +33,7 @@ export default async function SearchPage({
     query,
     page = 1,
     size = 27,
-    sort = "pageView",
+    sort = "createdAt",
     order = "desc",
   },
 }: SearchPageProps) {
