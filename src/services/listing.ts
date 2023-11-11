@@ -1,7 +1,8 @@
 import "server-only";
 
-import prisma from "../lib/prisma";
-import { Listing } from '@prisma/client';
+import prisma from "@/lib/prisma";
+import { upsertTags } from "@/services/tag";
+import { Listing } from "@prisma/client";
 import { cache } from "react";
 
 /** データベース未登録のListing型 */
@@ -13,13 +14,13 @@ export type UnregisteredListing = Omit<
 /**
  * 商品を追加する
  * @param listing 追加する商品
- * @param tagIds タグIDの配列
+ * @param tagTexts タグIDの配列
  * @param imageURLs 画像URLの配列
  * @returns 追加された商品
  */
 export const createListingWithTagsAndImages = async (
   listing: UnregisteredListing,
-  tagIds: string[],
+  tagTexts: string[],
   imageURLs: string[],
 ) => {
   const {
@@ -46,7 +47,9 @@ export const createListingWithTagsAndImages = async (
           data: imageURLs.map((imageURL, i) => ({ imageURL, order: i })),
         },
       },
-      tags: tagIds.length > 0 ? { connect: tagIds.map((id) => ({ id })) } : {},
+      tags: {
+        connect: (await upsertTags(tagTexts)).map((tag) => ({ id: tag.id })),
+      },
     },
   });
 };
@@ -86,7 +89,7 @@ export type ListingOrderBy =
  * @param order ソート順 例: { price: "asc" }
  */
 export const findListings = cache(
-  async (page: number, size: number, order: ListingOrderBy) => {
+  async (page: number, size: number, orderBy: ListingOrderBy) => {
     return prisma.listing.findMany({
       skip: (page - 1) * size,
       take: size,
@@ -98,7 +101,7 @@ export const findListings = cache(
           },
         },
       },
-      orderBy: order,
+      orderBy,
     });
   },
 );
@@ -112,7 +115,12 @@ export const findListings = cache(
  * @returns 検索結果
  */
 export const findListingByProductName = cache(
-  async (query: string, page: number, size: number, order: ListingOrderBy) => {
+  async (
+    query: string,
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+  ) => {
     return prisma.listing.findMany({
       skip: (page - 1) * size,
       take: size,
@@ -125,7 +133,7 @@ export const findListingByProductName = cache(
           },
         },
       },
-      orderBy: order,
+      orderBy,
     });
   },
 );
