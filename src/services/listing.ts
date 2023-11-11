@@ -64,7 +64,7 @@ export const createListingWithTagsAndImages = async (
  */
 export const findListingById = cache(async (id: string) => {
   return prisma.listing.findUniqueOrThrow({
-    where: { id },
+    where: { id, isPublic: true },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
@@ -92,6 +92,7 @@ export type ListingOrderBy =
 export const findListings = cache(
   async (page: number, size: number, orderBy: ListingOrderBy) => {
     return prisma.listing.findMany({
+      where: { isPublic: true },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -138,9 +139,9 @@ export const findListingsByProductName = cache(
     orderBy: ListingOrderBy,
   ) => {
     return prisma.listing.findMany({
+      where: { productName: { contains: query }, isPublic: true },
       skip: (page - 1) * size,
       take: size,
-      where: { productName: { contains: query } },
       include: {
         images: { select: { imageURL: true }, orderBy: { order: "asc" } },
         tags: {
