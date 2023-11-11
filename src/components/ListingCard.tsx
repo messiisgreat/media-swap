@@ -23,7 +23,7 @@ export function ListingCard({ listing }: Props) {
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
       <Link
-        href={"/listings/" + listing.id}
+        href={"/listing/" + listing.id}
         className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
       >
         <div className="relative h-32 w-32 cursor-pointer rounded-lg sm:h-48 sm:w-48">
