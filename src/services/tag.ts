@@ -16,21 +16,6 @@ export const createTag = async (text: string) => {
 };
 
 /**
- * タグ文字列を受け取り、すでに登録されているタグはそのまま、未登録のタグは新規登録する
- * @param tagTexts タグテキストの配列
- */
-export const upsertTags = async (tagTexts: string[]) =>
-  Promise.all(
-    tagTexts.map(async (text) =>
-      prisma.tag.upsert({
-        where: { text },
-        update: {},
-        create: { text },
-      }),
-    ),
-  );
-
-/**
  * すべてのタグを取得する
  */
 export const findTags = cache(async () => prisma.tag.findMany());

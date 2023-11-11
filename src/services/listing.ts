@@ -1,7 +1,6 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
-import { upsertTags } from "@/services/tag";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
 
@@ -48,7 +47,9 @@ export const createListingWithTagsAndImages = async (
         },
       },
       tags: {
-        connect: (await upsertTags(tagTexts)).map((tag) => ({ id: tag.id })),
+        create: tagTexts.map((text) => ({
+          tag: { connectOrCreate: { where: { text }, create: { text } } },
+        })),
       },
     },
   });

@@ -58,7 +58,7 @@ export const addListing = async (
   const isVerified = await fetchVerifyResult(captchaValue);
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
-  const tagIds = parseTags(tags);
+  const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
 
   const listing: UnregisteredListing = {
@@ -74,7 +74,7 @@ export const addListing = async (
 
   const insertedListing = await createListingWithTagsAndImages(
     listing,
-    tagIds,
+    tagTexts,
     images,
   );
 
