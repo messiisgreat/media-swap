@@ -7,6 +7,7 @@ import {
   UnregisteredListing,
   createListingWithTagsAndImages,
 } from "@/services/listing";
+import { strToBool } from "@/utils/converter";
 import { getFormValues } from "@/utils/extendsForm";
 import getSession from "@/utils/getSession";
 import { redirect } from "next/navigation";
@@ -41,10 +42,10 @@ export const addListing = async (
     imageFiles,
     tags,
     postageIsIncluded,
+    isPublic,
     ...rest
   } = formValues;
   const previousPrice = null;
-
   const session = await getSession();
   const userId = session?.user.id;
 
@@ -67,8 +68,8 @@ export const addListing = async (
     previousPrice,
     description,
     sellerId: userId,
-    isPublic: true,
-    postageIsIncluded: Boolean(postageIsIncluded),
+    isPublic: strToBool(isPublic),
+    postageIsIncluded: strToBool(postageIsIncluded),
     ...rest,
   };
 

@@ -6,7 +6,7 @@ import { useFormStatus } from "react-dom";
 /**
  * 下書き保存・出品ボタン
  * 送信中はボタンを無効化する
- * どちらのボタンが押されたかを、name="submit" value="draft"|"publish" で判定する
+ * どちらのボタンが押されたかを、name="isPublic" value="true"|"false" で判定する
  * @returns Fragment > Button
  */
 export const SubmitContainer = () => {
@@ -17,14 +17,14 @@ export const SubmitContainer = () => {
     <>
       <Button
         type="submit"
-        name="submit"
-        value="draft"
+        name="isPublic"
+        value="false"
         outline
         disabled={pending}
       >
         {loading}下書きに保存する
       </Button>
-      <Button type="submit" name="submit" value="publish" disabled={pending}>
+      <Button type="submit" name="isPublic" value="true" disabled={pending}>
         {loading}出品する
       </Button>
     </>
