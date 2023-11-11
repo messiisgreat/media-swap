@@ -60,7 +60,8 @@ jobs:
             重要な問題を特定し、解決して全体的なコード品質を向上させることを目指し、細かい問題は意図的に無視してください。
             以下は指摘しない:
               - use client,use server directive
-              - form action,async component,
+              - function recieved by form action attribute
+              - async component
               - Link > a
               - hooks export static component
               - async function throws error
