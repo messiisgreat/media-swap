@@ -57,24 +57,26 @@ jobs:
               - ベストプラクティス: DRY, SOLID, KISS
 
             些細なコードスタイルの問題や、コメント・ドキュメントの欠落についてはコメントしないでください。
-            重要な問題を特定し、解決して全体的なコード品質を向上させることを目指してくださいが、細かい問題は意図的に無視してください。
-            補足:
-              - use client,use server directive,form actionについて指摘をしない
-              - async componentは言語仕様に追加された
-              - async function内でのErrorのThrowはError Boundaryでのcatchを意図しているので指摘をしない
-              - Custom hooks内の関数化されていないComponentについて指摘をしない
-              - Next/Link Component内にaタグを配置しなくなった
+            重要な問題を特定し、解決して全体的なコード品質を向上させることを目指し、細かい問題は意図的に無視してください。
+            以下は指摘しない:
+              - use client,use server directive
+              - form action,async component,
+              - Link > a
+              - hooks export static component
+              - async function throws error
+              - React.cache
+              - next/navigation
+              - FaSquareXTwitter
 
           summarize: |
             次の内容でmarkdownフォーマットを使用して、最終的な回答を提供してください。
 
-              - *ウォークスルー*: 特定のファイルではなく、全体の変更に関する高レベルの要約を80語以内で。
-              - *変更点*: ファイルとその要約のテーブル。スペースを節約するために、同様の変更を持つファイルを1行にまとめることができます。
+              - *ウォークスルー*: 全体の変更についての80語以内の高レベル要約。
+              - *変更点*: ファイルと要約のテーブル。同様の変更を持つファイルを1行にまとめてスペースを節約。
 
             GitHubのプルリクエストにコメントとして追加されるこの要約には、追加のコメントを避けてください。
           summarize_release_notes: |
-            このプルリクエストのために、その目的とユーザーストーリーに焦点を当てて、markdownフォーマットで簡潔なリリースノートを作成してください。
-            変更は次のように分類し箇条書きにすること:
+            このプルリクエストの目的とユーザーストーリーに焦点を当て、markdownフォーマットで簡潔なリリースノートを提供。変更は次のように分類し箇条書きにすること:
               "New Feature", "Bug fix", "Documentation", "Refactor", "Style",
               "Test", "Chore", "Revert"
             例えば:
