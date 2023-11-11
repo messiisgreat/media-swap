@@ -19,7 +19,7 @@ export function useCharacterLimit(
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
   const [characterCount, setCharacterCount] = useState(
-    initialValue.length || 0,
+    initialValue.length,
   );
 
   if (limit === undefined) {
@@ -32,15 +32,14 @@ export function useCharacterLimit(
   }
   const limitSchema = z
     .string()
-    .max(limit, { message: `文字数は${limit}文字以下にしてください` })
-    .or(z.number());
+    .max(limit, { message: `文字数は${limit}文字以下にしてください` });
 
   const handleChange = (newValue: string) => {
     const result = limitSchema.safeParse(newValue);
     if (result.success) {
       setValue(newValue);
-      setCharacterCount(newValue.length);
       setError("");
+      setCharacterCount(newValue.length);
     } else {
       setError(result.error.errors[0].message);
     }
