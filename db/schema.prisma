@@ -181,29 +181,17 @@ model ListingReport {
     @@map("listing_reports")
 }
 
-// 画像テーブル
-model Image {
-    id       String  @id @default(auto()) @map("_id") @db.ObjectId
-    imageURL String  @map("image_url") // 画像URL
-    caption  String? // キャプション
-
-    listingImages ListingImage[]
-
-    @@map("images")
-}
-
-// 出品情報画像テーブル
+// 出品画像テーブル
 model ListingImage {
-    id        String @id @default(auto()) @map("_id") @db.ObjectId
-    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
-    imageId   String @map("image_id") @db.ObjectId // 画像ID外部キー
-    order     Int    @default(0) // 並び順
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String  @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    imageURL  String  @map("image_url") // 画像URL
+    caption   String? // キャプション
+    order     Int     @default(0) // 並び順
 
     listing Listing @relation(fields: [listingId], references: [id])
-    image   Image   @relation(fields: [imageId], references: [id])
 
-    @@unique([listingId, imageId])
-    @@map("listing_images")
+    @@map("images")
 }
 
 // 商品状態テーブル

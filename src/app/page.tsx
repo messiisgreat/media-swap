@@ -1,9 +1,7 @@
+import { ListingCard, PaginationBar } from "@/components";
+import prisma from "@/lib/prisma";
+import { ListingOrderBy, findListings } from "@/services/listing";
 import Link from "next/link";
-import React from "react";
-import { ListingCard } from "../components/ListingCard";
-import { PaginationBar } from "../components/PaginationBar";
-import prisma from "../lib/prisma";
-import { ListingOrderBy, findListings } from "../services/listing";
 
 type HomeProps = {
   searchParams: {
@@ -25,13 +23,11 @@ export default async function Home({
   const orderBy: ListingOrderBy = {
     [sort]: order,
   };
-  const heroItemCount = 1;
 
   const totalItemCount = await prisma.listing.count();
 
-  const totalPages = Math.ceil((totalItemCount - heroItemCount) / size);
+  const totalPages = Math.ceil(totalItemCount / size);
 
-  // findListings はリストを返すと仮定しています
   const listings = await findListings(page, size, orderBy);
   return (
     <>
@@ -40,7 +36,6 @@ export default async function Home({
           <ListingCard key={listing.id} listing={listing} />
         ))}
       </div>
-
       <Link href="/add-listing" className="btn btn-primary mb-4">
         出品する
       </Link>
