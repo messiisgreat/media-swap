@@ -1,9 +1,14 @@
 "use client";
 
 import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
+import { SubmitContainer } from "@/app/add-listing/SubmitContainer";
 import { addListing } from "@/app/add-listing/actions";
-import { ImageInput, Input, Select, Textarea } from "@/components/formElements/FormElements";
-import FormSubmitButton from "@/components/FormSubmitButton";
+import {
+  ImageInput,
+  Input,
+  Select,
+  Textarea,
+} from "@/components/formElements/FormElements";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
 import {
@@ -32,7 +37,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   };
 
   return (
-    <form action={action} className="flex flex-col gap-3">
+    <form
+      action={action}
+      className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1"
+    >
       <ImageInput
         labelText="出品画像(最大10枚)"
         id={imageInputId}
@@ -76,7 +84,6 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         labelText="発送までの日数"
         options={objToAssociative(SHIPPING_DAYS)}
       />
-      <label className="text-lg">販売価格</label>
       <Input
         labelText="販売価格"
         type="number"
@@ -91,7 +98,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       <label className="mb-2">販売利益</label>
       {/* 別途コンポーネントを作成の必要あり*/}
       {SecurityVerifier}
-      <FormSubmitButton>出品する</FormSubmitButton>
+      <SubmitContainer />
     </form>
   );
 };
