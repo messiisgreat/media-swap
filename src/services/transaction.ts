@@ -7,12 +7,12 @@ import { cache } from "react";
 /**
  * 取引を取得する
  * @param id - 取得対象の取引のID
- * @returns 取得した取引
- * @throws 取引が見つからない場合エラーをスロー
+ * @returns 取得した取引、もしない場合はnull
  */
 export const findTransaction = cache(async (id: string) => {
-  return prisma.transaction.findUniqueOrThrow({
+  return prisma.transaction.findUnique({
     where: { id },
+    include: { transactionComments: true }
   });
 });
 
@@ -53,7 +53,7 @@ export const createTransaction = async (
  * @param transaction - 更新する取引
  * @returns 更新された取引
  */
-export const updateTransaction = async (transaction: Transaction) => {
+export const updateTransaction = async (transaction: Partial<Transaction>) => {
   return prisma.transaction.update({
     where: { id: transaction.id },
     data: transaction,
