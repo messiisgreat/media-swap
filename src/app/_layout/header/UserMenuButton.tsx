@@ -10,7 +10,7 @@ type UserMenuButtonProps = {
 };
 /**
  * ヘッダーに表示するユーザーボタン (サインイン/サインアウト)
- * @returns 
+ * @returns
  */
 export default function UserMenuButton({ session }: UserMenuButtonProps) {
   const user = session?.user;
