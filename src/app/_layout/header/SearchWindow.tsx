@@ -24,7 +24,7 @@ export const SearchWindow = () => {
         placeholder="何をお探しですか？"
         className="h-full"
       />
-      <button type="submit" className="h-full px-2">
+      <button type="submit" className="h-full px-2" aria-label="検索ボタン">
         <FaSearch size={22} />
       </button>
     </form>
