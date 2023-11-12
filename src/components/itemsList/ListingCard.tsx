@@ -10,11 +10,8 @@ type Props = {
 
 /**
  * 商品カードを表示するコンポーネント
- * @param {Props} props - コンポーネントに渡されるプロパティ
- * @param {ReturnType<typeof findListingById>} props.listing - 表示に必要なリレーション先のテーブルをインクルード済みのListing型のオブジェクト
- * @returns {JSX.Element} 商品カードのJSX要素を返します。
- * @example
- * <ListingCard listing={sampleListing} />
+ * @param  listing 表示に必要なリレーション先をインクルード済みのListing
+ * @returns div
  */
 export function ListingCard({ listing }: Props) {
   const formattedPrice =
