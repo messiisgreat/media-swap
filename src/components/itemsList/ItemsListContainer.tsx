@@ -1,4 +1,5 @@
 import { PaginationBar } from "@/components";
+import { ListingButton } from "@/components/ListingButton";
 import ItemsList from "@/components/itemsList";
 import {
   ListingOrderBy,
@@ -44,6 +45,7 @@ export const ItemsListContainer = async (props: Props) => {
       {total > 1 && (
         <PaginationBar currentPage={props.page} totalPages={total} />
       )}
+      <ListingButton className="fixed right-8 top-2 z-10 max-md:hidden" />
     </>
   );
 };
