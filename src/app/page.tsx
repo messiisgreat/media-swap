@@ -15,7 +15,7 @@ type Props = {
  * TOPページ
  * @param param0.searchParams.page ページ番号
  */
-export default async function Home({
+export default function Home({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
 }: Props) {
   return (

@@ -28,7 +28,7 @@ export function generateMetadata({
  * 検索ページ
  * @param param0.searchParams.query 検索クエリ
  */
-export default async function SearchPage({
+export default function SearchPage({
   searchParams: {
     query,
     page = 1,
