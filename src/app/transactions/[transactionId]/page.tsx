@@ -20,13 +20,15 @@ export default async function Transaction({
     getSessionUser()
   ]);
 
+  // TODO: ユーザーバリデーション
+
   if (!transaction) {
     return NotFoundPage();
   }
 
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
-      <aside className="flex-1 flex flex-col gap-8">
+      <aside className="flex flex-1 flex-col gap-8">
         <div className="alert alert-warning flex w-full">
           <FaClock size="2rem" />
           <div className="flex flex-col">
