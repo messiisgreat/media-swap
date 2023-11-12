@@ -7,21 +7,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Session } from "next-auth";
 import { CommentWithPartialUser } from "@/services/listingComment";
+import { Skeleton } from "@/components/Skeleton";
 
-function Skeleton() {
-  return (
-    <div role="status" className="flex w-full animate-pulse items-center gap-2">
-      <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400"></div>
-      <div className="w-full">
-        <div className="mb-2.5 h-2 max-w-[360px] rounded-full bg-gray-400"></div>
-        <div className="mb-2.5 h-2 rounded-full bg-gray-400"></div>
-        <div className="mb-2.5 h-2 max-w-[330px] rounded-full bg-gray-400"></div>
-        <div className="h-2 max-w-[360px] rounded-full bg-gray-400"></div>
-      </div>
-      <span className="sr-only">Loading...</span>
-    </div>
-  );
-}
+
 
 /**
  * コメント(+コメントを書き込むフォーム)
@@ -35,6 +23,7 @@ export default function CommentSection({
   sessionUser: Session["user"] | null;
 }) {
   const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
+  const [comment, setComment] = useState("");
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
@@ -51,7 +40,7 @@ export default function CommentSection({
     sessionUser: Session["user"],
     productId: string
   ) => {
-    const text = f.get("comment");
+    const text = comment;
 
     if (!text || typeof text !== "string") return;
 
@@ -64,6 +53,7 @@ export default function CommentSection({
     try {
       await addComment(text, sessionUser, productId);
       toast.success("コメントを書き込みました。");
+      setComment("");
       setComments(await fetchComments(productId));
     } catch (e) {
       console.error(e);
@@ -77,7 +67,7 @@ export default function CommentSection({
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
         <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
-          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="comment" maxLength={300}></textarea>
+          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="comment" maxLength={300} value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
           <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
         </form>
       ) : (
