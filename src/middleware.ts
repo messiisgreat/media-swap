@@ -1,3 +1,5 @@
+import { ageCheckMiddleware } from "@/middlewares/ageCheck";
+import { composeMiddleware } from "next-compose-middleware";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -24,25 +26,11 @@ async function redirectToHome(req: NextRequest) {
  * @returns NextResponse.redirect | void
  */
 export async function middleware(req: NextRequest) {
-  const pathName = new URL(req.url).pathname;
-
-  const isAgeCheckedThrough = req.cookies.get("isAgeCheckedThrough")?.value;
-
-  if (isAgeCheckedThrough === undefined) {
-    return redirectToAgeCheck(req);
-  }
-
-  if (
-    isAgeCheckedThrough === "true" &&
-    (pathName === "/age-check" || pathName === "/no-available-service")
-  ) {
-    return redirectToHome(req);
-  }
+  return composeMiddleware(req, NextResponse.next(), {
+    scripts: [ageCheckMiddleware],
+  });
 }
 
 export const config = {
-  matcher: [
-    /**年齢確認画面、サービス利用不可画面、関連アセット以外にマッチ */
-    "/((?!age-check|no-available-service|api|_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
