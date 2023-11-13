@@ -3,8 +3,9 @@ import { MessageSection } from "@/app/transactions/[transactionId]/MessageSectio
 import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/getSession";
 import Image from "next/image";
-import { FaClock, FaChevronRight } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import defaultIcon from "@/assets/profile-pic-placeholder.png";
+import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
 
 /**
  * 取引画面
@@ -39,7 +40,7 @@ export default async function Transaction({
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
       <aside className="flex flex-1 flex-col gap-8">
-        
+        <TransactionStatus transaction={transaction} sessionUser={sessionUser} />
         <div>
           <p>出品者情報</p>
           <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
