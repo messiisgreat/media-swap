@@ -26,6 +26,10 @@ export default async function Transaction({
     return NotFoundPage();
   }
 
+  if (!sessionUser) {
+    return NotFoundPage();
+  }
+
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
       <aside className="flex flex-1 flex-col gap-8">
@@ -56,9 +60,9 @@ export default async function Transaction({
           </div>
         </div>
       </aside>
-      <div className="flex-1">
+      <div className="flex flex-1 flex-col gap-4">
         <p>メッセージ</p>
-        <MessageSection />
+        <MessageSection transaction={transaction} sessionUser={sessionUser} />
       </div>
     </div>
   );
