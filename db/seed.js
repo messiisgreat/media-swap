@@ -139,21 +139,13 @@ async function main() {
     },
   });
 
-  // 取引ステータスデータの作成
-  const transactionStatus = await prisma.transactionStatus.create({
-    data: {
-      step: 1,
-      name: "Pending",
-    },
-  });
-
   // 取引データの作成
   // 'buyerId' と 'listingId' は実際のデータに置き換える必要があります。
   const transaction = await prisma.transaction.create({
     data: {
       listingId: listing.id,
       buyerId: seller.id,
-      transactionStatusId: transactionStatus.id, // このIDは先に作成したtransactionStatusから取得
+      transactionStatus: 2,
     },
   });
 

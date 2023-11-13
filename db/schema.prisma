@@ -318,7 +318,7 @@ model Transaction {
 
     buyer             User               @relation("buyer", fields: [buyerId], references: [id])
     listing           Listing            @relation(fields: [listingId], references: [id])
-    transactionStatus TransactionStatus? @relation(fields: [transactionStatusId], references: [id]) // 本来は必須だが、完成するまでNULL許可
+    transactionStatus Int
     userCoupon        UserCoupon?        @relation(fields: [userCouponId], references: [id])
 
     transactionRating   TransactionRating[]
@@ -326,17 +326,6 @@ model Transaction {
 
     @@unique([listingId, buyerId])
     @@map("transactions")
-}
-
-// 取引ステータステーブル
-model TransactionStatus {
-    id   String @id @default(auto()) @map("_id") @db.ObjectId
-    step Int    @unique // ステップ
-    name String @unique // ステータス名
-
-    transactions Transaction[]
-
-    @@map("transaction_statuses")
 }
 
 // 取引コメントテーブル
