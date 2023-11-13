@@ -1,4 +1,5 @@
 import { ageCheckMiddleware } from "@/middlewares/ageCheck";
+import { authMiddleware } from "@/middlewares/auth";
 import { composeMiddleware } from "next-compose-middleware";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,6 +29,9 @@ async function redirectToHome(req: NextRequest) {
 export async function middleware(req: NextRequest) {
   return composeMiddleware(req, NextResponse.next(), {
     scripts: [ageCheckMiddleware],
+    "/add-listing": {
+      scripts: [authMiddleware],
+    },
   });
 }
 
