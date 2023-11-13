@@ -1,6 +1,5 @@
 import { TextLink } from "@/components/TextLink";
-import { Section } from "@/components/structure";
-import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
+import { Section, TitleUnderbar } from "@/components/structure";
 
 /**
  * 404ページ
