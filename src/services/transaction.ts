@@ -12,7 +12,7 @@ import { cache } from "react";
 export const findTransaction = cache(async (id: string) => {
   return prisma.transaction.findUnique({
     where: { id },
-    include: { transactionComments: true }
+    include: { transactionComments: true, buyer: true, listing: { include: { seller: true } } }
   });
 });
 
@@ -80,5 +80,47 @@ export const getTransactionComments = async (transactionId: string) => {
         id: comment.user.id
       },
     };
+  });
+}
+
+/**
+ * 取引メッセージを作成
+ * @param text コメント
+ * @param userId ユーザーID
+ * @param transactionId 取引ID
+ */
+export const createTransactionComment = async (
+  text: string,
+  userId: string,
+  transactionId: string
+) => {
+  await prisma.transactionComment.create({
+    data: {
+      comment: text,
+      userId,
+      transactionId,
+    },
+    include: { user: true },
+  });
+}
+
+/**
+ * 既読にする
+ * @param transactionId 取引ID 
+ * @param userId メッセージを見た側のユーザーID
+ */
+export const markAsReadTransactionComments = async (
+  transactionId: string,
+  userId: string
+) => {
+  await prisma.transactionComment.updateMany({
+    where: {
+      transactionId,
+      userId: { not: userId },
+      isRead: false,
+    },
+    data: {
+      isRead: true,
+    },
   });
 }

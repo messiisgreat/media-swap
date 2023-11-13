@@ -1,14 +1,15 @@
 "use client";
 
-import { fetchMessages } from "@/app/transactions/[transactionId]/actions";
+import { fetchMessages, sendMessage } from "@/app/transactions/[transactionId]/actions";
 import { Skeleton } from "@/components/Skeleton";
 import { Transaction, TransactionComment } from "@prisma/client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import defaultIcon from "@/assets/profile-pic-placeholder.png";
 import { Session } from "next-auth";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { BiSend } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 /**
  * 取引画面のメッセージ
@@ -27,22 +28,51 @@ export function MessageSection({
       })[]
     | null
   >(null);
+  const [message, setMessage] = useState("");
+  const [posting, setPosting] = useState(false);
+  const chatareaRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    fetchMessages(transaction.id)
+    fetchMessages(transaction.id, sessionUser.id)
       .then((res) => {
         setMessages(res);
+        chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight);
       })
       .catch((e) => {
         console.error(e);
       });
-  }, [transaction.id]);
+  }, [transaction.id, sessionUser.id]);
+
+  const postComment = async () => {
+    if (!message || typeof message !== "string") return;
+
+    if (message.length > 300) {
+      toast.error("300文字以内で入力してください");
+      return;
+    }
+
+    setPosting(true);
+
+    try {
+      await sendMessage(message, sessionUser, transaction.id);
+      setMessages(await fetchMessages(transaction.id, sessionUser.id));
+      setMessage("");
+      toast.success("メッセージを送信しました。");
+      setTimeout(() => chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight), 500);
+    } catch (e) {
+      console.error(e);
+      toast.error("メッセージの送信に失敗しました。");
+    } finally {
+      setPosting(false);
+    }
+  }
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       {messages ? (
         messages.length === 0 ? (
           <div>メッセージはありません</div>
         ) : (
-          <div className="flex flex-col gap-4">
+          <div className="flex max-h-96 flex-col gap-4 overflow-y-scroll" ref={chatareaRef}>
             {messages
               .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
               .map((message, i) => {
@@ -74,7 +104,7 @@ export function MessageSection({
                     </div>
                     <div className="chat-bubble">{message.comment}</div>
                     <div className="chat-footer opacity-50">
-                      {message.isRead && !isMe ? "既読" : ""}
+                      {message.isRead && isMe ? "既読" : ""}
                     </div>
                   </div>
                 );
@@ -87,13 +117,15 @@ export function MessageSection({
           <Skeleton />
         </div>
       )}
-      <form className="flex w-full items-center">
+      <form className="flex w-full items-center" action={() => postComment()}>
         <input
           type="text"
           placeholder="メッセージを入力..."
           className="input input-bordered input-accent grow rounded-r-none"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="btn btn-square btn-accent shrink-0 rounded-l-none" type="submit">
+        <button className="btn btn-square btn-accent shrink-0 rounded-l-none" disabled={posting || !message} type="submit">
           <BiSend size="2rem" />
         </button>
       </form>

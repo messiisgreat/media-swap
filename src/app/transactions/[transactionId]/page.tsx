@@ -4,6 +4,7 @@ import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/getSession";
 import Image from "next/image";
 import { FaClock, FaChevronRight } from "react-icons/fa";
+import defaultIcon from "@/assets/profile-pic-placeholder.png";
 
 /**
  * 取引画面
@@ -20,8 +21,6 @@ export default async function Transaction({
     getSessionUser()
   ]);
 
-  // TODO: ユーザーバリデーション
-
   if (!transaction) {
     return NotFoundPage();
   }
@@ -30,31 +29,32 @@ export default async function Transaction({
     return NotFoundPage();
   }
 
+  const sellerId = transaction.listing.sellerId;
+  const buyerId = transaction.buyerId;
+
+  if (sessionUser.id !== sellerId && sessionUser.id !== buyerId) {
+    return NotFoundPage();
+  }
+
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
       <aside className="flex flex-1 flex-col gap-8">
-        <div className="alert alert-warning flex w-full">
-          <FaClock size="2rem" />
-          <div className="flex flex-col">
-            <p className="font-bold">発送をお待ち下さい</p>
-            <p>出品者からの発送通知をお待ち下さい</p>
-          </div>
-        </div>
+        
         <div>
           <p>出品者情報</p>
-          <div className="btn btn-ghost flex h-20 items-center justify-between px-0">
+          <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
             <div className="flex items-center gap-4">
               <div className="avatar">
                 <div className="w-16 rounded-full">
                   <Image
-                    src="https://picsum.photos/200"
+                    src={transaction.listing.seller.image || defaultIcon}
                     width={64}
                     height={64}
                     alt=""
                   />
                 </div>
               </div>
-              <span className="text-xl">テスト</span>
+              <span className="text-xl">{transaction.listing.seller.name}</span>
             </div>
             <FaChevronRight />
           </div>
