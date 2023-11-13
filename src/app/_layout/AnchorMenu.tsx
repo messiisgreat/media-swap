@@ -44,7 +44,7 @@ const naviMenu: NaviMenu[] = [
  * フッターの下部ナビゲーションメニュー
  * @returns footer
  */
-export const NaviMenu = () => {
+export const AnchorMenu = () => {
   const pathName = usePathname();
 
   return (
