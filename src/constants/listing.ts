@@ -3,7 +3,6 @@ import {
   ShippingDays,
   ShippingMethod,
   TransactionRatingOption,
-  TransactionStatus,
 } from "@prisma/client";
 
 // 注意: このファイルは自動生成されます。本番環境に影響してしまうため、リリース後の変更は行わないでください。
@@ -43,13 +42,13 @@ export const SHIPPING_DAYS: ShippingDays[] = [
 ];
 
 /** 取引ステータス */
-export const TRANSACTION_STATUS: TransactionStatus[] = [
-  { id: "0".padStart(24, "0"), name: "支払い前", step: 0 },
-  { id: "1".padStart(24, "0"), name: "支払い完了", step: 1 },
-  { id: "2".padStart(24, "0"), name: "発送済み", step: 2 },
-  { id: "3".padStart(24, "0"), name: "受け取り完了", step: 3 },
-  { id: "4".padStart(24, "0"), name: "取引キャンセル", step: 4 },
-];
+export const TRANSACTION_STATUS = {
+  BEFORE_PAYMENT: 0, // 支払い前
+  COMPLETE_PAYMENT: 1, // 支払い完了
+  SENT: 2, // 発送済み
+  RECEIVED: 3, // 受け取り完了
+  CANCELLED: 4, // 取引キャンセル
+} as const;
 
 /** 取引評価選択肢 */
 export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
