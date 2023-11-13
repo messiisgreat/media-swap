@@ -1,14 +1,17 @@
 import { ListingForm } from "@/app/add-listing/ListingForm";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { H } from "@/components/structure/H";
+import { Section } from "@/components/structure";
+import { PageTitle } from "@/components/structure/PageTitle";
 import { findTags } from "@/services/tag";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
+const title = "商品を出品する";
+
 export const metadata: Metadata = {
-  title: "商品を出品する",
+  title,
   description: "商品を出品する",
 };
 
@@ -25,8 +28,10 @@ export default async function Page() {
 
   return (
     <>
-      <H className="mb-3 text-lg font-bold">商品を出品する</H>
-      <ListingForm tags={tags} />
+      <PageTitle title={title} />
+      <Section>
+        <ListingForm tags={tags} />
+      </Section>
     </>
   );
 }

@@ -10,7 +10,7 @@ import "server-only";
 export const createTag = async (text: string) => {
   return prisma.tag.create({
     data: {
-      text: text,
+      text,
     },
   });
 };

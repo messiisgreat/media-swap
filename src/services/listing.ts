@@ -4,6 +4,57 @@ import prisma from "@/lib/prisma";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
 
+/** データベース未登録のListing型 */
+export type UnregisteredListing = Omit<
+  Listing,
+  "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId" | "pageView"
+>;
+
+/**
+ * 商品を追加する
+ * @param listing 追加する商品
+ * @param tagTexts タグIDの配列
+ * @param imageURLs 画像URLの配列
+ * @returns 追加された商品
+ */
+export const createListingWithTagsAndImages = async (
+  listing: UnregisteredListing,
+  tagTexts: string[],
+  imageURLs: string[],
+) => {
+  const {
+    sellerId,
+    shippingDaysId,
+    shippingMethodId,
+    productConditionId,
+    ...rest
+  } = listing;
+
+  return prisma.listing.create({
+    data: {
+      ...rest,
+      seller: { connect: { id: sellerId } },
+      shippingDays: shippingDaysId ? { connect: { id: shippingDaysId } } : {},
+      shippingMethod: shippingMethodId
+        ? { connect: { id: shippingMethodId } }
+        : {},
+      productCondition: productConditionId
+        ? { connect: { id: productConditionId } }
+        : {},
+      images: {
+        createMany: {
+          data: imageURLs.map((imageURL, i) => ({ imageURL, order: i })),
+        },
+      },
+      tags: {
+        create: tagTexts.map((text) => ({
+          tag: { connectOrCreate: { where: { text }, create: { text } } },
+        })),
+      },
+    },
+  });
+};
+
 /**
  * 商品を取得する
  *
@@ -15,7 +66,7 @@ export const findListingById = cache(async (id: string) => {
   return prisma.listing.findUniqueOrThrow({
     where: { id },
     include: {
-      images: { include: { image: true } },
+      images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
         include: {
           tag: true,
@@ -39,19 +90,19 @@ export type ListingOrderBy =
  * @param order ソート順 例: { price: "asc" }
  */
 export const findListings = cache(
-  async (page: number, size: number, order: ListingOrderBy) => {
+  async (page: number, size: number, orderBy: ListingOrderBy) => {
     return prisma.listing.findMany({
       skip: (page - 1) * size,
       take: size,
       include: {
-        images: { include: { image: true } },
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
         tags: {
           include: {
             tag: true,
           },
         },
       },
-      orderBy: order,
+      orderBy,
     });
   },
 );
@@ -65,79 +116,35 @@ export const findListings = cache(
  * @returns 検索結果
  */
 export const findListingByProductName = cache(
-  async (query: string, page: number, size: number, order: ListingOrderBy) => {
+  async (
+    query: string,
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+  ) => {
     return prisma.listing.findMany({
       skip: (page - 1) * size,
       take: size,
       where: { productName: { contains: query } },
       include: {
-        images: { include: { image: true } },
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
         tags: {
           include: {
             tag: true,
           },
         },
       },
-      orderBy: order,
+      orderBy,
     });
   },
 );
 
-/** データベースいまだ未登録のListing型 */
-export type UnregisteredListing = Omit<
-  Listing,
-  "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId" | "pageView"
->;
-
 /**
- * 商品を追加する
- * @param listing 商品情報
- * @param tagIds タグIDの配列
- * @param images 画像のURLの配列
- * @returns 追加された商品
+ * 商品の総数を取得する
  */
-// `UnregisteredListing`から`sellerId`を分割代入し、それを使用してsellerを接続します。
-export const createListingWithTagsAndImages = async (
-  {
-    sellerId,
-    shippingDaysId, // このフィールドは `string | null` 型です
-    shippingMethodId, // 同上
-    productConditionId, // 同上
-    ...restOfListing
-  }: UnregisteredListing,
-  tagIds: string[],
-  images: string[],
-) => {
-  return prisma.listing.create({
-    data: {
-      ...restOfListing, // 残りのリストの詳細を展開
-      seller: {
-        connect: { id: sellerId }, // 分割代入した`sellerId`を使用してsellerを接続
-      },
-      shippingDays: shippingDaysId
-        ? { connect: { id: shippingDaysId } }
-        : undefined,
-      shippingMethod: shippingMethodId
-        ? { connect: { id: shippingMethodId } }
-        : undefined,
-      productCondition: productConditionId
-        ? { connect: { id: productConditionId } }
-        : undefined,
-      tags: {
-        connect: tagIds.map((id) => ({ id })),
-      },
-      images: {
-        create: images.map((imageURL) => ({
-          image: {
-            create: {
-              imageURL,
-            },
-          },
-        })),
-      },
-    },
-  });
-};
+export const countListings = cache(async () => {
+  return prisma.listing.count();
+});
 
 /**
  * 商品を削除する
