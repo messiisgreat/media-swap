@@ -4,24 +4,6 @@ import { composeMiddleware } from "next-compose-middleware";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * 年齢認証画面にリダイレクトする
- * @param req NextRequest
- * @returns NextResponse.redirect
- */
-async function redirectToAgeCheck(req: NextRequest) {
-  return NextResponse.redirect(new URL("/age-check", req.url));
-}
-
-/**
- * ホーム画面にリダイレクトする
- * @param req NextRequest
- * @returns NextResponse.redirect
- */
-async function redirectToHome(req: NextRequest) {
-  return NextResponse.redirect(new URL("/", req.url));
-}
-
-/**
  * 年齢認証を通過していない場合に年齢認証画面にリダイレクトするミドルウェア
  * @param req NextRequest
  * @returns NextResponse.redirect | void
