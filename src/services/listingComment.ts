@@ -16,7 +16,7 @@ export const getComments = async (
 ): Promise<CommentWithPartialUser[]> =>
   prisma.listingComment.findMany({
     where: { listingId },
-    orderBy: { createdAt: "desc", id: "desc" },
+    orderBy: { createdAt: "desc" },
     include: { user: { select: { name: true, image: true } } },
   });
 
