@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 
+const formValue = "searchQuery";
+
 async function searchListings(formData: FormData) {
   "use server";
-  const searchQuery = formData.get("searchQuery")?.toString();
+  const searchQuery = formData.get(formValue)?.toString();
   if (searchQuery) {
     redirect(`/search?query=${encodeURIComponent(searchQuery)}`);
   }
@@ -20,11 +22,15 @@ export const SearchWindow = () => {
       className="input input-bordered flex w-full items-center justify-center py-0 pr-1"
     >
       <input
-        name="searchQuery"
+        name={formValue}
         placeholder="何をお探しですか？"
         className="h-full"
       />
-      <button type="submit" className="h-full px-2" aria-label="検索ボタン">
+      <button
+        type="submit"
+        className="h-full px-2 text-gray-500 hover:text-gray-700"
+        aria-label="検索ボタン"
+      >
         <FaSearch size={22} />
       </button>
     </form>
