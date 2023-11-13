@@ -32,10 +32,10 @@ export const createTransaction = async (
     Transaction,
     | "id"
     | "externalPaymentId"
-    | "transactionStatusId"
     | "isCanceled"
     | "purchaseDate"
     | "transactionRatingId"
+    | "transactionStatus"
   > = {
     listingId,
     buyerId,
@@ -43,6 +43,7 @@ export const createTransaction = async (
   };
   return prisma.transaction.create({
     data: {
+      transactionStatus: 0,
       ...transaction,
     },
   });

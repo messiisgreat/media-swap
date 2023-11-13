@@ -310,7 +310,6 @@ model Transaction {
     listingId           String   @unique @map("listing_id") @db.ObjectId // 出品情報ID外部キー
     buyerId             String   @map("buyer_id") @db.ObjectId // 購入者ID外部キー
     externalPaymentId   String?  @map("external_payment_id") // 外部決済ID
-    transactionStatusId String?  @map("transaction_status_id") @db.ObjectId // 取引ステータスID外部キー 本来は必須だが、完成するまでNULL許可
     isCanceled          Boolean  @default(false) @map("is_canceled") // 取引キャンセルフラグ
     userCouponId        String?  @unique @map("user_coupon_id") @db.ObjectId // ユーザークーポンID外部キー
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
