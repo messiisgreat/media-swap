@@ -14,7 +14,6 @@ export const ageCheckMiddleware: ComposableMiddleware = async (req, res) => {
   if (isAgeCheckedThrough === undefined) {
     return NextResponse.redirect(new URL("/age-check", req.url));
   }
-
   if (
     isAgeCheckedThrough === "true" &&
     (pathName === "/age-check" || pathName === "/no-available-service")
