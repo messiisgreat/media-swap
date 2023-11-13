@@ -12,18 +12,18 @@ import { objToAssociative } from "@/utils/converter";
 
 export const AddressFormSchema = z.object({
   postalCode: z
-    .string({ required_error: "必須項目です" })
-    .length(7, { message: "ハイフンなしの7文字で入力してください。" }),
-  prefecture: z.string({ required_error: "必須項目です" }).min(1),
-  city: z.string({ required_error: "必須項目です" }).min(1),
-  addressLine1: z.string({ required_error: "必須項目です" }).min(1),
+    .string()
+    .length(7, { message: "ハイフンなしの7文字で入力してください" }),
+  prefecture: z.string().min(1, { message: "必須項目です" }),
+  city: z.string().min(1, { message: "必須項目です" }),
+  addressLine1: z.string().min(1, { message: "必須項目です" }),
   addressLine2: z.string().optional(),
   phoneNumber: z
     .string({
-      required_error: "必須項目です",
       invalid_type_error: "数字で入力してください",
     })
-    .max(12, { message: "記号なし12文字以内で入力してください。" }),
+    .min(7, { message: "7文字以上で入力ください" })
+    .max(12, { message: "記号なし12文字以内で入力してください" }),
 });
 
 export type TAddressForm = z.infer<typeof AddressFormSchema>;
@@ -137,7 +137,7 @@ export default function AddressForm() {
       )}
       <Input
         labelText="電話番号"
-        type="text"
+        type="number"
         autoComplete="shipping phone-number"
         className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="09000000000"
