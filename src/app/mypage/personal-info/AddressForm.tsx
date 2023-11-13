@@ -12,14 +12,18 @@ import { objToAssociative } from "@/utils/converter";
 
 export const AddressFormSchema = z.object({
   postalCode: z
-    .string()
+    .string({ required_error: "必須項目です" })
     .length(7, { message: "ハイフンなしの7文字で入力してください。" }),
-  prefecture: z.string().min(1, { message: "必須項目です" }),
-  city: z.string().min(1, { message: "必須項目です" }),
-  addressLine1: z.string().min(1, { message: "必須項目です" }),
+  prefecture: z.string({ required_error: "必須項目です" }).min(1),
+  city: z.string({ required_error: "必須項目です" }).min(1),
+  addressLine1: z.string({ required_error: "必須項目です" }).min(1),
   addressLine2: z.string().optional(),
-  // TODO: 電話番号後で追加
-  // phoneNumber: z.string(),
+  phoneNumber: z
+    .string({
+      required_error: "必須項目です",
+      invalid_type_error: "数字で入力してください",
+    })
+    .max(12, { message: "記号なし12文字以内で入力してください。" }),
 });
 
 export type TAddressForm = z.infer<typeof AddressFormSchema>;
@@ -58,8 +62,6 @@ export default function AddressForm() {
     console.log("--フォームでエラーが発生しました。--");
   };
 
-  console.log(errors);
-
   return (
     // TODO:以下のPRがreact-hook-formにマージされたら、useTransitionを使わなくて良くなりそうなのでその時に修正する
     // https://github.com/react-hook-form/react-hook-form/pull/11061
@@ -67,82 +69,85 @@ export default function AddressForm() {
       className="flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit, onSubmitError)}
     >
-      <label>
-        <div>
-          <Input
-            labelText="郵便番号"
-            autoComplete="shipping postal-code"
-            className="rounded-md border border-gray-300 px-3 py-2"
-            placeholder="例: 1234567"
-            {...register("postalCode")}
-          />
-          {errors && errors.postalCode && (
-            <p className="text-xs italic text-red-500">
-              {errors.postalCode.message}
-            </p>
-          )}
-        </div>
-      </label>
-      <label>
-        <div>
-          <Select
-            labelText="都道府県"
-            options={objToAssociative(PREFECTURE_OBJ)}
-            autoComplete="shipping address-level1"
-            className="rounded-md border border-gray-300 px-3 py-2"
-            defaultValue={"東京都"}
-            {...register("prefecture")}
-          />
-          {errors && errors.prefecture && (
-            <p className="text-xs italic text-red-500">
-              {errors.prefecture.message}
-            </p>
-          )}
-        </div>
-      </label>
-      <label>
+      <div>
         <Input
-          labelText="市区町村 (例: 川崎市川崎区)"
-          type="text"
-          autoComplete="shipping address-level2"
-          className="w-full rounded-md border border-gray-300 px-3 py-2"
-          placeholder="川崎市川崎区"
-          {...register("city")}
+          labelText="郵便番号"
+          autoComplete="shipping postal-code"
+          className="rounded-md border border-gray-300 px-3 py-2"
+          placeholder="例: 1234567"
+          {...register("postalCode")}
         />
-        {errors && errors.city && (
-          <p className="text-xs italic text-red-500">{errors.city.message}</p>
-        )}
-      </label>
-      <label>
-        <Input
-          labelText="町域・番地(例: 旭町1-1)"
-          type="text"
-          autoComplete="shipping address-line1"
-          className="w-full rounded-md border border-gray-300 px-3 py-2"
-          placeholder="旭町1-1"
-          {...register("addressLine1")}
-        />
-        {errors && errors.addressLine1 && (
+        {errors && errors.postalCode && (
           <p className="text-xs italic text-red-500">
-            {errors.addressLine1.message}
+            {errors.postalCode.message}
           </p>
         )}
-      </label>
-      <label>
-        <Input
-          labelText="建物名など(例: ○○マンション101号)"
-          type="text"
-          autoComplete="shipping address-line2"
-          className="w-full rounded-md border border-gray-300 px-3 py-2"
-          placeholder="○○マンション101号"
-          {...register("addressLine2")}
+      </div>
+      <div>
+        <Select
+          labelText="都道府県"
+          options={objToAssociative(PREFECTURE_OBJ)}
+          autoComplete="shipping address-level1"
+          className="rounded-md border border-gray-300 px-3 py-2"
+          defaultValue={"東京都"}
+          {...register("prefecture")}
         />
-        {errors && errors.addressLine2 && (
+        {errors && errors.prefecture && (
           <p className="text-xs italic text-red-500">
-            {errors.addressLine2.message}
+            {errors.prefecture.message}
           </p>
         )}
-      </label>
+      </div>
+      <Input
+        labelText="市区町村 (例: 川崎市川崎区)"
+        type="text"
+        autoComplete="shipping address-level2"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        placeholder="川崎市川崎区"
+        {...register("city")}
+      />
+      {errors && errors.city && (
+        <p className="text-xs italic text-red-500">{errors.city.message}</p>
+      )}
+      <Input
+        labelText="町域・番地(例: 旭町1-1)"
+        type="text"
+        autoComplete="shipping address-line1"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        placeholder="旭町1-1"
+        {...register("addressLine1")}
+      />
+      {errors && errors.addressLine1 && (
+        <p className="text-xs italic text-red-500">
+          {errors.addressLine1.message}
+        </p>
+      )}
+      <Input
+        labelText="建物名など(例: ○○マンション101号)"
+        type="text"
+        autoComplete="shipping address-line2"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        placeholder="○○マンション101号"
+        {...register("addressLine2")}
+      />
+      {errors && errors.addressLine2 && (
+        <p className="text-xs italic text-red-500">
+          {errors.addressLine2.message}
+        </p>
+      )}
+      <Input
+        labelText="電話番号"
+        type="text"
+        autoComplete="shipping phone-number"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        placeholder="09000000000"
+        {...register("phoneNumber")}
+      />
+      {errors && errors.phoneNumber && (
+        <p className="text-xs italic text-red-500">
+          {errors.phoneNumber.message}
+        </p>
+      )}
       <FormSubmitButton>住所を登録する</FormSubmitButton>
     </form>
   );

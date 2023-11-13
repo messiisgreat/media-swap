@@ -12,11 +12,11 @@ export const insertAddress = async (formData: TAddressForm) => {
   const session = await getSessionUser();
   if (!session || !session.id) {
     // TODO: エラーハンドリングやログなど追加
-    return;
+    throw new Error("セッションがありません");
   }
   // TODO: phoneNumberはのちほで追加する
   const insertedAddress = await prisma.address.create({
-    data: { ...formData, phoneNumber: "", userId: session.id },
+    data: { ...formData, userId: session.id },
   });
   return insertedAddress;
 };
