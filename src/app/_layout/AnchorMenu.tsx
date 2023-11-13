@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { AiFillBell, AiFillCamera, AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
+import { useScrollingState } from "@/app/_layout/anchorMenuHooks";
 
 type NaviMenu = {
   id: string;
@@ -46,9 +47,15 @@ const naviMenu: NaviMenu[] = [
  */
 export const AnchorMenu = () => {
   const pathName = usePathname();
+  const isScroll = useScrollingState();
+  console.log(isScroll);
 
   return (
-    <div className="navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 md:hidden">
+    <div
+      className={`navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 md:hidden ${
+        isScroll ? "hidden" : "visible"
+      }`}
+    >
       {naviMenu.map((item) => {
         const Icon = item.icon;
         return (
