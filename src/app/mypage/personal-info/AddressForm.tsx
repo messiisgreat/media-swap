@@ -7,7 +7,6 @@ import { z } from "zod";
 import { insertAddress } from "@/app/mypage/personal-info/server";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 import { Input, Select } from "@/components/FormElements";
 import { objToAssociative } from "@/utils/converter";
 
@@ -27,13 +26,9 @@ export type TAddressForm = z.infer<typeof AddressFormSchema>;
 
 /**
  *住所フォーム
- * @param user
+ *
  */
-export default function AddressForm({
-  user,
-}: {
-  user: Session["user"] | null;
-}) {
+export default function AddressForm() {
   const router = useRouter();
   const {
     register,
@@ -45,16 +40,12 @@ export default function AddressForm({
     defaultValues: undefined,
     resolver: zodResolver(AddressFormSchema),
   });
-  const [isPending, startTransition] = useTransition();
-  console.log(user);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, startTransition] = useTransition();
   const onSubmit = async (formData: TAddressForm) => {
     startTransition(async () => {
       try {
-        console.log(user);
-        const response = await insertAddress();
-        // if (typeof response === "string") {
-        //   // toast.error(response);
-        // }
+        await insertAddress(formData);
       } catch (e) {
         console.log(e);
       }
@@ -70,6 +61,8 @@ export default function AddressForm({
   console.log(errors);
 
   return (
+    // TODO:以下のPRがreact-hook-formにマージされたら、useTransitionを使わなくて良くなりそうなのでその時に修正する
+    // https://github.com/react-hook-form/react-hook-form/pull/11061
     <form
       className="flex flex-col gap-3"
       onSubmit={handleSubmit(onSubmit, onSubmitError)}
