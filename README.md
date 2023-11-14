@@ -23,7 +23,91 @@
 8. [vercel](https://vercel.com/dirtyman69/media-swap)
 9. ドメイン[swappy](https://www.swappy.jp/)
 
-## ローカル開発環境構築
+## 各自がリモートのmongoDBを作成する手順(ローカル開発環境ではなく、こちらを実行してください)
+
+### 1. mongoDBのサイトにログインする
+
+[mongodb](https://www.mongodb.com/ja-jp)
+
+まだユーザーがない人は作成
+これはgoogleでもgithubでもどちらでもOK
+
+![スクリーンショット 2023-11-14 13 55 09](https://github.com/developerhost/media-swap/assets/50170789/b9ef59a2-4d1a-4b11-afc9-9ef265a3ab19)
+![スクリーンショット 2023-11-14 13 55 17](https://github.com/developerhost/media-swap/assets/50170789/b9f28296-38fe-4362-ba96-0157e6b169a4)
+
+### 2. 自分のプロジェクトを作成する
+
+![スクリーンショット 2023-11-14 13 58 49](https://github.com/developerhost/media-swap/assets/50170789/e92795ba-0758-4f0f-a683-7c2ec05e13b7)
+
+- クラスターはM0
+- プロバイダーはAWS
+- リージョンは日本
+- create ボタンを押す
+
+![スクリーンショット 2023-11-14 12 57 48](https://github.com/developerhost/media-swap/assets/50170789/e52341b5-575f-4f41-af1e-232f0d636b45)
+![スクリーンショット 2023-11-14 12 58 07](https://github.com/developerhost/media-swap/assets/50170789/b3b5ad2b-f6ee-486a-90bf-ff5cb93bed81)
+
+### 3.自分のユーザーネームとパスワードを設定する
+
+- パスワードはコピペして保存しておくこと
+- パスワードは外部公開しないでください
+
+![スクリーンショット 2023-11-14 12 58 35](https://github.com/developerhost/media-swap/assets/50170789/e42a4a0f-81ec-4037-a6fd-94eeaa753adb)
+
+### 4. 接続設定をする
+
+![スクリーンショット 2023-11-14 13 00 51](https://github.com/developerhost/media-swap/assets/50170789/763dee5c-9e3d-419c-8add-64aaff73eb08)
+
+![スクリーンショット 2023-11-14 13 03 22](https://github.com/developerhost/media-swap/assets/50170789/586e9379-d6b3-40a9-b70e-230b9ab43045)
+
+Connectを押して、Driversを選択
+
+### 5. urlを設定する
+
+.envファイルに自分のmongoDBのURLを設定する
+
+![スクリーンショット 2023-11-14 13 19 38](https://github.com/developerhost/media-swap/assets/50170789/3c9cca85-52a3-48cc-978e-1f325ba4728b)
+
+
+例
+
+DATABASE_URL="mongodb+srv://squall0609kanon:<password>@cluster0.z8hkn6f.mongodb.net/eccomerce?retryWrites=true&w=majority&appName=AtlasApp"
+
+注意！！！！！！！！
+
+データベース名=eccomerceを入れてpasswordは自分のパスワードを設定してください！！
+
+### 6. データベースを作成
+
+![スクリーンショット 2023-11-14 13 16 37](https://github.com/developerhost/media-swap/assets/50170789/b1d6c775-0343-417e-a0a3-e128ea5b113b)
+
+![スクリーンショット 2023-11-14 13 15 54](https://github.com/developerhost/media-swap/assets/50170789/a2644ae0-7764-454f-b9fe-aec59f9c2b77)
+
+![スクリーンショット 2023-11-14 13 15 07](https://github.com/developerhost/media-swap/assets/50170789/54f6a1ab-b727-46f9-917d-b85c3e298678)
+
+Brouse CollectionからAdd My Own Dataをクリックして、Database nameに"eccomerce"を設定してください
+
+
+![スクリーンショット 2023-11-14 13 17 41](https://github.com/developerhost/media-swap/assets/50170789/e84d69c6-6e75-4de8-aa74-23ba629f9947)
+![スクリーンショット 2023-11-14 13 17 52](https://github.com/developerhost/media-swap/assets/50170789/07992f26-91ac-4491-88a7-8d7117a7ba51)
+
+
+### 7. db pushする
+
+ターミナルで
+
+pnpm run db:push
+
+を実行する
+
+![スクリーンショット 2023-11-14 13 24 06](https://github.com/developerhost/media-swap/assets/50170789/56b320f2-385e-4866-aef6-f737670c0a6b)
+
+自分の先ほど作成したmongoDBのプロジェクトのデータベースにスキーマ定義がされていたら完了！！！
+
+お疲れ様でした！！！！
+
+
+## ローカル開発環境構築(まだ動かない人がいます(windows))
 
 ### dockerの起動・停止コマンド
 
