@@ -71,11 +71,17 @@ Connectを押して、Driversを選択
 
 例
 
-DATABASE_URL="mongodb+srv://squall0609kanon:<password>@cluster0.z8hkn6f.mongodb.net/eccomerce?retryWrites=true&w=majority&appName=AtlasApp"
+DATABASE_URL="mongodb+srv://<your_username>:<your_password>@cluster0.z8hkn6f.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=AtlasApp"
 
 注意！！！！！！！！
 
-データベース名=eccomerceを入れてpasswordは自分のパスワードを設定してください！！
+データベース名=ecommerceを入れてpasswordは自分のパスワードを設定してください！！
+
+注意!!!!!!!!!!!
+
+
+ecommerceの綴りとか注意！！！！
+
 
 ### 6. データベースを作成
 
