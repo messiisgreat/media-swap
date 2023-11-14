@@ -8,6 +8,7 @@ import differenceInWeeks from "date-fns/differenceInWeeks";
 import differenceInYears from "date-fns/differenceInYears";
 import format from "date-fns/format";
 import { utcToZonedTime } from "date-fns-tz";
+import { isToday, isYesterday } from "date-fns";
 
 /**
  * 相対時間を計算する
@@ -57,32 +58,21 @@ export const parseRelativeTime = (target: Date): string => {
 /**
  * 「今日 10:00」や「2023/01/01 10:00」のような形式に変換する
  * @param target 日付
- * @returns 
+ * @returns
  */
 export const parseFixedDateTime = (target: Date): string => {
-  target = utcToZonedTime(target, "Asia/Tokyo");
-  const today = utcToZonedTime(new Date(), "Asia/Tokyo");
-  const yesterday = utcToZonedTime(new Date(), "Asia/Tokyo");
-  yesterday.setDate(today.getDate() - 1);
+  const timeZone = "Asia/Tokyo";
+  target = utcToZonedTime(target, timeZone);
 
-  // eslint-disable-next-line no-restricted-syntax
-  let date = "";
-  // 今日の場合は「今日」と表示
-  if (
-    target.getFullYear() === today.getFullYear() &&
-    target.getMonth() === today.getMonth() &&
-    target.getDate() === today.getDate()
-  ) {
-    date = "今日";
-  } else if (
-    target.getFullYear() === yesterday.getFullYear() &&
-    target.getMonth() === yesterday.getMonth() &&
-    target.getDate() === yesterday.getDate()
-  ) {
-    date = "昨日";
-  } else {
-    date = format(target, "yyyy/MM/dd");
+  const formattedTime = format(target, "HH:mm");
+
+  if (isToday(target)) {
+    return `今日 ${formattedTime}`;
   }
 
-  return `${date} ${format(target, "HH:mm")}`;
+  if (isYesterday(target)) {
+    return `昨日 ${formattedTime}`;
+  }
+
+  return `${format(target, "yyyy/MM/dd")} ${formattedTime}`;
 };
