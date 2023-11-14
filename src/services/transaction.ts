@@ -70,6 +70,7 @@ export const getTransactionComments = async (transactionId: string) => {
   const comments = await prisma.transactionComment.findMany({
     where: { transactionId },
     include: { user: { select: { name: true, image: true, id: true } } },
+    orderBy: { createdAt: "asc" },
   });
   return comments;
 }
