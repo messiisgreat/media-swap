@@ -71,7 +71,10 @@ export const Input = forwardRef<
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
->(function Textarea({ className, labelText, characterLimit, ...props }, ref) {
+>(function Textarea(
+  { className, labelText, characterLimit, hideLimit = false, ...props },
+  ref,
+) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
   const { value, error, characterCount, handleChange } = useCharacterLimit(
     "",
@@ -90,15 +93,17 @@ export const Textarea = forwardRef<
       {characterLimit && error ? (
         <div className="flex justify-between">
           <label className="label-text-alt text-error">{error}</label>
-          <label className="label-text-alt self-end">
-            {characterCount}/{characterLimit}
-          </label>
+          {hideLimit ? null : (
+            <label className="label-text-alt self-end">
+              {characterCount}/{characterLimit}
+            </label>
+          )}
         </div>
-      ) : (
+      ) : characterLimit && !hideLimit ? (
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
-      )}
+      ) : null}
     </div>
   );
 });
