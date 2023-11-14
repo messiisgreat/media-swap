@@ -3,11 +3,13 @@
 import { addComment, fetchComments } from "@/app/listing/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Session } from "next-auth";
 import { CommentWithPartialUser } from "@/services/listingComment";
 import { Skeleton } from "@/components/Skeleton";
+import { Textarea } from "@/components/formElements/FormElements";
+import FormSubmitButton from "@/components/FormSubmitButton";
 
 
 
@@ -23,8 +25,8 @@ export default function CommentSection({
   sessionUser: Session["user"] | null;
 }) {
   const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
-  const [comment, setComment] = useState("");
   const [posting, setPosting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     fetchComments(listingId)
@@ -40,7 +42,7 @@ export default function CommentSection({
     sessionUser: Session["user"],
     productId: string
   ) => {
-    const text = comment;
+    const text = f.get("comment") as string;
 
     if (!text || typeof text !== "string") return;
 
@@ -53,7 +55,7 @@ export default function CommentSection({
     try {
       await addComment(text, sessionUser, productId);
       toast.success("コメントを書き込みました。");
-      setComment("");
+      formRef.current?.reset();
       setComments(await fetchComments(productId));
     } catch (e) {
       console.error(e);
@@ -66,9 +68,9 @@ export default function CommentSection({
     <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
-        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
-          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="comment" maxLength={300} value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-          <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
+        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)} ref={formRef}>
+          <Textarea className="w-full resize-none" disabled={posting} name="comment" characterLimit={300}></Textarea>
+          <FormSubmitButton className="btn-secondary" type="submit">コメントを書き込む</FormSubmitButton>
         </form>
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
