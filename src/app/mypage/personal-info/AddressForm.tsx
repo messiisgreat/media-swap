@@ -51,6 +51,7 @@ export default function AddressForm() {
       try {
         await insertAddress(formData);
       } catch (e) {
+        // TODO: アラートみたいなのだす
         console.log(e);
       }
       router.push("/mypage");

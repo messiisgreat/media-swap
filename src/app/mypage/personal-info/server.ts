@@ -14,7 +14,6 @@ export const insertAddress = async (formData: TAddressForm) => {
     // TODO: エラーハンドリングやログなど追加
     throw new Error("セッションがありません");
   }
-  // TODO: phoneNumberはのちほで追加する
   const insertedAddress = await prisma.address.create({
     data: { ...formData, userId: session.id },
   });
