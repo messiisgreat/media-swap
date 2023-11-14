@@ -111,7 +111,6 @@ export function MessageSection({
               ref={chatareaRef}
             >
               {messages
-                .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
                 .map((message, i) => {
                   const isMe = message.user.id === sessionUser.id;
                   return (
