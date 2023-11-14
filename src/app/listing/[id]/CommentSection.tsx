@@ -64,8 +64,9 @@ export default function CommentSection({
     } catch (e) {
       console.error(e);
       toast.error("コメントの書き込みに失敗しました。");
+    } finally {
+      setPosting(false);
     }
-    setPosting(false);
   };
 
   return (
