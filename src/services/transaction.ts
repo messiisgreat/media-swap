@@ -54,8 +54,7 @@ export const createTransaction = async (
  * @param transaction - 更新する取引
  * @returns 更新された取引
  */
-export const updateTransaction = async (transaction: Partial<Transaction>) => {
-  if (!transaction.id) throw new Error("idが指定されていません");
+export const updateTransaction = async (transaction: { id: string } & Partial<Transaction>) => {
   return prisma.transaction.update({
     where: { id: transaction.id },
     data: transaction,
@@ -70,18 +69,9 @@ export const updateTransaction = async (transaction: Partial<Transaction>) => {
 export const getTransactionComments = async (transactionId: string) => {
   const comments = await prisma.transactionComment.findMany({
     where: { transactionId },
-    include: { user: true },
+    include: { user: { select: { name: true, image: true, id: true } } },
   });
-  return comments.map((comment) => {
-    return {
-      ...comment,
-      user: {
-        name: comment.user.name,
-        image: comment.user.image,
-        id: comment.user.id
-      },
-    };
-  });
+  return comments;
 }
 
 /**
