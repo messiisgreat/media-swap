@@ -108,6 +108,21 @@ export const findListings = cache(
 );
 
 /**
+ * 商品総数を取得する
+ */
+export const countListings = cache(async () => {
+  return prisma.listing.count();
+});
+
+/**
+ * 検索結果の商品総数を取得する
+ * @param query 検索クエリ
+ */
+export const countListingsByProductName = cache(async (query: string) => {
+  return prisma.listing.count({ where: { productName: { contains: query } } });
+});
+
+/**
  * 商品の検索結果を取得する
  * @param query 検索クエリ
  * @param page ページ番号 (1始まり)
@@ -115,7 +130,7 @@ export const findListings = cache(
  * @param order ソート順 例: { price: "asc" }
  * @returns 検索結果
  */
-export const findListingByProductName = cache(
+export const findListingsByProductName = cache(
   async (
     query: string,
     page: number,
@@ -138,13 +153,6 @@ export const findListingByProductName = cache(
     });
   },
 );
-
-/**
- * 商品の総数を取得する
- */
-export const countListings = cache(async () => {
-  return prisma.listing.count();
-});
 
 /**
  * 商品を削除する
