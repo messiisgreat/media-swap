@@ -11,9 +11,19 @@ export const ItemsList = ({
 }: {
   listings: Awaited<ReturnType<typeof findListings>>;
 }) => (
-  <div className="my-4 grid grid-cols-3 gap-1">
-    {listings.map((listing) => (
-      <ListingCard key={listing.id} listing={listing} />
-    ))}
-  </div>
+  <>
+    {listings.length ? (
+      <div className="grid grid-cols-3 gap-1">
+        {listings.map((listing) => (
+          <ListingCard key={listing.id} listing={listing} />
+        ))}
+      </div>
+    ) : (
+      <NoItems />
+    )}
+  </>
+);
+
+const NoItems = () => (
+  <div className="text-center text-gray-400">商品がありません</div>
 );

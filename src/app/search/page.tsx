@@ -1,6 +1,5 @@
-import ItemsList from "@/components/itemsList";
+import { ItemsListContainer } from "@/components/itemsList/ItemsListContainer";
 import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
-import { ListingOrderBy, findListingByProductName } from "@/services/listing";
 import { Listing } from "@prisma/client";
 import { Metadata } from "next";
 
@@ -21,7 +20,7 @@ export function generateMetadata({
   searchParams: { query },
 }: SearchPageProps): Metadata {
   return {
-    title: `${query}の検索結果`,
+    title: `${decodeURIComponent(query)}の検索結果`,
   };
 }
 
@@ -29,7 +28,7 @@ export function generateMetadata({
  * 検索ページ
  * @param param0.searchParams.query 検索クエリ
  */
-export default async function SearchPage({
+export default function SearchPage({
   searchParams: {
     query,
     page = 1,
@@ -38,22 +37,16 @@ export default async function SearchPage({
     order = "desc",
   },
 }: SearchPageProps) {
-  const orderBy: ListingOrderBy = {
-    [sort]: order,
-  };
-  const listings = await findListingByProductName(
-    decodeURIComponent(query),
-    page,
-    size,
-    orderBy,
-  );
-  if (listings.length === 0) {
-    return <div className="text-center">商品が見つかりません</div>;
-  }
   return (
     <>
       <TitleUnderbar title={`${query}の検索結果`} />
-      <ItemsList listings={listings} />
+      <ItemsListContainer
+        page={page}
+        size={size}
+        sort={sort}
+        order={order}
+        query={decodeURIComponent(query)}
+      />
     </>
   );
 }
