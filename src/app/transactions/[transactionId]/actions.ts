@@ -6,7 +6,7 @@ import { Session } from "next-auth";
 /**
  * 取引メッセージを取得
  * @param transactionId 取引ID
- * @param userId ユーザーID(既読処理に仕様)
+ * @param userId ユーザーID(既読処理に使用)
  * @returns
  */
 export const fetchMessages = async (transactionId: string, userId: string) => {
