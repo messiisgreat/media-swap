@@ -10,6 +10,8 @@ import { Session } from "next-auth";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { BiSend } from "react-icons/bi";
 import toast from "react-hot-toast";
+import { Input } from "@/components/formElements/FormElements";
+import FormSubmitButton from "@/components/FormSubmitButton";
 
 /**
  * 取引画面のメッセージ
@@ -28,8 +30,6 @@ export function MessageSection({
       })[]
     | null
   >(null);
-  const [message, setMessage] = useState("");
-  const [posting, setPosting] = useState(false);
   const chatareaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,30 +40,30 @@ export function MessageSection({
       })
       .catch((e) => {
         console.error(e);
+        toast.error("メッセージの取得に失敗しました。");
       });
   }, [transaction.id, sessionUser.id]);
 
-  const postComment = async () => {
-    if (!message || typeof message !== "string") return;
+  const postComment = async (f: FormData) => {
+    const message = f.get("message") as string;
+    if (!message || typeof message !== "string") {
+      toast.error("メッセージを入力してください");
+      return;
+    }
 
     if (message.length > 300) {
       toast.error("300文字以内で入力してください");
       return;
     }
 
-    setPosting(true);
-
     try {
       await sendMessage(message, sessionUser, transaction.id);
       setMessages(await fetchMessages(transaction.id, sessionUser.id));
-      setMessage("");
       toast.success("メッセージを送信しました。");
       setTimeout(() => chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight), 500);
     } catch (e) {
       console.error(e);
       toast.error("メッセージの送信に失敗しました。");
-    } finally {
-      setPosting(false);
     }
   }
   return (
@@ -117,17 +117,18 @@ export function MessageSection({
           <Skeleton />
         </div>
       )}
-      <form className="flex w-full items-center" action={() => postComment()}>
-        <input
+      <form className="flex w-full items-center" action={(f) => postComment(f)}>
+        <Input
           type="text"
+          name="message"
           placeholder="メッセージを入力..."
-          className="input input-bordered input-accent grow rounded-r-none"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          className="input-accent grow rounded-r-none"
+          characterLimit={300}
+          hideLimit
         />
-        <button className="btn btn-square btn-accent shrink-0 rounded-l-none" disabled={posting || !message} type="submit">
+        <FormSubmitButton className="btn-square btn-accent shrink-0 rounded-l-none" hideChildrenInPending>
           <BiSend size="2rem" />
-        </button>
+        </FormSubmitButton>
       </form>
     </div>
   );
