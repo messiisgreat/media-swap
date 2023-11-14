@@ -1,5 +1,4 @@
-import { env } from "@/utils/env";
-import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
 import { ComposableMiddleware } from "next-compose-middleware";
 import { NextResponse } from "next/server";
 
@@ -9,8 +8,14 @@ import { NextResponse } from "next/server";
  * @param res NextResponse
  */
 export const authMiddleware: ComposableMiddleware = async (req, res) => {
-  const token = await getToken({ req, secret: env.NEXTAUTH_SECRET });
-  if (!token) {
+  const requestForNextAuth = {
+    headers: {
+      cookie: req.headers.get("cookie") ?? undefined,
+    },
+  };
+  const session = await getSession({ req: requestForNextAuth });
+  console.log(session);
+  if (!session) {
     const pathName = new URL(req.url).pathname;
     return NextResponse.redirect(
       new URL(`/api/auth/signin?callbackUrl=${encodeURI(pathName)}`, req.url),
