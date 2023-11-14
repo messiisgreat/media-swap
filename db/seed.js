@@ -32,25 +32,16 @@ async function main() {
   });
 
   // 画像情報をシードする
-  const image = await prisma.image.create({
-    data: {
-      imageURL:
-        "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
-      caption: "Very delicious banana.",
-      // その他の必要な Image フィールド
-    },
-  });
-
-  // 出品情報と画像のリレーションを作成する
   const listingImage = await prisma.listingImage.create({
     data: {
       listing: {
         connect: { id: listing.id }, // Listing モデルと接続
       },
-      image: {
-        connect: { id: image.id }, // Image モデルと接続
-      },
+      imageURL:
+        "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
+      caption: "Very delicious banana.",
       order: 1,
+      // その他の必要な Image フィールド
     },
   });
 
@@ -129,7 +120,6 @@ async function main() {
   });
 
   // 出品情報コメントの作成
-  // 'userId' と 'listingId' は実際のデータに置き換える必要があります。
   const listingComment = await prisma.listingComment.create({
     data: {
       userId: seller.id,
@@ -148,7 +138,6 @@ async function main() {
   });
 
   // 取引データの作成
-  // 'buyerId' と 'listingId' は実際のデータに置き換える必要があります。
   const transaction = await prisma.transaction.create({
     data: {
       listingId: listing.id,
@@ -158,7 +147,6 @@ async function main() {
   });
 
   // 取引コメントデータの作成
-  // 'userId' と 'transactionId' は実際のデータに置き換える必要があります。
   const transactionComment = await prisma.transactionComment.create({
     data: {
       transactionId: transaction.id,
@@ -169,7 +157,6 @@ async function main() {
 
   const transactionRating = await prisma.transactionRating.create({
     data: {
-      // transactionId, raterId, ratedIdは適切なObjectId文字列を使用してください
       transactionId: transaction.id,
       raterId: seller.id,
       ratedId: buyer.id,
@@ -189,10 +176,8 @@ async function main() {
   // UserViewHistoryのシードデータ
   const userViewHistory = await prisma.userViewHistory.create({
     data: {
-      // userId, listingIdは適切なObjectId文字列を使用してください
       userId: seller.id,
       listingId: listing.id,
-      // viewedAtは自動的に設定されます
     },
   });
 
@@ -207,7 +192,6 @@ async function main() {
   // Notificationのシードデータ
   const notification = await prisma.notification.create({
     data: {
-      // notificationTypeIdは適切なObjectId文字列を使用してください
       notificationTypeId: notificationType.id,
       content: "新しい取引が利用可能です。",
     },
@@ -216,7 +200,6 @@ async function main() {
   // UserNotificationReadのシードデータ
   const userNotificationRead = await prisma.userNotificationRead.create({
     data: {
-      // notificationId, userIdは適切なObjectId文字列を使用してください
       notificationId: notification.id,
       userId: seller.id,
     },
@@ -225,7 +208,6 @@ async function main() {
   // UserNotificationPermitのシードデータ
   const userNotificationPermit = await prisma.userNotificationPermit.create({
     data: {
-      // userId, notificationTypeIdは適切なObjectId文字列を使用してください
       userId: seller.id,
       notificationTypeId: notificationType.id,
       isPermit: true,
@@ -235,7 +217,6 @@ async function main() {
   // Accountのシードデータ
   const account = await prisma.account.create({
     data: {
-      // userIdは適切なObjectId文字列を使用してください
       userId: seller.id,
       type: "oauth",
       provider: "google",
@@ -246,10 +227,8 @@ async function main() {
   // Sessionのシードデータ
   const session = await prisma.session.create({
     data: {
-      // userIdは適切なObjectId文字列を使用してください
       userId: seller.id,
       sessionToken: "session-token-string",
-      // expiresは具体的なDateTime値を使用してください
       expires: new Date("2023-12-31T23:59:59Z"),
     },
   });
@@ -259,7 +238,6 @@ async function main() {
     data: {
       identifier: "user-email@example.com",
       token: "verification-token-string",
-      // expiresは具体的なDateTime値を使用してください
       expires: new Date("2023-12-31T23:59:59Z"),
     },
   });

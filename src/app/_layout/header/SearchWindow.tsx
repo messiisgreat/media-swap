@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
+import { FaSearch } from "react-icons/fa";
+
+const formValue = "searchQuery";
 
 async function searchListings(formData: FormData) {
   "use server";
-  const searchQuery = formData.get("searchQuery")?.toString();
+  const searchQuery = formData.get(formValue)?.toString();
   if (searchQuery) {
-    redirect("/search?query=" + searchQuery);
+    redirect(`/search?query=${encodeURIComponent(searchQuery)}`);
   }
 }
 
@@ -14,14 +17,22 @@ async function searchListings(formData: FormData) {
  */
 export const SearchWindow = () => {
   return (
-    <form action={searchListings}>
-      <div className="form-control">
-        <input
-          name="searchQuery"
-          placeholder="何をお探しですか？"
-          className="input input-bordered w-full min-w-[100px]"
-        />
-      </div>
+    <form
+      action={searchListings}
+      className="input input-bordered flex w-full items-center justify-center py-0 pr-1"
+    >
+      <input
+        name={formValue}
+        placeholder="何をお探しですか？"
+        className="h-full"
+      />
+      <button
+        type="submit"
+        className="h-full px-2 text-gray-500 hover:text-gray-700"
+        aria-label="検索ボタン"
+      >
+        <FaSearch size={22} />
+      </button>
     </form>
   );
 };
