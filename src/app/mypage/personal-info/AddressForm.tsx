@@ -7,7 +7,7 @@ import { z } from "zod";
 import { insertAddress } from "@/app/mypage/personal-info/server";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Input, Select } from "@/components/FormElements";
+import { Input, Select } from "@/components/formElements/FormElements";
 import { objToAssociative } from "@/utils/converter";
 
 export const AddressFormSchema = z.object({
@@ -138,7 +138,7 @@ export default function AddressForm() {
       )}
       <Input
         labelText="電話番号"
-        type="number"
+        type="tel"
         autoComplete="shipping phone-number"
         className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="09000000000"
