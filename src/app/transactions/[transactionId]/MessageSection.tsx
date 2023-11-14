@@ -127,7 +127,7 @@ export function MessageSection({
                             src={message.user.image ?? defaultIcon}
                             width={40}
                             height={40}
-                            alt=""
+                            alt={message.user.name ?? "名無し"}
                           />
                         </div>
                       </div>
