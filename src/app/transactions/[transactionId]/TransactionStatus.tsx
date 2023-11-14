@@ -1,127 +1,62 @@
 import { TRANSACTION_STATUS } from "@/constants/listing";
 import { Transaction } from "@prisma/client";
 import { Session } from "next-auth";
+import { IconType } from "react-icons";
 import { FaClock, FaMoneyCheckAlt, FaTruck, FaBriefcase, FaTimes } from "react-icons/fa";
 
-function BeforePaymentSellerStatus() {
+function StatusAlert({ icon, alertClass, boldText, text }: { icon: IconType, alertClass: string, boldText: string, text: string }) {
+  const IconComponent = icon;
   return (
-    <div className="alert alert-success flex w-full">
-      <FaMoneyCheckAlt size="2rem" />
+    <div className={`alert ${alertClass} flex w-full`}>
+      <IconComponent size="2rem" />
       <div className="flex flex-col">
-        <p className="font-bold">支払いをお待ち下さい</p>
-        <p>購入者からの支払い完了通知をお待ち下さい</p>
+        <p className="font-bold">{boldText}</p>
+        <p>{text}</p>
       </div>
     </div>
   );
+}
+
+function BeforePaymentSellerStatus() {
+  return <StatusAlert icon={FaMoneyCheckAlt} alertClass="alert-success" boldText="支払いをお待ち下さい" text="購入者からの支払い完了通知をお待ち下さい" />;
 }
 
 function BeforePaymentBuyerStatus() {
-  return (
-    <div className="alert alert-warning flex w-full">
-      <FaMoneyCheckAlt size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">支払いを完了してください</p>
-        <p>注文処理を進めるために、支払いを完了してください</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaMoneyCheckAlt} alertClass="alert-warning" boldText="支払いを完了してください" text="注文処理を進めるために、支払いを完了してください" />;
 }
 
 function CompletePaymentSellerStatus() {
-  return (
-    <div className="alert alert-warning flex w-full">
-      <FaTruck size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">支払いが確認されました</p>
-        <p>発送を行ってください</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaTruck} alertClass="alert-warning" boldText="支払いが確認されました" text="発送を行ってください" />;
 }
 
 function CompletePaymentBuyerStatus() {
-  return (
-    <div className="alert alert-success flex w-full">
-      <FaClock size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">発送をお待ち下さい</p>
-        <p>出品者からの発送通知をお待ち下さい</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaClock} alertClass="alert-success" boldText="発送をお待ち下さい" text="出品者からの発送通知をお待ち下さい" />;
 }
 
 function SentSellerStatus() {
-  return (
-    <div className="alert alert-success flex w-full">
-      <FaTruck size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">商品が発送されました</p>
-        <p>購入者への到着をお待ち下さい</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaTruck} alertClass="alert-success" boldText="商品が発送されました" text="購入者への到着をお待ち下さい" />;
 }
 
 function SentBuyerStatus() {
-  return (
-    <div className="alert alert-warning flex w-full">
-      <FaTruck size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">商品が発送されました</p>
-        <p>到着したら受け取り評価をしてください</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaTruck} alertClass="alert-warning" boldText="商品が発送されました" text="到着したら受け取り評価をしてください" />;
 }
 
 function ReceivedSellerStatus() {
-  return (
-    <div className="alert alert-success flex w-full">
-      <FaBriefcase size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">商品が購入者に到着しました</p>
-        <p>購入者が評価をし次第取引完了となります</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaBriefcase} alertClass="alert-success" boldText="商品が購入者に到着しました" text="購入者が評価をし次第取引完了となります" />;
 }
 
 function ReceivedBuyerStatus() {
-  return (
-    <div className="alert alert-warning flex w-full">
-      <FaBriefcase size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">商品が到着しました</p>
-        <p>取引評価をしてください</p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaBriefcase} alertClass="alert-warning" boldText="商品が到着しました" text="取引評価をしてください" />;
 }
 
 function CancelSellerStatus() {
-  return (
-    <div className="alert alert-error flex w-full">
-      <FaTimes size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">取引がキャンセルされました</p>
-        <p></p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaTimes} alertClass="alert-error" boldText="取引がキャンセルされました" text="" />;
 }
 
 function CancelBuyerStatus() {
-  return (
-    <div className="alert alert-error flex w-full">
-      <FaTimes size="2rem" />
-      <div className="flex flex-col">
-        <p className="font-bold">取引がキャンセルされました</p>
-        <p></p>
-      </div>
-    </div>
-  );
+  return <StatusAlert icon={FaTimes} alertClass="alert-error" boldText="取引がキャンセルされました" text="" />;
 }
+
 
 /**
  * 取引のステータスを表示する
