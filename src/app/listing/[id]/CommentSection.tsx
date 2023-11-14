@@ -1,27 +1,19 @@
 "use client";
 
-import { addComment, fetchComments } from "@/app/listing/[id]/actions";
+import {
+  addComment,
+  fetchComments,
+  merchant,
+} from "@/app/listing/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Session } from "next-auth";
 import { CommentWithPartialUser } from "@/services/listingComment";
-
-function Skeleton() {
-  return (
-    <div role="status" className="flex w-full animate-pulse items-center gap-2">
-      <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400"></div>
-      <div className="w-full">
-        <div className="mb-2.5 h-2 max-w-[360px] rounded-full bg-gray-400"></div>
-        <div className="mb-2.5 h-2 rounded-full bg-gray-400"></div>
-        <div className="mb-2.5 h-2 max-w-[330px] rounded-full bg-gray-400"></div>
-        <div className="h-2 max-w-[360px] rounded-full bg-gray-400"></div>
-      </div>
-      <span className="sr-only">Loading...</span>
-    </div>
-  );
-}
+import { Skeleton } from "@/components/Skeleton";
+import { Textarea } from "@/components/formElements/FormElements";
+import FormSubmitButton from "@/components/FormSubmitButton";
 
 /**
  * コメント(+コメントを書き込むフォーム)
@@ -34,8 +26,11 @@ export default function CommentSection({
   listingId: string;
   sessionUser: Session["user"] | null;
 }) {
-  const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
+  const [comments, setComments] = useState<CommentWithPartialUser[] | null>(
+    null,
+  );
   const [posting, setPosting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     fetchComments(listingId)
@@ -49,9 +44,9 @@ export default function CommentSection({
   const postComment = async (
     f: FormData,
     sessionUser: Session["user"],
-    productId: string
+    productId: string,
   ) => {
-    const text = f.get("comment");
+    const text = f.get("comment") as string;
 
     if (!text || typeof text !== "string") return;
 
@@ -64,21 +59,47 @@ export default function CommentSection({
     try {
       await addComment(text, sessionUser, productId);
       toast.success("コメントを書き込みました。");
+      formRef.current?.reset();
       setComments(await fetchComments(productId));
     } catch (e) {
       console.error(e);
       toast.error("コメントの書き込みに失敗しました。");
+    } finally {
+      setPosting(false);
     }
-    setPosting(false);
-  }
+  };
 
   return (
     <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
+      {/* TODO: 検証用の取引作成ボタン！リリース時には削除 */}
+      <button
+        onClick={async () => {
+          if (!sessionUser) {
+            alert("ログインしてください");
+            return;
+          }
+          const transactionId = await merchant(listingId, sessionUser.id);
+          location.href = `/transactions/${transactionId}`;
+        }}
+      >
+        取引を作成
+      </button>
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
-        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)}>
-          <textarea className="textarea textarea-bordered w-full resize-none" disabled={posting} name="comment" maxLength={300}></textarea>
-          <button className="btn btn-secondary flex items-center gap-2" type="submit" disabled={posting}><span className={`loading loading-spinner loading-md ${posting ? "":"hidden"}`}></span>コメントを書き込む</button>
+        <form
+          className="flex flex-col items-start gap-4"
+          action={(f) => postComment(f, sessionUser, listingId)}
+          ref={formRef}
+        >
+          <Textarea
+            className="w-full resize-none"
+            disabled={posting}
+            name="comment"
+            characterLimit={300}
+          ></Textarea>
+          <FormSubmitButton className="btn-secondary" type="submit">
+            コメントを書き込む
+          </FormSubmitButton>
         </form>
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
