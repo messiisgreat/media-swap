@@ -1,6 +1,10 @@
 "use client";
 
-import { addComment, fetchComments } from "@/app/listing/[id]/actions";
+import {
+  addComment,
+  fetchComments,
+  merchant,
+} from "@/app/listing/[id]/actions";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -10,8 +14,6 @@ import { CommentWithPartialUser } from "@/services/listingComment";
 import { Skeleton } from "@/components/Skeleton";
 import { Textarea } from "@/components/formElements/FormElements";
 import FormSubmitButton from "@/components/FormSubmitButton";
-
-
 
 /**
  * コメント(+コメントを書き込むフォーム)
@@ -24,7 +26,9 @@ export default function CommentSection({
   listingId: string;
   sessionUser: Session["user"] | null;
 }) {
-  const [comments, setComments] = useState<CommentWithPartialUser[] | null>(null);
+  const [comments, setComments] = useState<CommentWithPartialUser[] | null>(
+    null,
+  );
   const [posting, setPosting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -40,7 +44,7 @@ export default function CommentSection({
   const postComment = async (
     f: FormData,
     sessionUser: Session["user"],
-    productId: string
+    productId: string,
   ) => {
     const text = f.get("comment") as string;
 
@@ -62,15 +66,39 @@ export default function CommentSection({
       toast.error("コメントの書き込みに失敗しました。");
     }
     setPosting(false);
-  }
+  };
 
   return (
     <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
+      {/* TODO: 検証用の取引作成ボタン！リリース時には削除 */}
+      <button
+        onClick={async () => {
+          if (!sessionUser) {
+            alert("ログインしてください");
+            return;
+          }
+          const transactionId = await merchant(listingId, sessionUser.id);
+          location.href = `/transactions/${transactionId}`;
+        }}
+      >
+        取引を作成
+      </button>
       <p className="mb-2 text-xl font-medium">コメント</p>
       {sessionUser ? (
-        <form className="flex flex-col items-start gap-4" action={(f) => postComment(f, sessionUser, listingId)} ref={formRef}>
-          <Textarea className="w-full resize-none" disabled={posting} name="comment" characterLimit={300}></Textarea>
-          <FormSubmitButton className="btn-secondary" type="submit">コメントを書き込む</FormSubmitButton>
+        <form
+          className="flex flex-col items-start gap-4"
+          action={(f) => postComment(f, sessionUser, listingId)}
+          ref={formRef}
+        >
+          <Textarea
+            className="w-full resize-none"
+            disabled={posting}
+            name="comment"
+            characterLimit={300}
+          ></Textarea>
+          <FormSubmitButton className="btn-secondary" type="submit">
+            コメントを書き込む
+          </FormSubmitButton>
         </form>
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
