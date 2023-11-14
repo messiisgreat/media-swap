@@ -20,7 +20,7 @@ export const CompletedListing = async ({
       className="grid justify-center gap-4"
     >
       <Image
-        src={listing.images.filter((i) => i.order === 0)[0].image.imageURL}
+        src={listing.images[0].imageURL}
         alt={listing.productName!}
         width={400}
         height={400}

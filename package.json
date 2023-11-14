@@ -5,7 +5,7 @@
   "scripts": {
     "package:install": "pnpm install",
     "dev": "next dev",
-    "build": "ts-node --project tsconfig.build.json -r tsconfig-paths/register src/constants/constantsSeed.ts && prisma generate && next build",
+    "build": "prisma generate && ts-node --project tsconfig.build.json -r tsconfig-paths/register src/constants/constantsSeed.ts && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -26,6 +26,7 @@
     "cloudinary": "^1.41.0",
     "daisyui": "^3.9.4",
     "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
     "eslint": "^8.52.0",
     "eslint-config-next": "^13.5.6",
     "eslint-config-prettier": "^9.0.0",
@@ -46,6 +47,7 @@
     "server-only": "^0.0.1",
     "sharp": "^0.32.6",
     "tailwindcss": "3.3.3",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "zod": "^3.22.4"
   },

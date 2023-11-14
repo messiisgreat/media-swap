@@ -1,9 +1,14 @@
+import Link from "next/link";
 import { ComponentProps, memo } from "react";
 
-type Props = ComponentProps<"button"> & {
+type CommonProps = {
   outline?: boolean;
   secondary?: boolean;
 };
+
+type ButtonProps = ComponentProps<"button"> & CommonProps;
+
+type LinkProps = ComponentProps<typeof Link> & CommonProps;
 
 /**
  * ボタンコンポーネント
@@ -22,7 +27,7 @@ export const Button = memo(function Button({
   className,
   type = "button",
   ...props
-}: Props) {
+}: ButtonProps) {
   const variant = `${outline ? "btn-outline" : ""} ${
     secondary ? "btn-secondary" : "btn-primary"
   }`;
@@ -30,5 +35,22 @@ export const Button = memo(function Button({
     <button className={`btn ${variant} ${className}`} type={type} {...props}>
       {children}
     </button>
+  );
+});
+
+export const ButtonAsLink = memo(function ButtonAsLink({
+  outline = false,
+  secondary = false,
+  children,
+  className,
+  ...props
+}: LinkProps) {
+  const variant = `${outline ? "btn-outline" : ""} ${
+    secondary ? "btn-secondary" : "btn-primary"
+  }`;
+  return (
+    <Link className={`btn ${variant} ${className}`} {...props}>
+      {children}
+    </Link>
   );
 });

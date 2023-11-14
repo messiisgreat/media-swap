@@ -10,6 +10,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
+import { useCharacterLimit } from "@/components/formElements/FormElementsHooks";
 
 /**
  * Formの共通型
@@ -17,37 +18,8 @@ import { FaTimes } from "react-icons/fa";
 type FormCommonProps = {
   labelText?: string;
   characterLimit?: number;
+  hideLimit?: boolean;
 };
-
-/**
- * テキスト入力フィールドの文字数制限を扱うためのフックス
- * @param {string} initialValue - テキスト入力フィールドの初期値
- * @param {number} limit - テキスト入力フィールドで許可される最大文字数（オプション）
- * @returns {object} - テキスト入力フィールドの現在の値、文字数カウント、および値を更新するためのhandleChange関数を含むオブジェクト
- */
-function useCharacterLimit(
-  initialValue: string,
-  limit?: number,
-): {
-  value: string;
-  characterCount: number;
-  handleChange: (newValue: string) => void;
-} {
-  const [value, setValue] = useState(initialValue);
-  const [characterCount, setCharacterCount] = useState(
-    initialValue.length || 0,
-  );
-  const handleChange = (newValue: string) => {
-    if (limit && newValue.length > limit) {
-      setValue(newValue.substring(0, limit));
-      setCharacterCount(limit);
-    } else {
-      setValue(newValue);
-      setCharacterCount(newValue.length);
-    }
-  };
-  return { value, characterCount, handleChange };
-}
 
 /**
  * inputタグにCSSを適用したラッパー
@@ -55,14 +27,18 @@ function useCharacterLimit(
 export const Input = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function Input({ className, labelText, characterLimit, ...props }, ref) {
+>(function Input(
+  { className, labelText, characterLimit, hideLimit = false, ...props },
+  ref,
+) {
   const inputClass = `input input-bordered ${className ?? ""}`;
-  const { value, characterCount, handleChange } = useCharacterLimit(
+  const { value, error, characterCount, handleChange } = useCharacterLimit(
     "",
     characterLimit,
   );
+
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
       <input
         className={inputClass}
@@ -71,11 +47,20 @@ export const Input = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
-      {characterLimit && (
+      {characterLimit && error ? (
+        <div className="flex justify-between">
+          <label className="label-text-alt text-error">{error}</label>
+          {hideLimit ? null : (
+            <label className="label-text-alt self-end">
+              {characterCount}/{characterLimit}
+            </label>
+          )}
+        </div>
+      ) : characterLimit && !hideLimit ? (
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
-      )}
+      ) : null}
     </div>
   );
 });
@@ -86,14 +71,17 @@ export const Input = forwardRef<
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
->(function Textarea({ className, labelText, characterLimit, ...props }, ref) {
+>(function Textarea(
+  { className, labelText, characterLimit, hideLimit = false, ...props },
+  ref,
+) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
-  const { value, characterCount, handleChange } = useCharacterLimit(
+  const { value, error, characterCount, handleChange } = useCharacterLimit(
     "",
     characterLimit,
   );
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
       <textarea
         className={textareaClass}
@@ -102,11 +90,20 @@ export const Textarea = forwardRef<
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
-      {characterLimit && (
+      {characterLimit && error ? (
+        <div className="flex justify-between">
+          <label className="label-text-alt text-error">{error}</label>
+          {hideLimit ? null : (
+            <label className="label-text-alt self-end">
+              {characterCount}/{characterLimit}
+            </label>
+          )}
+        </div>
+      ) : characterLimit && !hideLimit ? (
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
-      )}
+      ) : null}
     </div>
   );
 });
@@ -212,21 +209,18 @@ export const ImageInput = forwardRef<
 >(function ImageInput({ id, labelText, ...props }, ref) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-  const onDrop = useCallback(
-    (droppedFiles: File[]) => {
-      setFiles((previousFiles) => {
-        const spaceLeft = 10 - previousFiles.length;
-        const acceptedFiles = droppedFiles.slice(0, spaceLeft);
-        const filesWithPreview = acceptedFiles.map((file: File) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
-        ) as FileWithPreview[];
-        return [...previousFiles, ...filesWithPreview];
-      });
-    },
-    [],
-  );
+  const onDrop = useCallback((droppedFiles: File[]) => {
+    setFiles((previousFiles) => {
+      const spaceLeft = 10 - previousFiles.length;
+      const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+      const filesWithPreview = acceptedFiles.map((file: File) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        }),
+      ) as FileWithPreview[];
+      return [...previousFiles, ...filesWithPreview];
+    });
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

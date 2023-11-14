@@ -7,41 +7,21 @@ import {
   UnregisteredListing,
   createListingWithTagsAndImages,
 } from "@/services/listing";
-import { createTag } from "@/services/tag";
 import { getFormValues } from "@/utils/extendsForm";
 import getSession from "@/utils/getSession";
 import { redirect } from "next/navigation";
 
 /**
- * タグ文字列の処理を行う。
- * 未登録のタグをDBに登録し、登録済みのタグと併せてタグIDの配列を返す
+ * タグ文字列をパースしてタグ名の配列を返す
  *
  * @param tagsString stringifyされたタグのJSON文字列
- * @returns Tag IDの配列
+ * @returns Tag textの配列
  */
-async function processTags(tagsString?: string | null): Promise<string[]> {
+const parseTags = (tagsString: string) => {
   if (!tagsString) return [];
-  try {
-    const tags: { id: string; text: string }[] = JSON.parse(tagsString);
-    const [newTags, existingTags] = tags.reduce(
-      (acc, tag) => {
-        tag.id === tag.text ? acc[0].push(tag) : acc[1].push(tag);
-        return acc;
-      },
-      [[], []] as [
-        { id: string; text: string }[],
-        { id: string; text: string }[],
-      ],
-    );
-
-    const createdTagIds = await Promise.all(
-      newTags.map(async (tag) => await createTag(tag.text)),
-    ).then((tags) => tags.map((tag) => tag.id));
-    return [...existingTags.map((tag) => tag.id), ...createdTagIds];
-  } catch (e) {
-    return [];
-  }
-}
+  const tags: { id: string; text: string }[] = JSON.parse(tagsString);
+  return tags.map((tag) => tag.text);
+};
 
 /**
  * フォームに入力された商品情報をDBに登録し、完了後に確認ページにリダイレクトする
@@ -78,7 +58,7 @@ export const addListing = async (
   const isVerified = await fetchVerifyResult(captchaValue);
   if (!isVerified) return "reCAPTCHAが正しくありません";
 
-  const tagIds = await processTags(tags);
+  const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
 
   const listing: UnregisteredListing = {
@@ -94,7 +74,7 @@ export const addListing = async (
 
   const insertedListing = await createListingWithTagsAndImages(
     listing,
-    tagIds,
+    tagTexts,
     images,
   );
 

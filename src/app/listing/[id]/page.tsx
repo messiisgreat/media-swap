@@ -22,12 +22,11 @@ export async function generateMetadata({
   params: { id },
 }: ListingPageProps): Promise<Metadata> {
   const listing = await findListingById(id);
-
   return {
     title: listing.productName,
     description: listing.description,
     openGraph: {
-      images: [{ url: listing.images[0]?.image.imageURL }],
+      images: [{ url: listing.images[0].imageURL }],
     },
   };
 }
@@ -41,7 +40,7 @@ export default async function ListingPage({
 }: ListingPageProps) {
   const listing = await findListingById(id);
   const tags = listing.tags.map((t) => t.tag);
-  const images = listing.images.map((i) => i.image.imageURL);
+  const images = listing.images;
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
@@ -52,7 +51,7 @@ export default async function ListingPage({
         <div className="hero-content flex-col lg:flex-row lg:items-center">
           {/* TODO: カルーセルにしてimagesをmapで展開する */}
           <Image
-            src={images[0]}
+            src={images[0].imageURL}
             alt={listing.productName!}
             width={500}
             height={500}
