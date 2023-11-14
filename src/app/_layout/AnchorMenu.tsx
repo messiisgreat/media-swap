@@ -48,7 +48,6 @@ const naviMenu: NaviMenu[] = [
 export const AnchorMenu = () => {
   const pathName = usePathname();
   const isScroll = useScrollingState();
-  console.log(isScroll);
 
   return (
     <div
