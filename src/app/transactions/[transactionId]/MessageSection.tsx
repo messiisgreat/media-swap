@@ -104,7 +104,7 @@ export function MessageSection({
       <div className="flex w-full flex-col gap-4">
         {messages ? (
           messages.length === 0 ? (
-            <div>メッセージはありません</div>
+            <div className="text-center">メッセージはありません</div>
           ) : (
             <div
               className="flex max-h-96 flex-col gap-4 overflow-y-scroll"
