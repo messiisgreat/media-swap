@@ -52,8 +52,9 @@ export const AnchorMenu = () => {
 
   return (
     <div
-      className={`navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 md:hidden ${
-        isScroll ? "hidden" : "visible"
+      className={`navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 transition-transform 
+      md:hidden ${
+        isScroll ? "translate-y-full" : "translate-y-0"
       }`}
     >
       {naviMenu.map((item) => {
