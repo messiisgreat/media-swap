@@ -107,7 +107,7 @@ export const markAsReadTransactionComments = async (
   await prisma.transactionComment.updateMany({
     where: {
       transactionId,
-      userId: { not: userId },
+      userId: { not: { equals: userId } },
       isRead: false,
     },
     data: {
