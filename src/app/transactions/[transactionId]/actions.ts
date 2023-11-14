@@ -10,8 +10,10 @@ import { Session } from "next-auth";
  * @returns
  */
 export const fetchMessages = async (transactionId: string, userId: string) => {
-  const comments = await getTransactionComments(transactionId);
-  await markAsReadTransactionComments(transactionId, userId);
+  const [comments] = await Promise.all([
+    getTransactionComments(transactionId),
+    markAsReadTransactionComments(transactionId, userId)
+  ]);
   return comments;
 };
 
