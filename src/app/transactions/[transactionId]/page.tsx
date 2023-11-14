@@ -1,4 +1,3 @@
-import NotFoundPage from "@/app/not-found";
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
 import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/getSession";
@@ -6,6 +5,7 @@ import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 import defaultIcon from "@/assets/profile-pic-placeholder.png";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
+import { notFound } from "next/navigation";
 
 /**
  * 取引画面
@@ -22,19 +22,17 @@ export default async function Transaction({
     getSessionUser()
   ]);
 
-  if (!transaction) {
-    return NotFoundPage();
-  }
-
-  if (!sessionUser) {
-    return NotFoundPage();
+  if (!transaction || !sessionUser) {
+    return notFound();
   }
 
   const sellerId = transaction.listing.sellerId;
   const buyerId = transaction.buyerId;
 
-  if (sessionUser.id !== sellerId && sessionUser.id !== buyerId) {
-    return NotFoundPage();
+  const isNotSellerOrBuyer = sessionUser.id !== sellerId && sessionUser.id !== buyerId;  
+
+  if (isNotSellerOrBuyer) {
+    return notFound();
   }
 
   return (
