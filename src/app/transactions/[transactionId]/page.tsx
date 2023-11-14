@@ -41,6 +41,7 @@ export default async function Transaction({
         <TransactionStatus transaction={transaction} sessionUser={sessionUser} />
         <div>
           <p>出品者情報</p>
+          {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
           <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
             <div className="flex items-center gap-4">
               <div className="avatar">
@@ -59,10 +60,8 @@ export default async function Transaction({
           </div>
         </div>
       </aside>
-      <div className="flex flex-1 flex-col gap-4">
-        <p>メッセージ</p>
-        <MessageSection transaction={transaction} sessionUser={sessionUser} />
-      </div>
+      
+      <MessageSection transaction={transaction} sessionUser={sessionUser} />
     </div>
   );
 }
