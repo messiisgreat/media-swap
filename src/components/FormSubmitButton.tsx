@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 type FormSubmitButtonProps = {
   children: React.ReactNode;
   className?: string;
+  hideChildrenInPending?: boolean;
 } & ComponentProps<"button">;
 
 /**
@@ -18,6 +19,7 @@ type FormSubmitButtonProps = {
 export default function FormSubmitButton({
   children,
   className,
+  hideChildrenInPending = false,
   ...props
 }: FormSubmitButtonProps) {
   const { pending } = useFormStatus();
@@ -30,7 +32,7 @@ export default function FormSubmitButton({
       disabled={pending}
     >
       {pending && <span className="loading loading-spinner"></span>}
-      {children}
+      {pending && hideChildrenInPending ? null:children}
     </button>
   );
 }
