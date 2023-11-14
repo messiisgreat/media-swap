@@ -14,7 +14,6 @@ export const authMiddleware: ComposableMiddleware = async (req, res) => {
     },
   };
   const session = await getSession({ req: requestForNextAuth });
-  console.log(session);
   if (!session) {
     const pathName = new URL(req.url).pathname;
     return NextResponse.redirect(
