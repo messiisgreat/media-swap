@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
  * @returns {boolean} - スクロール中かどうかを示す状態
  */
 export const useScrollingState = (delay: number = 200): boolean => {
-  const [isScrolling, setIsScrolling] = useState<boolean>(true);
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
   // eslint-disable-next-line no-restricted-syntax
   let timeoutId: NodeJS.Timeout;
 
