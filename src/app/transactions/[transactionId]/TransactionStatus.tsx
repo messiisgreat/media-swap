@@ -170,6 +170,6 @@ export function TransactionStatus({
       return <CancelBuyerStatus />;
     }
   } else {
-    return <div></div>;
+    return null;
   }
 }
