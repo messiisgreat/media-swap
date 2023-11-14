@@ -13,7 +13,7 @@ export const authMiddleware: ComposableMiddleware = async (req, res) => {
   if (!token) {
     const pathName = new URL(req.url).pathname;
     return NextResponse.redirect(
-      new URL(`/api/auth/signin?callbackUrl=/${encodeURI(pathName)}`, req.url),
+      new URL(`/api/auth/signin?callbackUrl=${encodeURI(pathName)}`, req.url),
     );
   }
   return res;
