@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
  * Serverとありますが、Clientでも動作します。
  * @returns セッション情報またはnull
  */
-export default async function getSession() {
+export async function getSession() {
   return getServerSession(authOptions);
 }
 

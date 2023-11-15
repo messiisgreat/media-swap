@@ -1,7 +1,7 @@
 import { SearchWindow } from "@/app/_layout/header/SearchWindow";
 import { TitleLogo } from "@/app/_layout/header/TitleLogo";
 import UserMenuButton from "@/app/_layout/header/UserMenuButton";
-import getSession from "@/utils/getSession";
+import { getSession } from "@/utils/session";
 
 /**
  * サイトのヘッダー
