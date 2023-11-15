@@ -1,21 +1,18 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { getSessionUser } from "@/utils/getSession";
 import { TAddressForm } from "./AddressForm";
+import { createAddress } from "@/services/address";
 
 /**
  * 住所を登録する関数
  * @param formData フォームの値
  */
 export const insertAddress = async (formData: TAddressForm) => {
-  const session = await getSessionUser();
-  if (!session || !session.id) {
+  const user = await getSessionUser();
+  if (!user || !user.id) {
     // TODO: エラーハンドリングやログなど追加
     throw new Error("セッションがありません");
   }
-  const insertedAddress = await prisma.address.create({
-    data: { ...formData, userId: session.id },
-  });
-  return insertedAddress;
+  return createAddress({ ...formData, userId: user.id });
 };

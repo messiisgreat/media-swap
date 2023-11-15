@@ -17,7 +17,7 @@ export const AddressFormSchema = z.object({
   prefecture: z.string().min(1, { message: "必須項目です" }),
   city: z.string().min(1, { message: "必須項目です" }),
   addressLine1: z.string().min(1, { message: "必須項目です" }),
-  addressLine2: z.string().optional(),
+  addressLine2: z.string().nullable(),
   phoneNumber: z
     .string({
       invalid_type_error: "数字で入力してください",
