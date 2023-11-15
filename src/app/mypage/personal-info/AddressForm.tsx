@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PREFECTURE_OBJ } from "./prefecture";
+import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { z } from "zod";
 import { insertAddress } from "@/app/mypage/personal-info/server";
 import { useTransition } from "react";

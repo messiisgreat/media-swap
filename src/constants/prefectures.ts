@@ -1,4 +1,4 @@
-const PREFECTURE = [
+const PREFECTURES = [
   "北海道",
   "青森県",
   "岩手県",
@@ -48,7 +48,7 @@ const PREFECTURE = [
   "沖縄県",
 ];
 
-export const PREFECTURE_OBJ = PREFECTURE.map((prefecture) => ({
+export const PREFECTURE_OBJ = PREFECTURES.map((prefecture) => ({
   id: prefecture,
   name: prefecture,
 }));
