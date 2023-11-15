@@ -1,5 +1,4 @@
 "use client";
-import { useCharacterLimit } from "@/components/form/FormElementsHooks";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 /**
@@ -18,26 +17,16 @@ export const Input = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & FormCommonProps
 >(function Input(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { className, labelText, characterLimit, hideLimit = false, ...props },
   ref,
 ) {
   const inputClass = `input input-bordered ${className ?? ""}`;
-  const { value, error, characterCount, handleChange } = useCharacterLimit(
-    "",
-    characterLimit,
-  );
-
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
-      <input
-        className={inputClass}
-        {...props}
-        ref={ref}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-      {characterLimit && error ? (
+      <input className={inputClass} {...props} ref={ref} />
+      {/* {characterLimit && error ? (
         <div className="flex justify-between">
           <label className="label-text-alt text-error">{error}</label>
           {hideLimit ? null : (
@@ -50,7 +39,7 @@ export const Input = forwardRef<
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
-      ) : null}
+      ) : null} */}
     </div>
   );
 });
@@ -62,25 +51,16 @@ export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & FormCommonProps
 >(function Textarea(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   { className, labelText, characterLimit, hideLimit = false, ...props },
   ref,
 ) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
-  const { value, error, characterCount, handleChange } = useCharacterLimit(
-    "",
-    characterLimit,
-  );
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
-      <textarea
-        className={textareaClass}
-        {...props}
-        ref={ref}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-      {characterLimit && error ? (
+      <textarea className={textareaClass} {...props} ref={ref} />
+      {/* {characterLimit && error ? (
         <div className="flex justify-between">
           <label className="label-text-alt text-error">{error}</label>
           {hideLimit ? null : (
@@ -93,7 +73,7 @@ export const Textarea = forwardRef<
         <label className="label-text-alt self-end">
           {characterCount}/{characterLimit}
         </label>
-      ) : null}
+      ) : null} */}
     </div>
   );
 });
@@ -116,12 +96,7 @@ export const Select = forwardRef<
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <select
-        className={selectClass}
-        defaultValue={undefined}
-        {...props}
-        ref={ref}
-      >
+      <select className={selectClass} {...props} ref={ref}>
         <option disabled value={undefined}>
           選択してください
         </option>
