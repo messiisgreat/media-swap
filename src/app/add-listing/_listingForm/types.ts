@@ -14,7 +14,7 @@ export type ProductFormData = {
   isPublic: string;
 };
 
-type ProductFormState = FormState<ProductFormData>;
+export type ProductFormState = FormState<ProductFormData>;
 
 export const initialProductFormValues: ProductFormState = {
   values: {
