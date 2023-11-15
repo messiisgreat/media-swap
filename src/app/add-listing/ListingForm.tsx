@@ -1,16 +1,18 @@
 "use client";
 
-import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
-import { SubmitContainer } from "@/app/add-listing/SubmitContainer";
-import { addListing } from "@/app/add-listing/actions";
 import {
-  ImageInput,
-  Input,
-  Select,
-  Textarea,
-} from "@/components/formElements/FormElements";
-import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
-import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
+  ListingTagInput,
+  SubmitContainer,
+  initialProductFormValues,
+  listingItem,
+} from "@/app/add-listing/_listingForm";
+import { Input, Select, Textarea } from "@/components/form/FormElements";
+import { ImageInput } from "@/components/form/ImageInput";
+import {
+  fetchVerifyResult,
+  useSecurityVerifier,
+} from "@/components/securityVerifier";
+import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
   PRODUCT_CONDITION,
@@ -20,6 +22,7 @@ import {
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
+import { useFormState } from "react-dom";
 import toast from "react-hot-toast";
 
 /**
@@ -30,12 +33,20 @@ import toast from "react-hot-toast";
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
+  const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
 
   const action = async (formData: FormData) => {
-    const e = await addListing(formData, verifiedValue);
-    typeof e === "string" && toast.error(e);
+    if (!verifiedValue) {
+      toast.error("認証を行ってください");
+      return;
+    }
+    const verifyResult = await fetchVerifyResult(verifiedValue);
+    if (!verifyResult) {
+      toast.error("認証に失敗しました");
+      return;
+    }
+    dispatch(formData);
   };
-
   return (
     <form
       action={action}
@@ -51,17 +62,22 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         characterLimit={10}
         name="productName"
         required
+        defaultValue={state.values.productName}
       />
       <TitleUnderbar title="商品の説明" />
       <Select
         labelText="商品の状態"
         options={objToAssociative(PRODUCT_CONDITION)}
+        name="productConditionId"
+        required
+        defaultValue={state.values.productConditionId}
       />
       <Textarea
         labelText="商品の説明"
         characterLimit={1000}
         name="description"
         required
+        defaultValue={state.values.description}
       ></Textarea>
       <ListingTagInput
         tags={tags}
@@ -73,16 +89,19 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         name="postageId"
         labelText="配送料の負担"
         options={objToAssociative(POSTAGE_IS_INCLUDED)}
+        defaultValue={state.values.postageIsIncluded}
       />
       <Select
         name="shippingMethodId"
         labelText="配送の方法"
         options={objToAssociative(SHIPPING_METHOD)}
+        defaultValue={state.values.shippingMethodId}
       />
       <Select
         name="shippingDaysId"
         labelText="発送までの日数"
         options={objToAssociative(SHIPPING_DAYS)}
+        defaultValue={state.values.shippingDaysId}
       />
       <Input
         labelText="販売価格"
@@ -92,6 +111,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         min={0}
         inputMode="numeric"
         required
+        defaultValue={state.values.price}
       />
       <label>販売手数料</label>
       {/* 別途コンポーネントを作成の必要あり*/}
