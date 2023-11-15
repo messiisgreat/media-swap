@@ -1,7 +1,9 @@
 "use server";
 
-import { productFormData } from "@/app/add-listing/types";
-import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
+import {
+  ProductFormSchema,
+  ProductFormState,
+} from "@/app/add-listing/_listingForm/types";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
@@ -25,16 +27,25 @@ const parseTags = (tagsString: string) => {
 };
 
 /**
- * フォームに入力された商品情報をDBに登録し、完了後に確認ページにリダイレクトする
- * 入力されていない項目がある場合やreCAPTCHAに不備がある場合Toastに渡す用のメッセージを返す
- * @param formData 商品情報が入力されたFormData
- * @param captchaValue reCAPTCHAのトークン
+ * フォームに入力された商品情報を登録し、完了後に確認ページにリダイレクトする
+ * 不備がある場合はエラーメッセージを含んだ状態を返す
+ * @param prevState 前の状態
+ * @param formData FormData
  */
-export const addListing = async (
+export const listingItem = async (
+  prevState: ProductFormState,
   formData: FormData,
-  captchaValue: string | null | undefined,
-) => {
-  const formValues = getFormValues(formData, productFormData);
+): Promise<ProductFormState> => {
+  const validated = ProductFormSchema.safeParse(
+    getFormValues(formData, prevState.values),
+  );
+  if (!validated.success) {
+    return {
+      ...prevState,
+      errors: validated.error.flatten().fieldErrors,
+      message: "入力に不備があります",
+    };
+  }
   const {
     productName,
     price,
@@ -44,24 +55,20 @@ export const addListing = async (
     postageIsIncluded,
     isPublic,
     ...rest
-  } = formValues;
+  } = validated.data;
   const previousPrice = null;
   const session = await getSession();
   const userId = session?.user.id;
 
-  if (!userId) throw new Error("User is not authenticated");
-  if (!productName) return "商品名を入力してください";
-  if (!description) return "商品説明を入力してください";
-  if (!imageFiles) return "画像を選択してください";
-  if (!price) return "価格を入力してください";
-  if (!captchaValue) return "reCAPTCHAを通してください";
-
-  const isVerified = await fetchVerifyResult(captchaValue);
-  if (!isVerified) return "reCAPTCHAが正しくありません";
+  if (!userId) {
+    return {
+      ...prevState,
+      message: "セッションが切れました。再度ログインしてください。",
+    };
+  }
 
   const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
-
   const listing: UnregisteredListing = {
     productName,
     price,
