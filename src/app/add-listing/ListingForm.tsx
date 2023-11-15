@@ -41,6 +41,12 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
     });
   }, [state.errors]);
 
+  useEffect(() => {
+    if (state.message) {
+      toast.success(state.message);
+    }
+  }, [state.message]);
+
   return (
     <form
       action={(f) => dispatch(f)}

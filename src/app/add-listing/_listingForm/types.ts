@@ -49,6 +49,8 @@ export const ProductFormSchema: ZodType<ProductFormData> = z.object({
     .min(1, { message: "発送方法を選択してください" }),
   imageFiles: z.array(z.any()).min(1, { message: "画像は必須です" }),
   tags: z.string(),
-  verificationCode: z.string().min(1, { message: "認証を行ってください" }),
+  verificationCode: z
+    .string({ required_error: "認証を行ってください" })
+    .min(1, { message: "認証を行ってください" }),
   isPublic: z.string().min(1, { message: "公開設定は必須です" }),
 });
