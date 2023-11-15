@@ -25,7 +25,6 @@ export const fetchVerifyResult = async (captchaValue: string) => {
     }
     return true;
   } catch (error) {
-    console.error(error);
     return false;
   }
 };

@@ -18,8 +18,9 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { useFormState } from "react-dom";
+import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -30,6 +31,15 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
+
+  useEffect(() => {
+    Object.entries(state.errors!).forEach((error) => {
+      const [, messages] = error;
+      messages.forEach((message) => {
+        toast.error(message);
+      });
+    });
+  }, [state.errors]);
 
   return (
     <form
@@ -62,7 +72,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         name="description"
         required
         defaultValue={state.values.description}
-      ></Textarea>
+      />
       <ListingTagInput
         tags={tags}
         name="tags"
