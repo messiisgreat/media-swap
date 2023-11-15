@@ -56,3 +56,6 @@ export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
   { id: "2".padStart(24, "0"), name: "普通", rating: 0 },
   { id: "3".padStart(24, "0"), name: "悪い", rating: -1 },
 ];
+
+/** サービス手数料 */
+export const SERVICE_CHARGE = 0.05;

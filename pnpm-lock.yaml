@@ -56,6 +56,9 @@ dependencies:
   next-cloudinary:
     specifier: ^5.3.0
     version: 5.6.0(next@14.0.1)(react@18.2.0)
+  next-compose-middleware:
+    specifier: ^1.0.0
+    version: 1.0.0
   postcss:
     specifier: 8.4.31
     version: 8.4.31
@@ -4398,6 +4401,10 @@ packages:
       '@cloudinary-util/util': 2.3.0
       next: 14.0.1(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
+    dev: false
+
+  /next-compose-middleware@1.0.0:
+    resolution: {integrity: sha512-VF4S75yaEiLWBFDBI2RNW3tOPtbnsQBwAg/bsPp3cA82Nb3hb4JQYjczaUIvxSQqzL4SeaAwknzQtP6dRQYcNQ==}
     dev: false
 
   /next@14.0.1(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0):
