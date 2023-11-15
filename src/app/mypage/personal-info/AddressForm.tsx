@@ -66,15 +66,11 @@ export default function AddressForm() {
   return (
     // TODO:以下のPRがreact-hook-formにマージされたら、useTransitionを使わなくて良くなりそうなのでその時に修正する
     // https://github.com/react-hook-form/react-hook-form/pull/11061
-    <form
-      className="flex flex-col gap-3"
-      onSubmit={handleSubmit(onSubmit, onSubmitError)}
-    >
+    <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
       <div>
         <Input
           labelText="郵便番号"
           autoComplete="shipping postal-code"
-          className="rounded-md border border-gray-300 px-3 py-2"
           placeholder="例: 1234567"
           {...register("postalCode")}
         />
@@ -89,7 +85,6 @@ export default function AddressForm() {
           labelText="都道府県"
           options={objToAssociative(PREFECTURE_OBJ)}
           autoComplete="shipping address-level1"
-          className="rounded-md border border-gray-300 px-3 py-2"
           defaultValue={"東京都"}
           {...register("prefecture")}
         />
@@ -103,7 +98,6 @@ export default function AddressForm() {
         labelText="市区町村 (例: 川崎市川崎区)"
         type="text"
         autoComplete="shipping address-level2"
-        className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="川崎市川崎区"
         {...register("city")}
       />
@@ -114,7 +108,6 @@ export default function AddressForm() {
         labelText="町域・番地(例: 旭町1-1)"
         type="text"
         autoComplete="shipping address-line1"
-        className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="旭町1-1"
         {...register("addressLine1")}
       />
@@ -127,7 +120,6 @@ export default function AddressForm() {
         labelText="建物名など(例: ○○マンション101号)"
         type="text"
         autoComplete="shipping address-line2"
-        className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="○○マンション101号"
         {...register("addressLine2")}
       />
@@ -140,7 +132,6 @@ export default function AddressForm() {
         labelText="電話番号"
         type="tel"
         autoComplete="shipping phone-number"
-        className="w-full rounded-md border border-gray-300 px-3 py-2"
         placeholder="09000000000"
         {...register("phoneNumber")}
       />
