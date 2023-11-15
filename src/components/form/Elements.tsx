@@ -26,11 +26,7 @@ export const Input = forwardRef<
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & CommonProps
->(function Textarea(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { className, labelText, ...props },
-  ref,
-) {
+>(function Textarea({ className, labelText, ...props }, ref) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
   return (
     <div className="flex w-full flex-col">
