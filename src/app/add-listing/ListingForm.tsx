@@ -7,7 +7,9 @@ import {
   listingItem,
 } from "@/app/add-listing/_listingForm";
 import { ImageInput } from "@/components/form";
-import { Input, Select, Textarea } from "@/components/form/FormElements";
+import { Input, Select } from "@/components/form/Elements";
+
+import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
 import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { TitleUnderbar } from "@/components/structure";
 import {
@@ -57,9 +59,9 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         id={imageInputId}
         name="imageFiles"
       />
-      <Input
+      <LimitInput
         labelText="商品名"
-        characterLimit={10}
+        maxLength={10}
         name="productName"
         required
         defaultValue={state.values.productName}
@@ -72,9 +74,9 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         required
         defaultValue={state.values.productConditionId}
       />
-      <Textarea
+      <LimitTextarea
         labelText="商品の説明"
-        characterLimit={1000}
+        maxLength={1000}
         name="description"
         required
         defaultValue={state.values.description}

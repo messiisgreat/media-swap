@@ -1,13 +1,7 @@
-"use client";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
-/**
- * Formの共通型
- */
-type FormCommonProps = {
+type CommonProps = {
   labelText?: string;
-  characterLimit?: number;
-  hideLimit?: boolean;
 };
 
 /**
@@ -15,31 +9,13 @@ type FormCommonProps = {
  */
 export const Input = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function Input(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { className, labelText, characterLimit, hideLimit = false, ...props },
-  ref,
-) {
+  ComponentPropsWithoutRef<"input"> & CommonProps
+>(function Input({ className, labelText, ...props }, ref) {
   const inputClass = `input input-bordered ${className ?? ""}`;
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
       <input className={inputClass} {...props} ref={ref} />
-      {/* {characterLimit && error ? (
-        <div className="flex justify-between">
-          <label className="label-text-alt text-error">{error}</label>
-          {hideLimit ? null : (
-            <label className="label-text-alt self-end">
-              {characterCount}/{characterLimit}
-            </label>
-          )}
-        </div>
-      ) : characterLimit && !hideLimit ? (
-        <label className="label-text-alt self-end">
-          {characterCount}/{characterLimit}
-        </label>
-      ) : null} */}
     </div>
   );
 });
@@ -49,10 +25,10 @@ export const Input = forwardRef<
  */
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
-  ComponentPropsWithoutRef<"textarea"> & FormCommonProps
+  ComponentPropsWithoutRef<"textarea"> & CommonProps
 >(function Textarea(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { className, labelText, characterLimit, hideLimit = false, ...props },
+  { className, labelText, ...props },
   ref,
 ) {
   const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
@@ -60,28 +36,11 @@ export const Textarea = forwardRef<
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
       <textarea className={textareaClass} {...props} ref={ref} />
-      {/* {characterLimit && error ? (
-        <div className="flex justify-between">
-          <label className="label-text-alt text-error">{error}</label>
-          {hideLimit ? null : (
-            <label className="label-text-alt self-end">
-              {characterCount}/{characterLimit}
-            </label>
-          )}
-        </div>
-      ) : characterLimit && !hideLimit ? (
-        <label className="label-text-alt self-end">
-          {characterCount}/{characterLimit}
-        </label>
-      ) : null} */}
     </div>
   );
 });
 
-/**
- * Selectの型宣言
- */
-type SelectProps = FormCommonProps & {
+type SelectProps = CommonProps & {
   options: { [key: string | number]: string | number };
 };
 
@@ -137,22 +96,6 @@ export const RadioGroup = forwardRef<
           </label>
         ))}
       </div>
-    </div>
-  );
-});
-
-export const Toggle = forwardRef<
-  HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & FormCommonProps
->(function Toggle({ className, labelText, ...props }, ref) {
-  const toggleClass = `toggle toggle-primary ${className ?? ""}`;
-  return (
-    <div className="flex flex-col">
-      {labelText && <label>{labelText}</label>}
-      <label className={toggleClass}>
-        <input type="checkbox" {...props} ref={ref} className="toggle" />
-        <span className="toggle-mark"></span>
-      </label>
     </div>
   );
 });
