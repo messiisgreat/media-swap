@@ -4,14 +4,14 @@ import {
   ProductFormSchema,
   ProductFormState,
 } from "@/app/add-listing/_listingForm/types";
+import { getFormValues } from "@/components/form/utils";
+import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
   createListingWithTagsAndImages,
 } from "@/services/listing";
-import { strToBool } from "@/utils/converter";
-import { getFormValues } from "@/utils/extendsForm";
-import getSession from "@/utils/getSession";
+import { getSession, strToBool } from "@/utils";
 import { redirect } from "next/navigation";
 
 /**
@@ -54,6 +54,7 @@ export const listingItem = async (
     tags,
     postageIsIncluded,
     isPublic,
+    verificationCode,
     ...rest
   } = validated.data;
   const previousPrice = null;
@@ -64,6 +65,19 @@ export const listingItem = async (
     return {
       ...prevState,
       message: "セッションが切れました。再度ログインしてください。",
+    };
+  }
+  if (!verificationCode) {
+    return {
+      ...prevState,
+      message: "認証を行ってください",
+    };
+  }
+  const verifyResult = await fetchVerifyResult(verificationCode);
+  if (!verifyResult) {
+    return {
+      ...prevState,
+      message: "認証に失敗しました。再度認証を行ってください",
     };
   }
 

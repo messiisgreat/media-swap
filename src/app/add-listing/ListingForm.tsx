@@ -6,12 +6,9 @@ import {
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
+import { ImageInput } from "@/components/form";
 import { Input, Select, Textarea } from "@/components/form/FormElements";
-import { ImageInput } from "@/components/form/ImageInput";
-import {
-  fetchVerifyResult,
-  useSecurityVerifier,
-} from "@/components/securityVerifier";
+import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -23,7 +20,6 @@ import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
 import { useId } from "react";
 import { useFormState } from "react-dom";
-import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -35,21 +31,9 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
 
-  const action = async (formData: FormData) => {
-    if (!verifiedValue) {
-      toast.error("認証を行ってください");
-      return;
-    }
-    const verifyResult = await fetchVerifyResult(verifiedValue);
-    if (!verifyResult) {
-      toast.error("認証に失敗しました");
-      return;
-    }
-    dispatch(formData);
-  };
   return (
     <form
-      action={action}
+      action={(f) => dispatch(f)}
       className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1"
     >
       <ImageInput
@@ -112,6 +96,11 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         inputMode="numeric"
         required
         defaultValue={state.values.price}
+      />
+      <input
+        type="hidden"
+        name="verificationCode"
+        value={verifiedValue || ""}
       />
       <label>販売手数料</label>
       {/* 別途コンポーネントを作成の必要あり*/}
