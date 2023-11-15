@@ -4,7 +4,7 @@ import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
-import { getSessionUser } from "@/utils/getSession";
+import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
