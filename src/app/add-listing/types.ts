@@ -8,6 +8,7 @@ export type ProductFormData = {
   shippingMethodId: string;
   imageFiles: File[];
   tags: string;
+  isPublic: string;
 };
 
 export const productFormData: ProductFormData = {
@@ -20,4 +21,5 @@ export const productFormData: ProductFormData = {
   shippingMethodId: "",
   imageFiles: [],
   tags: "",
+  isPublic: "",
 };

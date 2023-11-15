@@ -14,3 +14,16 @@ export const objToAssociative = (
     {} as { [key: string | number]: string },
   );
 };
+
+/**
+ * 文字列をbooleanに変換する
+ * "true"や"1"ならtrueを返す
+ * "false"や"0"ならfalseを返す
+ * @param value 変換する文字列
+ */
+export const strToBool = (value: string) => {
+  if (!value) {
+    return false;
+  }
+  return value.toLowerCase() === "true" || value === "1";
+};
