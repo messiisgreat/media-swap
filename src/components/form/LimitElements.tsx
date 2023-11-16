@@ -1,7 +1,7 @@
 "use client";
 
 import { Input, Textarea } from "@/components/form/Elements";
-import { ComponentProps, useRef, useState } from "react";
+import { ComponentProps, useCallback, useRef, useState } from "react";
 
 type LimitInputProps = Omit<ComponentProps<typeof Input>, "onChange"> & {
   maxLength: number;
@@ -13,9 +13,9 @@ type LimitInputProps = Omit<ComponentProps<typeof Input>, "onChange"> & {
 export const LimitInput = ({ maxLength, ...props }: LimitInputProps) => {
   const [charCount, setCharCount] = useState(0);
   const ref = useRef<HTMLInputElement>(null);
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     setCharCount(ref.current?.value.length ?? 0);
-  };
+  }, []);
   const isOverLimit = charCount > maxLength;
   return (
     <>
@@ -44,9 +44,9 @@ type LimitTextareaProps = Omit<ComponentProps<typeof Textarea>, "onChange"> & {
 export const LimitTextarea = ({ maxLength, ...props }: LimitTextareaProps) => {
   const [charCount, setCharCount] = useState(0);
   const ref = useRef<HTMLTextAreaElement>(null);
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     setCharCount(ref.current?.value.length ?? 0);
-  };
+  }, []);
   const isOverLimit = charCount > maxLength;
   return (
     <>
