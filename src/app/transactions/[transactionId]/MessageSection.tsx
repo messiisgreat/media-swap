@@ -8,7 +8,7 @@ import defaultIcon from "@/assets/profile-pic-placeholder.png";
 import { Button } from "@/components";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
-import { Input } from "@/components/form/FormElements";
+import { LimitInput } from "@/components/form/LimitElements";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { Transaction, TransactionComment } from "@prisma/client";
 import { Session } from "next-auth";
@@ -156,12 +156,12 @@ export function MessageSection({
           className="flex w-full items-center"
           action={(f) => postComment(f)}
         >
-          <Input
+          <LimitInput
             type="text"
             name="message"
             placeholder="メッセージを入力..."
             className="input-accent grow rounded-r-none"
-            characterLimit={300}
+            maxLength={300}
             hideLimit
           />
           <FormSubmitButton

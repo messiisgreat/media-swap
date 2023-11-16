@@ -7,7 +7,7 @@ import {
 } from "@/app/listing/[id]/actions";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
-import { Textarea } from "@/components/form/FormElements";
+import { LimitTextarea } from "@/components/form/LimitElements";
 import { CommentWithPartialUser } from "@/services/listingComment";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { Session } from "next-auth";
@@ -91,12 +91,12 @@ export default function CommentSection({
           action={(f) => postComment(f, sessionUser, listingId)}
           ref={formRef}
         >
-          <Textarea
+          <LimitTextarea
             className="w-full resize-none"
             disabled={posting}
             name="comment"
-            characterLimit={300}
-          ></Textarea>
+            maxLength={300}
+          />
           <FormSubmitButton className="btn-secondary" type="submit">
             コメントを書き込む
           </FormSubmitButton>
