@@ -47,9 +47,18 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
         className="menu dropdown-content rounded-box menu-sm z-30 mt-3 w-52 bg-base-100 p-2 shadow"
       >
         {user ? (
-          <button onClick={() => signOut({ callbackUrl: "/" })}>
-            Sign Out
-          </button>
+          <>
+            <li>
+              <button onClick={() => signOut({ callbackUrl: "/" })}>
+                Sign Out
+              </button>
+            </li>
+            <li>
+              <button onClick={() => signOut({ callbackUrl: "/mypage" })}>
+                マイページ
+              </button>
+            </li>
+          </>
         ) : (
           <button onClick={() => signIn()}>Sign In</button>
         )}
