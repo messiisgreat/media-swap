@@ -66,7 +66,7 @@ export const Select = forwardRef<
 });
 
 /**
- * ラジオボタン
+ * 複数のラジオボタンを束ねて表示する選択肢用コンポーネント
  * @param props inputタグのattribute
  * @returns div
  */
