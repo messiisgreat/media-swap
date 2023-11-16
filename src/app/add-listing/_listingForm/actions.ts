@@ -54,7 +54,6 @@ export const listingItem = async (
   const session = await getSession();
   const userId = session?.user.id;
   const { verificationCode, ...rest } = values;
-
   if (!userId) {
     return {
       ...prevState,

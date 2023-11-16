@@ -1,4 +1,5 @@
 import { ListingForm } from "@/app/add-listing/ListingForm";
+import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/components/structure";
 import { findTags } from "@/services/tag";
 import { getSession } from "@/utils/session";
@@ -28,7 +29,9 @@ export default async function Page() {
     <>
       <PageTitle title={title} />
       <Section>
-        <ListingForm tags={tags} />
+        <VerifyProvider>
+          <ListingForm tags={tags} />
+        </VerifyProvider>
       </Section>
     </>
   );

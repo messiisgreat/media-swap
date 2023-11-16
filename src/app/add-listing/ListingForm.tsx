@@ -8,9 +8,7 @@ import {
 } from "@/app/add-listing/_listingForm";
 import { ImageInput } from "@/components/form";
 import { Input, Select } from "@/components/form/Elements";
-
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
-import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -20,8 +18,9 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useEffect, useId } from "react";
+import { useCallback, useEffect, useId } from "react";
 import { useFormState } from "react-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 
 /**
@@ -30,7 +29,7 @@ import toast from "react-hot-toast";
  * @returns form
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
-  const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
 
@@ -45,13 +44,24 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
 
   useEffect(() => {
     if (state.message) {
-      toast.success(state.message);
+      toast.error(state.message);
     }
   }, [state.message]);
 
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) return;
+    return executeRecaptcha("add_listing");
+  }, [executeRecaptcha]);
+
+  const action = async (f: FormData) => {
+    const verificationCode = await handleReCaptchaVerify();
+    f.append("verificationCode", verificationCode || "");
+    dispatch(f);
+  };
+
   return (
     <form
-      action={(f) => dispatch(f)}
+      action={action}
       className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1"
     >
       <ImageInput
@@ -61,7 +71,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <LimitInput
         labelText="商品名"
-        maxLength={10}
+        maxLength={32}
         name="productName"
         required
         defaultValue={state.values.productName}
@@ -88,7 +98,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <TitleUnderbar title="配送について" />
       <Select
-        name="postageId"
+        name="postageIsIncluded"
         labelText="配送料の負担"
         options={objToAssociative(POSTAGE_IS_INCLUDED)}
         defaultValue={state.values.postageIsIncluded}
@@ -115,16 +125,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         required
         defaultValue={state.values.price}
       />
-      <input
-        type="hidden"
-        name="verificationCode"
-        value={verifiedValue || ""}
-      />
       <label>販売手数料</label>
       {/* 別途コンポーネントを作成の必要あり*/}
       <label className="mb-2">販売利益</label>
       {/* 別途コンポーネントを作成の必要あり*/}
-      {SecurityVerifier}
       <SubmitContainer />
     </form>
   );
