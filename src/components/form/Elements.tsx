@@ -55,7 +55,7 @@ export const Select = forwardRef<
         <option disabled value={undefined}>
           選択してください
         </option>
-        {Object.keys(options)?.map((option, i) => (
+        {Object.keys(options).map((option, i) => (
           <option key={i} value={option}>
             {options[option]}
           </option>
@@ -79,7 +79,7 @@ export const RadioGroup = forwardRef<
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <div className="flex flex-row gap-2">
-        {Object.keys(options)?.map((option, i) => (
+        {Object.keys(options).map((option, i) => (
           <label key={i} className={radioClass}>
             <input
               type="radio"
