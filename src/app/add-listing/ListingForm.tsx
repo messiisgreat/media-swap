@@ -73,6 +73,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         labelText="商品名"
         maxLength={32}
         name="productName"
+        placeholder="商品名を入力してください"
         required
         defaultValue={state.values.productName}
       />
@@ -86,9 +87,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <LimitTextarea
         labelText="商品の説明"
-        maxLength={1000}
         name="description"
+        placeholder="商品の説明を入力してください"
         required
+        maxLength={1000}
         defaultValue={state.values.description}
       />
       <ListingTagInput
@@ -119,7 +121,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         labelText="販売価格"
         type="number"
         name="price"
-        placeholder="￥"
+        placeholder="1000"
         min={0}
         inputMode="numeric"
         required
