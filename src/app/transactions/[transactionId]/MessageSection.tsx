@@ -110,12 +110,12 @@ export function MessageSection({
               className="flex max-h-96 flex-col gap-4 overflow-y-scroll"
               ref={chatareaRef}
             >
-              {messages.map((message, i) => {
+              {messages.map((message) => {
                 const isMe = message.user.id === sessionUser.id;
                 return (
                   <div
                     className={`chat ${isMe ? "chat-end" : "chat-start"}`}
-                    key={i}
+                    key={message.id}
                   >
                     <div
                       className={`avatar chat-image ${isMe ? "hidden" : ""}`}

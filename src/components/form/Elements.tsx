@@ -10,8 +10,8 @@ type CommonProps = {
 export const Input = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & CommonProps
->(function Input({ className, labelText, ...props }, ref) {
-  const inputClass = `input input-bordered ${className ?? ""}`;
+>(function Input({ className = "", labelText, ...props }, ref) {
+  const inputClass = `input input-bordered ${className}`;
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
@@ -26,8 +26,8 @@ export const Input = forwardRef<
 export const Textarea = forwardRef<
   HTMLTextAreaElement,
   ComponentPropsWithoutRef<"textarea"> & CommonProps
->(function Textarea({ className, labelText, ...props }, ref) {
-  const textareaClass = `textarea textarea-bordered ${className ?? ""}`;
+>(function Textarea({ className = "", labelText, ...props }, ref) {
+  const textareaClass = `textarea textarea-bordered ${className}`;
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
@@ -46,8 +46,8 @@ type SelectProps = CommonProps & {
 export const Select = forwardRef<
   HTMLSelectElement,
   ComponentPropsWithoutRef<"select"> & SelectProps
->(function Select({ className, labelText, options, ...props }, ref) {
-  const selectClass = `select select-bordered ${className ?? ""}`;
+>(function Select({ className = "", labelText, options, ...props }, ref) {
+  const selectClass = `select select-bordered ${className}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
@@ -73,8 +73,8 @@ export const Select = forwardRef<
 export const RadioGroup = forwardRef<
   HTMLInputElement,
   ComponentPropsWithoutRef<"input"> & SelectProps
->(function RadioGroup({ className, labelText, options, ...props }, ref) {
-  const radioClass = `radio radio-primary ${className ?? ""}`;
+>(function RadioGroup({ className = "", labelText, options, ...props }, ref) {
+  const radioClass = `radio radio-primary ${className}`;
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
