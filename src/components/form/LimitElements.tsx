@@ -24,7 +24,7 @@ export const LimitInput = ({
 }: LimitInputProps) => {
   const [charCount, setCharCount] = useState(0);
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setCharCount(e.currentTarget.value.length ?? 0);
+    setCharCount(e.currentTarget.value.length);
   }, []);
   const isOverLimit = charCount > maxLength;
   return (
@@ -60,7 +60,7 @@ export const LimitTextarea = ({
 }: LimitTextareaProps) => {
   const [charCount, setCharCount] = useState(0);
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCharCount(e.currentTarget.value.length ?? 0);
+    setCharCount(e.currentTarget.value.length);
   }, []);
   const isOverLimit = charCount > maxLength;
   return (
