@@ -1,15 +1,27 @@
 "use client";
 
 import { Input, Textarea } from "@/components/form/Elements";
-import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
+import {
+  ChangeEvent,
+  ComponentProps,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
-type LimitInputProps = Omit<ComponentProps<typeof Input>, "onChange"> & {
+type CommonProps = {
+  /** 最大文字数 */
   maxLength: number;
+  /** 文字数制限ラベルを表示するか */
   hideLimit?: boolean;
 };
 
+type LimitInputProps = CommonProps &
+  Omit<ComponentProps<typeof Input>, "onChange">;
+
 /**
  * 文字数制限付きのinputタグ
+ * @returns input,label
  */
 export const LimitInput = ({
   maxLength,
@@ -20,7 +32,12 @@ export const LimitInput = ({
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCharCount(e.currentTarget.value.length ?? 0);
   }, []);
-  const isOverLimit = charCount > maxLength;
+
+  const isOverLimit = useMemo(
+    () => charCount > maxLength,
+    [charCount, maxLength],
+  );
+
   return (
     <>
       <Input onChange={handleChange} {...props} />
@@ -40,13 +57,12 @@ export const LimitInput = ({
   );
 };
 
-type LimitTextareaProps = Omit<ComponentProps<typeof Textarea>, "onChange"> & {
-  maxLength: number;
-  hideLimit?: boolean;
-};
+type LimitTextareaProps = CommonProps &
+  Omit<ComponentProps<typeof Textarea>, "onChange">;
 
 /**
  * 文字数制限付きのtextareaタグ
+ * @returns textarea,label
  */
 export const LimitTextarea = ({
   maxLength,
@@ -57,7 +73,12 @@ export const LimitTextarea = ({
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setCharCount(e.currentTarget.value.length ?? 0);
   }, []);
-  const isOverLimit = charCount > maxLength;
+
+  const isOverLimit = useMemo(
+    () => charCount > maxLength,
+    [charCount, maxLength],
+  );
+
   return (
     <>
       <Textarea

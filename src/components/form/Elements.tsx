@@ -52,7 +52,7 @@ export const Select = forwardRef<
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
       <select className={selectClass} {...props} ref={ref}>
-        <option disabled value={undefined}>
+        <option disabled value="">
           選択してください
         </option>
         {Object.keys(options).map((option, i) => (
