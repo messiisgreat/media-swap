@@ -1,5 +1,5 @@
-import { v2 as cloudinary } from "cloudinary";
 import { env } from "@/utils/env";
+import { v2 as cloudinary } from "cloudinary";
 
 const cloudinaryConfig = {
   cloud_name: env.CLOUDINARY_CLOUDNAME,
@@ -62,22 +62,17 @@ async function uploadSingleFile(
  * @param files ユーザーがドロップしたファイル
  * @returns Promise<string>[]
  */
-export async function uploadToCloudinary(files: File[]): Promise<string[]> {
+export async function uploadToCloudinary(files: File[]) {
   const { timestamp, signature } = await getSignature();
-
-  const uploadPromises: Promise<string>[] = [];
-
-  files.forEach((file) => {
-    const uploadPromise = uploadSingleFile(
+  const uploadPromises = files.map((file) =>
+    uploadSingleFile(
       file,
       timestamp,
       signature,
       cloudinaryConfig.api_key,
       env.CLOUDINARY_UPLOAD_URL,
-    );
-
-    uploadPromises.push(uploadPromise);
-  });
+    ),
+  );
 
   return Promise.all(uploadPromises);
 }
