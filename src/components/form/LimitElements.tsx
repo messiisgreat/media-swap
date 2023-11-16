@@ -1,7 +1,7 @@
 "use client";
 
 import { Input, Textarea } from "@/components/form/Elements";
-import { ComponentProps, useCallback, useRef, useState } from "react";
+import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
 
 type LimitInputProps = Omit<ComponentProps<typeof Input>, "onChange"> & {
   maxLength: number;
@@ -17,14 +17,13 @@ export const LimitInput = ({
   ...props
 }: LimitInputProps) => {
   const [charCount, setCharCount] = useState(0);
-  const ref = useRef<HTMLInputElement>(null);
-  const handleChange = useCallback(() => {
-    setCharCount(ref.current?.value.length ?? 0);
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setCharCount(e.currentTarget.value.length ?? 0);
   }, []);
   const isOverLimit = charCount > maxLength;
   return (
     <>
-      <Input ref={ref} onChange={handleChange} {...props} />
+      <Input onChange={handleChange} {...props} />
       {!hideLimit && (
         <label
           className={`label-text-alt flex justify-between ${
@@ -55,14 +54,18 @@ export const LimitTextarea = ({
   ...props
 }: LimitTextareaProps) => {
   const [charCount, setCharCount] = useState(0);
-  const ref = useRef<HTMLTextAreaElement>(null);
-  const handleChange = useCallback(() => {
-    setCharCount(ref.current?.value.length ?? 0);
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCharCount(e.currentTarget.value.length ?? 0);
   }, []);
   const isOverLimit = charCount > maxLength;
   return (
     <>
-      <Textarea ref={ref} onChange={handleChange} {...props} />
+      <Textarea
+        onChange={(e) => {
+          handleChange(e);
+        }}
+        {...props}
+      />
       {!hideLimit && (
         <label
           className={`label-text-alt flex justify-between ${
