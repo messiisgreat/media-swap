@@ -24,7 +24,7 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
 /**
  * 画像に灰色の背景を追加して, 短い辺を長い辺と同じ長さにする関数
  * @param file アップロードされた画像ファイル 
- * @returns
+ * @returns file 灰色の背景が追加された画像ファイル
  */
 async function addGrayBackground(file: File): Promise<File> {
   return new Promise((resolve, reject) => {
@@ -52,7 +52,6 @@ async function addGrayBackground(file: File): Promise<File> {
         ctx.fillStyle = '#f5f5f5'; // メルカリに合わせた
         ctx.fillRect(0, 0, maxLength, maxLength);
 
-        // 画像を中央に配置
         const offsetX = (maxLength - img.width) / 2;
         const offsetY = (maxLength - img.height) / 2;
         ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
@@ -86,15 +85,14 @@ export const ImageInput = forwardRef<HTMLInputElement, Props>(
       const processedFiles = await Promise.all(
         droppedFiles.map(file => addGrayBackground(file))
       );
-
+    
       setFiles((previousFiles) => {
         const spaceLeft = 10 - previousFiles.length;
         const acceptedFiles = processedFiles.slice(0, spaceLeft);
-        const filesWithPreview = acceptedFiles.map((file: File) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
-        ) as FileWithPreview[];
+        const filesWithPreview = acceptedFiles.map((file: File) => ({
+          ...file,
+          preview: URL.createObjectURL(file),
+        })) as FileWithPreview[];
         return [...previousFiles, ...filesWithPreview];
       });
     }, []);
