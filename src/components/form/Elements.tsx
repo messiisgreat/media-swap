@@ -12,10 +12,18 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & CommonProps
 >(function Input({ className = "", labelText, ...props }, ref) {
   const inputClass = `input input-bordered ${className}`;
+  const isPrice = props.name === "price" && props.type === "number";
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
-      <input className={inputClass} {...props} ref={ref} />
+      {isPrice ? (
+        <div className="relative flex items-center">
+          <div className="absolute ml-4 font-bold">¥</div>
+          <input className={inputClass} {...props} ref={ref} />
+        </div>
+      ) : (
+        <input className={inputClass} {...props} ref={ref} />
+      )}
     </div>
   );
 });
