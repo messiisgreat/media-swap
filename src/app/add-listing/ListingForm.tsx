@@ -7,8 +7,9 @@ import {
   listingItem,
 } from "@/app/add-listing/_listingForm";
 import { ImageInput } from "@/components/form";
-import { Input, Select } from "@/components/form/Elements";
+import { Select } from "@/components/form/Elements";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
+import { PriceInput } from "@/components/form/PriceInput";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -117,20 +118,13 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         options={objToAssociative(SHIPPING_DAYS)}
         defaultValue={state.values.shippingDaysId}
       />
-      <Input
-        labelText="販売価格"
-        type="number"
+      <PriceInput 
+        labelText="販売価格(￥300〜10,000,000)" 
         name="price"
-        placeholder="1000"
-        min={0}
-        inputMode="numeric"
         required
+        rate={0.15}
         defaultValue={state.values.price}
       />
-      <label>販売手数料</label>
-      {/* 別途コンポーネントを作成の必要あり*/}
-      <label className="mb-2">販売利益</label>
-      {/* 別途コンポーネントを作成の必要あり*/}
       <SubmitContainer />
     </form>
   );
