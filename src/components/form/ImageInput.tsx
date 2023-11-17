@@ -22,6 +22,57 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
 };
 
 /**
+ * 画像に灰色の背景を追加して, 短い辺を長い辺と同じ長さにする関数
+ * @param file アップロードされた画像ファイル 
+ * @returns
+ */
+async function addGrayBackground(file: File): Promise<File> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      if (!event.target || !event.target.result) {
+        reject("FileReader did not load the file.");
+        return;
+      }
+
+      const img = new window.Image();
+      img.src = event.target.result as string;
+      img.onload = () => {
+        const maxLength = Math.max(img.width, img.height);
+        const canvas = document.createElement('canvas');
+        canvas.width = maxLength;
+        canvas.height = maxLength;
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+          reject("Could not create canvas context.");
+          return;
+        }
+
+        ctx.fillStyle = '#f5f5f5'; // メルカリに合わせた
+        ctx.fillRect(0, 0, maxLength, maxLength);
+
+        // 画像を中央に配置
+        const offsetX = (maxLength - img.width) / 2;
+        const offsetY = (maxLength - img.height) / 2;
+        ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject("Canvas toBlob failed.");
+            return;
+          }
+          resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+        }, 'image/jpeg', 1);
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/**
  * 画像を選択するinputタグにCSSを適用したラッパー
  * @param id 一意のIDを指定する clientではuseID, serverではcuidを使用する
  * @param props inputタグのattribute
@@ -31,10 +82,14 @@ export const ImageInput = forwardRef<HTMLInputElement, Props>(
   function ImageInput({ id, labelText, ...props }, ref) {
     const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-    const onDrop = useCallback((droppedFiles: File[]) => {
+    const onDrop = useCallback(async (droppedFiles: File[]) => {
+      const processedFiles = await Promise.all(
+        droppedFiles.map(file => addGrayBackground(file))
+      );
+
       setFiles((previousFiles) => {
         const spaceLeft = 10 - previousFiles.length;
-        const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+        const acceptedFiles = processedFiles.slice(0, spaceLeft);
         const filesWithPreview = acceptedFiles.map((file: File) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
