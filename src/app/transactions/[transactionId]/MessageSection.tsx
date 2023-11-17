@@ -4,19 +4,19 @@ import {
   fetchMessages,
   sendMessage,
 } from "@/app/transactions/[transactionId]/actions";
+import defaultIcon from "@/assets/profile-pic-placeholder.png";
+import { Button } from "@/components";
+import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
+import { LimitInput } from "@/components/form/LimitElements";
+import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { Transaction, TransactionComment } from "@prisma/client";
+import { Session } from "next-auth";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import defaultIcon from "@/assets/profile-pic-placeholder.png";
-import { Session } from "next-auth";
-import { parseFixedDateTime } from "@/utils/parseRelativeTime";
+import toast from "react-hot-toast";
 import { BiSend } from "react-icons/bi";
 import { FaSyncAlt } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { Input } from "@/components/formElements/FormElements";
-import FormSubmitButton from "@/components/FormSubmitButton";
-import { Button } from "@/components";
 
 /**
  * 取引画面のメッセージ
@@ -110,41 +110,40 @@ export function MessageSection({
               className="flex max-h-96 flex-col gap-4 overflow-y-scroll"
               ref={chatareaRef}
             >
-              {messages
-                .map((message, i) => {
-                  const isMe = message.user.id === sessionUser.id;
-                  return (
+              {messages.map((message) => {
+                const isMe = message.user.id === sessionUser.id;
+                return (
+                  <div
+                    className={`chat ${isMe ? "chat-end" : "chat-start"}`}
+                    key={message.id}
+                  >
                     <div
-                      className={`chat ${isMe ? "chat-end" : "chat-start"}`}
-                      key={i}
+                      className={`avatar chat-image ${isMe ? "hidden" : ""}`}
                     >
-                      <div
-                        className={`avatar chat-image ${isMe ? "hidden" : ""}`}
-                      >
-                        <div className="w-10 rounded-full">
-                          <Image
-                            src={message.user.image ?? defaultIcon}
-                            width={40}
-                            height={40}
-                            alt={message.user.name ?? "名無し"}
-                          />
-                        </div>
-                      </div>
-                      <div className="chat-header flex items-end gap-1">
-                        <span className={`${isMe ? "hidden" : ""}`}>
-                          {message.user.name ?? "名無し"}
-                        </span>
-                        <time className="text-xs opacity-50">
-                          {parseFixedDateTime(message.createdAt)}
-                        </time>
-                      </div>
-                      <div className="chat-bubble">{message.comment}</div>
-                      <div className="chat-footer opacity-50">
-                        {message.isRead && isMe ? "既読" : ""}
+                      <div className="w-10 rounded-full">
+                        <Image
+                          src={message.user.image ?? defaultIcon}
+                          width={40}
+                          height={40}
+                          alt={message.user.name ?? "名無し"}
+                        />
                       </div>
                     </div>
-                  );
-                })}
+                    <div className="chat-header flex items-end gap-1">
+                      <span className={`${isMe ? "hidden" : ""}`}>
+                        {message.user.name ?? "名無し"}
+                      </span>
+                      <time className="text-xs opacity-50">
+                        {parseFixedDateTime(message.createdAt)}
+                      </time>
+                    </div>
+                    <div className="chat-bubble">{message.comment}</div>
+                    <div className="chat-footer opacity-50">
+                      {message.isRead && isMe ? "既読" : ""}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )
         ) : (
@@ -157,12 +156,12 @@ export function MessageSection({
           className="flex w-full items-center"
           action={(f) => postComment(f)}
         >
-          <Input
+          <LimitInput
             type="text"
             name="message"
             placeholder="メッセージを入力..."
             className="input-accent grow rounded-r-none"
-            characterLimit={300}
+            maxLength={300}
             hideLimit
           />
           <FormSubmitButton

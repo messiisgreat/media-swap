@@ -1,11 +1,11 @@
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
-import { findTransaction } from "@/services/transaction";
-import { getSessionUser } from "@/utils/getSession";
-import Image from "next/image";
-import { FaChevronRight } from "react-icons/fa";
-import defaultIcon from "@/assets/profile-pic-placeholder.png";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
+import defaultIcon from "@/assets/profile-pic-placeholder.png";
+import { findTransaction } from "@/services/transaction";
+import { getSessionUser } from "@/utils/session";
+import Image from "next/image";
 import { notFound } from "next/navigation";
+import { FaChevronRight } from "react-icons/fa";
 
 /**
  * 取引画面
@@ -19,7 +19,7 @@ export default async function Transaction({
   const transactionId = params.transactionId;
   const [transaction, sessionUser] = await Promise.all([
     findTransaction(transactionId),
-    getSessionUser()
+    getSessionUser(),
   ]);
 
   if (!transaction || !sessionUser) {
@@ -29,7 +29,8 @@ export default async function Transaction({
   const sellerId = transaction.listing.sellerId;
   const buyerId = transaction.buyerId;
 
-  const isNotSellerOrBuyer = sessionUser.id !== sellerId && sessionUser.id !== buyerId;  
+  const isNotSellerOrBuyer =
+    sessionUser.id !== sellerId && sessionUser.id !== buyerId;
 
   if (isNotSellerOrBuyer) {
     return notFound();
@@ -38,7 +39,10 @@ export default async function Transaction({
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
       <aside className="flex flex-1 flex-col gap-8">
-        <TransactionStatus transaction={transaction} sessionUser={sessionUser} />
+        <TransactionStatus
+          transaction={transaction}
+          sessionUser={sessionUser}
+        />
         <div>
           <p>出品者情報</p>
           {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
@@ -60,7 +64,7 @@ export default async function Transaction({
           </div>
         </div>
       </aside>
-      
+
       <MessageSection transaction={transaction} sessionUser={sessionUser} />
     </div>
   );

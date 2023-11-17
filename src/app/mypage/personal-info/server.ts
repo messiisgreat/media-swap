@@ -1,8 +1,8 @@
 "use server";
 
-import { getSessionUser } from "@/utils/getSession";
-import { TAddressForm } from "./AddressForm";
 import { createAddress } from "@/services/address";
+import { getSessionUser } from "@/utils";
+import { TAddressForm } from "./AddressForm";
 
 /**
  * 住所を登録する関数

@@ -1,16 +1,15 @@
 "use client";
 
-import { ListingTagInput } from "@/app/add-listing/ListingTagInput";
-import { SubmitContainer } from "@/app/add-listing/SubmitContainer";
-import { addListing } from "@/app/add-listing/actions";
 import {
-  ImageInput,
-  Input,
-  Select,
-  Textarea,
-} from "@/components/formElements/FormElements";
-import { useSecurityVerifier } from "@/components/securityVerifier/useSecurityVerifier";
-import { TitleUnderbar } from "@/components/structure/TitleUnderbar";
+  ListingTagInput,
+  SubmitContainer,
+  initialProductFormValues,
+  listingItem,
+} from "@/app/add-listing/_listingForm";
+import { ImageInput } from "@/components/form";
+import { Input, Select } from "@/components/form/Elements";
+import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
+import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
   PRODUCT_CONDITION,
@@ -19,7 +18,9 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useId } from "react";
+import { useCallback, useEffect, useId } from "react";
+import { useFormState } from "react-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 
 /**
@@ -28,12 +29,34 @@ import toast from "react-hot-toast";
  * @returns form
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
-  const [verifiedValue, SecurityVerifier] = useSecurityVerifier();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const imageInputId = useId();
+  const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
 
-  const action = async (formData: FormData) => {
-    const e = await addListing(formData, verifiedValue);
-    typeof e === "string" && toast.error(e);
+  useEffect(() => {
+    Object.entries(state.errors!).forEach((error) => {
+      const [, messages] = error;
+      messages.forEach((message) => {
+        toast.error(message);
+      });
+    });
+  }, [state.errors]);
+
+  useEffect(() => {
+    if (state.message) {
+      toast.error(state.message);
+    }
+  }, [state.message]);
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) return;
+    return executeRecaptcha("add_listing");
+  }, [executeRecaptcha]);
+
+  const action = async (f: FormData) => {
+    const verificationCode = await handleReCaptchaVerify();
+    f.append("verificationCode", verificationCode || "");
+    dispatch(f);
   };
 
   return (
@@ -46,23 +69,30 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         id={imageInputId}
         name="imageFiles"
       />
-      <Input
+      <LimitInput
         labelText="商品名"
-        characterLimit={10}
+        maxLength={32}
         name="productName"
+        placeholder="商品名を入力してください"
         required
+        defaultValue={state.values.productName}
       />
       <TitleUnderbar title="商品の説明" />
       <Select
         labelText="商品の状態"
         options={objToAssociative(PRODUCT_CONDITION)}
-      />
-      <Textarea
-        labelText="商品の説明"
-        characterLimit={1000}
-        name="description"
+        name="productConditionId"
         required
-      ></Textarea>
+        defaultValue={state.values.productConditionId}
+      />
+      <LimitTextarea
+        labelText="商品の説明"
+        name="description"
+        placeholder="商品の説明を入力してください"
+        required
+        maxLength={1000}
+        defaultValue={state.values.description}
+      />
       <ListingTagInput
         tags={tags}
         name="tags"
@@ -70,34 +100,37 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <TitleUnderbar title="配送について" />
       <Select
-        name="postageId"
+        name="postageIsIncluded"
         labelText="配送料の負担"
         options={objToAssociative(POSTAGE_IS_INCLUDED)}
+        defaultValue={state.values.postageIsIncluded}
       />
       <Select
         name="shippingMethodId"
         labelText="配送の方法"
         options={objToAssociative(SHIPPING_METHOD)}
+        defaultValue={state.values.shippingMethodId}
       />
       <Select
         name="shippingDaysId"
         labelText="発送までの日数"
         options={objToAssociative(SHIPPING_DAYS)}
+        defaultValue={state.values.shippingDaysId}
       />
       <Input
         labelText="販売価格"
         type="number"
         name="price"
-        placeholder="￥"
+        placeholder="1000"
         min={0}
         inputMode="numeric"
         required
+        defaultValue={state.values.price}
       />
       <label>販売手数料</label>
       {/* 別途コンポーネントを作成の必要あり*/}
       <label className="mb-2">販売利益</label>
       {/* 別途コンポーネントを作成の必要あり*/}
-      {SecurityVerifier}
       <SubmitContainer />
     </form>
   );

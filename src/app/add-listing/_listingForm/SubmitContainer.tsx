@@ -11,7 +11,6 @@ import { useFormStatus } from "react-dom";
  */
 export const SubmitContainer = () => {
   const { pending } = useFormStatus();
-  const loading = pending && <span className="loading loading-spinner"></span>;
 
   return (
     <>
@@ -22,10 +21,10 @@ export const SubmitContainer = () => {
         outline
         disabled={pending}
       >
-        {loading}下書きに保存する
+        下書きに保存する
       </Button>
       <Button type="submit" name="isPublic" value="true" disabled={pending}>
-        {loading}出品する
+        出品する
       </Button>
     </>
   );
