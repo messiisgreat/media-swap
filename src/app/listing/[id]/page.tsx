@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { transformCloudinaryURL } from "@/utils/transformCloudinaryURL";
+import Carousel from "@/components/Carousel";
 
 type ListingPageProps = {
   params: {
@@ -51,14 +52,7 @@ export default async function ListingPage({
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row lg:items-center">
           {/* TODO: カルーセルにしてimagesをmapで展開する */}
-          <Image
-            src={transformCloudinaryURL(listing.images[0].imageURL, 500, 500, '031e2b')}
-            alt={listing.productName!}
-            width={500}
-            height={500}
-            className="rounded-lg"
-            priority
-          />
+          <Carousel images={images} />
           <div>
             <H className="text-5xl font-bold">{listing.productName}</H>
             <div className="mt-4 flex flex-wrap gap-2">

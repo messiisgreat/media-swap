@@ -63,6 +63,7 @@ async function uploadSingleFile(
  * @returns Promise<string>[]
  */
 export async function uploadToCloudinary(files: File[]) {
+  console.log(files)
   const { timestamp, signature } = await getSignature();
   const uploadPromises = files.map((file) =>
     uploadSingleFile(
