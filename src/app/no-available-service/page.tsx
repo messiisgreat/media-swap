@@ -1,5 +1,5 @@
+import closeIcon from "@/images/close.webp";
 import Image from "next/image";
-import closeIcon from "/src/assets/close.webp";
 
 /**
  * 年齢確認で「いいえ」を押したときのページ
