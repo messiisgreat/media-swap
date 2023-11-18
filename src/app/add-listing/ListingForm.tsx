@@ -54,6 +54,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   }, [executeRecaptcha]);
 
   const action = async (f: FormData) => {
+    console.log(f.get("imageFiles"));
     const verificationCode = await handleReCaptchaVerify();
     f.append("verificationCode", verificationCode || "");
     dispatch(f);

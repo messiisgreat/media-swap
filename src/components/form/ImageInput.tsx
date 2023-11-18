@@ -28,15 +28,15 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @returns label
  */
 export function ImageInput ({ id, labelText, ...props }: Props) {
-
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const inputElem = useRef<any>()
-  const inputForDataTransfer = useRef<any>()
+  const [formFiles, setFormFiles] = useState<File[]>([]);
+  const inputElem = useRef<any>();
 
   const onDrop = useCallback((droppedFiles: File[]) => {
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+      console.log(acceptedFiles)
       const filesWithPreview = acceptedFiles.map((file: File) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
@@ -44,9 +44,12 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
       ) as FileWithPreview[];
       return [...previousFiles, ...filesWithPreview];
     });
+    setFormFiles((previousFiles) => {
+      const spaceLeft = 10 - previousFiles.length;
+      const acceptedFiles = droppedFiles.slice(0, spaceLeft);
+      return [...previousFiles, ...acceptedFiles];
+    });
   }, []);
-
-  console.log(files)
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -57,21 +60,15 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     noClick: true,
   });
 
-  const onChange = (e: any) => {
-    e.stopPropagation()
-    e.preventDefault()
-    const _dataTransfer = new DataTransfer()
-    console.log(inputForDataTransfer)
-    console.log(inputElem)
-    Array.prototype.forEach.call(inputForDataTransfer.current.files, (file) => {
-        _dataTransfer.items.add(file)
-    })
-    Array.prototype.forEach.call(inputElem.current.files, (file) => {
-        _dataTransfer.items.add(file)
-    })
-    inputElem.current.files = _dataTransfer.files
-    inputForDataTransfer.current.files = _dataTransfer.files
-  }
+  useEffect(() => {
+    const dataTransfer = new DataTransfer();
+    formFiles.forEach(file => {
+      dataTransfer.items.add(file);
+    });
+    inputElem.current.files = dataTransfer.files;
+    console.log(inputElem.current.files)
+  }, [formFiles]);
+
 
   useEffect(() => {
     return () =>
@@ -114,30 +111,21 @@ ${
         ))}
       </ul>
       <label className={labelClass} htmlFor={id}>
+        <input
+          {...props}
+          {...getInputProps()}
+          id={id}
+          type="file"
+          multiple
+          ref={inputElem}
+          className="hidden"
+        />
         <div
           {...getRootProps()}
           className="flex flex-row items-center justify-center gap-1 px-3 py-3.5"
         >
           <BiSolidCamera size={20} />
           <p className="font-bold">画像を選択する</p>
-          <input
-          {...props}
-          {...getInputProps()}
-          id={id}
-          type="file"
-          ref={inputElem}
-          multiple={true}
-          className="hidden"
-          onChange={onChange}
-        />
-          <input
-          {...props}
-          {...getInputProps()}
-          ref={inputForDataTransfer}
-          type='file'
-          className="hidden"
-          multiple={true}
-          />
         </div>
       </label>
     </div>
