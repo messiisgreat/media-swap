@@ -122,6 +122,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         labelText="販売価格(￥300〜10,000,000)" 
         name="price"
         required
+        prefix="¥"
         defaultValue={state.values.price}
       />
       <SubmitContainer />

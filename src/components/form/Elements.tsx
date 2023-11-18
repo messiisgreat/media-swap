@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 type CommonProps = {
   labelText?: string;
+  suffix?: string;
 };
 
 /**
@@ -12,14 +13,18 @@ export const Input = forwardRef<
   ComponentPropsWithoutRef<"input"> & CommonProps
 >(function Input({ className = "", labelText, ...props }, ref) {
   const inputClass = `input input-bordered ${className}`;
-  const isPrice = props.name === "price" && props.type === "number";
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
-      {isPrice ? (
+      {props.prefix || props.suffix ? (
         <div className="relative flex items-center">
-          <div className="absolute ml-4 font-bold">¥</div>
+          {props.prefix && (
+            <div className="absolute ml-4 font-bold">{props.prefix}</div>
+          )}
           <input className={inputClass} {...props} ref={ref} />
+          {props.suffix && (
+            <div className="absolute end-0 mr-3 font-bold">{props.suffix}</div>
+          )}
         </div>
       ) : (
         <input className={inputClass} {...props} ref={ref} />
@@ -59,7 +64,7 @@ export const Select = forwardRef<
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <select className={selectClass} {...props} ref={ref} defaultValue="" >
+      <select className={selectClass} {...props} ref={ref} defaultValue="">
         <option disabled value="">
           選択してください
         </option>
