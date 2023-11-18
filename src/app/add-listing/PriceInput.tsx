@@ -9,7 +9,6 @@ type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
 
 /**
  * 手数料計算付きのinputタグ
- * @param {number} rate - 手数料率
  * @returns input,label,div
  */
 export const PriceInput = ({ ...props }: PriceInputProps) => {
