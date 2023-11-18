@@ -28,7 +28,7 @@ export function ListingCard({ listing }: Props) {
             src={listing.images[0].imageURL}
             alt={listing.productName || "Product Image"}
             fill
-            sizes="100vw"
+            sizes="100px"
             className="rounded-lg"
           />
           <PriceBadge className="absolute bottom-2  inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
