@@ -12,20 +12,7 @@ import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
 
-/**
- * ファイルの型宣言
- */
-type FileWithPreview = File & { preview: string };
 
-type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
-  labelText?: string;
-};
-
-/**
- * 画像に灰色の背景を追加して, 短い辺を長い辺と同じ長さにする関数
- * @param file アップロードされた画像ファイル 
- * @returns file 灰色の背景が追加された画像ファイル
- */
 async function addGrayBackground(file: File): Promise<File> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -49,7 +36,7 @@ async function addGrayBackground(file: File): Promise<File> {
           return;
         }
 
-        ctx.fillStyle = '#f5f5f5'; // メルカリに合わせた
+        ctx.fillStyle = '#031e2b';
         ctx.fillRect(0, 0, maxLength, maxLength);
 
         const offsetX = (maxLength - img.width) / 2;
@@ -72,6 +59,15 @@ async function addGrayBackground(file: File): Promise<File> {
 }
 
 /**
+ * ファイルの型宣言
+ */
+type FileWithPreview = File & { preview: string };
+
+type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
+  labelText?: string;
+};
+
+/**
  * 画像を選択するinputタグにCSSを適用したラッパー
  * @param id 一意のIDを指定する clientではuseID, serverではcuidを使用する
  * @param props inputタグのattribute
@@ -81,7 +77,7 @@ export const ImageInput = forwardRef<HTMLInputElement, Props>(
   function ImageInput({ id, labelText, ...props }, ref) {
     const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-    const onDrop = useCallback(async (droppedFiles: File[]) => {
+    const onDrop = useCallback(async(droppedFiles: File[]) => {
       const processedFiles = await Promise.all(
         droppedFiles.map(file => addGrayBackground(file))
       );
