@@ -2,6 +2,7 @@
 import CommentSection from "@/app/listing/[id]/CommentSection";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
+import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
@@ -80,7 +81,9 @@ export default async function ListingPage({
           </div>
         </div>
       </div>
-      <CommentSection listingId={listing.id} sessionUser={user} />
+      <VerifyProvider>
+        <CommentSection listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+      </VerifyProvider>
     </div>
   );
 }

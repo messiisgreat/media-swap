@@ -310,7 +310,8 @@ model ListingCommentReport {
     id               String @id @default(auto()) @map("_id") @db.ObjectId
     listingCommentId String @map("listing_comment_id") @db.ObjectId // 出品情報コメントID外部キー
     userId           String @map("user_id") @db.ObjectId // ユーザーID外部キー
-    comment          String // 通報コメント
+    reason           String // 通報理由
+    createdAt        DateTime @default(now()) @map("created_at") // 作成日時
 
     listingComment ListingComment @relation(fields: [listingCommentId], references: [id])
     user           User           @relation(fields: [userId], references: [id])

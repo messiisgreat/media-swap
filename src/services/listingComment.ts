@@ -39,3 +39,25 @@ export async function createComment(
     },
   });
 }
+
+/**
+ * コメントの通報
+ * @param commentId コメントのID
+ * @param userId 通報ユーザーID
+ * @param reason 通報理由
+ * @returns 
+ * @throws 通報済みの場合
+ */
+export async function createCommentReport(
+  commentId: string,
+  userId: string,
+  reason: string,
+) {
+  return prisma.listingCommentReport.create({
+    data: {
+      listingCommentId: commentId,
+      userId,
+      reason,
+    },
+  });
+}
