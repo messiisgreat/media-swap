@@ -41,7 +41,7 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
         placeholder="0"
         min={0}
         inputMode="numeric"
-        className="w-full text-right font-bold"
+        className="w-full text-right font-bold [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         onChange={handleChange}
         {...props}
       />
