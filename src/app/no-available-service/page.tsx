@@ -1,4 +1,4 @@
-import closeIcon from "@/images/close.webp";
+import closeIcon from "@/app/no-available-service/close.webp";
 import Image from "next/image";
 
 /**
