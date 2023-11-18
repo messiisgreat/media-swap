@@ -8,6 +8,7 @@ import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { transformCloudinaryURL } from "@/utils/transformCloudinaryURL";
 
 type ListingPageProps = {
   params: {
@@ -51,7 +52,7 @@ export default async function ListingPage({
         <div className="hero-content flex-col lg:flex-row lg:items-center">
           {/* TODO: カルーセルにしてimagesをmapで展開する */}
           <Image
-            src={images[0].imageURL}
+            src={transformCloudinaryURL(listing.images[0].imageURL, 500, 500, '031e2b')}
             alt={listing.productName!}
             width={500}
             height={500}
