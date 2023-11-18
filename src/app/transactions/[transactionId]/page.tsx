@@ -1,6 +1,6 @@
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
-import defaultIcon from "@/assets/profile-pic-placeholder.png";
+import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/session";
 import Image from "next/image";
