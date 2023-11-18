@@ -4,11 +4,11 @@ import {
   fetchMessages,
   sendMessage,
 } from "@/app/transactions/[transactionId]/actions";
-import defaultIcon from "@/assets/profile-pic-placeholder.png";
 import { Button } from "@/components";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
 import { LimitInput } from "@/components/form/LimitElements";
+import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { Transaction, TransactionComment } from "@prisma/client";
 import { Session } from "next-auth";
