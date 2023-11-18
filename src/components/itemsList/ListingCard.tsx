@@ -1,4 +1,5 @@
 import PriceBadge from "@/components/PriceBadge";
+import SoldOutBadge from "@/components/SoldOutBadge";
 import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
@@ -17,6 +18,8 @@ export function ListingCard({ listing }: Props) {
   const formattedPrice =
     listing.price != null ? formatPrice(listing.price) : "N/A";
 
+  const isSoldOut = !!listing.transactionId;
+
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
       <Link
@@ -31,7 +34,8 @@ export function ListingCard({ listing }: Props) {
             objectFit="cover"
             className="rounded-lg"
           />
-          <PriceBadge className="absolute bottom-2  inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
+          {isSoldOut && <SoldOutBadge />}
+          <PriceBadge className="absolute bottom-2 inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
             {formattedPrice}
           </PriceBadge>
         </div>
