@@ -9,7 +9,7 @@ import {
 import { ImageInput } from "@/components/form";
 import { Select } from "@/components/form/Elements";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
-import { PriceInput } from "@/components/form/PriceInput";
+import { PriceInput } from "@/app/add-listing/PriceInput";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
