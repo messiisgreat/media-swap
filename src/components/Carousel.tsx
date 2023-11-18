@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-// import { transformCloudinaryURL } from '@/utils/transformCloudinaryURL';
+import { transformCloudinaryURL } from '@/utils/transformCloudinaryURL';
 import "./Carousel.css";
 
 const OPTIONS: EmblaOptionsType = {}
@@ -80,7 +80,6 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
                 <img
                   className="embla-thumbs__slide__img"
                   src={images.images[index].imageURL}
-                  // src={transformCloudinaryURL(images.images[index].imageURL, 500, 500, '031e2b')}
                   alt="Your alt text"
                 />
               </button>
