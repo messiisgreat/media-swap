@@ -3,7 +3,6 @@ import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";
-import { transformCloudinaryURL } from "@/utils/transformCloudinaryURL";
 
 type Props = {
   listing: Awaited<ReturnType<typeof findListingById>>;
@@ -26,10 +25,10 @@ export function ListingCard({ listing }: Props) {
       >
         <div className="relative h-32 w-32 cursor-pointer rounded-lg sm:h-48 sm:w-48">
           <Image
-            src={transformCloudinaryURL(listing.images[0].imageURL, 500, 500, '031e2b')}
+            src={listing.images[0].imageURL}
             alt={listing.productName || "Product Image"}
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes=""
             className="rounded-lg"
           />
           <PriceBadge className="absolute bottom-2  inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">

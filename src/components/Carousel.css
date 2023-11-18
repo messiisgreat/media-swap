@@ -24,7 +24,6 @@
   height: var(--slide-height);
   width: 200px;
   height: 200px;
-  object-fit: cover;
 }
 .embla__slide__number {
   width: 4.6rem;

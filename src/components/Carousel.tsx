@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-import { transformCloudinaryURL } from '@/utils/transformCloudinaryURL';
 import "./Carousel.css";
 
 const OPTIONS: EmblaOptionsType = {}

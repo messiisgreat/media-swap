@@ -6,9 +6,7 @@ import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { transformCloudinaryURL } from "@/utils/transformCloudinaryURL";
 import Carousel from "@/components/Carousel";
 
 type ListingPageProps = {
@@ -47,17 +45,12 @@ export default async function ListingPage({
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
 
-  const cloudinaryImages = images.map((image) => {
-    const url = transformCloudinaryURL(image.imageURL, 500, 500, '031e2b');
-    return { imageURL: url };
-  });
-
   return (
     <div>
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row lg:items-center">
           {/* TODO: カルーセルにしてimagesをmapで展開する */}
-          <Carousel images={cloudinaryImages} />
+          <Carousel images={images} />
           <div>
             <H className="text-5xl font-bold">{listing.productName}</H>
             <div className="mt-4 flex flex-wrap gap-2">
