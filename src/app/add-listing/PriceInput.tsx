@@ -3,14 +3,9 @@
 import { Input } from "@/components/form/Elements";
 import { ChangeEvent, ComponentProps, useState } from "react";
 import { z } from "zod";
+import { HANDING_CHARGE_RATE } from "@/constants/listing";
 
-type CommonProps = {
-  /** 手数料率 */
-  rate: number;
-};
-
-type PriceInputProps = CommonProps &
-  Omit<ComponentProps<typeof Input>, "onChange">;
+type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
 
 /**
  * 手数料計算付きのinputタグ
@@ -29,9 +24,9 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
     const amount = Number(e.target.value);
     const result = valueSchema.safeParse(amount);
     if (result.success) {
-      const handlingCharge = Math.round(amount * props.rate);
-      const amountAfterCharge = amount - handlingCharge;
-      setHandlingCharge(handlingCharge);
+      const handingCharge = Math.round(amount * HANDING_CHARGE_RATE);
+      const amountAfterCharge = amount - handingCharge;
+      setHandlingCharge(handingCharge);
       setAmountAfterCharge(amountAfterCharge);
       setIsOverLimit(false);
     } else {

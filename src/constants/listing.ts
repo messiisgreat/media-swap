@@ -59,3 +59,6 @@ export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
 
 /** サービス手数料 */
 export const SERVICE_CHARGE = 0.05;
+
+/** 販売手数料率 */
+export const HANDING_CHARGE_RATE = 0.15;
