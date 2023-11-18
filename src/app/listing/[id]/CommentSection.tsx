@@ -14,6 +14,7 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { FaEllipsis, FaTriangleExclamation, FaTrash } from "react-icons/fa6";
 
 /**
  * コメント(+コメントを書き込むフォーム)
@@ -127,9 +128,30 @@ export default function CommentSection({
               <div className="flex w-full flex-col">
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-bold">{comment.user.name}</p>{" "}
-                  <p className="text-sm text-gray-400">
-                    {parseRelativeTime(comment.createdAt)}
-                  </p>
+                  <div className="flex items-center gap-2 text-gray-400">
+                    <p className="text-sm">
+                      {parseRelativeTime(comment.createdAt)}
+                    </p>
+                    <div className="dropdown dropdown-end dropdown-bottom">
+                      <label
+                        tabIndex={0}
+                        className="btn btn-ghost h-[initial] min-h-0 p-2"
+                      >
+                        <FaEllipsis />
+                      </label>
+                      <ul
+                        tabIndex={0}
+                        className="menu dropdown-content rounded-box z-[1] w-24 gap-2 bg-base-100 p-2 text-red-500 shadow"
+                      >
+                        <li>
+                          <div className="flex items-center whitespace-nowrap"><FaTriangleExclamation />報告</div>
+                        </li>
+                        <li>
+                          <div className="flex items-center whitespace-nowrap"><FaTrash />削除</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
                 <p className="text-sm">{comment.comment}</p>
               </div>

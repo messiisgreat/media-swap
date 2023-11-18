@@ -44,6 +44,7 @@ model User {
     userCoupons             UserCoupon[]
     userNotificationPermits UserNotificationPermit[]
     listingReports          ListingReport[]
+    ListingCommentReport    ListingCommentReport[]
 
     @@map("users")
 }
@@ -298,10 +299,24 @@ model ListingComment {
     comment   String // コメント
     createdAt DateTime @default(now()) @map("created_at") // 作成日時
 
-    user    User    @relation(fields: [userId], references: [id])
-    listing Listing @relation(fields: [listingId], references: [id])
+    user    User                   @relation(fields: [userId], references: [id])
+    listing Listing                @relation(fields: [listingId], references: [id])
+    reports ListingCommentReport[]
 
     @@map("listing_comments")
+}
+
+model ListingCommentReport {
+    id               String @id @default(auto()) @map("_id") @db.ObjectId
+    listingCommentId String @map("listing_comment_id") @db.ObjectId // 出品情報コメントID外部キー
+    userId           String @map("user_id") @db.ObjectId // ユーザーID外部キー
+    comment          String // 通報コメント
+
+    listingComment ListingComment @relation(fields: [listingCommentId], references: [id])
+    user           User           @relation(fields: [userId], references: [id])
+
+    @@unique([listingCommentId, userId])
+    @@map("listing_comment_reports")
 }
 
 // 取引テーブル
@@ -315,10 +330,10 @@ model Transaction {
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
     transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
 
-    buyer             User               @relation("buyer", fields: [buyerId], references: [id])
-    listing           Listing            @relation(fields: [listingId], references: [id])
+    buyer             User        @relation("buyer", fields: [buyerId], references: [id])
+    listing           Listing     @relation(fields: [listingId], references: [id])
     transactionStatus Int
-    userCoupon        UserCoupon?        @relation(fields: [userCouponId], references: [id])
+    userCoupon        UserCoupon? @relation(fields: [userCouponId], references: [id])
 
     transactionRating   TransactionRating[]
     transactionComments TransactionComment[]
