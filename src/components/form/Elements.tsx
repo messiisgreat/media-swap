@@ -17,13 +17,11 @@ export const Input = forwardRef<
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
       {props.prefix || props.suffix ? (
-        <div className="relative flex items-center">
-          {props.prefix && (
-            <div className="absolute ml-4 font-bold">{props.prefix}</div>
-          )}
+        <div className="relative flex items-center font-bold">
+          {props.prefix && <div className="absolute ml-4">{props.prefix}</div>}
           <input className={inputClass} {...props} ref={ref} />
           {props.suffix && (
-            <div className="absolute end-0 mr-3 font-bold">{props.suffix}</div>
+            <div className="absolute end-0 mr-3">{props.suffix}</div>
           )}
         </div>
       ) : (
