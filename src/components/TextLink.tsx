@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ComponentProps } from "react";
+import { twMerge } from "tailwind-merge";
 
 type TextLinkProps = ComponentProps<typeof Link>;
 
@@ -21,7 +22,10 @@ export const TextLink = ({
   return (
     <Link
       href={href}
-      className={`text-blue-500 underline hover:text-blue-600 ${className}`}
+      className={twMerge(
+        "text-blue-500 underline hover:text-blue-600",
+        className,
+      )}
       target={target}
       {...props}
     >
