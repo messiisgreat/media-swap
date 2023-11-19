@@ -84,10 +84,12 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
                 <div className="absolute">
                   <span className=' opacity-0' >{index + 1}</span>
                 </div>
-                <img
-                  className="block h-12 w-12 object-cover"
+                <Image
+                  className="block object-cover"
                   src={images.images[index].imageURL}
                   alt="Your alt text"
+                  width={50}
+                  height={50}
                 />
               </button>
             </div>

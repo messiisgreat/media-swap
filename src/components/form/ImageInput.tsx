@@ -60,24 +60,19 @@ async function addGrayBackground(file: File): Promise<File> {
   });
 }
 
-/**
- * ファイルの型宣言
- */
 type FileWithPreview = File & { preview: string };
-
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
 };
 
 /**
  * 画像を選択するinputタグにCSSを適用したラッパー
- * @param id 一意のIDを指定する clientではuseID, serverではcuidを使用する
- * @param props inputタグのattribute
+ * @param props inputタグのその他の属性
  * @returns label
  */
 export function ImageInput ({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const inputElem = useRef<any>();
+  const inputElem = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(async(droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
@@ -110,7 +105,9 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     files.forEach(file => {
       dataTransfer.items.add(file);
     });
-    inputElem.current.files = dataTransfer.files;
+    if (inputElem.current) {
+      inputElem.current.files = dataTransfer.files;
+    }
   }, [files]);
 
 
