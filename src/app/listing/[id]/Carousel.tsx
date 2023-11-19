@@ -38,6 +38,10 @@ export default function Carousel({ images }: { images: { imageURL: string; }[]; 
     onSelect()
     emblaMainApi.on('select', onSelect)
     emblaMainApi.on('reInit', onSelect)
+    return () => {
+      emblaMainApi.off('select', onSelect)
+      emblaMainApi.off('reInit', onSelect)
+      }
   }, [emblaMainApi, onSelect])
 
   return (
