@@ -2,6 +2,10 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 type CommonProps = {
   labelText?: string;
+};
+
+type InputProps = CommonProps & {
+  prefix?: string;
   suffix?: string;
 };
 
@@ -10,7 +14,7 @@ type CommonProps = {
  */
 export const Input = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & CommonProps
+  ComponentPropsWithoutRef<"input"> & InputProps
 >(function Input({ className = "", labelText, ...props }, ref) {
   const inputClass = `input input-bordered ${className}`;
   return (
