@@ -4,18 +4,14 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
 
-const OPTIONS: EmblaOptionsType = {}
-
 /**
  * 商品ページのカルーセル
  * @param images - Cloudinaryから取得した画像のURL
  */
-export default function Carousel( images : { images: { imageURL: string; }[]; }
-) {
+export default function Carousel({ images }: { images: { imageURL: string; }[]; }) {
 
-  const SLIDE_COUNT = images.images.length
-  const slides = Array.from(Array(SLIDE_COUNT).keys())
-  const options = OPTIONS 
+  const slides = Array.from(Array(images.length).keys())
+  const options: EmblaOptionsType = {}
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options)
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
@@ -49,13 +45,13 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
     <div className="overflow-hidden" ref={emblaMainRef}>
       <div className="flex touch-pan-y">
         {slides.map((index) => (
-          <div className="relative min-w-0 flex-100" key={index}>
+          <div className="relative min-w-0 flex-100" key={images[index].imageURL}>
             <div className="opacity-0">
               <span>{index + 1}</span>
             </div>
             <Image
               className="mx-auto block"
-              src={images.images[index].imageURL}
+              src={images[index].imageURL}
               alt="Your alt text"
               width={200}
               height={200}
@@ -70,7 +66,7 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
         <div className="flex flex-row">
           {slides.map((index) => (
             <div
-              key={index}
+              key={images[index].imageURL}
               className={'relative min-w-0 flex-28 px-[12px]'}
             >
               <button
@@ -86,7 +82,7 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
                 </div>
                 <Image
                   className="block object-cover"
-                  src={images.images[index].imageURL}
+                  src={images[index].imageURL}
                   alt="Your alt text"
                   width={50}
                   height={50}

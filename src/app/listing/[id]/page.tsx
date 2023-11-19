@@ -49,7 +49,6 @@ export default async function ListingPage({
     <div>
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row lg:items-center">
-          {/* TODO: カルーセルにしてimagesをmapで展開する */}
           <Carousel images={images} />
           <div>
             <H className="text-5xl font-bold">{listing.productName}</H>
