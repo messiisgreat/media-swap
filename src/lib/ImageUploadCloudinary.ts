@@ -1,40 +1,35 @@
 import { env } from "@/utils/env";
-import { v2 as cloudinary } from "cloudinary";
+// import { v2 as cloudinary } from "cloudinary";
 
-const cloudinaryConfig = {
-  cloud_name: env.CLOUDINARY_CLOUDNAME,
-  api_key: env.CLOUDINARY_API_KEY,
-  api_secret: env.CLOUDINARY_API_SECRET,
-  secure: true,
-};
+// const cloudinaryConfig = {
+//   cloud_name: env.CLOUDINARY_CLOUDNAME,
+//   upload_preset: env.CLOUDINARY_UPLOAD_PRESET,
+//   secure: true,
+// };
 
-async function getSignature(): Promise<{
-  timestamp: number;
-  signature: string;
-}> {
-  const timestamp = Math.round(new Date().getTime() / 1000);
+// async function getSignature(): Promise<{
+//   timestamp: number;
+//   signature: string;
+// }> {
+//   const timestamp = Math.round(new Date().getTime() / 1000);
 
-  const signature = cloudinary.utils.api_sign_request(
-    { timestamp, folder: "swappy" },
-    cloudinaryConfig.api_secret,
-  );
+//   const signature = cloudinary.utils.api_sign_request(
+//     { timestamp, folder: "swappy" },
+//     cloudinaryConfig.api_secret,
+//   );
 
-  return { timestamp, signature };
-}
+//   return { timestamp, signature };
+// }
 
 async function uploadSingleFile(
   file: File,
-  timestamp: number,
-  signature: string,
-  apiKey: string,
   uploadUrl: string,
+  upload_preset: string,
 ): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("api_key", apiKey);
-  formData.append("signature", signature);
-  formData.append("timestamp", timestamp.toString());
   formData.append("folder", "swappy");
+  formData.append("upload_preset", upload_preset);
 
   try {
     const response = await fetch(uploadUrl, {
@@ -63,15 +58,13 @@ async function uploadSingleFile(
  * @returns Promise<string>[]
  */
 export async function uploadToCloudinary(files: File[]) {
-  // console.log("uploaded these files", files)
-  const { timestamp, signature } = await getSignature();
+  console.log("files", files)
+  // const { timestamp, signature } = await getSignature();
   const uploadPromises = files.map((file) =>
     uploadSingleFile(
       file,
-      timestamp,
-      signature,
-      cloudinaryConfig.api_key,
       env.CLOUDINARY_UPLOAD_URL,
+      env.CLOUDINARY_UPLOAD_PRESET,
     ),
   );
 

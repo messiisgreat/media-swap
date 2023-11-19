@@ -11,6 +11,7 @@ const envSchema = z.object({
   CLOUDINARY_API_KEY: z.string().min(1),
   CLOUDINARY_API_SECRET: z.string().min(1),
   CLOUDINARY_UPLOAD_URL: z.string().min(1),
+  CLOUDINARY_UPLOAD_PRESET: z.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);
