@@ -7,7 +7,7 @@ import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
-import Carousel from "@/components/Carousel";
+import Carousel from "@/app/listing/[id]/Carousel";
 
 type ListingPageProps = {
   params: {

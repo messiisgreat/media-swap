@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react'
-import "./Carousel.css";
 
 const OPTIONS: EmblaOptionsType = {}
 
@@ -41,16 +40,16 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
   }, [emblaMainApi, onSelect])
 
   return (
-    <div className="embla">
-    <div className="embla__viewport" ref={emblaMainRef}>
-      <div className="embla__container">
+    <div className="w-full">
+    <div className="overflow-hidden" ref={emblaMainRef}>
+      <div className="flex touch-pan-y">
         {slides.map((index) => (
-          <div className="embla__slide" key={index}>
-            <div className="embla__slide__number">
+          <div className="flex-100 min-w-0 relative" key={index}>
+            <div className="opacity-0">
               <span>{index + 1}</span>
             </div>
             <img
-              className="embla__slide__img"
+              className="block mx-auto w-[200px] h-[200px]"
               src={images.images[index].imageURL}
               alt="Your alt text"
             />
@@ -59,25 +58,26 @@ export default function Carousel( images : { images: { imageURL: string; }[]; }
       </div>
     </div>
 
-    <div className="embla-thumbs">
-      <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
-        <div className="embla-thumbs__container">
+    <div className="mt-[8px]">
+      <div className="overflow-hidden bg-[#333] py-1" ref={emblaThumbsRef}>
+        <div className="flex flex-row">
           {slides.map((index) => (
             <div
-              className={'embla-thumbs__slide'.concat(
-                index == selectedIndex ? ' embla-thumbs__slide--selected' : ''
-              )}
+              className={'flex-28 min-w-0 px-[12px] relative'}
             >
               <button
                 onClick={() => onThumbClick(index)}
-                className="embla-thumbs__slide__button"
+                className={`
+                ${"touch-manipulation block cursor-pointer transition-opacity duration-200"}
+                ${index == selectedIndex ? 'opacity-100' : 'opacity-20'}
+                `}
                 type="button"
               >
-                <div className="embla-thumbs__slide__number">
-                  <span>{index + 1}</span>
+                <div className="absolute">
+                  <span className=' opacity-0' >{index + 1}</span>
                 </div>
                 <img
-                  className="embla-thumbs__slide__img"
+                  className="block h-12 w-12 object-cover"
                   src={images.images[index].imageURL}
                   alt="Your alt text"
                 />

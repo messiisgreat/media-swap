@@ -111,7 +111,6 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
       dataTransfer.items.add(file);
     });
     inputElem.current.files = dataTransfer.files;
-    console.log(inputElem.current.files)
   }, [files]);
 
 
