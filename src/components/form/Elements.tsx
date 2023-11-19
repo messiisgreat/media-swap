@@ -4,18 +4,33 @@ type CommonProps = {
   labelText?: string;
 };
 
+type InputProps = CommonProps & {
+  prefix?: string;
+  suffix?: string;
+};
+
 /**
  * inputタグにCSSを適用したラッパー
  */
 export const Input = forwardRef<
   HTMLInputElement,
-  ComponentPropsWithoutRef<"input"> & CommonProps
+  ComponentPropsWithoutRef<"input"> & InputProps
 >(function Input({ className = "", labelText, ...props }, ref) {
   const inputClass = `input input-bordered ${className}`;
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
-      <input className={inputClass} {...props} ref={ref} />
+      {props.prefix || props.suffix ? (
+        <div className="relative flex items-center font-bold">
+          {props.prefix && <div className="absolute ml-4">{props.prefix}</div>}
+          <input className={inputClass} {...props} ref={ref} />
+          {props.suffix && (
+            <div className="absolute end-0 mr-3">{props.suffix}</div>
+          )}
+        </div>
+      ) : (
+        <input className={inputClass} {...props} ref={ref} />
+      )}
     </div>
   );
 });
@@ -51,7 +66,7 @@ export const Select = forwardRef<
   return (
     <div className="flex flex-col">
       {labelText && <label>{labelText}</label>}
-      <select className={selectClass} {...props} ref={ref} defaultValue="" >
+      <select className={selectClass} {...props} ref={ref} defaultValue="">
         <option disabled value="">
           選択してください
         </option>
