@@ -127,7 +127,9 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         defaultValue={state.values.price}
       />
       <SubmitContainer />
-      <TestDataButton classNeme="fixed bottom-2 left-2" />
+      if(process.env.NODE_ENV !== "production"){
+          <TestDataButton classNeme="fixed bottom-2 left-2" />
+    }
     </form>
   );
 };
