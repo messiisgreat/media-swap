@@ -5,6 +5,7 @@ import {
   SubmitContainer,
   initialProductFormValues,
   listingItem,
+  TestDataButton
 } from "@/app/add-listing/_listingForm";
 import { ImageInput } from "@/components/form";
 import { Select } from "@/components/form/Elements";
@@ -126,6 +127,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         defaultValue={state.values.price}
       />
       <SubmitContainer />
+      <TestDataButton classNeme="fixed bottom-2 left-2" />
     </form>
   );
 };
