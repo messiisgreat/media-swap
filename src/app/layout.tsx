@@ -5,7 +5,7 @@ import {
   GoogleTagManager,
   Header,
 } from "@/app/_layout";
-import { NaviMenu } from "@/app/_layout/NaviMenu";
+import { AnchorMenu } from "@/app/_layout/AnchorMenu";
 
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 import type { Metadata } from "next";
@@ -49,7 +49,7 @@ export default function RootLayout({
           <Container>{children}</Container>
           <Footer />
           <Toaster />
-          <NaviMenu />
+          <AnchorMenu />
         </ClientProvider>
       </body>
     </html>

@@ -45,3 +45,14 @@ export const addComment = async (
 export const fetchComments = async (listingId: string) => {
   return await getComments(listingId);
 };
+
+/**
+ * TODO: 検証用の取引作成ボタン！リリース時には削除
+ * @param listingId 商品ID
+ * @param buyerId 購入者ID
+ * @returns 取引ID
+ */
+export const merchant = async (listingId: string, buyerId: string) => {
+  const transaction = await createTransaction(listingId, buyerId);
+  return transaction.id;
+}

@@ -6,6 +6,9 @@ import differenceInMonths from "date-fns/differenceInMonths";
 import differenceInSeconds from "date-fns/differenceInSeconds";
 import differenceInWeeks from "date-fns/differenceInWeeks";
 import differenceInYears from "date-fns/differenceInYears";
+import format from "date-fns/format";
+import { utcToZonedTime } from "date-fns-tz";
+import { isToday, isYesterday } from "date-fns";
 
 /**
  * 相対時間を計算する
@@ -50,4 +53,26 @@ export const parseRelativeTime = (target: Date): string => {
   const diffInYears = differenceInYears(base, target);
 
   return `${diffInYears}年前`;
+};
+
+/**
+ * 「今日 10:00」や「2023/01/01 10:00」のような形式に変換する
+ * @param target 日付
+ * @returns
+ */
+export const parseFixedDateTime = (target: Date): string => {
+  const timeZone = "Asia/Tokyo";
+  target = utcToZonedTime(target, timeZone);
+
+  const formattedTime = format(target, "HH:mm");
+
+  if (isToday(target)) {
+    return `今日 ${formattedTime}`;
+  }
+
+  if (isYesterday(target)) {
+    return `昨日 ${formattedTime}`;
+  }
+
+  return `${format(target, "yyyy/MM/dd")} ${formattedTime}`;
 };

@@ -1,13 +1,18 @@
-import React from "react";
+import { TextLink } from "@/components/TextLink";
+import { Section, TitleUnderbar } from "@/components/structure";
 
 /**
  * 404ページ
  */
-export default function NotFoundPage() {
+export default function NotFound() {
   return (
-    <div>
-      <h1>Page not found.</h1>
-      <h1>ページが見つかりません</h1>
-    </div>
+    <>
+      <TitleUnderbar title="ページが見つかりません" />
+      <Section className="grid gap-2">
+        <p>お探しのページは見つかりませんでした。</p>
+        <p>URLが間違っているか、削除された可能性があります。</p>
+        <TextLink href="/">トップページへ</TextLink>
+      </Section>
+    </>
   );
 }

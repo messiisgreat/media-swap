@@ -1,11 +1,12 @@
+import { ReCaptchaResult } from "@/components/securityVerifier/type";
 import { env } from "@/utils/env";
 
 /**
  * 認証の結果を取得する
- * @param captchaValue Security Verifireで取得した値
+ * @param verificationCode Security Verifireで取得した値
  * @returns 認証の結果
  */
-export const fetchVerifyResult = async (captchaValue: string) => {
+export const fetchVerifyResult = async (verificationCode: string) => {
   const url = "https://www.google.com/recaptcha/api/siteverify";
   try {
     const response = await fetch(url, {
@@ -15,17 +16,16 @@ export const fetchVerifyResult = async (captchaValue: string) => {
       },
       body: new URLSearchParams({
         secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
-        response: captchaValue,
+        response: verificationCode,
       }).toString(),
     });
-    const json = await response.json();
-
+    const json = (await response.json()) as ReCaptchaResult;
+    console.log(json);
     if (!json.success) {
       return false;
     }
     return true;
   } catch (error) {
-    console.error(error);
     return false;
   }
 };

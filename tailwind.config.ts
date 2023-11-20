@@ -6,6 +6,14 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    extend: {
+      flex: {
+        '28': '0 0 28%',
+        '100': '0 0 100%'
+      }
+    }
+  },
   plugins: [require("daisyui")],
   daisyui: {
     themes: [

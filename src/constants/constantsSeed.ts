@@ -3,7 +3,6 @@ import {
   SHIPPING_DAYS,
   SHIPPING_METHOD,
   TRANSACTION_RATING_OPTION,
-  TRANSACTION_STATUS,
 } from "@/constants/listing";
 import { PrismaClient } from "@prisma/client";
 
@@ -49,19 +48,6 @@ async function main() {
         },
         update: rest,
         create: days,
-      });
-    }),
-  );
-
-  await Promise.all(
-    TRANSACTION_STATUS.map((status) => {
-      const { id, ...rest } = status;
-      return prisma.transactionStatus.upsert({
-        where: {
-          id,
-        },
-        update: rest,
-        create: status,
       });
     }),
   );

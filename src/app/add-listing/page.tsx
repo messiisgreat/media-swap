@@ -1,11 +1,9 @@
 import { ListingForm } from "@/app/add-listing/ListingForm";
-
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Section } from "@/components/structure";
-import { PageTitle } from "@/components/structure/PageTitle";
+import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
+import { PageTitle, Section } from "@/components/structure";
 import { findTags } from "@/services/tag";
+import { getSession } from "@/utils/session";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const title = "商品を出品する";
@@ -19,7 +17,8 @@ export const metadata: Metadata = {
  * 商品追加ページ
  */
 export default async function Page() {
-  const session = await getServerSession(authOptions);
+  // 仮対応
+  const session = await getSession();
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add-listing");
   }
@@ -30,7 +29,9 @@ export default async function Page() {
     <>
       <PageTitle title={title} />
       <Section>
-        <ListingForm tags={tags} />
+        <VerifyProvider>
+          <ListingForm tags={tags} />
+        </VerifyProvider>
       </Section>
     </>
   );

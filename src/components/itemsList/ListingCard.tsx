@@ -1,9 +1,24 @@
-import PriceBadge from "@/components/PriceBadge";
-import SoldOutBadge from "@/components/SoldOutBadge";
+import SoldOutBadge from "@/components/SoldoutBadge";
 import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
+
+const PriceBadge = ({
+  className,
+  children,
+}: {
+  className: string;
+  children: ReactNode;
+}) => (
+  <div
+    className={`flex w-20 items-center justify-center overflow-hidden whitespace-nowrap
+    rounded-r-xl bg-black/40 p-1 text-xs text-white ${className}`}
+  >
+    {children}
+  </div>
+);
 
 type Props = {
   listing: Awaited<ReturnType<typeof findListingById>>;
@@ -15,10 +30,9 @@ type Props = {
  * @returns div
  */
 export function ListingCard({ listing }: Props) {
-  const formattedPrice =
-    listing.price != null ? formatPrice(listing.price) : "N/A";
+  const formattedPrice = listing.price ? formatPrice(listing.price) : "N/A";
 
-  const isSoldOut = !!listing.transactionId;
+  const isSoldOut = !listing.transactionId;
 
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
@@ -26,16 +40,15 @@ export function ListingCard({ listing }: Props) {
         href={`/listing/${listing.id}`}
         className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
       >
-        <div className="relative h-32 w-32 cursor-pointer rounded-lg sm:h-48 sm:w-48">
+        <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:h-48 sm:w-48">
           <Image
             src={listing.images[0].imageURL}
             alt={listing.productName || "Product Image"}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
+            sizes="500px"
+            fill
           />
           {isSoldOut && <SoldOutBadge />}
-          <PriceBadge className="absolute bottom-2 inline-flex h-6 w-16 items-baseline overflow-hidden whitespace-nowrap rounded-r-lg bg-black/40 pb-2 text-xs">
+          <PriceBadge className="absolute bottom-2">
             {formattedPrice}
           </PriceBadge>
         </div>

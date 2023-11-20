@@ -1,6 +1,6 @@
 "use client";
 
-import profilePicPlaceholder from "@/assets/profile-pic-placeholder.png";
+import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -10,7 +10,7 @@ type UserMenuButtonProps = {
 };
 /**
  * ヘッダーに表示するユーザーボタン (サインイン/サインアウト)
- * @returns 
+ * @returns
  */
 export default function UserMenuButton({ session }: UserMenuButtonProps) {
   const user = session?.user;
@@ -47,9 +47,18 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
         className="menu dropdown-content rounded-box menu-sm z-30 mt-3 w-52 bg-base-100 p-2 shadow"
       >
         {user ? (
-          <button onClick={() => signOut({ callbackUrl: "/" })}>
-            Sign Out
-          </button>
+          <>
+            <li>
+              <button onClick={() => signOut({ callbackUrl: "/" })}>
+                Sign Out
+              </button>
+            </li>
+            <li>
+              <button onClick={() => signOut({ callbackUrl: "/mypage" })}>
+                マイページ
+              </button>
+            </li>
+          </>
         ) : (
           <button onClick={() => signIn()}>Sign In</button>
         )}
