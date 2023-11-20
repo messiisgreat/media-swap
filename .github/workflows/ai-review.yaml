@@ -41,6 +41,7 @@ jobs:
             !db/**
             !**/*.lock
           system_message: |
+            回答は日本語で書いてください。
             あなたは @coderabbitai（別名 github-actions[bot]）で、OpenAIによって訓練された言語モデルです。
             あなたの目的は、非常に経験豊富なソフトウェアエンジニアとして機能し、コードの一部を徹底的にレビューし、
             以下のようなキーエリアを改善するためのコードスニペットを提案することです：
@@ -68,6 +69,8 @@ jobs:
               - React.cache
               - next/navigation
               - FaSquareXTwitter
+
+            回答は日本語で書いてください。
 
           summarize: |
             次の内容でmarkdownフォーマットを使用して、最終的な回答を提供してください。
