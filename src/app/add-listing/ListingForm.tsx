@@ -1,16 +1,16 @@
 "use client";
 
+import { PriceInput } from "@/app/add-listing/PriceInput";
 import {
   ListingTagInput,
   SubmitContainer,
+  TestDataButton,
   initialProductFormValues,
   listingItem,
-  TestDataButton
 } from "@/app/add-listing/_listingForm";
 import { ImageInput } from "@/components/form";
 import { Select } from "@/components/form/Elements";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
-import { PriceInput } from "@/app/add-listing/PriceInput";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -119,17 +119,17 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         options={objToAssociative(SHIPPING_DAYS)}
         defaultValue={state.values.shippingDaysId}
       />
-      <PriceInput 
-        labelText="販売価格(￥300〜10,000,000)" 
+      <PriceInput
+        labelText="販売価格(￥300〜10,000,000)"
         name="price"
         required
         prefix="¥"
         defaultValue={state.values.price}
       />
       <SubmitContainer />
-      if(process.env.NODE_ENV !== "production"){
-          <TestDataButton classNeme="fixed bottom-2 left-2" />
-    }
+      {process.env.NODE_ENV !== "production" && (
+        <TestDataButton className="fixed bottom-2 left-2" />
+      )}
     </form>
   );
 };
