@@ -9,6 +9,7 @@ async function uploadSingleFile(
   formData.append("file", file);
   formData.append("folder", "swappy");
   formData.append("upload_preset", upload_preset);
+  formData.append("fetch_format", "auto");
 
   try {
     const response = await fetch(uploadUrl, {
@@ -37,7 +38,7 @@ async function uploadSingleFile(
  * @returns Promise<string>[]
  */
 export async function uploadToCloudinary(files: File[]) {
-  console.log("files", files)
+  console.log("files", files);
   const uploadPromises = files.map((file) =>
     uploadSingleFile(
       file,
