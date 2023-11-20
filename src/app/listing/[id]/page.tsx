@@ -1,4 +1,5 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
+import Carousel from "@/app/listing/[id]/Carousel";
 import CommentSection from "@/app/listing/[id]/CommentSection";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
@@ -7,7 +8,6 @@ import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
-import Carousel from "@/app/listing/[id]/Carousel";
 
 type ListingPageProps = {
   params: {
@@ -26,6 +26,10 @@ export async function generateMetadata({
     title: listing.productName,
     description: listing.description,
     openGraph: {
+      images: [{ url: listing.images[0].imageURL }],
+    },
+    twitter: {
+      card: "summary_large_image",
       images: [{ url: listing.images[0].imageURL }],
     },
   };
