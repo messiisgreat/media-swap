@@ -8,13 +8,11 @@ import { ComponentProps } from "react";
 
 const setTestData = (selector: string, testData: string): void => {
   const element = document.querySelector(selector);
-
   if (element) {
-    if (element instanceof HTMLTextAreaElement) {
-      element.innerHTML = testData;
-    } else if (
+    if (
       element instanceof HTMLInputElement ||
-      element instanceof HTMLSelectElement
+      element instanceof HTMLSelectElement ||
+      element instanceof HTMLTextAreaElement
     ) {
       element.value = testData;
     } else {
@@ -37,22 +35,22 @@ type Props = ComponentProps<typeof Button>;
  */
 export const TestDataButton = (props: Props) => {
   const handleClick = () => {
-    setTestData('[name="productName"]', "試験商品");
+    setTestData("[name=productName]", "テストデータ");
     setTestData(
-      '[name="productConditionId"]',
+      "[name=productConditionId]",
       generateRandomId(PRODUCT_CONDITION),
     );
     setTestData(
-      '[name="price"]',
+      "[name=price]",
       Math.floor(Math.random() * 99999700 + 300).toString(),
     );
-    setTestData('[name="description"]', "これは試験商品の説明です。");
+    setTestData("textarea[name=description]", "これは試験商品の説明です。");
     setTestData(
-      '[name="postageIsIncluded"]',
+      "[name=postageIsIncluded]",
       Math.floor(Math.random() * 2).toString(),
     );
-    setTestData('[name="shippingDaysId"]', generateRandomId(SHIPPING_DAYS));
-    setTestData('[name="shippingMethodId"]', generateRandomId(SHIPPING_METHOD));
+    setTestData("[name=shippingDaysId]", generateRandomId(SHIPPING_DAYS));
+    setTestData("[name=shippingMethodId]", generateRandomId(SHIPPING_METHOD));
   };
   return (
     <Button onClick={handleClick} {...props}>

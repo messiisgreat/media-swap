@@ -128,7 +128,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <SubmitContainer />
       {process.env.NODE_ENV !== "production" && (
-        <TestDataButton className="fixed bottom-3 left-3" />
+        <TestDataButton className="fixed left-3 max-sm:bottom-20 sm:bottom-3 " />
       )}
     </form>
   );
