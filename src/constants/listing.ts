@@ -25,7 +25,6 @@ export const POSTAGE_IS_INCLUDED = [
 /** 配送方法 */
 export const SHIPPING_METHOD: ShippingMethod[] = [
   { id: "0".padStart(24, "0"), name: "未定", amount: null },
-  { id: "1".padStart(24, "0"), name: "らくらくメルカリ便", amount: 500 },
   { id: "2".padStart(24, "0"), name: "ゆうメール", amount: 200 },
   { id: "3".padStart(24, "0"), name: "レターパック", amount: 500 },
   { id: "4".padStart(24, "0"), name: "普通郵便(定形、定形外)", amount: null },
