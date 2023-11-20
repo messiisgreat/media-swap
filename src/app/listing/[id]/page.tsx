@@ -6,8 +6,8 @@ import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import Carousel from "@/app/listing/[id]/Carousel";
 
 type ListingPageProps = {
   params: {
@@ -49,15 +49,7 @@ export default async function ListingPage({
     <div>
       <div className="hero">
         <div className="hero-content flex-col lg:flex-row lg:items-center">
-          {/* TODO: カルーセルにしてimagesをmapで展開する */}
-          <Image
-            src={images[0].imageURL}
-            alt={listing.productName!}
-            width={500}
-            height={500}
-            className="rounded-lg"
-            priority
-          />
+          <Carousel images={images} />
           <div>
             <H className="text-5xl font-bold">{listing.productName}</H>
             <div className="mt-4 flex flex-wrap gap-2">
