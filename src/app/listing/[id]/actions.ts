@@ -1,6 +1,7 @@
 "use server";
 
-import { createComment, getComments } from "@/services/listingComment";
+import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
+import { createComment, createCommentReport, deleteListingComment, getComments } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -55,4 +56,39 @@ export const fetchComments = async (listingId: string) => {
 export const merchant = async (listingId: string, buyerId: string) => {
   const transaction = await createTransaction(listingId, buyerId);
   return transaction.id;
+}
+
+/**
+ * コメントの通報
+ * @param commentId コメントID
+ * @param userId 通報ユーザーID
+ * @param reason 通報理由
+ * @param verificationCode reCAPTCHA v3で取得した値
+ * @returns 
+ */
+export const addCommentReport = async (commentId: string, userId: string, reason: string, verificationCode: string) => {
+  if (!verificationCode) {
+    return {
+      message: "認証を行ってください",
+      error: true,
+    };
+  }
+  const verifyResult = await fetchVerifyResult(verificationCode);
+  if (!verifyResult) {
+    return {
+      message: "認証に失敗しました。再度認証を行ってください",
+      error: true,
+    };
+  }
+  return await createCommentReport(commentId, userId, reason);
+}
+
+/**
+ * コメントを削除する
+ * @param commentId コメントID
+ * @param userId 削除を行うユーザーID
+ * @returns 
+ */
+export const removeComment = async (commentId: string, userId: string) => {
+  return await deleteListingComment(commentId, userId);
 }
