@@ -42,7 +42,7 @@ export const TestDataButton = (props: Props) => {
     );
     setTestData(
       "[name=price]",
-      Math.floor(Math.random() * 99999700 + 300).toString(),
+      Math.floor(Math.random() * 999700 + 300).toString(),
     );
     setTestData("textarea[name=description]", "これは試験商品の説明です。");
     setTestData(
