@@ -9,6 +9,7 @@ import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
 import Carousel from "@/app/listing/[id]/Carousel";
+import { ProtButton } from "@/app/listing/[id]/ProtButton";
 
 type ListingPageProps = {
   params: {
@@ -70,12 +71,24 @@ export default async function ListingPage({
               buyerId={userId!}
               userCouponId={null}
             />
+            <div className="mt-4 flex flex-col gap-2">
+              <ProtButton data = {listing}>支払前</ProtButton>
+              <ProtButton data = {listing}>支払完了</ProtButton>
+              <ProtButton data = {listing}>発送済</ProtButton>
+              <ProtButton data = {listing}>受取完了</ProtButton>
+              <ProtButton data = {listing}>取引キャンセル</ProtButton>
+            </div>
           </div>
         </div>
       </div>
       <VerifyProvider>
-        <CommentSection listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+        <CommentSection
+          listingId={listing.id}
+          sessionUser={user}
+          isListingOwner={isOwner}
+        />
       </VerifyProvider>
     </div>
   );
 }
+
