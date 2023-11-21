@@ -13,10 +13,8 @@ export const protTransactionStateUpdate = async (
   id : string,
   stateId: number
 ) => {
-  await updateTransaction(
-    {
+  await updateTransaction( {
       id: id,
       transactionStatus: stateId
-    }
-  )
+    })
 };

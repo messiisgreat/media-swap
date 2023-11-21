@@ -72,11 +72,11 @@ export default async function ListingPage({
               userCouponId={null}
             />
             <div className="mt-4 flex flex-col gap-2">
-              <ProtButton data = {listing}>支払前</ProtButton>
-              <ProtButton data = {listing}>支払完了</ProtButton>
-              <ProtButton data = {listing}>発送済</ProtButton>
-              <ProtButton data = {listing}>受取完了</ProtButton>
-              <ProtButton data = {listing}>取引キャンセル</ProtButton>
+              <ProtButton data = {listing} status={0}>支払前</ProtButton>
+              <ProtButton data = {listing} status={1}>支払完了</ProtButton>
+              <ProtButton data = {listing} status={2}>発送済</ProtButton>
+              <ProtButton data = {listing} status={3}>受取完了</ProtButton>
+              <ProtButton data = {listing} status={4}>取引キャンセル</ProtButton>
             </div>
           </div>
         </div>
