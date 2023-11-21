@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
-import { createComment, createCommentReport, getComments } from "@/services/listingComment";
+import { createComment, createCommentReport, deleteListingComment, getComments } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -81,4 +81,14 @@ export const addCommentReport = async (commentId: string, userId: string, reason
     };
   }
   return await createCommentReport(commentId, userId, reason);
+}
+
+/**
+ * コメントを削除する
+ * @param commentId コメントID
+ * @param userId 削除を行うユーザーID
+ * @returns 
+ */
+export const removeComment = async (commentId: string, userId: string) => {
+  return await deleteListingComment(commentId, userId);
 }

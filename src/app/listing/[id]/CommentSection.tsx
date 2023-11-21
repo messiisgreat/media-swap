@@ -5,6 +5,7 @@ import {
   addCommentReport,
   fetchComments,
   merchant,
+  removeComment,
 } from "@/app/listing/[id]/actions";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
@@ -15,7 +16,7 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { FaEllipsis, FaTriangleExclamation, FaTrash } from "react-icons/fa6";
+import { FaEllipsis, FaTriangleExclamation, FaTrash, FaFlag } from "react-icons/fa6";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 /**
@@ -37,7 +38,12 @@ export default function CommentSection({
   const [posting, setPosting] = useState(false);
   const [selectedComment, setSelectedComment] = useState<string | null>(null); // 通報するコメントのIDを格納する
   const formRef = useRef<HTMLFormElement>(null);
-  const reportModalRef = useRef<HTMLDialogElement & { showModal: () => void }>(null);
+  const reportModalRef = useRef<HTMLDialogElement & { showModal: () => void }>(
+    null,
+  );
+  const deleteModalRef = useRef<HTMLDialogElement & { showModal: () => void }>(
+    null,
+  );
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   useEffect(() => {
@@ -82,50 +88,93 @@ export default function CommentSection({
     return executeRecaptcha("report_comment");
   }, [executeRecaptcha]);
 
-  const reportComment = useCallback(async (f: FormData) => {
-    const reason = f.get("report_reason") as string;
+  const reportComment = useCallback(
+    async (f: FormData) => {
+      const reason = f.get("report_reason") as string;
 
-    if (!reason || typeof reason !== "string") return;
+      if (!reason || typeof reason !== "string") return;
 
-    if (reason.length < 3) {
-      toast.error("3文字以上入力してください");
-      return;
-    }
+      if (reason.length < 3) {
+        toast.error("3文字以上入力してください");
+        return;
+      }
 
-    if (reason.length > 1000) {
-      toast.error("1000文字以内で入力してください");
-      return;
-    }
+      if (reason.length > 1000) {
+        toast.error("1000文字以内で入力してください");
+        return;
+      }
 
+      if (!selectedComment) {
+        toast.error("通報するコメントが選択されていません");
+        return;
+      }
+
+      if (!sessionUser) {
+        toast.error("ログインしてください");
+        return;
+      }
+
+      const verificationCode = await handleReCaptchaVerify();
+
+      if (!verificationCode) {
+        toast.error("reCAPTCHAの検証に失敗しました。");
+        return;
+      }
+
+      try {
+        const res = await addCommentReport(
+          selectedComment,
+          sessionUser.id,
+          reason,
+          verificationCode || "",
+        );
+        if ("error" in res) {
+          toast.error(res.message);
+          return;
+        }
+        toast.success("コメントを通報しました。");
+        reportModalRef.current?.close();
+      } catch (e: unknown) {
+        if (String(e).toLowerCase().includes("already")) {
+          toast.error("あなたは既にこのコメントを通報しています。");
+          reportModalRef.current?.close();
+          return;
+        }
+        toast.error("コメントの通報に失敗しました。");
+      }
+    },
+    [selectedComment, sessionUser, handleReCaptchaVerify],
+  );
+
+  const deleteComment = useCallback(async () => {
     if (!selectedComment) {
-      toast.error("通報するコメントが選択されていません");
+      toast.error("削除するコメントが選択されていません");
       return;
     }
-    
+
     if (!sessionUser) {
       toast.error("ログインしてください");
       return;
     }
 
-    const verificationCode = await handleReCaptchaVerify();
+    if (!isListingOwner) {
+      toast.error("商品の出品者のみがコメントを削除できます");
+      return;
+    }
 
     try {
-      const res = await addCommentReport(selectedComment, sessionUser.id, reason, verificationCode || "");
-      if ("error" in res) {
+      await removeComment(selectedComment, sessionUser.id);
+      /*if ("error" in res) {
         toast.error(res.message);
         return;
-      }
-      toast.success("コメントを通報しました。");
-      reportModalRef.current?.close();
+      }*/
+      toast.success("コメントを削除しました。");
+      deleteModalRef.current?.close();
+      setComments(await fetchComments(listingId));
     } catch (e: unknown) {
-      if (String(e).toLowerCase().includes("unique")) {
-        toast.error("あなたは既にこのコメントを通報しています。");
-        reportModalRef.current?.close();
-        return;
-      }
-      toast.error("コメントの通報に失敗しました。");
+      toast.error("コメントの削除に失敗しました。");
     }
-  }, [selectedComment, sessionUser, handleReCaptchaVerify])
+  }, [selectedComment, sessionUser, isListingOwner, listingId]);
 
   return (
     <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
@@ -189,36 +238,47 @@ export default function CommentSection({
                     <p className="text-sm">
                       {parseRelativeTime(comment.createdAt)}
                     </p>
-                    {sessionUser ? <div className="dropdown dropdown-end dropdown-bottom">
-                      <label
-                        tabIndex={0}
-                        className="btn btn-ghost h-[initial] min-h-0 p-2"
-                      >
-                        <FaEllipsis />
-                      </label>
-                      <ul
-                        tabIndex={0}
-                        className="menu dropdown-content rounded-box z-[1] w-24 gap-2 bg-base-100 p-2 text-red-500 shadow"
-                      >
-                        {comment.userId !== sessionUser.id ? <li onClick={() => {
-                          setSelectedComment(comment.id);
-                          reportModalRef.current?.showModal();
-                        }}>
-                          <div className="flex items-center whitespace-nowrap">
-                            <FaTriangleExclamation />
-                            通報
-                          </div>
-                        </li>:null}
-                        {isListingOwner ? (
-                          <li>
-                            <div className="flex items-center whitespace-nowrap">
-                              <FaTrash />
-                              削除
-                            </div>
-                          </li>
-                        ) : null}
-                      </ul>
-                    </div>:null}
+                    {sessionUser ? (
+                      <div className="dropdown dropdown-end dropdown-bottom">
+                        <label
+                          tabIndex={0}
+                          className="btn btn-ghost h-[initial] min-h-0 p-2"
+                        >
+                          <FaEllipsis />
+                        </label>
+                        <ul
+                          tabIndex={0}
+                          className="menu dropdown-content rounded-box z-[1] w-24 gap-2 bg-base-100 p-2 text-red-500 shadow"
+                        >
+                          {comment.userId !== sessionUser.id ? (
+                            <li
+                              onClick={() => {
+                                setSelectedComment(comment.id);
+                                reportModalRef.current?.showModal();
+                              }}
+                            >
+                              <div className="flex items-center whitespace-nowrap">
+                                <FaFlag />
+                                通報
+                              </div>
+                            </li>
+                          ) : null}
+                          {isListingOwner ? (
+                            <li
+                              onClick={() => {
+                                setSelectedComment(comment.id);
+                                deleteModalRef.current?.showModal();
+                              }}
+                            >
+                              <div className="flex items-center whitespace-nowrap">
+                                <FaTrash />
+                                削除
+                              </div>
+                            </li>
+                          ) : null}
+                        </ul>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
                 <p className="text-sm">{comment.comment}</p>
@@ -237,12 +297,49 @@ export default function CommentSection({
             </button>
           </form>
           <h3 className="text-center text-lg font-bold">コメントの通報</h3>
-          <p className="py-2">こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。</p>
-          <form className="flex flex-col gap-4" action={(f) => reportComment(f)}>
-            <LimitTextarea className="h-24" placeholder="通報理由を入力してください" required minLength={3} name="report_reason" maxLength={1000} />
-            <FormSubmitButton className="btn-error">
-              通報する
-            </FormSubmitButton>
+          <p className="py-2">
+            こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
+          </p>
+          <form
+            className="flex flex-col gap-4"
+            action={(f) => reportComment(f)}
+          >
+            <LimitTextarea
+              className="h-24"
+              placeholder="通報理由を入力してください"
+              required
+              minLength={3}
+              name="report_reason"
+              maxLength={1000}
+            />
+            <FormSubmitButton className="btn-error">通報する</FormSubmitButton>
+          </form>
+        </div>
+      </dialog>
+      {/* 削除モーダル */}
+      <dialog ref={deleteModalRef} className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="text-center text-lg font-bold">コメントの削除</h3>
+          <p className="py-2">コメントを削除してもよろしいですか？</p>
+          <div className="alert alert-warning mb-4" role="alert">
+            <FaTriangleExclamation className="text-2xl" />
+            <p>この操作は取り消せません。</p>
+          </div>
+          <div className="alert mb-4" role="alert">
+            <FaFlag className="text-2xl" />
+            <p>利用規約に違反しているコメントの場合は、先に通報を行ってください。</p>
+          </div>
+          <form
+            className="flex flex-col gap-4"
+            action={() => deleteComment()}
+          >
+            <FormSubmitButton className="btn-error">削除</FormSubmitButton>
           </form>
         </div>
       </dialog>
