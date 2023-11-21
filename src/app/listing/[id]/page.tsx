@@ -9,6 +9,11 @@ import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
 
+export type SEOProps = Record<
+  "title" | "description" | "url" | "imageUrl",
+  string
+>;
+
 type ListingPageProps = {
   params: {
     id: string;
@@ -18,6 +23,36 @@ type ListingPageProps = {
 /**
  * OGP生成
  */
+// export default function SeoComponent(Info:SEOProps):Metadata {
+//   const { title,description,url,imageUrl } = Info
+//   const metadata:Metadata = {
+//       title: title,
+//       description: description,
+//       icons: "/favicon.ico",
+//       keywords: ["UtakataKyosui","泡沫京水","Portfolio","ポートフォリオ"],
+//       viewport: {
+//           width: "device-width",
+//           initialScale: 1,
+//           maximumScale: 1,
+//       },
+//       twitter: {
+//           card: "summary_large_image",
+//           images: [imageUrl]
+//       },
+//       openGraph: {
+//           title: title,
+//           description: description,
+//           url: url,
+//           siteName: title,
+//           images: {
+//               url:imageUrl,
+//               width: 1200,
+//               height: 600,
+//           },
+//       }
+//   }
+//   return metadata
+// }
 export async function generateMetadata({
   params: { id },
 }: ListingPageProps): Promise<Metadata> {
