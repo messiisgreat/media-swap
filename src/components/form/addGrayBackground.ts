@@ -12,8 +12,11 @@ export async function addGrayBackground(file: File): Promise<File> {
       }
 
       const img = new window.Image();
-      img.src = event.target.result as string;
+      const objectUrl = URL.createObjectURL(file);
+      img.src = objectUrl;
       img.onload = () => {
+        // オブジェクトURLの解放
+        URL.revokeObjectURL(objectUrl);
         const maxLength = Math.max(img.width, img.height);
         const canvas = document.createElement('canvas');
         canvas.width = maxLength;
@@ -42,9 +45,11 @@ export async function addGrayBackground(file: File): Promise<File> {
           resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
         }, 'image/jpeg', 1);
       };
-      img.onerror = () => reject(new Error("Image loading error."));
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error("Image loading error."))
+      };
     };
     reader.onerror = () => reject(new Error("FileReader error."));
-    reader.readAsDataURL(file);
   });
 }
