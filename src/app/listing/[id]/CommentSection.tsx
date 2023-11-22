@@ -1,23 +1,22 @@
 "use client";
 
+import { useReportModal } from "@/app/listing/[id]/_commentSection/ReportModal";
+import { TestTransactionButton } from "@/app/listing/[id]/_commentSection/TestTransactionButton";
 import {
   addComment,
-  addCommentReport,
   fetchComments,
-  merchant,
   removeComment,
 } from "@/app/listing/[id]/actions";
-import { Button } from "@/components";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
 import { LimitTextarea } from "@/components/form/LimitElements";
 import { Section } from "@/components/structure";
+import { H } from "@/components/structure/H";
 import { CommentWithPartialUser } from "@/services/listingComment";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 import {
   FaEllipsis,
@@ -26,32 +25,34 @@ import {
   FaTriangleExclamation,
 } from "react-icons/fa6";
 
+type Props = {
+  listingId: string;
+  sessionUser: Session["user"] | null;
+  isListingOwner: boolean;
+};
+
 /**
  * コメント(+コメントを書き込むフォーム)
  * @param param0.listingId 商品ID
  */
-export default function CommentSection({
+export const CommentSection = ({
   listingId,
   sessionUser,
   isListingOwner,
-}: {
-  listingId: string;
-  sessionUser: Session["user"] | null;
-  isListingOwner: boolean;
-}) {
+}: Props) => {
   const [comments, setComments] = useState<CommentWithPartialUser[] | null>(
     null,
   );
   const [posting, setPosting] = useState(false);
   const [selectedComment, setSelectedComment] = useState<string | null>(null); // 通報するコメントのIDを格納する
   const formRef = useRef<HTMLFormElement>(null);
-  const reportModalRef = useRef<HTMLDialogElement & { showModal: () => void }>(
-    null,
-  );
+  const { open, ReportModal } = useReportModal({
+    selectedComment,
+    sessionUser,
+  });
   const deleteModalRef = useRef<HTMLDialogElement & { showModal: () => void }>(
     null,
   );
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   useEffect(() => {
     fetchComments(listingId)
@@ -90,69 +91,6 @@ export default function CommentSection({
     }
   };
 
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha("report_comment");
-  }, [executeRecaptcha]);
-
-  const reportComment = useCallback(
-    async (f: FormData) => {
-      const reason = f.get("report_reason") as string;
-
-      if (!reason || typeof reason !== "string") return;
-
-      if (reason.length < 3) {
-        toast.error("3文字以上入力してください");
-        return;
-      }
-
-      if (reason.length > 1000) {
-        toast.error("1000文字以内で入力してください");
-        return;
-      }
-
-      if (!selectedComment) {
-        toast.error("通報するコメントが選択されていません");
-        return;
-      }
-
-      if (!sessionUser) {
-        toast.error("ログインしてください");
-        return;
-      }
-
-      const verificationCode = await handleReCaptchaVerify();
-
-      if (!verificationCode) {
-        toast.error("reCAPTCHAの検証に失敗しました。");
-        return;
-      }
-
-      try {
-        const res = await addCommentReport(
-          selectedComment,
-          sessionUser.id,
-          reason,
-          verificationCode || "",
-        );
-        if ("error" in res) {
-          toast.error(res.message);
-          return;
-        }
-        toast.success("コメントを通報しました。");
-        reportModalRef.current?.close();
-      } catch (e: unknown) {
-        if (String(e).toLowerCase().includes("already")) {
-          toast.error("あなたは既にこのコメントを通報しています。");
-          reportModalRef.current?.close();
-          return;
-        }
-        toast.error("コメントの通報に失敗しました。");
-      }
-    },
-    [selectedComment, sessionUser, handleReCaptchaVerify],
-  );
-
   const deleteComment = useCallback(async () => {
     if (!selectedComment) {
       toast.error("削除するコメントが選択されていません");
@@ -186,34 +124,31 @@ export default function CommentSection({
   return (
     <Section className="grid w-full gap-4">
       {/* TODO: 検証用の取引作成ボタン！リリース時には削除 */}
-      <Button
-        onClick={async () => {
-          if (!sessionUser) {
-            alert("ログインしてください");
-            return;
-          }
-          const transactionId = await merchant(listingId, sessionUser.id);
-          location.href = `/transactions/${transactionId}`;
-        }}
-      >
-        検証用取引を作成
-      </Button>
+
       {sessionUser ? (
-        <form
-          className="flex flex-col items-start gap-4"
-          action={(f) => postComment(f, sessionUser, listingId)}
-          ref={formRef}
-        >
-          <LimitTextarea
-            className="w-full resize-none"
-            disabled={posting}
-            name="comment"
-            maxLength={300}
-          />
-          <FormSubmitButton className="btn-secondary self-end" type="submit">
-            コメントを書き込む
-          </FormSubmitButton>
-        </form>
+        <>
+          {process.env.NODE_ENV !== "production" ? (
+            <TestTransactionButton
+              listingId={listingId}
+              sessionUserId={sessionUser.id}
+            />
+          ) : null}
+          <form
+            className="flex flex-col items-start gap-4"
+            action={(f) => postComment(f, sessionUser, listingId)}
+            ref={formRef}
+          >
+            <LimitTextarea
+              className="w-full resize-none"
+              disabled={posting}
+              name="comment"
+              maxLength={300}
+            />
+            <FormSubmitButton className="btn-secondary self-end" type="submit">
+              コメントを書き込む
+            </FormSubmitButton>
+          </form>
+        </>
       ) : (
         <p>コメントを書き込むにはログインが必要です。</p>
       )}
@@ -260,7 +195,7 @@ export default function CommentSection({
                             <li
                               onClick={() => {
                                 setSelectedComment(comment.id);
-                                reportModalRef.current?.showModal();
+                                open();
                               }}
                             >
                               <div className="flex items-center whitespace-nowrap">
@@ -293,35 +228,7 @@ export default function CommentSection({
           ))
         )}
       </ul>
-      {/* 通報モーダル */}
-      <dialog ref={reportModalRef} className="modal">
-        <div className="modal-box">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <h3 className="text-center text-lg font-bold">コメントの通報</h3>
-          <p className="py-2">
-            こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
-          </p>
-          <form
-            className="flex flex-col gap-4"
-            action={(f) => reportComment(f)}
-          >
-            <LimitTextarea
-              className="h-24"
-              placeholder="通報理由を入力してください"
-              required
-              minLength={3}
-              name="report_reason"
-              maxLength={1000}
-            />
-            <FormSubmitButton className="btn-error">通報する</FormSubmitButton>
-          </form>
-        </div>
-      </dialog>
+      <ReportModal />
       {/* 削除モーダル */}
       <dialog ref={deleteModalRef} className="modal">
         <div className="modal-box">
@@ -331,7 +238,7 @@ export default function CommentSection({
               ✕
             </button>
           </form>
-          <h3 className="text-center text-lg font-bold">コメントの削除</h3>
+          <H className="text-center text-lg font-bold">コメントの削除</H>
           <p className="py-2">コメントを削除してもよろしいですか？</p>
           <div className="alert alert-warning mb-4" role="alert">
             <FaTriangleExclamation className="text-2xl" />
@@ -350,4 +257,4 @@ export default function CommentSection({
       </dialog>
     </Section>
   );
-}
+};
