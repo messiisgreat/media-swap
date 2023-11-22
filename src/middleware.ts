@@ -31,6 +31,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png |res.cloudinary.com).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png|res.cloudinary.com).*)",
   ],
 };
