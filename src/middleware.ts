@@ -8,6 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
  * @returns NextResponse.redirect | void
  */
 export async function middleware(req: NextRequest) {
+  const userAgent = req.headers.get("user-agent");
+  if (userAgent?.includes("facebookexternalhit")) {
+    return NextResponse.next();
+  }
   return composeMiddleware(req, NextResponse.next(), {
     scripts: [ageCheckMiddleware],
     // "/add-listing": {
@@ -17,5 +21,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png).*)",
+  ],
 };
