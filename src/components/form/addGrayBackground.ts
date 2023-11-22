@@ -42,9 +42,9 @@ export async function addGrayBackground(file: File): Promise<File> {
           resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
         }, 'image/jpeg', 1);
       };
-      img.onerror = () => reject("Image loading error.");
+      img.onerror = () => reject(new Error("Image loading error."));
     };
-    reader.onerror = () => reject("FileReader error.");
+    reader.onerror = () => reject(new Error("FileReader error."));
     reader.readAsDataURL(file);
   });
 }
