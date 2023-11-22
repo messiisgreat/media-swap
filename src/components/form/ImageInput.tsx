@@ -110,13 +110,42 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     }
   }, [files]);
 
-
   useEffect(() => {
     return () =>
       files.forEach((file: FileWithPreview) =>
         URL.revokeObjectURL(file.preview),
       );
   }, [files]);
+
+  async function fetchImageAndConvertToFile(url: string, fileName: string): Promise<File> {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const blob = await response.blob();
+    return new File([blob], fileName, { type: blob.type });
+  }
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.id === 'test-button') {
+        const dataTransfer = new DataTransfer();
+        fetchImageAndConvertToFile('https://picsum.photos/200/200', 'random-image.jpg')
+          .then(file => {
+            dataTransfer.items.add(file);
+            if (inputElem.current) {
+              inputElem.current.files = dataTransfer.files;
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   const removeFile = (name: string) => {
     setFiles(files.filter((file) => file.name !== name));

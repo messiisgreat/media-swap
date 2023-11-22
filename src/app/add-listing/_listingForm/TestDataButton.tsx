@@ -90,16 +90,22 @@ export const TestDataButton = (props: Props) => {
     setTestData("[name=shippingDaysId]", generateRandomId(SHIPPING_DAYS));
     setTestData("[name=shippingMethodId]", generateRandomId(SHIPPING_METHOD));
 
-    // const dataTransfer = new DataTransfer();
-    // fetchPicsumImages().then(files => {
-    //   files.forEach(file => {
-    //     dataTransfer.items.add(file);
-    //   });
-    // });
-    // const inputElem = document.querySelector<HTMLInputElement>("[name=imageFiles]");
-    // if (inputElem) {
-    //   inputElem.files = dataTransfer.files;
-    // }
+    const newInput = document.createElement('input');
+    newInput.type = 'file';
+    newInput.accept = 'image/*';
+    newInput.multiple = true;
+    newInput.style.display = 'none';
+    newInput.tabIndex = -1;
+    newInput.className = 'hidden';
+    newInput.name = 'imageFiles';
+
+    const dataTransfer = new DataTransfer();
+    fetchPicsumImages().then(files => {
+      files.forEach(file => {
+        dataTransfer.items.add(file);
+      });
+    });
+  //  action
   };
   return (
     <>
