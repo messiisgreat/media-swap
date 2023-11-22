@@ -11,54 +11,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-
-// 画像に灰色の背景を追加して、短い辺を長い辺と同じ長さにする関数
-async function addGrayBackground(file: File): Promise<File> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      if (!event.target || !event.target.result) {
-        reject("FileReader did not load the file.");
-        return;
-      }
-
-      const img = new window.Image();
-      img.src = event.target.result as string;
-      img.onload = () => {
-        const maxLength = Math.max(img.width, img.height);
-        const canvas = document.createElement('canvas');
-        canvas.width = maxLength;
-        canvas.height = maxLength;
-        const ctx = canvas.getContext('2d');
-
-        if (!ctx) {
-          reject("Could not create canvas context.");
-          return;
-        }
-
-        // 灰色の背景を設定
-        ctx.fillStyle = '#808080';
-        ctx.fillRect(0, 0, maxLength, maxLength);
-
-        // 画像を中央に配置
-        const offsetX = (maxLength - img.width) / 2;
-        const offsetY = (maxLength - img.height) / 2;
-        ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
-
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject("Canvas toBlob failed.");
-            return;
-          }
-          resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-        }, 'image/jpeg', 1);
-      };
-      img.onerror = reject;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+import { addGrayBackground } from "./addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
@@ -116,6 +69,7 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
       );
   }, [files]);
 
+  // テスト用コード
   async function fetchImageAndConvertToFile(url: string, fileName: string): Promise<File> {
     const response = await fetch(url);
     if (!response.ok) {
@@ -125,6 +79,7 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     return new File([blob], fileName, { type: blob.type });
   }
 
+  // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (files.length < 10) {
