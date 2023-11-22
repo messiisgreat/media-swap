@@ -10,7 +10,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 
 type Props = {
-  selectedComment: string | null;
+  commentId: string | null;
   sessionUser: Session["user"] | null;
 };
 
@@ -20,7 +20,7 @@ type Props = {
  * @param param0.sessionUser ログインユーザー
  * @returns open, close, ReportModal
  */
-export const useReportModal = ({ selectedComment, sessionUser }: Props) => {
+export const useReportModal = ({ commentId, sessionUser }: Props) => {
   const { open, close, Dialog } = useDialog();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -45,7 +45,7 @@ export const useReportModal = ({ selectedComment, sessionUser }: Props) => {
         return;
       }
 
-      if (!selectedComment) {
+      if (!commentId) {
         toast.error("通報するコメントが選択されていません");
         return;
       }
@@ -64,7 +64,7 @@ export const useReportModal = ({ selectedComment, sessionUser }: Props) => {
 
       try {
         const res = await addCommentReport(
-          selectedComment,
+          commentId,
           sessionUser.id,
           reason,
           verificationCode || "",
@@ -74,17 +74,16 @@ export const useReportModal = ({ selectedComment, sessionUser }: Props) => {
           return;
         }
         toast.success("コメントを通報しました。");
-        close();
       } catch (e: unknown) {
         if (String(e).toLowerCase().includes("already")) {
           toast.error("あなたは既にこのコメントを通報しています。");
-          close();
-          return;
         }
         toast.error("コメントの通報に失敗しました。");
+      } finally {
+        close();
       }
     },
-    [close, handleReCaptchaVerify, selectedComment, sessionUser],
+    [close, handleReCaptchaVerify, commentId, sessionUser],
   );
 
   const ReportModal = useCallback(
@@ -120,5 +119,5 @@ export const useReportModal = ({ selectedComment, sessionUser }: Props) => {
     [Dialog, reportComment],
   );
 
-  return { open, close, ReportModal };
+  return { openReportModal: open, closeReportModal: close, ReportModal };
 };

@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ProtButton } from "@/app/listing/[id]/ProtButton";
