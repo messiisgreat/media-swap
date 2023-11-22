@@ -30,11 +30,6 @@ export async function generateMetadata({
     description: listing.description,
     icons: "/favicon.ico",
     keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 1,
-    },
     twitter: {
       card: "summary_large_image",
       images: [{ url: listing.images[0].imageURL }],
