@@ -62,6 +62,20 @@ export const updateTransaction = async (transaction: { id: string } & Partial<Tr
 };
 
 /**
+ * 取引ステータスを更新する
+ * @param transaction - 更新する取引
+ * @returns 更新された取引
+ */
+export const updateTransactionStatus = async (transaction: { id: string } & Partial<Transaction>) => {
+  return prisma.transaction.update({
+    where: { id: transaction.id },
+    data: {
+      transactionStatus: transaction.transactionStatus,
+    }
+  });
+};
+
+/**
  * 取引コメントを取得
  * @param transactionId 取引ID
  * @returns コメントの配列
