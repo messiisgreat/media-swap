@@ -26,11 +26,11 @@ export async function generateMetadata({
 }: ListingPageProps): Promise<Metadata> {
   const listing = await findListingById(id);
   return {
-    title: `SWAPPY - ${listing.productName}`,
-    description: `商品説明 - ${listing.description}`,
+    title: listing.productName,
+    description: listing.description,
     openGraph: {
-      title: `SWAPPY - ${listing.productName}`,
-      description: `商品説明 - ${listing.description}`,
+      title: listing.productName!,
+      description: listing.description!,
       images: {
         url: listing.images[0].imageURL,
         width: 1200,
