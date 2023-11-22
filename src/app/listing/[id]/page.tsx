@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Carousel from "@/app/listing/[id]/Carousel";
 import { ProtButton } from "@/app/listing/[id]/ProtButton";
+import { ButtonAsLink } from "@/components/Button";
 
 type ListingPageProps = {
   params: {
@@ -65,12 +66,17 @@ export default async function ListingPage({
             </div>
             <Badge className="mt-4">¥{listing.price}</Badge>
             <p className="py-6">{listing.description}</p>
-            <PurchaseButton
+            {listing.transactionId ? (
+              <div>
+                <p>すでに商品を購入しています！</p>
+                <ButtonAsLink href={`/transactions/${listing.transactionId}`} secondary>取引へ進む</ButtonAsLink>
+              </div>
+            ):<PurchaseButton
               disabled={!userId || isOwner}
               listingId={listing.id}
               buyerId={userId!}
               userCouponId={null}
-            />
+            />}
             <div className="mt-4 flex flex-col gap-2">
               <ProtButton data = {listing} status={0}>支払前</ProtButton>
               <ProtButton data = {listing} status={1}>支払完了</ProtButton>
