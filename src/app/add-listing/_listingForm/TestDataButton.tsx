@@ -27,12 +27,6 @@ const generateRandomId = (constant: { id: string; name: string }[]): string => {
   return constant[Math.floor(Math.random() * constant.length)].id.toString();
 };
 
-async function fetchImageAsFile(url: string, fileName: string): Promise<File> {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  return new File([blob], fileName, { type: blob.type });
-}
-
 type Props = ComponentProps<typeof Button>;
 
 /**
@@ -57,15 +51,6 @@ export const TestDataButton = (props: Props) => {
     );
     setTestData("[name=shippingDaysId]", generateRandomId(SHIPPING_DAYS));
     setTestData("[name=shippingMethodId]", generateRandomId(SHIPPING_METHOD));
-
-    const newInput = document.createElement('input');
-    newInput.type = 'file';
-    newInput.accept = 'image/*';
-    newInput.multiple = true;
-    newInput.style.display = 'none';
-    newInput.tabIndex = -1;
-    newInput.className = 'hidden';
-    newInput.name = 'imageFiles';
   };
   return (
     <>

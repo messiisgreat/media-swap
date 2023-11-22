@@ -127,21 +127,23 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (target.id === 'test-button') {
-        const dataTransfer = new DataTransfer();
-        fetchImageAndConvertToFile('https://picsum.photos/200/200', 'random-image.jpg')
-          .then(file => {
-            const fileWithPreview = Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            }) as FileWithPreview;
-            dataTransfer.items.add(file);
-            if (inputElem.current) {
-              inputElem.current.files = dataTransfer.files;
-            }
-            setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
-          })
-          .catch(error => console.error('Error:', error));
+      if (files.length < 10) {
+        const target = event.target as HTMLElement;
+        if (target.id === 'test-button') {
+          const dataTransfer = new DataTransfer();
+          fetchImageAndConvertToFile('https://picsum.photos/200/200', `image-${Math.floor(Math.random() * 100000)}.jpg`)
+            .then(file => {
+              const fileWithPreview = Object.assign(file, {
+                preview: URL.createObjectURL(file),
+              }) as FileWithPreview;
+              dataTransfer.items.add(file);
+              if (inputElem.current) {
+                inputElem.current.files = dataTransfer.files;
+              }
+              setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
+            })
+            .catch(error => console.error('Error:', error));
+        }
       }
     };
     document.addEventListener('click', handleOutsideClick);
