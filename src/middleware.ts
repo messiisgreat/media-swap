@@ -8,15 +8,24 @@ import { NextRequest, NextResponse } from "next/server";
  * @returns NextResponse.redirect | void
  */
 export async function middleware(req: NextRequest) {
-  const userAgent = req.headers.get("user-agent");
-  if (userAgent?.includes("facebookexternalhit")) {
+  const userAgent = req.headers.get("user-agent")?.toLowerCase();
+
+  // ソーシャルメディアボットのユーザーエージェントをチェック
+  const allowedUserAgents = [
+    "facebookexternalhit", // Facebook
+    "twitterbot", // Twitter
+    "googlebot", // Google
+    "hatenablog", // はてなブログ
+    "line", // LINE
+    "discordbot", // Discord
+    "slackbot", // Slack
+  ];
+
+  if (allowedUserAgents.some((ua) => userAgent?.includes(ua))) {
     return NextResponse.next();
   }
   return composeMiddleware(req, NextResponse.next(), {
     scripts: [ageCheckMiddleware],
-    // "/add-listing": {
-    //   scripts: [authMiddleware],
-    // },
   });
 }
 
