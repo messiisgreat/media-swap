@@ -1,4 +1,4 @@
-import { SoldOutBadge } from "@/components";
+import { SoldOutBadge } from "@/components/itemsList/SoldOutBadge";
 import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
