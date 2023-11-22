@@ -26,17 +26,11 @@ export async function generateMetadata({
 }: ListingPageProps): Promise<Metadata> {
   const listing = await findListingById(id);
   return {
-    title: listing.productName,
-    description: listing.description,
-    icons: "/favicon.ico",
-    keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
-    twitter: {
-      card: "summary_large_image",
-    },
+    title: `SWAPPY - ${listing.productName}`,
+    description: `商品説明 - ${listing.description}`,
     openGraph: {
-      title: listing.productName!,
-      description: listing.description!,
-      siteName: "Swappy",
+      title: `SWAPPY - ${listing.productName}`,
+      description: `商品説明 - ${listing.description}`,
       images: {
         url: listing.images[0].imageURL,
         width: 1200,
