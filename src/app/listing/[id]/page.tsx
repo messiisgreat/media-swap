@@ -1,9 +1,12 @@
 /* eslint-disable tailwindcss/enforces-negative-arbitrary-values */
 import Carousel from "@/app/listing/[id]/Carousel";
 import CommentSection from "@/app/listing/[id]/CommentSection";
+import { ProtButton } from "@/app/listing/[id]/ProtButton";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
+import { ButtonAsLink } from "@/components/Button";
 import SeoComponent from "@/components/GenerateMetadata";
+import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
@@ -105,16 +108,51 @@ export default async function ListingPage({
             </div>
             <Badge className="mt-4">¥{listing.price}</Badge>
             <p className="py-6">{listing.description}</p>
-            <PurchaseButton
-              disabled={!userId || isOwner}
-              listingId={listing.id}
-              buyerId={userId!}
-              userCouponId={null}
-            />
+            {listing.transactionId ? (
+              <div>
+                <p>すでに商品を購入しています！</p>
+                <ButtonAsLink
+                  href={`/transactions/${listing.transactionId}`}
+                  secondary
+                >
+                  取引へ進む
+                </ButtonAsLink>
+              </div>
+            ) : (
+              <PurchaseButton
+                disabled={!userId || isOwner}
+                listingId={listing.id}
+                buyerId={userId!}
+                userCouponId={null}
+              />
+            )}
+            <div className="mt-4 flex flex-col gap-2">
+              <ProtButton data={listing} status={0}>
+                支払前
+              </ProtButton>
+              <ProtButton data={listing} status={1}>
+                支払完了
+              </ProtButton>
+              <ProtButton data={listing} status={2}>
+                発送済
+              </ProtButton>
+              <ProtButton data={listing} status={3}>
+                受取完了
+              </ProtButton>
+              <ProtButton data={listing} status={4}>
+                取引キャンセル
+              </ProtButton>
+            </div>
           </div>
         </div>
       </div>
-      <CommentSection listingId={listing.id} sessionUser={user} />
+      <VerifyProvider>
+        <CommentSection
+          listingId={listing.id}
+          sessionUser={user}
+          isListingOwner={isOwner}
+        />
+      </VerifyProvider>
     </div>
   );
 }
