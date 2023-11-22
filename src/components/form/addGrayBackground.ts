@@ -7,7 +7,7 @@ export async function addGrayBackground(file: File): Promise<File> {
     const reader = new FileReader();
     reader.onload = (event: ProgressEvent<FileReader>) => {
       if (!event.target || !event.target.result) {
-        reject("FileReader did not load the file.");
+        reject(new Error ("FileReader did not load the file."));
         return;
       }
 
@@ -21,7 +21,7 @@ export async function addGrayBackground(file: File): Promise<File> {
         const ctx = canvas.getContext('2d');
 
         if (!ctx) {
-          reject("Could not create canvas context.");
+          reject(new Error("Could not create canvas context."));
           return;
         }
 
@@ -36,15 +36,15 @@ export async function addGrayBackground(file: File): Promise<File> {
 
         canvas.toBlob((blob) => {
           if (!blob) {
-            reject("Canvas toBlob failed.");
+            reject(new Error("Canvas toBlob failed."));
             return;
           }
           resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
         }, 'image/jpeg', 1);
       };
-      img.onerror = reject;
+      img.onerror = () => reject("Image loading error.");
     };
-    reader.onerror = reject;
+    reader.onerror = () => reject("FileReader error.");
     reader.readAsDataURL(file);
   });
 }
