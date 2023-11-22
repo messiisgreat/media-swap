@@ -1,5 +1,6 @@
 "use client";
 
+import { useImageModal } from "@/components/dialog";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
@@ -21,6 +22,7 @@ export default function Carousel({
     containScroll: "keepSnaps",
     dragFree: true,
   });
+  const { open, ImageModal } = useImageModal(images[selectedIndex].imageURL);
 
   const onThumbClick = useCallback(
     (index: number) => {
@@ -62,11 +64,13 @@ export default function Carousel({
                 alt="Your alt text"
                 width={200}
                 height={200}
+                onClick={() => open()}
               />
             </div>
           ))}
         </div>
       </div>
+      <ImageModal />
 
       <div className="mt-[8px]">
         <div className="overflow-hidden bg-[#333] py-1" ref={emblaThumbsRef}>
