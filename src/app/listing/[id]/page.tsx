@@ -8,7 +8,6 @@ import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
-import SeoComponent from "@/utils/GenerateMetadata";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -26,11 +25,31 @@ export async function generateMetadata({
   params: { id },
 }: ListingPageProps): Promise<Metadata> {
   const listing = await findListingById(id);
-  return SeoComponent({
-    title: listing.productName!,
-    description: listing.description!,
-    imageUrl: listing.images[0].imageURL,
-  });
+  return {
+    title: listing.productName,
+    description: listing.description,
+    icons: "/favicon.ico",
+    keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 1,
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [{ url: listing.images[0].imageURL }],
+    },
+    openGraph: {
+      title: listing.productName!,
+      description: listing.description!,
+      siteName: "Swappy",
+      images: {
+        url: listing.images[0].imageURL,
+        width: 1200,
+        height: 630,
+      },
+    },
+  };
 }
 
 /**
