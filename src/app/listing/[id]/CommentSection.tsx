@@ -7,17 +7,24 @@ import {
   merchant,
   removeComment,
 } from "@/app/listing/[id]/actions";
+import { Button } from "@/components";
 import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
 import { LimitTextarea } from "@/components/form/LimitElements";
+import { Section } from "@/components/structure";
 import { CommentWithPartialUser } from "@/services/listingComment";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { FaEllipsis, FaTriangleExclamation, FaTrash, FaFlag } from "react-icons/fa6";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import toast from "react-hot-toast";
+import {
+  FaEllipsis,
+  FaFlag,
+  FaTrash,
+  FaTriangleExclamation,
+} from "react-icons/fa6";
 
 /**
  * コメント(+コメントを書き込むフォーム)
@@ -177,9 +184,9 @@ export default function CommentSection({
   }, [selectedComment, sessionUser, isListingOwner, listingId]);
 
   return (
-    <div className="mx-auto w-full max-w-xs lg:max-w-2xl">
+    <Section className="grid w-full gap-4">
       {/* TODO: 検証用の取引作成ボタン！リリース時には削除 */}
-      <button
+      <Button
         onClick={async () => {
           if (!sessionUser) {
             alert("ログインしてください");
@@ -189,9 +196,8 @@ export default function CommentSection({
           location.href = `/transactions/${transactionId}`;
         }}
       >
-        取引を作成
-      </button>
-      <p className="mb-2 text-xl font-medium">コメント</p>
+        検証用取引を作成
+      </Button>
       {sessionUser ? (
         <form
           className="flex flex-col items-start gap-4"
@@ -204,7 +210,7 @@ export default function CommentSection({
             name="comment"
             maxLength={300}
           />
-          <FormSubmitButton className="btn-secondary" type="submit">
+          <FormSubmitButton className="btn-secondary self-end" type="submit">
             コメントを書き込む
           </FormSubmitButton>
         </form>
@@ -333,16 +339,15 @@ export default function CommentSection({
           </div>
           <div className="alert mb-4" role="alert">
             <FaFlag className="text-2xl" />
-            <p>利用規約に違反しているコメントの場合は、先に通報を行ってください。</p>
+            <p>
+              利用規約に違反しているコメントの場合は、先に通報を行ってください。
+            </p>
           </div>
-          <form
-            className="flex flex-col gap-4"
-            action={() => deleteComment()}
-          >
+          <form className="flex flex-col gap-4" action={() => deleteComment()}>
             <FormSubmitButton className="btn-error">削除</FormSubmitButton>
           </form>
         </div>
       </dialog>
-    </div>
+    </Section>
   );
 }

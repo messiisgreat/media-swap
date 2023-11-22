@@ -7,7 +7,7 @@ import { ReactNode } from "react";
  */
 export const Container = ({ children }: { children: ReactNode }) => {
   return (
-    <Main className="container flex min-h-[640px] flex-col items-center justify-start gap-4 p-4 sm:mx-auto">
+    <Main className="container mx-auto flex min-h-[640px] flex-col items-center justify-start gap-4 p-4 max-sm:w-full sm:max-w-2xl">
       {children}
     </Main>
   );
