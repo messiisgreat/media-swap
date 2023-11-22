@@ -32,7 +32,6 @@ export async function generateMetadata({
     keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
     twitter: {
       card: "summary_large_image",
-      images: [{ url: listing.images[0].imageURL }],
     },
     openGraph: {
       title: listing.productName!,
