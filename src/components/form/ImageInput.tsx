@@ -78,7 +78,6 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     const processedFiles = await Promise.all(
       droppedFiles.map(file => addGrayBackground(file))
     );
-
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = processedFiles.slice(0, spaceLeft);
@@ -133,10 +132,14 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
         const dataTransfer = new DataTransfer();
         fetchImageAndConvertToFile('https://picsum.photos/200/200', 'random-image.jpg')
           .then(file => {
+            const fileWithPreview = Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            }) as FileWithPreview;
             dataTransfer.items.add(file);
             if (inputElem.current) {
               inputElem.current.files = dataTransfer.files;
             }
+            setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
           })
           .catch(error => console.error('Error:', error));
       }
@@ -145,7 +148,7 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
-  }, []);
+  }, [files]);
 
   const removeFile = (name: string) => {
     setFiles(files.filter((file) => file.name !== name));

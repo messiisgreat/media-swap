@@ -33,38 +33,6 @@ async function fetchImageAsFile(url: string, fileName: string): Promise<File> {
   return new File([blob], fileName, { type: blob.type });
 }
 
-async function fetchPicsumImages(): Promise<File[]> {
-  // ここで取得したい画像のURLを設定します
-  const urls = [
-    'https://picsum.photos/200/200',
-    'https://picsum.photos/id/1/200/300',
-  ];
-
-  const filePromises = urls.map((url, index) => 
-    fetchImageAsFile(url, `image${index}.jpg`)
-  );
-
-  return Promise.all(filePromises);
-}
-
-// const setImage = (selector: string): void =>{
-
-//   const fetchImage = async () => {
-//     try {
-//       const response = await fetch('https://picsum.photos/200');
-//       const data = await response.json();
-//       return data;
-//     } catch (error) {
-//       console.error('画像の取得に失敗しました', error);
-//     }
-//   };
-
-//   const dataTransfer = new Array();
-//   const file = fetchImage();
-//   dataTransfer.push(file);
-//   console.log(dataTransfer);
-// };
-
 type Props = ComponentProps<typeof Button>;
 
 /**
@@ -98,14 +66,6 @@ export const TestDataButton = (props: Props) => {
     newInput.tabIndex = -1;
     newInput.className = 'hidden';
     newInput.name = 'imageFiles';
-
-    const dataTransfer = new DataTransfer();
-    fetchPicsumImages().then(files => {
-      files.forEach(file => {
-        dataTransfer.items.add(file);
-      });
-    });
-  //  action
   };
   return (
     <>
