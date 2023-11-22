@@ -22,36 +22,6 @@ type ListingPageProps = {
 /**
  * OGP生成
  */
-// export default function SeoComponent(Info:SEOProps):Metadata {
-//   const { title,description,url,imageUrl } = Info
-//   const metadata:Metadata = {
-//       title: title,
-//       description: description,
-//       icons: "/favicon.ico",
-//       keywords: ["UtakataKyosui","泡沫京水","Portfolio","ポートフォリオ"],
-//       viewport: {
-//           width: "device-width",
-//           initialScale: 1,
-//           maximumScale: 1,
-//       },
-//       twitter: {
-//           card: "summary_large_image",
-//           images: [imageUrl]
-//       },
-//       openGraph: {
-//           title: title,
-//           description: description,
-//           url: url,
-//           siteName: title,
-//           images: {
-//               url:imageUrl,
-//               width: 1200,
-//               height: 600,
-//           },
-//       }
-//   }
-//   return metadata
-// }
 export async function generateMetadata({
   params: { id },
 }: ListingPageProps): Promise<Metadata> {
@@ -61,19 +31,6 @@ export async function generateMetadata({
     description: listing.description!,
     imageUrl: listing.images[0].imageURL,
   });
-  // return {
-  //   title: listing.productName,
-  //   description: listing.description,
-  //   openGraph: {
-  //     title: listing.productName!,
-  //     description: listing.description!,
-  //     images: [{ url: listing.images[0].imageURL }],
-  //   },
-  //   twitter: {
-  //     card: "summary_large_image",
-  //     images: [{ url: listing.images[0].imageURL }],
-  //   },
-  // };
 }
 
 /**
