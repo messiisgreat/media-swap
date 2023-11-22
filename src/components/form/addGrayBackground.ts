@@ -1,4 +1,7 @@
-// 画像に灰色の背景を追加して、短い辺を長い辺と同じ長さにする関数
+/**
+ * 画像に灰色の背景を追加して, 短い辺を長い辺と同じ長さにする
+ * @param file ドロップされたファイル
+ */
 export async function addGrayBackground(file: File): Promise<File> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
