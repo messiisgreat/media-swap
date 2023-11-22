@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 
-export type SEOProps = Record<
-  "title" | "description" | "url" | "imageUrl",
-  string
->;
+export type SEOProps = Record<"title" | "description" | "imageUrl", string>;
 
 /**
  * OGP生成
@@ -11,12 +8,12 @@ export type SEOProps = Record<
  * @returns OGP情報
  */
 export default function SeoComponent(Info: SEOProps): Metadata {
-  const { title, description, url, imageUrl } = Info;
+  const { title, description, imageUrl } = Info;
   const metadata: Metadata = {
     title: title,
     description: description,
     icons: "/favicon.ico",
-    keywords: ["UtakataKyosui", "泡沫京水", "Portfolio", "ポートフォリオ"],
+    keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
     viewport: {
       width: "device-width",
       initialScale: 1,
@@ -29,7 +26,6 @@ export default function SeoComponent(Info: SEOProps): Metadata {
     openGraph: {
       title: title,
       description: description,
-      url: url,
       siteName: title,
       images: {
         url: imageUrl,

@@ -3,16 +3,12 @@ import Carousel from "@/app/listing/[id]/Carousel";
 import CommentSection from "@/app/listing/[id]/CommentSection";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
+import SeoComponent from "@/components/GenerateMetadata";
 import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 import Link from "next/link";
-
-export type SEOProps = Record<
-  "title" | "description" | "url" | "imageUrl",
-  string
->;
 
 type ListingPageProps = {
   params: {
@@ -57,19 +53,24 @@ export async function generateMetadata({
   params: { id },
 }: ListingPageProps): Promise<Metadata> {
   const listing = await findListingById(id);
-  return {
-    title: listing.productName,
-    description: listing.description,
-    openGraph: {
-      title: listing.productName!,
-      description: listing.description!,
-      images: [{ url: listing.images[0].imageURL }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      images: [{ url: listing.images[0].imageURL }],
-    },
-  };
+  return SeoComponent({
+    title: listing.productName!,
+    description: listing.description!,
+    imageUrl: listing.images[0].imageURL,
+  });
+  // return {
+  //   title: listing.productName,
+  //   description: listing.description,
+  //   openGraph: {
+  //     title: listing.productName!,
+  //     description: listing.description!,
+  //     images: [{ url: listing.images[0].imageURL }],
+  //   },
+  //   twitter: {
+  //     card: "summary_large_image",
+  //     images: [{ url: listing.images[0].imageURL }],
+  //   },
+  // };
 }
 
 /**
