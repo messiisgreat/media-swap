@@ -6,7 +6,7 @@ import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
-import { H } from "@/components/structure/H";
+import { PageTitle, Section, TitleUnderbar } from "@/components/structure";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
@@ -55,61 +55,58 @@ export default async function ListingPage({
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
 
   return (
-    <div>
-      <div className="hero">
-        <div className="hero-content flex-col lg:flex-row lg:items-center">
-          <Carousel images={images} />
-          <div>
-            <H className="text-5xl font-bold">{listing.productName}</H>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-                  <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
-                    {tag.text}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-            <Badge className="mt-4">¥{listing.price}</Badge>
-            <p className="py-6">{listing.description}</p>
-            {listing.transactionId ? (
-              <div>
-                <p>すでに商品を購入しています！</p>
-                <ButtonAsLink
-                  href={`/transactions/${listing.transactionId}`}
-                  secondary
-                >
-                  取引へ進む
-                </ButtonAsLink>
-              </div>
-            ) : (
-              <PurchaseButton
-                disabled={!userId || isOwner}
-                listingId={listing.id}
-                buyerId={userId!}
-                userCouponId={null}
-              />
-            )}
-            <div className="mt-4 flex flex-col gap-2">
-              <ProtButton data={listing} status={0}>
-                支払前
-              </ProtButton>
-              <ProtButton data={listing} status={1}>
-                支払完了
-              </ProtButton>
-              <ProtButton data={listing} status={2}>
-                発送済
-              </ProtButton>
-              <ProtButton data={listing} status={3}>
-                受取完了
-              </ProtButton>
-              <ProtButton data={listing} status={4}>
-                取引キャンセル
-              </ProtButton>
-            </div>
-          </div>
+    <>
+      <Carousel images={images} />
+      <PageTitle title={listing.productName!} />
+      <Section className="flex w-full flex-col items-start gap-4">
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
+              <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
+                {tag.text}
+              </Badge>
+            </Link>
+          ))}
         </div>
-      </div>
+        <Badge className="badge-lg">¥{listing.price}</Badge>
+        <p>{listing.description}</p>
+        {listing.transactionId ? (
+          <div>
+            <p>すでに商品を購入しています！</p>
+            <ButtonAsLink
+              href={`/transactions/${listing.transactionId}`}
+              secondary
+            >
+              取引へ進む
+            </ButtonAsLink>
+          </div>
+        ) : (
+          <PurchaseButton
+            disabled={!userId || isOwner}
+            listingId={listing.id}
+            buyerId={userId!}
+            userCouponId={null}
+          />
+        )}
+        <div className="mt-4 flex flex-col gap-2">
+          <ProtButton data={listing} status={0}>
+            支払前
+          </ProtButton>
+          <ProtButton data={listing} status={1}>
+            支払完了
+          </ProtButton>
+          <ProtButton data={listing} status={2}>
+            発送済
+          </ProtButton>
+          <ProtButton data={listing} status={3}>
+            受取完了
+          </ProtButton>
+          <ProtButton data={listing} status={4}>
+            取引キャンセル
+          </ProtButton>
+        </div>
+      </Section>
+      <TitleUnderbar title="コメント" />
       <VerifyProvider>
         <CommentSection
           listingId={listing.id}
@@ -117,6 +114,6 @@ export default async function ListingPage({
           isListingOwner={isOwner}
         />
       </VerifyProvider>
-    </div>
+    </>
   );
 }
