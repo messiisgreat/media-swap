@@ -10,12 +10,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   return composeMiddleware(req, NextResponse.next(), {
     scripts: [ageCheckMiddleware],
-    // "/add-listing": {
-    //   scripts: [authMiddleware],
-    // },
   });
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|opengraph-image.png).*)",
+  ],
 };

@@ -29,7 +29,13 @@ export async function generateMetadata({
     title: listing.productName,
     description: listing.description,
     openGraph: {
-      images: [{ url: listing.images[0].imageURL }],
+      title: listing.productName!,
+      description: listing.description!,
+      images: {
+        url: listing.images[0].imageURL,
+        width: 1200,
+        height: 630,
+      },
     },
   };
 }

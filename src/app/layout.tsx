@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { template: `%s - ${SITE_NAME}`, default: SITE_NAME },
   description: "フリーマーケットアプリ",
+  keywords: ["同人誌", "フリマ", "コミケ", "Swappy", "スワッピー"],
   openGraph: {
     type: "website",
     locale: "ja_JP",

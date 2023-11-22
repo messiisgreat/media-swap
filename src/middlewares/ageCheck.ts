@@ -8,6 +8,22 @@ import { NextResponse } from "next/server";
  * @param res NextResponse
  */
 export const ageCheckMiddleware: ComposableMiddleware = async (req, res) => {
+  const userAgent = req.headers.get("user-agent")?.toLowerCase();
+
+  // ソーシャルメディアボットのユーザーエージェントをチェック
+  const allowedUserAgents = [
+    "facebookexternalhit", // Facebook
+    "twitterbot", // Twitter
+    "googlebot", // Google
+    "hatenablog", // はてなブログ
+    "line", // LINE
+    "discordbot", // Discord
+    "slackbot", // Slack
+  ];
+
+  if (allowedUserAgents.some((ua) => userAgent?.includes(ua))) {
+    return NextResponse.next();
+  }
   const pathName = new URL(req.url).pathname;
   if (pathName.match(exclude)) return res;
   const isAgeCheckedThrough = req.cookies.get("isAgeCheckedThrough")?.value;
