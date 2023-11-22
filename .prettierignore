@@ -6,3 +6,4 @@ project_doc
 .env
 .env.example
 README.md
+pnpm-lock.yaml
