@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FiChevronRight } from "react-icons/fi";
-import Link from "next/link";
 
 /**
  * ユーザーマイページ
@@ -20,6 +20,12 @@ export default async function Page() {
             <Link href="/mypage/personal-info">
               <div className="flex justify-between">
                 <p>個人情報設定</p>
+                <FiChevronRight size={24} />
+              </div>
+            </Link>
+            <Link href="/mypage/listings">
+              <div className="flex justify-between">
+                <p>出品商品一覧</p>
                 <FiChevronRight size={24} />
               </div>
             </Link>
