@@ -8,9 +8,9 @@ import {
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
-import { ImageInput } from "@/components/form";
 import { Select } from "@/components/form/Elements";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
+import ImageInput from "@/components/form/imageInput";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -128,7 +128,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       />
       <SubmitContainer />
       {process.env.NODE_ENV !== "production" && (
-        <TestDataButton className="fixed left-3 max-sm:bottom-20 sm:bottom-3 " />
+        <TestDataButton
+          className="fixed left-3 max-sm:bottom-20 sm:bottom-3"
+          id="test-button"
+        />
       )}
     </form>
   );

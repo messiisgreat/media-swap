@@ -1,2 +1,2 @@
-export { ImageInput } from "@/components/form/ImageInput";
+export { ImageInput } from "@/components/form/imageInput/ImageInput";
 export * from "@/components/form/type";

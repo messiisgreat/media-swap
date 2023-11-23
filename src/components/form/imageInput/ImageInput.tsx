@@ -1,6 +1,7 @@
 "use client";
 
-import { ImagePreview } from "@/components/form/ImagePreview";
+import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
+import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -11,63 +12,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-
-// 画像に灰色の背景を追加して、短い辺を長い辺と同じ長さにする関数
-async function addGrayBackground(file: File): Promise<File> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      if (!event.target || !event.target.result) {
-        reject("FileReader did not load the file.");
-        return;
-      }
-
-      const img = new window.Image();
-      img.src = event.target.result as string;
-      img.onload = () => {
-        const maxLength = Math.max(img.width, img.height);
-        const canvas = document.createElement("canvas");
-        canvas.width = maxLength;
-        canvas.height = maxLength;
-        const ctx = canvas.getContext("2d");
-
-        if (!ctx) {
-          reject("Could not create canvas context.");
-          return;
-        }
-
-        // 灰色の背景を設定
-        ctx.fillStyle = "#808080";
-        ctx.fillRect(0, 0, maxLength, maxLength);
-
-        // 画像を中央に配置
-        const offsetX = (maxLength - img.width) / 2;
-        const offsetY = (maxLength - img.height) / 2;
-        ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
-
-        canvas.toBlob(
-          (blob) => {
-            if (!blob) {
-              reject("Canvas toBlob failed.");
-              return;
-            }
-            resolve(
-              new File([blob], file.name, {
-                type: "image/jpeg",
-                lastModified: Date.now(),
-              }),
-            );
-          },
-          "image/jpeg",
-          1,
-        );
-      };
-      img.onerror = reject;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+import { addGrayBackground } from "../addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
 
@@ -82,13 +27,12 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  */
 export function ImageInput({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const inputElem = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
       droppedFiles.map((file) => addGrayBackground(file)),
     );
-
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = processedFiles.slice(0, spaceLeft);
@@ -115,9 +59,48 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     files.forEach((file) => {
       dataTransfer.items.add(file);
     });
-    if (inputElem.current) {
-      inputElem.current.files = dataTransfer.files;
+    if (inputRef.current) {
+      inputRef.current.files = dataTransfer.files;
     }
+  }, [files]);
+
+  useEffect(() => {
+    return () =>
+      files.forEach((file: FileWithPreview) =>
+        URL.revokeObjectURL(file.preview),
+      );
+  }, [files]);
+
+  // ボタンがクリックされたらpiscum.photosから画像を取得して追加
+  useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (files.length < 10) {
+        const target = event.target as HTMLElement;
+        if (target.id === "test-button") {
+          const dataTransfer = new DataTransfer();
+          fetchImageAndConvertToFile()
+            .then((file) => {
+              const fileWithPreview = Object.assign(file, {
+                preview: URL.createObjectURL(file),
+              }) as FileWithPreview;
+              dataTransfer.items.add(file);
+              if (inputRef.current) {
+                inputRef.current.files = dataTransfer.files;
+              }
+              setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+    };
+    if (process.env.NODE_ENV !== "production") {
+      document.addEventListener("click", handleClick);
+    }
+    return () => {
+      if (process.env.NODE_ENV !== "production") {
+        document.removeEventListener("click", handleClick);
+      }
+    };
   }, [files]);
 
   const removeFile = (name: string) => {
@@ -154,7 +137,7 @@ ${
           id={id}
           type="file"
           multiple
-          ref={inputElem}
+          ref={inputRef}
           className="hidden"
         />
         <div
