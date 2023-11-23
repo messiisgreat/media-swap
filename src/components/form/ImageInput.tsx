@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { ImagePreview } from "@/components/form/ImagePreview";
 import {
   ComponentPropsWithoutRef,
   useCallback,
   useEffect,
+  useRef,
   useState,
-  useRef
 } from "react";
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
@@ -14,6 +14,7 @@ import { FaTimes } from "react-icons/fa";
 import { addGrayBackground } from "./addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
+
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
 };
@@ -23,13 +24,13 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @param props inputタグのその他の属性
  * @returns label
  */
-export function ImageInput ({ id, labelText, ...props }: Props) {
+export function ImageInput({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const inputElem = useRef<HTMLInputElement>(null);
 
-  const onDrop = useCallback(async(droppedFiles: File[]) => {
+  const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
-      droppedFiles.map(file => addGrayBackground(file))
+      droppedFiles.map((file) => addGrayBackground(file)),
     );
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
@@ -54,7 +55,7 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
 
   useEffect(() => {
     const dataTransfer = new DataTransfer();
-    files.forEach(file => {
+    files.forEach((file) => {
       dataTransfer.items.add(file);
     });
     if (inputElem.current) {
@@ -118,7 +119,7 @@ ${
     : "cursor-no-drop border-neutral-300 text-neutral-300"
 }`;
   return (
-    <div>
+    <div className="grid gap-2">
       {labelText && <label>{labelText}</label>}
       <ul className="grid grid-cols-3 gap-2">
         {files.map((file) => (
@@ -130,13 +131,7 @@ ${
             >
               <FaTimes color="white" />
             </button>
-            <Image
-              src={file.preview}
-              alt={file.name}
-              width={80}
-              height={80}
-              className="p-2"
-            />
+            <ImagePreview file={file} />
           </li>
         ))}
       </ul>

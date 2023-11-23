@@ -1,26 +1,27 @@
 "use client";
 
-import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
+import { useImageModal } from "@/components/dialog";
+import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 /**
  * 商品ページのカルーセル
- * @param images - Cloudinaryから取得した画像のURL
+ * @param images - 画像のURL一覧が含まれたオブジェクトの配列
  */
 export default function Carousel({
   images,
 }: {
   images: { imageURL: string }[];
 }) {
-  const slides = Array.from(Array(images.length).keys());
-  const options: EmblaOptionsType = {};
+  const slides = images.map((image) => image.imageURL);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
+  const [emblaMainRef, emblaMainApi] = useEmblaCarousel();
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
   });
+  const { open, ImageModal } = useImageModal(images[selectedIndex].imageURL);
 
   const onThumbClick = useCallback(
     (index: number) => {
@@ -48,56 +49,46 @@ export default function Carousel({
   }, [emblaMainApi, onSelect]);
 
   return (
-    <div className="w-full">
+    <div className="grid w-full select-none gap-4">
       <div className="overflow-hidden" ref={emblaMainRef}>
         <div className="flex touch-pan-y">
-          {slides.map((index) => (
-            <div className="min-w-0 flex-100" key={images[index].imageURL}>
-              <div className="opacity-0">
-                <span>{index + 1}</span>
-              </div>
-              <Image
-                className="mx-auto block"
-                src={images[index].imageURL}
-                alt="Your alt text"
-                width={200}
-                height={200}
-              />
-            </div>
+          {slides.map((imageURL, index) => (
+            <Image
+              key={imageURL}
+              className="mx-auto block min-w-0 flex-100"
+              src={imageURL}
+              alt={`商品画像-${index}`}
+              width={500}
+              height={500}
+              onClick={open}
+            />
           ))}
         </div>
+        <ImageModal />
       </div>
-
-      <div className="mt-[8px]">
-        <div className="overflow-hidden bg-[#333] py-1" ref={emblaThumbsRef}>
-          <div className="flex flex-row">
-            {slides.map((index) => (
-              <div
-                key={images[index].imageURL}
-                className="min-w-0 flex-28 px-3"
-              >
-                <button
-                  onClick={() => onThumbClick(index)}
-                  className={`block cursor-pointer touch-manipulation transition-opacity duration-200
-                ${index == selectedIndex ? "opacity-100" : "opacity-20"}
-                `}
-                  type="button"
-                >
-                  <div className="absolute">
-                    <span className=" opacity-0">{index + 1}</span>
-                  </div>
-                  <Image
-                    className="block object-cover"
-                    src={images[index].imageURL}
-                    alt="Your alt text"
-                    width={50}
-                    height={50}
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div
+        className="flex flex-row gap-4 overflow-x-scroll bg-black/70 py-1"
+        ref={emblaThumbsRef}
+      >
+        {slides.map((imageURL, index) => (
+          <Image
+            key={imageURL}
+            role="button"
+            aria-label="表示画像選択"
+            onClick={() => onThumbClick(index)}
+            className={`block cursor-pointer touch-manipulation transition-opacity duration-200
+                                ${
+                                  index == selectedIndex
+                                    ? "opacity-100"
+                                    : "opacity-20"
+                                }
+                                `}
+            src={imageURL}
+            alt={`サムネイル-${index}`}
+            width={100}
+            height={100}
+          />
+        ))}
       </div>
     </div>
   );
