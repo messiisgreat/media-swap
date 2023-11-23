@@ -53,10 +53,8 @@ export const TestDataButton = (props: Props) => {
     setTestData("[name=shippingMethodId]", generateRandomId(SHIPPING_METHOD));
   };
   return (
-    <>
     <Button onClick={handleClick} {...props}>
       試験データ設定
     </Button>
-    </>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
-import { ImagePreview } from "@/components/form/ImagePreview";
+import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
+import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -11,7 +12,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import { addGrayBackground } from "./addGrayBackground";
+import { addGrayBackground } from "../addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
 
@@ -26,7 +27,7 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  */
 export function ImageInput({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const inputElem = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
@@ -58,8 +59,8 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     files.forEach((file) => {
       dataTransfer.items.add(file);
     });
-    if (inputElem.current) {
-      inputElem.current.files = dataTransfer.files;
+    if (inputRef.current) {
+      inputRef.current.files = dataTransfer.files;
     }
   }, [files]);
 
@@ -70,41 +71,35 @@ export function ImageInput({ id, labelText, ...props }: Props) {
       );
   }, [files]);
 
-  // テスト用コード
-  async function fetchImageAndConvertToFile(url: string, fileName: string): Promise<File> {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const blob = await response.blob();
-    return new File([blob], fileName, { type: blob.type });
-  }
-
   // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
+    const handleClick = (event: MouseEvent) => {
       if (files.length < 10) {
         const target = event.target as HTMLElement;
-        if (target.id === 'test-button') {
+        if (target.id === "test-button") {
           const dataTransfer = new DataTransfer();
-          fetchImageAndConvertToFile('https://picsum.photos/200/200', `image-${Math.floor(Math.random() * 100000)}.jpg`)
-            .then(file => {
+          fetchImageAndConvertToFile()
+            .then((file) => {
               const fileWithPreview = Object.assign(file, {
                 preview: URL.createObjectURL(file),
               }) as FileWithPreview;
               dataTransfer.items.add(file);
-              if (inputElem.current) {
-                inputElem.current.files = dataTransfer.files;
+              if (inputRef.current) {
+                inputRef.current.files = dataTransfer.files;
               }
               setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
             })
-            .catch(error => console.error('Error:', error));
+            .catch((error) => console.error("Error:", error));
         }
       }
     };
-    document.addEventListener('click', handleOutsideClick);
+    if (process.env.NODE_ENV !== "production") {
+      document.addEventListener("click", handleClick);
+    }
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      if (process.env.NODE_ENV !== "production") {
+        document.removeEventListener("click", handleClick);
+      }
     };
   }, [files]);
 
@@ -142,7 +137,7 @@ ${
           id={id}
           type="file"
           multiple
-          ref={inputElem}
+          ref={inputRef}
           className="hidden"
         />
         <div
