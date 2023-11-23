@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import { ImagePreview } from "@/components/form/ImagePreview";
 import {
   ComponentPropsWithoutRef,
   useCallback,
   useEffect,
+  useRef,
   useState,
-  useRef
 } from "react";
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
@@ -26,10 +26,10 @@ async function addGrayBackground(file: File): Promise<File> {
       img.src = event.target.result as string;
       img.onload = () => {
         const maxLength = Math.max(img.width, img.height);
-        const canvas = document.createElement('canvas');
+        const canvas = document.createElement("canvas");
         canvas.width = maxLength;
         canvas.height = maxLength;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         if (!ctx) {
           reject("Could not create canvas context.");
@@ -37,7 +37,7 @@ async function addGrayBackground(file: File): Promise<File> {
         }
 
         // 灰色の背景を設定
-        ctx.fillStyle = '#808080';
+        ctx.fillStyle = "#808080";
         ctx.fillRect(0, 0, maxLength, maxLength);
 
         // 画像を中央に配置
@@ -45,13 +45,22 @@ async function addGrayBackground(file: File): Promise<File> {
         const offsetY = (maxLength - img.height) / 2;
         ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
 
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject("Canvas toBlob failed.");
-            return;
-          }
-          resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-        }, 'image/jpeg', 1);
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject("Canvas toBlob failed.");
+              return;
+            }
+            resolve(
+              new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              }),
+            );
+          },
+          "image/jpeg",
+          1,
+        );
       };
       img.onerror = reject;
     };
@@ -61,6 +70,7 @@ async function addGrayBackground(file: File): Promise<File> {
 }
 
 type FileWithPreview = File & { preview: string };
+
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
 };
@@ -70,13 +80,13 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @param props inputタグのその他の属性
  * @returns label
  */
-export function ImageInput ({ id, labelText, ...props }: Props) {
+export function ImageInput({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const inputElem = useRef<HTMLInputElement>(null);
 
-  const onDrop = useCallback(async(droppedFiles: File[]) => {
+  const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
-      droppedFiles.map(file => addGrayBackground(file))
+      droppedFiles.map((file) => addGrayBackground(file)),
     );
 
     setFiles((previousFiles) => {
@@ -102,20 +112,12 @@ export function ImageInput ({ id, labelText, ...props }: Props) {
 
   useEffect(() => {
     const dataTransfer = new DataTransfer();
-    files.forEach(file => {
+    files.forEach((file) => {
       dataTransfer.items.add(file);
     });
     if (inputElem.current) {
       inputElem.current.files = dataTransfer.files;
     }
-  }, [files]);
-
-
-  useEffect(() => {
-    return () =>
-      files.forEach((file: FileWithPreview) =>
-        URL.revokeObjectURL(file.preview),
-      );
   }, [files]);
 
   const removeFile = (name: string) => {
@@ -129,7 +131,7 @@ ${
     : "cursor-no-drop border-neutral-300 text-neutral-300"
 }`;
   return (
-    <div>
+    <div className="grid gap-2">
       {labelText && <label>{labelText}</label>}
       <ul className="grid grid-cols-3 gap-2">
         {files.map((file) => (
@@ -141,13 +143,7 @@ ${
             >
               <FaTimes color="white" />
             </button>
-            <Image
-              src={file.preview}
-              alt={file.name}
-              width={80}
-              height={80}
-              className="p-2"
-            />
+            <ImagePreview file={file} />
           </li>
         ))}
       </ul>
