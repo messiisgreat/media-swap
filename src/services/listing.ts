@@ -109,21 +109,6 @@ export const findListings = cache(
 );
 
 /**
- * 商品総数を取得する
- */
-export const countListings = cache(async () => {
-  return prisma.listing.count();
-});
-
-/**
- * 検索結果の商品総数を取得する
- * @param query 検索クエリ
- */
-export const countListingsByProductName = cache(async (query: string) => {
-  return prisma.listing.count({ where: { productName: { contains: query } } });
-});
-
-/**
  * 商品の検索結果を取得する
  * @param query 検索クエリ
  * @param page ページ番号 (1始まり)
@@ -140,6 +125,100 @@ export const findListingsByProductName = cache(
   ) => {
     return prisma.listing.findMany({
       where: { productName: { contains: query }, isPublic: true },
+      skip: (page - 1) * size,
+      take: size,
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+      orderBy,
+    });
+  },
+);
+
+/**
+ * 指定したユーザーが出品した商品を取得する
+ */
+export const findListingsBySellerId = cache(
+  async (
+    sellerId: string,
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+  ) => {
+    return prisma.listing.findMany({
+      where: { sellerId, isPublic: true },
+      skip: (page - 1) * size,
+      take: size,
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+      orderBy,
+    });
+  },
+);
+
+/**
+ * 商品総数を取得する
+ */
+export const countListings = cache(async () => {
+  return prisma.listing.count();
+});
+
+/**
+ * 検索結果の商品総数を取得する
+ * @param query 検索クエリ
+ */
+export const countListingsByProductName = cache(async (query: string) => {
+  return prisma.listing.count({ where: { productName: { contains: query } } });
+});
+
+/**
+ * 指定したユーザーが出品した商品総数を取得する
+ */
+export const countListingsBySellerId = cache(async (sellerId: string) => {
+  return prisma.listing.count({ where: { sellerId } });
+});
+
+/**
+ * 指定したユーザーが購入した商品総数を取得する
+ */
+export const countListingsByBuyerId = cache(async (buyerId: string) => {
+  return prisma.listing.count({
+    where: {
+      transaction: {
+        buyerId,
+      },
+    },
+  });
+});
+
+/**
+ * 指定したユーザーが購入した商品を取得する
+ */
+export const findListingsByBuyerId = cache(
+  async (
+    buyerId: string,
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+  ) => {
+    return prisma.listing.findMany({
+      where: {
+        transaction: {
+          buyerId,
+        },
+        isPublic: true,
+      },
       skip: (page - 1) * size,
       take: size,
       include: {
