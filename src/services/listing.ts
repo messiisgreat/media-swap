@@ -1,7 +1,6 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
-import { getSession } from "@/utils";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
 
@@ -89,48 +88,82 @@ export type ListingOrderBy =
  * @param page ページ番号
  * @param size 1ページあたりの商品数
  * @param order ソート順 例: { price: "asc" }
- * @param isMyListings 自分の商品のみを取得するかどうか
  */
 export const findListings = cache(
+  async (page: number, size: number, orderBy: ListingOrderBy) => {
+    return prisma.listing.findMany({
+      where: { isPublic: true },
+      skip: (page - 1) * size,
+      take: size,
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+      orderBy,
+    });
+  },
+);
+
+/**
+ * 商品の検索結果を取得する
+ * @param query 検索クエリ
+ * @param page ページ番号 (1始まり)
+ * @param size 1ページあたりの商品数
+ * @param order ソート順 例: { price: "asc" }
+ * @returns 検索結果
+ */
+export const findListingsByProductName = cache(
   async (
+    query: string,
     page: number,
     size: number,
     orderBy: ListingOrderBy,
-    isMyListings: boolean | undefined,
   ) => {
-    if (isMyListings) {
-      const session = await getSession();
-      const userId = session?.user.id;
-      return prisma.listing.findMany({
-        where: { isPublic: true, sellerId: userId },
-        skip: (page - 1) * size,
-        take: size,
-        include: {
-          images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-          tags: {
-            include: {
-              tag: true,
-            },
+    return prisma.listing.findMany({
+      where: { productName: { contains: query }, isPublic: true },
+      skip: (page - 1) * size,
+      take: size,
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
           },
         },
-        orderBy,
-      });
-    } else {
-      return prisma.listing.findMany({
-        where: { isPublic: true },
-        skip: (page - 1) * size,
-        take: size,
-        include: {
-          images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-          tags: {
-            include: {
-              tag: true,
-            },
+      },
+      orderBy,
+    });
+  },
+);
+
+/**
+ * 指定したユーザーが出品した商品を取得する
+ */
+export const findListingsBySellerId = cache(
+  async (
+    sellerId: string,
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+  ) => {
+    return prisma.listing.findMany({
+      where: { sellerId, isPublic: true },
+      skip: (page - 1) * size,
+      take: size,
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
           },
         },
-        orderBy,
-      });
-    }
+      },
+      orderBy,
+    });
   },
 );
 
@@ -150,22 +183,42 @@ export const countListingsByProductName = cache(async (query: string) => {
 });
 
 /**
- * 商品の検索結果を取得する
- * @param query 検索クエリ
- * @param page ページ番号 (1始まり)
- * @param size 1ページあたりの商品数
- * @param order ソート順 例: { price: "asc" }
- * @returns 検索結果
+ * 指定したユーザーが出品した商品総数を取得する
  */
-export const findListingsByProductName = cache(
+export const countListingsBySellerId = cache(async (sellerId: string) => {
+  return prisma.listing.count({ where: { sellerId } });
+});
+
+/**
+ * 指定したユーザーが購入した商品総数を取得する
+ */
+export const countListingsByBuyerId = cache(async (buyerId: string) => {
+  return prisma.listing.count({
+    where: {
+      transaction: {
+        buyerId,
+      },
+    },
+  });
+});
+
+/**
+ * 指定したユーザーが購入した商品を取得する
+ */
+export const findListingsByBuyerId = cache(
   async (
-    query: string,
+    buyerId: string,
     page: number,
     size: number,
     orderBy: ListingOrderBy,
   ) => {
     return prisma.listing.findMany({
-      where: { productName: { contains: query }, isPublic: true },
+      where: {
+        transaction: {
+          buyerId,
+        },
+        isPublic: true,
+      },
       skip: (page - 1) * size,
       take: size,
       include: {
