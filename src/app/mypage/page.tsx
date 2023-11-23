@@ -23,6 +23,8 @@ export default async function Page() {
                 <FiChevronRight size={24} />
               </div>
             </Link>
+          </li>
+          <li className="border-b border-gray-200 bg-white px-4 py-2 transition-all duration-300 ease-in-out last:border-none hover:bg-sky-100 hover:text-sky-900">
             <Link href="/mypage/listings">
               <div className="flex justify-between">
                 <p>出品商品一覧</p>
