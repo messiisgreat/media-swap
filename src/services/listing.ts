@@ -1,6 +1,7 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
+import { getSession } from "@/utils";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
 
@@ -88,23 +89,48 @@ export type ListingOrderBy =
  * @param page ページ番号
  * @param size 1ページあたりの商品数
  * @param order ソート順 例: { price: "asc" }
+ * @param isMyListings 自分の商品のみを取得するかどうか
  */
 export const findListings = cache(
-  async (page: number, size: number, orderBy: ListingOrderBy) => {
-    return prisma.listing.findMany({
-      where: { isPublic: true },
-      skip: (page - 1) * size,
-      take: size,
-      include: {
-        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-        tags: {
-          include: {
-            tag: true,
+  async (
+    page: number,
+    size: number,
+    orderBy: ListingOrderBy,
+    isMyListings: boolean | undefined,
+  ) => {
+    if (isMyListings) {
+      const session = await getSession();
+      const userId = session?.user.id;
+      return prisma.listing.findMany({
+        where: { isPublic: true, sellerId: userId },
+        skip: (page - 1) * size,
+        take: size,
+        include: {
+          images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+          tags: {
+            include: {
+              tag: true,
+            },
           },
         },
-      },
-      orderBy,
-    });
+        orderBy,
+      });
+    } else {
+      return prisma.listing.findMany({
+        where: { isPublic: true },
+        skip: (page - 1) * size,
+        take: size,
+        include: {
+          images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+          tags: {
+            include: {
+              tag: true,
+            },
+          },
+        },
+        orderBy,
+      });
+    }
   },
 );
 

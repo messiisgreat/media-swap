@@ -15,16 +15,17 @@ type Props = {
   sort: string;
   order: string;
   query?: string;
+  isMyListings?: boolean;
 };
 
 const findlistingsAndCount = async (props: Props) => {
-  const { page, size, sort, order, query } = props;
+  const { page, size, sort, order, query, isMyListings } = props;
   const orderBy: ListingOrderBy = {
     [sort]: order,
   };
   const listings = query
     ? await findListingsByProductName(query, page, size, orderBy)
-    : await findListings(page, size, orderBy);
+    : await findListings(page, size, orderBy, isMyListings);
   const count = query
     ? await countListingsByProductName(query)
     : await countListings();
