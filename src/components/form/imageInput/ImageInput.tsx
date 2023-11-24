@@ -1,6 +1,7 @@
 "use client";
 
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
+import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
 import {
   ComponentPropsWithoutRef,
@@ -12,7 +13,6 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import { addGrayBackground } from "../addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
 
