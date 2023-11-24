@@ -36,7 +36,7 @@ export const createTransaction = async (
     | "purchaseDate"
     | "transactionRatingId"
     | "transactionStatus"
-  >  = {
+  > = {
     listingId,
     buyerId,
     userCouponId,
