@@ -28,6 +28,7 @@ const sendMail = async (options: SendMailOptions): Promise<boolean> => {
  * @param from 送信者名
  * @param subject 件名
  * @param text 本文
+ * @returns 送信が成功したかどうか
  */
 export const sendMailToAdmin = async (
   from: string,
@@ -48,6 +49,7 @@ export const sendMailToAdmin = async (
  * @param to 送信先メールアドレス
  * @param subject 件名
  * @param text 本文
+ * @returns 送信が成功したかどうか
  */
 export const sendMailToUser = async (
   to: string,
