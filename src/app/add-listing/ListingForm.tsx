@@ -10,6 +10,7 @@ import {
 } from "@/app/add-listing/_listingForm";
 import { Select } from "@/components/form/Elements";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
+import { useFormMessageToaster } from "@/components/form/hooks";
 import ImageInput from "@/components/form/imageInput";
 import { TitleUnderbar } from "@/components/structure";
 import {
@@ -20,10 +21,9 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useCallback, useEffect, useId } from "react";
+import { useCallback, useId } from "react";
 import { useFormState } from "react-dom";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -34,21 +34,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
-
-  useEffect(() => {
-    Object.entries(state.errors!).forEach((error) => {
-      const [, messages] = error;
-      messages.forEach((message) => {
-        toast.error(message);
-      });
-    });
-  }, [state.errors]);
-
-  useEffect(() => {
-    if (state.message) {
-      toast.error(state.message);
-    }
-  }, [state.message]);
+  useFormMessageToaster(state);
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) return;
