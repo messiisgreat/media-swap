@@ -1,8 +1,9 @@
 "use client";
+
 import { sendInquiry } from "@/app/inquiry/actions";
 import { categoryOptions, initialInquiryFormValues } from "@/app/inquiry/types";
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { Input, RadioGroup, Textarea } from "@/components/form/Elements";
+import { Input, Select, Textarea } from "@/components/form/Elements";
 import { useFormMessageToaster } from "@/components/form/hooks";
 import { useCallback, useRef } from "react";
 import { useFormState } from "react-dom";
@@ -20,7 +21,7 @@ export const MailForm = () => {
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) return;
-    return executeRecaptcha("add_listing");
+    return executeRecaptcha();
   }, [executeRecaptcha]);
 
   const action = async (f: FormData) => {
@@ -30,7 +31,7 @@ export const MailForm = () => {
   };
 
   return (
-    <form ref={ref} action={action}>
+    <form ref={ref} action={action} className="grid gap-3">
       <Input
         labelText="お名前"
         id="name"
@@ -41,7 +42,7 @@ export const MailForm = () => {
         required
       />
       <Input
-        labelText="お名前"
+        labelText="メールアドレス"
         id="email"
         name="email"
         type="email"
@@ -49,7 +50,7 @@ export const MailForm = () => {
         placeholder="you@example.com"
         required
       />
-      <RadioGroup
+      <Select
         labelText="お問い合わせ種別"
         id="category"
         name="category"
@@ -58,9 +59,9 @@ export const MailForm = () => {
       />
       <Textarea
         labelText="お問い合わせ内容"
-        id="message"
+        id="body"
         placeholder="お問い合わせ内容を入力してください。"
-        name="message"
+        name="body"
         required
         maxLength={4000}
       />

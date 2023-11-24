@@ -1,12 +1,13 @@
 "use server";
 
+import { subject, text } from "@/app/inquiry/mailConfig";
 import {
   InquiryFormSchema,
   InquiryFormState,
   initialInquiryFormValues,
 } from "@/app/inquiry/types";
 import { getFormValues } from "@/components/form/utils";
-import { sendMailToAdmin } from "@/lib/mail";
+import { sendMailToAdmin, sendMailToUser } from "@/lib/mail";
 
 /**
  * フォームに入力されたお問い合わせ内容を送信する
@@ -28,18 +29,22 @@ export const sendInquiry = async (
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  const { name, email, body } = values;
-  const result = await sendMailToAdmin(name, email, body);
+  const { name, email, category, body } = values;
+  const inquiryBody = `${category} お問い合わせフォームからの連絡
+  
+  ${body}`;
+  const result = await sendMailToAdmin(name, email, inquiryBody);
   if (result) {
+    sendMailToUser(email, subject, text);
     return {
       ...initialInquiryFormValues,
-      message: "お問い合わせを受け付けました。返信までしばらくお待ちください。",
+      message: "お問い合わせを受け付けました。",
     };
   } else {
     return {
       ...prevState,
-      message:
-        "お問い合わせの送信に失敗しました。時間をおいて再度お試しください。",
+      message: `お問い合わせの送信に失敗しました。
+        時間をおいて再度お試しください。`,
     };
   }
 };

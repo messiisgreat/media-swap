@@ -20,7 +20,7 @@ export const useFormMessageToaster = <T>(formState: FormState<T>) => {
 
   useEffect(() => {
     if (formState.message) {
-      toast.error(formState.message);
+      toast.success(formState.message);
     }
   }, [formState.message]);
 };
