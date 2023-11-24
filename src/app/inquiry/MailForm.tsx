@@ -3,9 +3,13 @@
 import { sendInquiry } from "@/app/inquiry/actions";
 import { categoryOptions, initialInquiryFormValues } from "@/app/inquiry/types";
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { Input, Select, Textarea } from "@/components/form/Elements";
-import { useFormMessageToaster } from "@/components/form/hooks";
-import { useCallback, useRef } from "react";
+import {
+  Input,
+  Select,
+  Textarea,
+  useFormMessageToaster,
+} from "@/components/form";
+import { useCallback } from "react";
 import { useFormState } from "react-dom";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
@@ -17,7 +21,6 @@ export const MailForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [state, dispatch] = useFormState(sendInquiry, initialInquiryFormValues);
   useFormMessageToaster(state);
-  const ref = useRef<HTMLFormElement>(null);
 
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) return;
@@ -31,7 +34,7 @@ export const MailForm = () => {
   };
 
   return (
-    <form ref={ref} action={action} className="grid gap-3">
+    <form action={action} className="grid gap-3">
       <Input
         labelText="お名前"
         id="name"
