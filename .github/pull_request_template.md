@@ -16,6 +16,10 @@ CodeRabbitがある程度作ってくれるので、人間がわかりづらい�
 - [ ] テストケースを書きます
 -->
 
+### Issue Number
+<!-- Fix #IssueNumber -->
+上記のコメントアウトを外してIssueNumberを入れると、PRがマージされたら自動的にそれに紐づくiusseがクローズされるようになります。
+
 ## Check List
 
 - [ ] developブランチから派生しています
