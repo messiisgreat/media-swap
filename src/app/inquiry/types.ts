@@ -26,9 +26,9 @@ export const initialInquiryFormValues: InquiryFormState = {
 
 /** お問い合わせフォームのバリデーション */
 export const InquiryFormSchema = z.object({
-  name: z.string().min(1, { message: "名前は必須です" }),
+  name: z.string().min(1, { message: "お名前を入力してください" }),
   email: z.string().email({ message: "メールアドレスが不正です" }),
-  category: z.string().min(1, { message: "カテゴリーは必須です" }),
+  category: z.string().min(1, { message: "カテゴリーを選択してください" }),
   body: z.string().min(1, { message: "本文は必須です" }),
 });
 
