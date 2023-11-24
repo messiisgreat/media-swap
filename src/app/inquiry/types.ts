@@ -18,6 +18,7 @@ export const initialInquiryFormValues: InquiryFormState = {
     email: "",
     category: "",
     body: "",
+    verificationCode: "",
   },
   errors: {},
   message: "",
@@ -32,8 +33,9 @@ export const InquiryFormSchema = z.object({
 });
 
 /** お問い合わせフォームのカテゴリー選択肢 */
-export const categoryOptions = [
-  { label: "ご意見", value: "ご意見" },
-  { label: "ご感想", value: "ご感想" },
-  { label: "その他", value: "その他" },
-];
+export const categoryOptions = {
+  1: "ご質問",
+  2: "ご意見",
+  3: "ご感想",
+  4: "その他",
+};
