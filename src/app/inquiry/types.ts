@@ -1,5 +1,5 @@
 import { FormState } from "@/components/form";
-import { z } from "zod";
+import { ZodType, z } from "zod";
 
 type InquiryFormValues = {
   name: string;
@@ -25,7 +25,7 @@ export const initialInquiryFormValues: InquiryFormState = {
 };
 
 /** お問い合わせフォームのバリデーション */
-export const InquiryFormSchema = z.object({
+export const InquiryFormSchema: ZodType<InquiryFormValues> = z.object({
   name: z.string().min(1, { message: "お名前を入力してください" }),
   email: z.string().email({ message: "メールアドレスが不正です" }),
   category: z.string().min(1, { message: "カテゴリーを選択してください" }),
