@@ -14,13 +14,13 @@ export const links: LinkSection[] = [
   {
     title: `${SITE_NAME}について`,
     items: [
-      { text: "会社概要(運営会社)", url: "#" },
-      { text: "採用情報", url: "#" },
+      { text: "会社概要(運営会社)", url: "/about" },
+      { text: "採用情報", url: "/recruit" },
     ],
   },
   {
     title: "ヘルプ",
-    items: [{ text: "お問い合わせ", url: "#" }],
+    items: [{ text: "お問い合わせ", url: "/inquiry" }],
   },
   {
     title: "プライバシーと利用規約",
