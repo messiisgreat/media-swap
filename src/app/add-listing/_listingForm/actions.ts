@@ -6,7 +6,7 @@ import {
   ProductFormState,
 } from "@/app/add-listing/_listingForm/types";
 import { getFormValues } from "@/components/form/utils";
-import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
+import { verifyForm } from "@/components/securityVerifier/verifyForm";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
@@ -60,32 +60,28 @@ export const listingItem = async (
       message: "セッションが切れました。再度ログインしてください。",
     };
   }
-  if (!values.isPublic) {
-    const listing = await create(rest, userId, previousPrice);
-    redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=false`);
+
+  const verifyResult = await verifyForm(prevState, verificationCode);
+
+  if (verifyResult) {
+    return verifyResult;
   } else {
-    const validated = ProductFormSchema.safeParse(values);
-    if (!validated.success) {
-      return {
-        ...prevState,
-        errors: validated.error.flatten().fieldErrors,
-        message: "入力に不備があります",
-      };
+    if (!values.isPublic) {
+      const listing = await create(rest, userId, previousPrice);
+      redirect(
+        `/add-listing/complete?listing_id=${listing.id}&is_public=false`,
+      );
+    } else {
+      const validated = ProductFormSchema.safeParse(values);
+      if (!validated.success) {
+        return {
+          ...prevState,
+          errors: validated.error.flatten().fieldErrors,
+          message: "入力に不備があります",
+        };
+      }
+      const listing = await create(rest, userId, previousPrice);
+      redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=true`);
     }
-    if (!verificationCode) {
-      return {
-        ...prevState,
-        message: "認証を行ってください",
-      };
-    }
-    const verifyResult = await fetchVerifyResult(verificationCode);
-    if (!verifyResult) {
-      return {
-        ...prevState,
-        message: "認証に失敗しました。再度認証を行ってください",
-      };
-    }
-    const listing = await create(rest, userId, previousPrice);
-    redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=true`);
   }
 };
