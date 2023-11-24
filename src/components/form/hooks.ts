@@ -10,12 +10,14 @@ import toast from "react-hot-toast";
  */
 export const useFormMessageToaster = <T>(formState: FormState<T>) => {
   useEffect(() => {
-    Object.entries(formState.errors!).forEach((error) => {
-      const [, messages] = error as [string, string[]];
-      messages.forEach((message) => {
-        toast.error(message);
+    if (formState.errors) {
+      Object.entries(formState.errors).forEach((error) => {
+        const [, messages] = error as [string, string[]];
+        messages.forEach((message) => {
+          toast.error(message);
+        });
       });
-    });
+    }
   }, [formState.errors]);
 
   useEffect(() => {
