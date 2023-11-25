@@ -7,6 +7,7 @@ import {
   deleteListingComment,
   getComments,
 } from "@/services/listingComment";
+import prisma from "@/lib/prisma";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
