@@ -1,7 +1,7 @@
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { removeComment } from "@/app/listing/[id]/actions";
 import { useDialog } from "@/components/dialog";
-import { SubmitButton } from "@/components/form";
+import { SubmitButton } from "@/components/form/SubmitButton";
 import { H } from "@/components/structure/H";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";

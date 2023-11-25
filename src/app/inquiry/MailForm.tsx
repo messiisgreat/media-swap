@@ -2,13 +2,9 @@
 
 import { sendInquiry } from "@/app/inquiry/actions";
 import { categoryOptions, initialInquiryFormValues } from "@/app/inquiry/types";
-import {
-  Input,
-  Select,
-  SubmitButton,
-  Textarea,
-  useFormMessageToaster,
-} from "@/components/form";
+import { Input, Select, Textarea } from "@/components/form";
+import { SubmitButton } from "@/components/form/SubmitButton";
+import { useFormMessageToaster } from "@/components/form/hooks";
 import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { useFormState } from "react-dom";
 
