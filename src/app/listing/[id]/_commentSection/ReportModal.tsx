@@ -1,12 +1,12 @@
 "use client";
 import { addCommentReport } from "@/app/listing/[id]/actions";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import { useDialog } from "@/components/dialog";
 import { LimitTextarea } from "@/components/form/LimitElements";
+import { SubmitButton } from "@/components/form/SubmitButton";
+import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
 import { useCallback } from "react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -22,12 +22,7 @@ type Props = {
  */
 export const useReportModal = ({ commentId, sessionUser }: Props) => {
   const { open, close, Dialog } = useDialog();
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha("report_comment");
-  }, [executeRecaptcha]);
+  const getVerificationCode = useVerify();
 
   const reportComment = useCallback(
     async (f: FormData) => {
@@ -55,7 +50,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
         return;
       }
 
-      const verificationCode = await handleReCaptchaVerify();
+      const verificationCode = await getVerificationCode();
 
       if (!verificationCode) {
         toast.error("reCAPTCHAの検証に失敗しました。");
@@ -83,7 +78,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
         close();
       }
     },
-    [close, handleReCaptchaVerify, commentId, sessionUser],
+    [close, getVerificationCode, commentId, sessionUser],
   );
 
   const ReportModal = useCallback(
@@ -111,7 +106,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
               name="report_reason"
               maxLength={1000}
             />
-            <FormSubmitButton className="btn-error">通報する</FormSubmitButton>
+            <SubmitButton className="btn-error">通報する</SubmitButton>
           </form>
         </div>
       </Dialog>

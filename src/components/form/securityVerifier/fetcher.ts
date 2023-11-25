@@ -1,5 +1,5 @@
-import { ReCaptchaResult } from "@/components/securityVerifier/type";
-import { env } from "@/utils/env";
+import { ReCaptchaResult } from "@/components/form/securityVerifier/type";
+import { env } from "@/utils/serverEnv";
 
 /**
  * 認証の結果を取得する

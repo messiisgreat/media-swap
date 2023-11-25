@@ -7,13 +7,8 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
  * セキュリティ認証情報を取得するコンポーネント
  * @example トークンの取り出し方の例
  * ```tsx
- * const { executeRecaptcha } = useGoogleReCaptcha();
- * const handleReCaptchaVerify = useCallback(async () => {
- *    if (!executeRecaptcha) return;
- *    return executeRecaptcha();
- * }, [executeRecaptcha]);
- *
- * const token = await handleReCaptchaVerify();
+ * const getVerificationCode = useVerify();
+ * const token = await getVerificationCode();
  * ```
  */
 export const VerifyProvider = ({ children }: { children: ReactNode }) => {

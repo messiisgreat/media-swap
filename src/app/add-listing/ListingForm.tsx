@@ -8,9 +8,11 @@ import {
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
-import { Select } from "@/components/form/Elements";
+import { Select } from "@/components/form";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
+import { useFormMessageToaster } from "@/components/form/hooks";
 import ImageInput from "@/components/form/imageInput";
+import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -20,10 +22,8 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useCallback, useEffect, useId } from "react";
+import { useId } from "react";
 import { useFormState } from "react-dom";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import toast from "react-hot-toast";
 
 /**
  * 商品を登録するためのフォーム
@@ -31,32 +31,13 @@ import toast from "react-hot-toast";
  * @returns form
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
-
-  useEffect(() => {
-    Object.entries(state.errors!).forEach((error) => {
-      const [, messages] = error;
-      messages.forEach((message) => {
-        toast.error(message);
-      });
-    });
-  }, [state.errors]);
-
-  useEffect(() => {
-    if (state.message) {
-      toast.error(state.message);
-    }
-  }, [state.message]);
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha("add_listing");
-  }, [executeRecaptcha]);
+  const getVerificationCode = useVerify();
+  useFormMessageToaster(state);
 
   const action = async (f: FormData) => {
-    const verificationCode = await handleReCaptchaVerify();
+    const verificationCode = await getVerificationCode();
     f.append("verificationCode", verificationCode || "");
     dispatch(f);
   };
