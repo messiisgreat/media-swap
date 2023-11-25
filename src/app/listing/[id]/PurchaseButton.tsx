@@ -3,6 +3,7 @@
 import { purchasing } from "@/app/listing/[id]/actions";
 import { Button } from "@/components/Button";
 import { ComponentProps, useCallback } from "react";
+import { useRouter } from 'next/navigation'
 
 type Props = ComponentProps<typeof Button> & {
   listingId: string;
@@ -21,10 +22,12 @@ export const PurchaseButton = ({
   userCouponId,
   ...props
 }: Props) => {
-  const handleOnClick = useCallback(
-    async () => await purchasing(listingId, buyerId, userCouponId),
-    [buyerId, listingId, userCouponId],
-  );
+  const router = useRouter();
+
+  const handleOnClick = useCallback(async () => {
+    const transactionId = await purchasing(listingId, buyerId, userCouponId);
+    router.push(`/transactions/${transactionId}`);
+  }, [buyerId, listingId, userCouponId, router]);
 
   return (
     <Button onClick={handleOnClick} {...props}>
