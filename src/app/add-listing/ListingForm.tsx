@@ -36,11 +36,11 @@ import { useFormState } from "react-dom";
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
-  const handleReCaptchaVerify = useVerify();
+  const getVerificationCode = useVerify();
   useFormMessageToaster(state);
 
   const action = async (f: FormData) => {
-    const verificationCode = await handleReCaptchaVerify();
+    const verificationCode = await getVerificationCode();
     f.append("verificationCode", verificationCode || "");
     dispatch(f);
   };

@@ -18,11 +18,11 @@ import { useFormState } from "react-dom";
  */
 export const MailForm = () => {
   const [state, dispatch] = useFormState(sendInquiry, initialInquiryFormValues);
-  const handleReCaptchaVerify = useVerify();
+  const getVerificationCode = useVerify();
   useFormMessageToaster(state);
 
   const action = async (f: FormData) => {
-    const verificationCode = await handleReCaptchaVerify();
+    const verificationCode = await getVerificationCode();
     f.append("verificationCode", verificationCode || "");
     dispatch(f);
   };
