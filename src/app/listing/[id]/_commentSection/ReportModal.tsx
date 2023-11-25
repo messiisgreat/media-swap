@@ -2,10 +2,10 @@
 import { addCommentReport } from "@/app/listing/[id]/actions";
 import { useDialog } from "@/components/dialog";
 import { LimitTextarea, SubmitButton } from "@/components/form";
+import { useVerify } from "@/components/securityVerifier/hooks";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
 import { useCallback } from "react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -21,12 +21,7 @@ type Props = {
  */
 export const useReportModal = ({ commentId, sessionUser }: Props) => {
   const { open, close, Dialog } = useDialog();
-  const { executeRecaptcha } = useGoogleReCaptcha();
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha("report_comment");
-  }, [executeRecaptcha]);
+  const handleReCaptchaVerify = useVerify();
 
   const reportComment = useCallback(
     async (f: FormData) => {

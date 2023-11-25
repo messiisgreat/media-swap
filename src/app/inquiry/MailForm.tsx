@@ -9,23 +9,17 @@ import {
   Textarea,
   useFormMessageToaster,
 } from "@/components/form";
-import { useCallback } from "react";
+import { useVerify } from "@/components/securityVerifier/hooks";
 import { useFormState } from "react-dom";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 /**
  * お問い合わせフォーム
  * @returns form
  */
 export const MailForm = () => {
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const [state, dispatch] = useFormState(sendInquiry, initialInquiryFormValues);
+  const handleReCaptchaVerify = useVerify();
   useFormMessageToaster(state);
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha();
-  }, [executeRecaptcha]);
 
   const action = async (f: FormData) => {
     const verificationCode = await handleReCaptchaVerify();
