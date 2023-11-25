@@ -5,8 +5,8 @@ import {
   ProductFormState,
   ProductFormValues,
 } from "@/app/add-listing/_listingForm/types";
+import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/components/form/utils";
-import { verifyForm } from "@/components/securityVerifier/verifyForm";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,

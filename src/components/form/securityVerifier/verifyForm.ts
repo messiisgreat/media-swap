@@ -1,5 +1,5 @@
 import { FormState } from "@/components/form";
-import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
+import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
 
 /**
  * 認証コードを検証する

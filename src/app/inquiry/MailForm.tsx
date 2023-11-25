@@ -9,7 +9,7 @@ import {
   Textarea,
   useFormMessageToaster,
 } from "@/components/form";
-import { useVerify } from "@/components/securityVerifier/hooks";
+import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { useFormState } from "react-dom";
 
 /**
