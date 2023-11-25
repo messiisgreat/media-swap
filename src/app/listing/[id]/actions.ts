@@ -2,6 +2,7 @@
 
 import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
 import { createComment, createCommentReport, deleteListingComment, getComments } from "@/services/listingComment";
+import prisma from "@/lib/prisma";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -18,7 +19,14 @@ export const purchasing = async (
   buyerId: string,
   userCouponId: string | null,
 ) => {
-  await createTransaction(listingId, buyerId, userCouponId);
+  const transaction = await createTransaction(listingId, buyerId, userCouponId);
+  const transactionId = transaction.id;
+  await prisma.listing.update({
+    where: { id: listingId },
+    data: {
+      transactionId,
+    },
+  })
   revalidatePath("/products/[id]");
 };
 
