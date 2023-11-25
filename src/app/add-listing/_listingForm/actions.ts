@@ -1,9 +1,9 @@
 "use server";
 
 import {
-  ProductFormData,
   ProductFormSchema,
   ProductFormState,
+  ProductFormValues,
 } from "@/app/add-listing/_listingForm/types";
 import { getFormValues } from "@/components/form/utils";
 import { verifyForm } from "@/components/securityVerifier/verifyForm";
@@ -22,7 +22,7 @@ const parseTags = (tagsString: string) => {
 };
 
 const create = async (
-  formData: Omit<ProductFormData, "verificationCode">,
+  formData: Omit<ProductFormValues, "verificationCode">,
   userId: string,
   previousPrice: number | null = null,
 ) => {
