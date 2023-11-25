@@ -7,9 +7,9 @@ import {
 } from "@/app/listing/[id]/_commentSection";
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { addComment, fetchComments } from "@/app/listing/[id]/actions";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
 import { LimitTextarea } from "@/components/form/LimitElements";
+import { SubmitButton } from "@/components/form/SubmitButton";
 import { Section } from "@/components/structure";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { useAtom } from "jotai";
@@ -108,9 +108,9 @@ export const CommentSection = ({
               name="comment"
               maxLength={300}
             />
-            <FormSubmitButton className="btn-secondary self-end" type="submit">
+            <SubmitButton className="btn-secondary self-end">
               コメントを書き込む
-            </FormSubmitButton>
+            </SubmitButton>
           </form>
         </>
       ) : (
@@ -144,7 +144,7 @@ export const CommentSection = ({
                       {parseRelativeTime(comment.createdAt)}
                     </p>
                     {sessionUser ? (
-                      <div className="dropdown dropdown-end dropdown-bottom">
+                      <div className="dropdown-end dropdown-bottom dropdown">
                         <label
                           tabIndex={0}
                           className="btn btn-ghost h-[initial] min-h-0 p-2"

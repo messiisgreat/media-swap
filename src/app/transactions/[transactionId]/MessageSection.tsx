@@ -5,9 +5,8 @@ import {
   sendMessage,
 } from "@/app/transactions/[transactionId]/actions";
 import { Button } from "@/components";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import { Skeleton } from "@/components/Skeleton";
-import { LimitInput } from "@/components/form/LimitElements";
+import { LimitInput, SubmitButton } from "@/components/form";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { Transaction, TransactionComment } from "@prisma/client";
@@ -164,12 +163,12 @@ export function MessageSection({
             maxLength={300}
             hideLimit
           />
-          <FormSubmitButton
+          <SubmitButton
             className="btn-square btn-accent shrink-0 rounded-l-none"
             hideChildrenInPending
           >
             <BiSend size="2rem" />
-          </FormSubmitButton>
+          </SubmitButton>
         </form>
       </div>
     </div>

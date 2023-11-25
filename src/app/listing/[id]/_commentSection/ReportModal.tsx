@@ -1,8 +1,7 @@
 "use client";
 import { addCommentReport } from "@/app/listing/[id]/actions";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import { useDialog } from "@/components/dialog";
-import { LimitTextarea } from "@/components/form/LimitElements";
+import { LimitTextarea, SubmitButton } from "@/components/form";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
 import { useCallback } from "react";
@@ -111,7 +110,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
               name="report_reason"
               maxLength={1000}
             />
-            <FormSubmitButton className="btn-error">通報する</FormSubmitButton>
+            <SubmitButton className="btn-error">通報する</SubmitButton>
           </form>
         </div>
       </Dialog>

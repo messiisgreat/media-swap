@@ -1,7 +1,7 @@
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { removeComment } from "@/app/listing/[id]/actions";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import { useDialog } from "@/components/dialog";
+import { SubmitButton } from "@/components/form";
 import { H } from "@/components/structure/H";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
@@ -77,8 +77,8 @@ export const useDeleteModal = ({
               利用規約に違反しているコメントの場合は、先に通報を行ってください。
             </p>
           </div>
-          <form className="flex flex-col gap-4" action={() => deleteComment()}>
-            <FormSubmitButton className="btn-error">削除</FormSubmitButton>
+          <form className="flex flex-col gap-4" action={deleteComment}>
+            <SubmitButton className="btn-error">削除</SubmitButton>
           </form>
         </div>
       </Dialog>

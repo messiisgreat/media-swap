@@ -2,10 +2,10 @@
 
 import { sendInquiry } from "@/app/inquiry/actions";
 import { categoryOptions, initialInquiryFormValues } from "@/app/inquiry/types";
-import FormSubmitButton from "@/components/FormSubmitButton";
 import {
   Input,
   Select,
+  SubmitButton,
   Textarea,
   useFormMessageToaster,
 } from "@/components/form";
@@ -68,7 +68,7 @@ export const MailForm = () => {
         required
         maxLength={4000}
       />
-      <FormSubmitButton>送信</FormSubmitButton>
+      <SubmitButton>送信</SubmitButton>
     </form>
   );
 };
