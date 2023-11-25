@@ -15,6 +15,7 @@ import {
   useFormMessageToaster,
 } from "@/components/form";
 import ImageInput from "@/components/form/imageInput";
+import { useVerify } from "@/components/securityVerifier/hooks";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,
@@ -24,9 +25,8 @@ import {
 } from "@/constants/listing";
 import { objToAssociative } from "@/utils/converter";
 import { Tag } from "@prisma/client";
-import { useCallback, useId } from "react";
+import { useId } from "react";
 import { useFormState } from "react-dom";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 /**
  * 商品を登録するためのフォーム
@@ -34,15 +34,10 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
  * @returns form
  */
 export const ListingForm = ({ tags }: { tags: Tag[] }) => {
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const imageInputId = useId();
   const [state, dispatch] = useFormState(listingItem, initialProductFormValues);
+  const handleReCaptchaVerify = useVerify();
   useFormMessageToaster(state);
-
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) return;
-    return executeRecaptcha("add_listing");
-  }, [executeRecaptcha]);
 
   const action = async (f: FormData) => {
     const verificationCode = await handleReCaptchaVerify();
