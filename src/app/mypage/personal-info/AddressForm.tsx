@@ -1,15 +1,13 @@
 "use client";
 import { insertAddress } from "@/app/mypage/personal-info/server";
-import FormSubmitButton from "@/components/FormSubmitButton";
+import { Input, Select, SubmitButton } from "@/components/form";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
+import { objToAssociative } from "@/utils/converter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { Input, Select } from "@/components/form/Elements";
-import { objToAssociative } from "@/utils/converter";
 
 export const AddressFormSchema = z.object({
   postalCode: z
@@ -141,7 +139,7 @@ export default function AddressForm() {
           {errors.phoneNumber.message}
         </p>
       )}
-      <FormSubmitButton>住所を登録する</FormSubmitButton>
+      <SubmitButton>住所を登録する</SubmitButton>
     </form>
   );
 }

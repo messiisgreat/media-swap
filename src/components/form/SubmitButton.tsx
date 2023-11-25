@@ -3,25 +3,22 @@
 import { ComponentProps } from "react";
 import { useFormStatus } from "react-dom";
 
-type FormSubmitButtonProps = {
-  children: React.ReactNode;
-  className?: string;
+type Props = {
+  /** 送信中に子要素を非表示にするかどうか */
   hideChildrenInPending?: boolean;
-} & ComponentProps<"button">;
+} & Omit<ComponentProps<"button">, "type" | "disabled">;
 
 /**
- * フォーム送信ボタン
- *
- * @param {ReactNode} props.children - ボタン内に表示されるコンテンツ
- * @param {string} [props.className] - 追加のCSSクラス名(省略可能)
- * @returns
+ * フォームに設置する送信ボタン
+ * 送信中はローディングアイコンを表示し、無効化する
+ * @returns button
  */
-export default function FormSubmitButton({
+export const SubmitButton = ({
   children,
   className,
   hideChildrenInPending = false,
   ...props
-}: FormSubmitButtonProps) {
+}: Props) => {
   const { pending } = useFormStatus();
 
   return (
@@ -32,7 +29,7 @@ export default function FormSubmitButton({
       disabled={pending}
     >
       {pending && <span className="loading loading-spinner"></span>}
-      {pending && hideChildrenInPending ? null:children}
+      {pending && hideChildrenInPending ? null : children}
     </button>
   );
-}
+};
