@@ -43,8 +43,7 @@ export default function AddressForm() {
     defaultValues: undefined,
     resolver: zodResolver(AddressFormSchema),
   });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const onSubmit = async (formData: TAddressForm) => {
     startTransition(async () => {
       try {
@@ -139,7 +138,7 @@ export default function AddressForm() {
           {errors.phoneNumber.message}
         </p>
       )}
-      <SubmitButton>住所を登録する</SubmitButton>
+      <SubmitButton>更新</SubmitButton>
     </form>
   );
 }
