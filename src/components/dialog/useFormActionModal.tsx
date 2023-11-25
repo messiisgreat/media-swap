@@ -2,7 +2,7 @@ import { useDialog } from "@/components/dialog";
 import { SubmitButton } from "@/components/form/SubmitButton";
 import { ReactNode, useCallback } from "react";
 
-type Returns = {
+type useFormActionModalResult = {
   /** モーダルを開く関数 */
   open: () => void;
   /** モーダルを閉じる関数 */
@@ -20,7 +20,7 @@ type Returns = {
 export const useFormActionModal = (
   action: (formData: FormData) => void,
   actionText: string = "実行する",
-): Returns => {
+): useFormActionModalResult => {
   const { open, close, Dialog } = useDialog();
 
   const FormActionModal = useCallback(
