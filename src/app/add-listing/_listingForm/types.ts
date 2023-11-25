@@ -2,7 +2,7 @@ import { FormState } from "@/components/form/type";
 import { ZodType, z } from "zod";
 
 /** 出品情報登録フォームの値を表す型 */
-export type ProductFormData = {
+export type ProductFormValues = {
   /** 商品名 */
   productName: string;
   /** 商品の状態 */
@@ -28,7 +28,7 @@ export type ProductFormData = {
 };
 
 /** 出品情報登録フォームの状態とバリデーション、メッセージを表す型 */
-export type ProductFormState = FormState<ProductFormData>;
+export type ProductFormState = FormState<ProductFormValues>;
 
 /** 出品情報登録フォームの初期値 */
 export const initialProductFormValues: ProductFormState = {
@@ -50,7 +50,7 @@ export const initialProductFormValues: ProductFormState = {
 };
 
 /** 出品情報登録フォームのバリデーション */
-export const ProductFormSchema: ZodType<ProductFormData> = z.object({
+export const ProductFormSchema: ZodType<ProductFormValues> = z.object({
   productName: z
     .string()
     .min(1, { message: "商品名は必須です" })
