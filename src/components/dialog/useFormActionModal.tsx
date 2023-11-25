@@ -5,8 +5,6 @@ import { ReactNode, useCallback } from "react";
 type useFormActionModalResult = {
   /** モーダルを開く関数 */
   open: () => void;
-  /** モーダルを閉じる関数 */
-  close: () => void;
   /** モーダルを表示するコンポーネント */
   FormActionModal: ({ children }: { children: ReactNode }) => JSX.Element;
 };
@@ -15,7 +13,7 @@ type useFormActionModalResult = {
  * 何らかの動作をするかどうかの確認用モーダルを表示するためのフック
  * @param action 実行ボタンを押した時に実行する関数
  * @param actionText　実行ボタンのテキスト
- * @returns open, close, FormActionModal
+ * @returns open,  FormActionModal
  */
 export const useFormActionModal = (
   action: (formData: FormData) => void,
@@ -49,5 +47,5 @@ export const useFormActionModal = (
     [Dialog, action, actionText, close],
   );
 
-  return { open, close, FormActionModal };
+  return { open, FormActionModal };
 };
