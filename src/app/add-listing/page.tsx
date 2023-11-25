@@ -1,5 +1,5 @@
 import { ListingForm } from "@/app/add-listing/ListingForm";
-import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
+import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/components/structure";
 import { findTags } from "@/services/tag";
 import { getSession } from "@/utils/session";

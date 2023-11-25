@@ -2,7 +2,7 @@
 import { addCommentReport } from "@/app/listing/[id]/actions";
 import { useDialog } from "@/components/dialog";
 import { LimitTextarea, SubmitButton } from "@/components/form";
-import { useVerify } from "@/components/securityVerifier/hooks";
+import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
 import { useCallback } from "react";

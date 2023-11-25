@@ -1,8 +1,12 @@
 "use server";
 
-import { fetchVerifyResult } from "@/components/securityVerifier/fetcher";
-import { createComment, createCommentReport, deleteListingComment, getComments } from "@/services/listingComment";
-import prisma from "@/lib/prisma";
+import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
+import {
+  createComment,
+  createCommentReport,
+  deleteListingComment,
+  getComments,
+} from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -64,7 +68,7 @@ export const fetchComments = async (listingId: string) => {
 export const merchant = async (listingId: string, buyerId: string) => {
   const transaction = await createTransaction(listingId, buyerId);
   return transaction.id;
-}
+};
 
 /**
  * コメントの通報
@@ -72,9 +76,14 @@ export const merchant = async (listingId: string, buyerId: string) => {
  * @param userId 通報ユーザーID
  * @param reason 通報理由
  * @param verificationCode reCAPTCHA v3で取得した値
- * @returns 
+ * @returns
  */
-export const addCommentReport = async (commentId: string, userId: string, reason: string, verificationCode: string) => {
+export const addCommentReport = async (
+  commentId: string,
+  userId: string,
+  reason: string,
+  verificationCode: string,
+) => {
   if (!verificationCode) {
     return {
       message: "認証を行ってください",
@@ -89,14 +98,14 @@ export const addCommentReport = async (commentId: string, userId: string, reason
     };
   }
   return await createCommentReport(commentId, userId, reason);
-}
+};
 
 /**
  * コメントを削除する
  * @param commentId コメントID
  * @param userId 削除を行うユーザーID
- * @returns 
+ * @returns
  */
 export const removeComment = async (commentId: string, userId: string) => {
   return await deleteListingComment(commentId, userId);
-}
+};

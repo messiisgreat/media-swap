@@ -15,7 +15,7 @@ import {
   useFormMessageToaster,
 } from "@/components/form";
 import ImageInput from "@/components/form/imageInput";
-import { useVerify } from "@/components/securityVerifier/hooks";
+import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { TitleUnderbar } from "@/components/structure";
 import {
   POSTAGE_IS_INCLUDED,

@@ -4,7 +4,7 @@ import { ProtButton } from "@/app/listing/[id]/ProtButton";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
-import { VerifyProvider } from "@/components/securityVerifier/VerifyProvider";
+import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section, TitleUnderbar } from "@/components/structure";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
