@@ -7,9 +7,9 @@ import {
   deleteListingComment,
   getComments,
 } from "@/services/listingComment";
-import prisma from "@/lib/prisma";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
+import { updateListingTransactionId } from "@/services/listing";
 
 /**
  * 購入ボタンを押したときのサーバー側処理
@@ -25,12 +25,7 @@ export const purchasing = async (
 ) => {
   const transaction = await createTransaction(listingId, buyerId, userCouponId);
   const transactionId = transaction.id;
-  await prisma.listing.update({
-    where: { id: listingId },
-    data: {
-      transactionId,
-    },
-  })
+  await updateListingTransactionId({ id: listingId }, transactionId);
   return transactionId;
 };
 

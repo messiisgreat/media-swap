@@ -256,3 +256,21 @@ export const updateListing = async (
     data: listing,
   });
 };
+
+/**
+ * 商品のtransactionIdを更新する
+ *
+ * @param listing - 更新対象の商品
+ * @param transactionId - 更新後のtransactionId
+ */
+export const updateListingTransactionId  = async (
+  listing: { id: string } & Partial<Listing>,
+  transactionId: string
+) => {
+  return prisma.listing.update({
+    where: { id: listing.id },
+    data: {
+      transactionId: transactionId
+    },
+  });
+};
