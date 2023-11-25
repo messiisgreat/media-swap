@@ -1,12 +1,9 @@
 "use client";
 import { personalInfoFormAction } from "@/app/mypage/personal-info/actions";
 import { initialPersonalInfoFormValues } from "@/app/mypage/personal-info/type";
-import {
-  Input,
-  Select,
-  SubmitButton,
-  useFormMessageToaster,
-} from "@/components/form";
+import { Input, Select } from "@/components/form";
+import { SubmitButton } from "@/components/form/SubmitButton";
+import { useFormMessageToaster } from "@/components/form/hooks";
 import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { objToAssociative } from "@/utils/converter";

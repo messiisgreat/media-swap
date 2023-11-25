@@ -6,7 +6,8 @@ import {
 } from "@/app/transactions/[transactionId]/actions";
 import { Button } from "@/components";
 import { Skeleton } from "@/components/Skeleton";
-import { LimitInput, SubmitButton } from "@/components/form";
+import { LimitInput } from "@/components/form/LimitElements";
+import { SubmitButton } from "@/components/form/SubmitButton";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 import { Transaction, TransactionComment } from "@prisma/client";
