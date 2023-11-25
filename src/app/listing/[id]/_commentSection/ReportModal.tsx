@@ -21,7 +21,7 @@ type Props = {
  */
 export const useReportModal = ({ commentId, sessionUser }: Props) => {
   const { open, close, Dialog } = useDialog();
-  const handleReCaptchaVerify = useVerify();
+  const getVerificationCode = useVerify();
 
   const reportComment = useCallback(
     async (f: FormData) => {
@@ -49,7 +49,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
         return;
       }
 
-      const verificationCode = await handleReCaptchaVerify();
+      const verificationCode = await getVerificationCode();
 
       if (!verificationCode) {
         toast.error("reCAPTCHAの検証に失敗しました。");
@@ -77,7 +77,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
         close();
       }
     },
-    [close, handleReCaptchaVerify, commentId, sessionUser],
+    [close, getVerificationCode, commentId, sessionUser],
   );
 
   const ReportModal = useCallback(
