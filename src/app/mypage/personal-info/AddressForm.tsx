@@ -8,25 +8,6 @@ import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { objToAssociative } from "@/utils/converter";
 import { useFormState } from "react-dom";
-import { z } from "zod";
-
-export const AddressFormSchema = z.object({
-  postalCode: z
-    .string()
-    .length(7, { message: "ハイフンなしの7文字で入力してください" }),
-  prefecture: z.string().min(1, { message: "必須項目です" }),
-  city: z.string().min(1, { message: "必須項目です" }),
-  addressLine1: z.string().min(1, { message: "必須項目です" }),
-  addressLine2: z.string().nullable(),
-  phoneNumber: z
-    .string({
-      invalid_type_error: "数字で入力してください",
-    })
-    .min(7, { message: "7文字以上で入力ください" })
-    .max(12, { message: "記号なし12文字以内で入力してください" }),
-});
-
-export type TAddressForm = z.infer<typeof AddressFormSchema>;
 
 /**
  *住所フォーム

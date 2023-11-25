@@ -45,7 +45,7 @@ export const PersonalInfoFormSchema: ZodType<PersonalInfoFormValues> = z.object(
     prefecture: z.string().min(1, { message: "都道府県を入力してください" }),
     city: z.string().min(1, { message: "市区町村を入力してください" }),
     addressLine1: z.string().min(1, { message: "住所1を入力してください" }),
-    addressLine2: z.string().min(1, { message: "住所2を入力してください" }),
+    addressLine2: z.string(),
     phoneNumber: z.string().min(1, { message: "電話番号を入力してください" }),
   },
 );
