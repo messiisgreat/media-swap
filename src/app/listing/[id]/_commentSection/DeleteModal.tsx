@@ -1,7 +1,6 @@
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { removeComment } from "@/app/listing/[id]/actions";
-import { useDialog } from "@/components/dialog";
-import { SubmitButton } from "@/components/form/SubmitButton";
+import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import { H } from "@/components/structure/H";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
@@ -24,7 +23,6 @@ export const useDeleteModal = ({
   sessionUser,
   isListingOwner,
 }: Props) => {
-  const { open, close, Dialog } = useDialog();
   const setComments = useSetAtom(commentsAtom);
 
   const deleteComment = useCallback(async () => {
@@ -51,39 +49,29 @@ export const useDeleteModal = ({
       );
     } catch (e: unknown) {
       toast.error("コメントの削除に失敗しました。");
-    } finally {
-      close();
     }
-  }, [commentId, sessionUser, isListingOwner, close, setComments]);
+  }, [commentId, sessionUser, isListingOwner, setComments]);
+
+  const { open, FormActionModal } = useFormActionModal(deleteComment, "削除");
 
   const DeleteModal = useCallback(
     () => (
-      <Dialog>
-        <div className="modal-box">
-          <form method="dialog">
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <H className="text-center text-lg font-bold">コメントの削除</H>
-          <p className="py-2">コメントを削除してもよろしいですか？</p>
-          <div className="alert alert-warning mb-4" role="alert">
-            <FaTriangleExclamation className="text-2xl" />
-            <p>この操作は取り消せません。</p>
-          </div>
-          <div className="alert mb-4" role="alert">
-            <FaFlag className="text-2xl" />
-            <p>
-              利用規約に違反しているコメントの場合は、先に通報を行ってください。
-            </p>
-          </div>
-          <form className="flex flex-col gap-4" action={deleteComment}>
-            <SubmitButton className="btn-error">削除</SubmitButton>
-          </form>
+      <FormActionModal>
+        <H className="text-center text-lg font-bold">コメントの削除</H>
+        <p className="py-2">コメントを削除してもよろしいですか？</p>
+        <div className="alert alert-warning mb-4" role="alert">
+          <FaTriangleExclamation className="text-2xl" />
+          <p>この操作は取り消せません。</p>
         </div>
-      </Dialog>
+        <div className="alert mb-4" role="alert">
+          <FaFlag className="text-2xl" />
+          <p>
+            利用規約に違反しているコメントの場合は、先に通報を行ってください。
+          </p>
+        </div>
+      </FormActionModal>
     ),
-    [Dialog, deleteComment],
+    [FormActionModal],
   );
-  return { openDeleteModal: open, closeDeleteModal: close, DeleteModal };
+  return { openDeleteModal: open, DeleteModal };
 };
