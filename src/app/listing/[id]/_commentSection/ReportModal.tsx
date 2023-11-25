@@ -1,8 +1,7 @@
 "use client";
 import { addCommentReport } from "@/app/listing/[id]/actions";
-import { useDialog } from "@/components/dialog";
+import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import { LimitTextarea } from "@/components/form/LimitElements";
-import { SubmitButton } from "@/components/form/SubmitButton";
 import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
@@ -21,7 +20,6 @@ type Props = {
  * @returns open, close, ReportModal
  */
 export const useReportModal = ({ commentId, sessionUser }: Props) => {
-  const { open, close, Dialog } = useDialog();
   const getVerificationCode = useVerify();
 
   const reportComment = useCallback(
@@ -74,45 +72,35 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
           toast.error("あなたは既にこのコメントを通報しています。");
         }
         toast.error("コメントの通報に失敗しました。");
-      } finally {
-        close();
       }
     },
-    [close, getVerificationCode, commentId, sessionUser],
+    [getVerificationCode, commentId, sessionUser],
+  );
+
+  const { open, FormActionModal } = useFormActionModal(
+    reportComment,
+    "通報する",
   );
 
   const ReportModal = useCallback(
     () => (
-      <Dialog>
-        <div className="modal-box">
-          <form method="dialog">
-            <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <H className="text-center text-lg font-bold">コメントの通報</H>
-          <p className="py-2">
-            こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
-          </p>
-          <form
-            className="flex flex-col gap-4"
-            action={(f) => reportComment(f)}
-          >
-            <LimitTextarea
-              className="h-24"
-              placeholder="通報理由を入力してください"
-              required
-              minLength={3}
-              name="report_reason"
-              maxLength={1000}
-            />
-            <SubmitButton className="btn-error">通報する</SubmitButton>
-          </form>
-        </div>
-      </Dialog>
+      <FormActionModal>
+        <H className="text-center text-lg font-bold">コメントの通報</H>
+        <p className="py-2">
+          こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
+        </p>
+        <LimitTextarea
+          className="h-24"
+          placeholder="通報理由を入力してください"
+          required
+          minLength={3}
+          name="report_reason"
+          maxLength={1000}
+        />
+      </FormActionModal>
     ),
-    [Dialog, reportComment],
+    [FormActionModal],
   );
 
-  return { openReportModal: open, closeReportModal: close, ReportModal };
+  return { openReportModal: open, ReportModal };
 };
