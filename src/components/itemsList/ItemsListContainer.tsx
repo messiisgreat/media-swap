@@ -21,53 +21,73 @@ type CommonProps = {
   query?: string;
   buyerId?: string;
   sellerId?: string;
+  isPublic?: boolean;
 };
 
 type AllProps = CommonProps & {
   query?: never;
   buyerId?: never;
   sellerId?: never;
+  isPublic: never;
 };
 
 type SearchProps = CommonProps & {
   query: string;
   buyerId?: never;
   sellerId?: never;
+  isPublic?: never;
 };
 
 type BuyerProps = CommonProps & {
   buyerId: string;
   sellerId?: never;
+  isPublic?: never;
 };
 
 type SellerProps = CommonProps & {
   buyerId?: never;
   sellerId: string;
+  isPublic?: boolean;
 };
 
-export type Props = SearchProps | BuyerProps | SellerProps| AllProps;
+export type Props = SearchProps | BuyerProps | SellerProps | AllProps;
 
-/** 
+/**
  * 渡されたパラメータに応じて取得するデータを選択する
  * @param props page, size, sort, order, query, buyerId, sellerId
  */
 const findlistingsAndCount = async (props: Props) => {
-  const { page, size, sort, order, query, buyerId, sellerId } = props;
+  const { page, size, sort, order, query, buyerId, sellerId, isPublic } = props;
   const orderBy: ListingOrderBy = {
     [sort]: order,
   };
+  // 購入商品一覧
   if (buyerId) {
     const listings = await findListingsByBuyerId(buyerId, page, size, orderBy);
     const count = await countListingsByBuyerId(buyerId);
     return [listings, count] as const;
-  } else if (sellerId) {
+
+    // 下書き商品一覧
+  } else if (sellerId && !isPublic) {
     const listings = await findListingsBySellerId(
       sellerId,
       page,
       size,
       orderBy,
+      isPublic,
     );
-    const count = await countListingsBySellerId(sellerId);
+    const count = await countListingsBySellerId(sellerId, isPublic);
+    return [listings, count] as const;
+    // 出品商品一覧
+  } else if (sellerId && isPublic) {
+    const listings = await findListingsBySellerId(
+      sellerId,
+      page,
+      size,
+      orderBy,
+      isPublic,
+    );
+    const count = await countListingsBySellerId(sellerId, isPublic);
     return [listings, count] as const;
   } else if (query) {
     const listings = await findListingsByProductName(

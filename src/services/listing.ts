@@ -149,9 +149,10 @@ export const findListingsBySellerId = cache(
     page: number,
     size: number,
     orderBy: ListingOrderBy,
+    isPublic?: boolean,
   ) => {
     return prisma.listing.findMany({
-      where: { sellerId, isPublic: true },
+      where: { sellerId, isPublic: isPublic },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -185,9 +186,11 @@ export const countListingsByProductName = cache(async (query: string) => {
 /**
  * 指定したユーザーが出品した商品総数を取得する
  */
-export const countListingsBySellerId = cache(async (sellerId: string) => {
-  return prisma.listing.count({ where: { sellerId } });
-});
+export const countListingsBySellerId = cache(
+  async (sellerId: string, isPublic?: boolean) => {
+    return prisma.listing.count({ where: { sellerId, isPublic: isPublic } });
+  },
+);
 
 /**
  * 指定したユーザーが購入した商品総数を取得する
