@@ -9,7 +9,7 @@ import {
 } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
-import { revalidatePath } from "next/cache";
+import { updateListingTransactionId } from "@/services/listing";
 
 /**
  * 購入ボタンを押したときのサーバー側処理
@@ -23,8 +23,10 @@ export const purchasing = async (
   buyerId: string,
   userCouponId: string | null,
 ) => {
-  await createTransaction(listingId, buyerId, userCouponId);
-  revalidatePath("/products/[id]");
+  const transaction = await createTransaction(listingId, buyerId, userCouponId);
+  const transactionId = transaction.id;
+  await updateListingTransactionId({ id: listingId }, transactionId);
+  return transactionId;
 };
 
 /**
