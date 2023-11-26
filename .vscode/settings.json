@@ -11,5 +11,13 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  // tailwindCSS のクラス名補完対象
+  "tailwindCSS.classAttributes":[
+    "class",
+    "className",
+    "ngClass",
+    ".*Class*",
+    ".*ClassName*"
+  ]
 }
