@@ -28,7 +28,7 @@ type AllProps = CommonProps & {
   query?: never;
   buyerId?: never;
   sellerId?: never;
-  isPublic: never;
+  isPublic?: never;
 };
 
 type SearchProps = CommonProps & {
