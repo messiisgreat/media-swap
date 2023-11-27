@@ -1,28 +1,24 @@
 import { env } from "@/utils/serverEnv";
-import heic2any from "heic2any";
+import convert from "heic-convert";
 
 /**
  * HEIF/HEIC形式の画像をJPEGに変換する関数
- * @param imageFile 変換前の画像
+ * @param file 変換前の画像
  * @returns 変換後の画像
  */
 // HEIF/HEIC形式の画像をJPEGに変換する関数
-export const convertImage = async (imageFile: File): Promise<Blob> => {
-  if (imageFile.type === "image/heif" || imageFile.type === "image/heic") {
-    const output = await heic2any({
-      blob: imageFile,
-      toType: "image/jpeg",
-    });
-
-    // output が Blob[] の場合は最初の Blob を使用
-    if (Array.isArray(output)) {
-      return output[0];
-    }
-
-    return output;
-  }
-  return imageFile;
-};
+// HEIF/HEICフォーマットをJPEGに変換する関数
+async function convertHeicToJpeg(file: File) {
+  const inputBuffer = await file.arrayBuffer();
+  const outputBuffer = await convert({
+    buffer: inputBuffer,
+    format: "JPEG",
+    quality: 1,
+  });
+  return new File([outputBuffer], file.name.replace(/\..+$/, ".jpg"), {
+    type: "image/jpeg",
+  });
+}
 
 async function uploadSingleFile(
   file: File,
@@ -32,9 +28,11 @@ async function uploadSingleFile(
   const formData = new FormData();
 
   // 画像の変換処理(HEIF/HEIC -> JPEG)
-  const convertedFile = await convertImage(file);
+  if (file.type === "image/heic" || file.type === "image/heif") {
+    file = await convertHeicToJpeg(file);
+  }
 
-  formData.append("file", convertedFile);
+  formData.append("file", file);
   formData.append("folder", "swappy");
   formData.append("upload_preset", upload_preset);
   formData.append("fetch_format", "auto");
