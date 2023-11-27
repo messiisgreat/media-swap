@@ -48,7 +48,9 @@ export default async function Transaction({
             transaction={transaction}
             sessionUser={sessionUser}
           />
+          {/* 通常の取引更新用ボタン */}
           <TransactionChangeButton transaction={transaction} />
+          {/* 取引キャンセル用ボタン */}
           <TransactionChangeButton transaction={transaction} isCancel={true} />
           <div>
             <p>出品者情報</p>
@@ -75,6 +77,7 @@ export default async function Transaction({
         </aside>
         <MessageSection transaction={transaction} sessionUser={sessionUser} />
       </div>
+      {/* テスト用のコンポーネントは本番環境のコードから削除または移動する */}
       <TestTransactionChangeButton transaction={transaction} status={0}>
         取引状態:支払い前
       </TestTransactionChangeButton>

@@ -22,15 +22,8 @@ export const TransactionChangeButton = ({
   isCancel?: boolean;
 }) => {
   const handleClick = useCallback(async () => {
-    const nextStatus = (() => {
-      if (!isCancel) {
-        return NEXT_TRANSACTION_STATUS[
-          transaction.transactionStatus as keyof typeof NEXT_TRANSACTION_STATUS
-        ];
-      } else {
-        return TRANSACTION_STATUS.CANCELLED;
-      }
-    })();
+    const statusKey = transaction.transactionStatus as keyof typeof NEXT_TRANSACTION_STATUS;
+    const nextStatus = isCancel ? TRANSACTION_STATUS.CANCELLED : NEXT_TRANSACTION_STATUS[statusKey];
     await transactionStateUpdate(transaction.id, nextStatus);
     window.location.reload();
   }, [transaction, isCancel]);
