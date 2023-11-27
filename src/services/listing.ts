@@ -72,6 +72,9 @@ export const findListingById = cache(async (id: string) => {
           tag: true,
         },
       },
+      productCondition: true,
+      shippingDays: true,
+      shippingMethod: true
     },
   });
 });

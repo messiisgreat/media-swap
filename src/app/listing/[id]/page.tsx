@@ -68,7 +68,46 @@ export default async function ListingPage({
           ))}
         </div>
         <Badge className="badge-lg">¥{listing.price}</Badge>
-        <p>{listing.description}</p>
+        <TitleUnderbar title="説明" />
+        <div className="p-4 bg-white shadow-md rounded-lg my-2">
+          <p className="my-4 text-gray-600">{listing.description}</p>
+        </div>
+        <TitleUnderbar title="商品情報" />
+        <div className="p-4 bg-white shadow-md rounded-lg my-2">
+          <div className="mb-4">
+            <p className="font-semibold text-gray-700">商品の状態</p>
+            <p className="text-gray-600">{listing.productCondition?.name}</p>
+          </div>
+          <div className="mb-4">
+            <p className="font-semibold text-gray-700">タグ名</p>
+            <div className="flex flex-wrap gap-2">
+              {listing.tags.map((tag) => (
+                <p
+                  key={tag.id}
+                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+                >
+                  {tag.tag.text}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="mb-4">
+            <div className="grid grid-cols-2 gap-2">
+              <p className="font-semibold text-gray-700">配送方法</p>
+              <p className="text-gray-600">{listing.shippingMethod?.name}</p>
+              <p className="font-semibold text-gray-700">送料の負担について</p>
+              <p className="text-gray-600">
+                {listing.shippingMethod?.amount
+                  ? "送料別(購入者負担)"
+                  : "送料込み(出品者負担)"}
+              </p>
+              <p className="font-semibold text-gray-700">配送までの日数</p>
+              <p className="text-gray-600">
+                {listing.shippingDays?.maxDays}日以内
+              </p>
+            </div>
+          </div>
+        </div>
         {listing.transactionId ? (
           <div>
             <p>すでに商品を購入しています！</p>
