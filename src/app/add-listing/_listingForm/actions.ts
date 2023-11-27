@@ -70,10 +70,8 @@ export const listingItem = async (
     return verifyResult;
   } else {
     if (!isPublicBool) {
-      const listing = await create(rest, userId, previousPrice);
-      redirect(
-        `/add-listing/complete?listing_id=${listing.id}&is_public=false`,
-      );
+      await create(rest, userId, previousPrice);
+      redirect(`/mypage/draft`);
     } else {
       const validated = ProductFormSchema.safeParse(values);
       if (!validated.success) {
