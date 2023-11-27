@@ -7,7 +7,7 @@ import { FiChevronRight } from "react-icons/fi";
 type MyPageLinks = {
   title: string;
   href: string;
-}
+};
 
 const myPageLinks: MyPageLinks[] = [
   {
@@ -21,6 +21,10 @@ const myPageLinks: MyPageLinks[] = [
   {
     title: "購入商品一覧",
     href: "/mypage/purchases",
+  },
+  {
+    title: "下書き一覧",
+    href: "/mypage/draft",
   },
 ];
 
@@ -37,7 +41,10 @@ export default async function Page() {
       <div className="m-auto px-4 sm:px-8">
         <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
           {myPageLinks.map((link) => (
-            <li key={link.title} className="border-b border-gray-200 bg-white px-4 py-2 transition-all duration-300 ease-in-out last:border-none hover:bg-sky-100 hover:text-sky-900">
+            <li
+              key={link.title}
+              className="border-b border-gray-200 bg-white px-4 py-2 transition-all duration-300 ease-in-out last:border-none hover:bg-sky-100 hover:text-sky-900"
+            >
               <Link href={link.href}>
                 <div className="flex justify-between">
                   <p>{link.title}</p>
