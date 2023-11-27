@@ -1,24 +1,4 @@
 import { env } from "@/utils/serverEnv";
-import convert from "heic-convert";
-
-/**
- * HEIF/HEIC形式の画像をJPEGに変換する関数
- * @param file 変換前の画像
- * @returns 変換後の画像
- */
-// HEIF/HEIC形式の画像をJPEGに変換する関数
-// HEIF/HEICフォーマットをJPEGに変換する関数
-async function convertHeicToJpeg(file: File) {
-  const inputBuffer = await file.arrayBuffer();
-  const outputBuffer = await convert({
-    buffer: inputBuffer,
-    format: "JPEG",
-    quality: 1,
-  });
-  return new File([outputBuffer], file.name.replace(/\..+$/, ".jpg"), {
-    type: "image/jpeg",
-  });
-}
 
 async function uploadSingleFile(
   file: File,
@@ -26,11 +6,6 @@ async function uploadSingleFile(
   upload_preset: string,
 ): Promise<string> {
   const formData = new FormData();
-
-  // 画像の変換処理(HEIF/HEIC -> JPEG)
-  if (file.type === "image/heic" || file.type === "image/heif") {
-    file = await convertHeicToJpeg(file);
-  }
 
   formData.append("file", file);
   formData.append("folder", "swappy");
@@ -65,13 +40,28 @@ async function uploadSingleFile(
  */
 export async function uploadToCloudinary(files: File[]) {
   console.log("files", files);
-  const uploadPromises = files.map((file) =>
-    uploadSingleFile(
-      file,
-      env.CLOUDINARY_UPLOAD_URL,
-      env.CLOUDINARY_UPLOAD_PRESET,
-    ),
-  );
+  // 変換が必要な場合は、サーバーサイドのAPIを呼び出す
+  const convertFiles = async (file: File) => {
+    if (file.type === "image/heic" || file.type === "image/heif") {
+      // ここでサーバーサイドのAPIを呼び出します。
+      const convertedFile = await fetch("/api/convert", {
+        method: "POST",
+        body: file,
+      });
+      return convertedFile;
+    }
+    return file;
+  };
+  const uploadPromises = files.map(async (file) => {
+    const processedFile = await convertFiles(file);
+    if (processedFile instanceof File) {
+      return uploadSingleFile(
+        processedFile,
+        env.CLOUDINARY_UPLOAD_URL,
+        env.CLOUDINARY_UPLOAD_PRESET,
+      );
+    }
+  });
 
   return Promise.all(uploadPromises);
 }
