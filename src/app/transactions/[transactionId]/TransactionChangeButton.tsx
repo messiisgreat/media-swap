@@ -1,15 +1,59 @@
 "use client";
 
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Transaction } from "@prisma/client";
+import { Button } from "@/components";
 import { transactionStateUpdate } from "@/app/transactions/[transactionId]/actions";
-
+import {
+  TRANSACTION_STATUS,
+  NEXT_TRANSACTION_STATUS,
+  TRANSACTION_BUTTON_STATUS,
+} from "@/constants/listing";
 /**
  * 取引ステータス変更ボタンコンポーネント
  * @param children - ボタン内のコンテンツ
  * @returns
  */
 export const TransactionChangeButton = ({
+  transaction,
+  isCancel = false,
+}: {
+  transaction: Transaction;
+  isCancel?: boolean;
+}) => {
+  const handleClick = useCallback(async () => {
+    const nextStatus = (() => {
+      if (!isCancel) {
+        return NEXT_TRANSACTION_STATUS[
+          transaction.transactionStatus as keyof typeof NEXT_TRANSACTION_STATUS
+        ];
+      } else {
+        return TRANSACTION_STATUS.CANCELLED;
+      }
+    })();
+    await transactionStateUpdate(transaction.id, nextStatus);
+    window.location.reload();
+  }, [transaction, isCancel]);
+
+  return (
+    <Button onClick={handleClick}>
+      {!isCancel ? (
+        TRANSACTION_BUTTON_STATUS[
+          transaction.transactionStatus as keyof typeof TRANSACTION_BUTTON_STATUS
+        ]
+      ) : (
+        <>取引キャンセル</>
+      )}
+    </Button>
+  );
+};
+
+/**
+ * テスト用：取引ステータス変更ボタンコンポーネント
+ * @param children - ボタン内のコンテンツ
+ * @returns
+ */
+export const TestTransactionChangeButton = ({
   children,
   transaction,
   status,
@@ -20,11 +64,8 @@ export const TransactionChangeButton = ({
 }) => {
   const handleClick = useCallback(async () => {
     await transactionStateUpdate(transaction.id as string, status);
-  }, [transaction.id, status]);
+    window.location.reload();
+  }, [transaction, status]);
 
-  return (
-    <button className="btn btn-primary" onChange={handleClick}>
-      {children}
-    </button>
-  );
+  return <Button onClick={handleClick}>{children}</Button>;
 };
