@@ -47,7 +47,11 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
         {...props}
       />
       <label className="label-text-alt flex justify-between text-error">
-        {isOverLimit ? `¥${MIN}以上¥${MAX}以下で入力してください` : "　"}
+        {isOverLimit
+          ? `¥${new Intl.NumberFormat().format(
+              MIN,
+            )}以上¥${new Intl.NumberFormat().format(MAX)}以下で入力してください`
+          : "　"}
       </label>
       <div className="flex justify-between">
         <label>販売手数料</label>
