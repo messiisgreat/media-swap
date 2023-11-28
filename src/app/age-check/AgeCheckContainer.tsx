@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 import { addAgeCheckedCookie } from "./actions";
 
@@ -12,8 +11,6 @@ import { addAgeCheckedCookie } from "./actions";
  * @returns div > Link*2
  */
 export const AgeChechContainer = () => {
-  const handleAgeVerified = useCallback(() => addAgeCheckedCookie(), []);
-
   const linkClass =
     "h-12 btn btn-circle btn-wide border-gray-500 text-lg font-bold";
 
@@ -25,7 +22,7 @@ export const AgeChechContainer = () => {
           "btn-error bg-red-500 text-white hover:bg-red-700 md:col-start-2 md:col-end-3",
           linkClass,
         )}
-        onClick={handleAgeVerified}
+        onClick={() => addAgeCheckedCookie()}
       >
         はい
       </Link>
