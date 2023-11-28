@@ -77,22 +77,25 @@ export default async function Transaction({
         </aside>
         <MessageSection transaction={transaction} sessionUser={sessionUser} />
       </div>
-      {/* テスト用のコンポーネントは本番環境のコードから削除または移動する */}
-      <TestTransactionChangeButton transaction={transaction} status={0}>
-        取引状態:支払い前
-      </TestTransactionChangeButton>
-      <TestTransactionChangeButton transaction={transaction} status={1}>
-        取引状態:支払い完了
-      </TestTransactionChangeButton>
-      <TestTransactionChangeButton transaction={transaction} status={2}>
-        取引状態:発送済み
-      </TestTransactionChangeButton>
-      <TestTransactionChangeButton transaction={transaction} status={3}>
-        取引状態:受取完了
-      </TestTransactionChangeButton>
-      <TestTransactionChangeButton transaction={transaction} status={4}>
-        取引状態:キャンセル
-      </TestTransactionChangeButton>
+      {process.env.NODE_ENV !== "production" && (
+        <>
+          <TestTransactionChangeButton transaction={transaction} status={0}>
+            取引状態:支払い前
+          </TestTransactionChangeButton>
+          <TestTransactionChangeButton transaction={transaction} status={1}>
+            取引状態:支払い完了
+          </TestTransactionChangeButton>
+          <TestTransactionChangeButton transaction={transaction} status={2}>
+            取引状態:発送済み
+          </TestTransactionChangeButton>
+          <TestTransactionChangeButton transaction={transaction} status={3}>
+            取引状態:受取完了
+          </TestTransactionChangeButton>
+          <TestTransactionChangeButton transaction={transaction} status={4}>
+            取引状態:キャンセル
+          </TestTransactionChangeButton>
+        </>
+      )}
     </>
   );
 }
