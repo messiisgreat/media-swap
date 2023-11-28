@@ -80,13 +80,14 @@ export default async function ListingPage({
             </ButtonAsLink>
           </div>
         ) : (
-          <PurchaseButton
-          listingId={listing.id}
-          buyerId={userId!}
-          userCouponId={null}
-          isOwner={isOwner}
-          user={user}
-          />
+          !isOwner && (
+            <PurchaseButton
+            listingId={listing.id}
+            buyerId={userId!}
+            userCouponId={null}
+            user={user}
+            />
+          )
         )}
         <div className="mt-4 flex flex-col gap-2">
           <ProtButton data={listing} status={0}>

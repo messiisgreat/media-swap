@@ -29,7 +29,7 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if(!user) {
-      signIn();
+      await signIn();
       return
     }
     const transactionId = await purchasing(listingId, buyerId, userCouponId);
