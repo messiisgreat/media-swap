@@ -81,10 +81,11 @@ export default async function ListingPage({
           </div>
         ) : (
           <PurchaseButton
-            disabled={!userId || isOwner}
-            listingId={listing.id}
-            buyerId={userId!}
-            userCouponId={null}
+          listingId={listing.id}
+          buyerId={userId!}
+          userCouponId={null}
+          isOwner={isOwner}
+          user={user}
           />
         )}
         <div className="mt-4 flex flex-col gap-2">
