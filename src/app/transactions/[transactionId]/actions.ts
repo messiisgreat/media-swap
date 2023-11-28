@@ -24,17 +24,19 @@ export const fetchMessages = async (transactionId: string, userId: string) => {
 
 /**
  * トランザクションのステータスを更新する
- * 
+ *
  * @param id - トランザクションの取引ID
  * @param stateId - 設定する新しい状態ID
  */
-export const transactionStateUpdate = async (id: string, stateId: number) => {
+export const updateTransactionStateByTransactionId = async (
+  id: string,
+  stateId: number,
+) => {
   await updateTransactionStatus({
     id,
     transactionStatus: stateId,
   });
 };
-
 /**
  * メッセージを送信
  * @param message メッセージ

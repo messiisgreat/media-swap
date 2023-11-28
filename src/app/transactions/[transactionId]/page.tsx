@@ -1,9 +1,6 @@
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
-import {
-  TransactionChangeButton,
-  TestTransactionChangeButton,
-} from "@/app/transactions/[transactionId]/TransactionChangeButton";
+import { TransactionChangeButton } from "@/app/transactions/[transactionId]/TransactionChangeButton";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/session";
@@ -49,9 +46,9 @@ export default async function Transaction({
             sessionUser={sessionUser}
           />
           {/* 通常の取引更新用ボタン */}
-          <TransactionChangeButton transaction={transaction} />
+          <TransactionChangeButton transaction={transaction} status={0}/>
           {/* 取引キャンセル用ボタン */}
-          <TransactionChangeButton transaction={transaction} isCancel={true} />
+          {/* <TransactionChangeButton transaction={transaction} isCancel={true} /> */}
           <div>
             <p>出品者情報</p>
             {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
@@ -79,21 +76,6 @@ export default async function Transaction({
       </div>
       {process.env.NODE_ENV !== "production" && (
         <>
-          <TestTransactionChangeButton transaction={transaction} status={0}>
-            取引状態:支払い前
-          </TestTransactionChangeButton>
-          <TestTransactionChangeButton transaction={transaction} status={1}>
-            取引状態:支払い完了
-          </TestTransactionChangeButton>
-          <TestTransactionChangeButton transaction={transaction} status={2}>
-            取引状態:発送済み
-          </TestTransactionChangeButton>
-          <TestTransactionChangeButton transaction={transaction} status={3}>
-            取引状態:受取完了
-          </TestTransactionChangeButton>
-          <TestTransactionChangeButton transaction={transaction} status={4}>
-            取引状態:キャンセル
-          </TestTransactionChangeButton>
         </>
       )}
     </>
