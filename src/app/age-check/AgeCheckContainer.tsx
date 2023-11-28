@@ -18,7 +18,7 @@ export const AgeChechContainer = () => {
     "h-12 btn btn-circle btn-wide border-gray-500 text-lg font-bold";
 
   return (
-    <div className="grid w-full items-center justify-center gap-8 md:grid-cols-2 md:gap-4">
+    <div className="grid justify-center gap-8 md:grid-cols-2">
       <Link
         href="/"
         className={twMerge(
