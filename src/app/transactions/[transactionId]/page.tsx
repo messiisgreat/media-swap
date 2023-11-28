@@ -45,10 +45,9 @@ export default async function Transaction({
           sessionUser={sessionUser}
         />
         {/* 通常の取引更新用ボタン */}
-        <TransactionChangeButton transaction={transaction} status={1} />
+        <TransactionChangeButton transaction={transaction} />
         {/* 取引キャンセル用ボタン */}
         <TransactionChangeButton transaction={transaction} isCancel={true} />
-        {/* <TransactionChangeButton transaction={transaction} isCancel={true} /> */}
         <div>
           <p>出品者情報</p>
           {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
