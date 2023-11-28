@@ -85,7 +85,6 @@ export default async function ListingPage({
             listingId={listing.id}
             buyerId={userId!}
             userCouponId={null}
-            user={user}
             />
           )
         )}

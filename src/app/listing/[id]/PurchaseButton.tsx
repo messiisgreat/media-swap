@@ -10,7 +10,6 @@ type Props = ComponentProps<typeof Button> & {
   listingId: string;
   buyerId: string;
   userCouponId: string | null;
-  user: object | null;
 };
 
 /**
@@ -22,19 +21,18 @@ export const PurchaseButton = ({
   listingId,
   buyerId,
   userCouponId,
-  user,
   ...props
 }: Props) => {
   const router = useRouter();
 
   const handleOnClick = useCallback(async () => {
-    if(!user) {
+    if(!buyerId) {
       await signIn();
       return
     }
     const transactionId = await purchasing(listingId, buyerId, userCouponId);
     router.push(`/transactions/${transactionId}`);
-  }, [buyerId, listingId, userCouponId, user, router]);
+  }, [buyerId, listingId, userCouponId, router]);
 
   return (
     <Button onClick={handleOnClick} {...props}>
