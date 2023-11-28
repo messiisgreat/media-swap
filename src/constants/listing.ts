@@ -49,12 +49,13 @@ export const TRANSACTION_STATUS = {
   CANCELLED: 4, // 取引キャンセル
 } as const;
 
-/** 取引状態IDから見るボタンの表示ステータス */
+/** 取引ステータスIDから見るボタンの表示ステータス */
 export const TRANSACTION_BUTTON_STATUS = {
   0: "支払完了",
   1: "発送完了",
   2: "受取完了",
   3: "取引評価",
+  4: "取引キャンセル",
 }
 
 /** 取引評価選択肢 */
