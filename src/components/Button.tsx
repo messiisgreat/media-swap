@@ -4,6 +4,7 @@ import { ComponentProps, memo } from "react";
 type CommonProps = {
   outline?: boolean;
   secondary?: boolean;
+  isOwner?: boolean;
 };
 
 type ButtonProps = ComponentProps<"button"> & CommonProps;
@@ -18,6 +19,7 @@ type LinkProps = ComponentProps<typeof Link> & CommonProps;
  * @param {ReactNode} props.children - ボタン内に表示されるコンテンツ。
  * @param {string} [props.className] - 追加のCSSクラス名(省略可能)
  * @param {*} [props.type="button"] - ボタンのタイプ属性(省略可能)
+ * @param {boolean} props.isOwner - 出品者かどうか
  * @returns
  */
 export const Button = memo(function Button({
@@ -31,6 +33,7 @@ export const Button = memo(function Button({
   const variant = `${outline ? "btn-outline" : ""} ${
     secondary ? "btn-secondary" : "btn-primary"
   }`;
+
   return (
     <button className={`btn ${variant} ${className}`} type={type} {...props}>
       {children}

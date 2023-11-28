@@ -54,14 +54,16 @@ export default async function ListingPage({
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
 
-  
-
   return (
     <VerifyProvider>
       <Carousel images={images} />
       <PageTitle title={listing.productName!} />
       <div className="flex w-full justify-end">
-        <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+        <Toolbar
+          listingId={listing.id}
+          sessionUser={user}
+          isListingOwner={isOwner}
+        />
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
@@ -111,11 +113,11 @@ export default async function ListingPage({
         </div>
       </Section>
       <TitleUnderbar title="コメント" />
-        <CommentSection
-          listingId={listing.id}
-          sessionUser={user}
-          isListingOwner={isOwner}
-        />
+      <CommentSection
+        listingId={listing.id}
+        sessionUser={user}
+        isListingOwner={isOwner}
+      />
     </VerifyProvider>
   );
 }

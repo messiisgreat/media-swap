@@ -2,8 +2,8 @@
 
 import { purchasing } from "@/app/listing/[id]/actions";
 import { Button } from "@/components/Button";
+import { useRouter } from "next/navigation";
 import { ComponentProps, useCallback } from "react";
-import { useRouter } from 'next/navigation'
 
 type Props = ComponentProps<typeof Button> & {
   listingId: string;
