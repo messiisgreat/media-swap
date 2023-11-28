@@ -17,25 +17,31 @@ export const TransactionChangeButton = ({
   isCancel = false,
 }: {
   transaction: Transaction;
-  status: number;
+  status?: number;
   isCancel?: boolean;
 }) => {
   const router = useRouter();
-  const handleClick = useCallback(async (id:string, transactionStatus: number | undefined) => {
-    await updateTransactionStatus({
-    id ,
-    transactionStatus : Number(transactionStatus),
-  });
-    router.replace(`/transactions/${id}`);
-  }, [router]);
-
+  const handleClick = useCallback(
+    async (id: string, transactionStatus: number) => {
+      await updateTransactionStatus({
+        id,
+        transactionStatus: Number(transactionStatus),
+      });
+      router.refresh();
+    },
+    [router],
+  );
   return (
-    <Button onClick={() => handleClick(transaction.id, status)}>
+    <>
       {!isCancel ? (
-        <>取引キャンセル</>
+        <Button onClick={() => handleClick(transaction.id, status as number)}>
+          取引
+        </Button>
       ) : (
-        <>取引キャンセル</>
+        <Button onClick={() => handleClick(transaction.id, 4)}>
+          取引キャンセル
+        </Button>
       )}
-    </Button>
+    </>
   );
 };

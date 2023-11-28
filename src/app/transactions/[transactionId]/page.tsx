@@ -38,46 +38,39 @@ export default async function Transaction({
   }
 
   return (
-    <>
-      <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
-        <aside className="flex flex-1 flex-col gap-8">
-          <TransactionStatus
-            transaction={transaction}
-            sessionUser={sessionUser}
-          />
-          {/* 通常の取引更新用ボタン */}
-          <TransactionChangeButton transaction={transaction} status={0}/>
-          {/* 取引キャンセル用ボタン */}
-          {/* <TransactionChangeButton transaction={transaction} isCancel={true} /> */}
-          <div>
-            <p>出品者情報</p>
-            {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
-            <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
-              <div className="flex items-center gap-4">
-                <div className="avatar">
-                  <div className="w-16 rounded-full">
-                    <Image
-                      src={transaction.listing.seller.image || defaultIcon}
-                      width={64}
-                      height={64}
-                      alt=""
-                    />
-                  </div>
+    <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
+      <aside className="flex flex-1 flex-col gap-8">
+        <TransactionStatus
+          transaction={transaction}
+          sessionUser={sessionUser}
+        />
+        {/* 通常の取引更新用ボタン */}
+        <TransactionChangeButton transaction={transaction} status={1} />
+        {/* 取引キャンセル用ボタン */}
+        <TransactionChangeButton transaction={transaction} isCancel={true} />
+        {/* <TransactionChangeButton transaction={transaction} isCancel={true} /> */}
+        <div>
+          <p>出品者情報</p>
+          {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
+          <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
+            <div className="flex items-center gap-4">
+              <div className="avatar">
+                <div className="w-16 rounded-full">
+                  <Image
+                    src={transaction.listing.seller.image || defaultIcon}
+                    width={64}
+                    height={64}
+                    alt=""
+                  />
                 </div>
-                <span className="text-xl">
-                  {transaction.listing.seller.name}
-                </span>
               </div>
-              <FaChevronRight />
+              <span className="text-xl">{transaction.listing.seller.name}</span>
             </div>
+            <FaChevronRight />
           </div>
-        </aside>
-        <MessageSection transaction={transaction} sessionUser={sessionUser} />
-      </div>
-      {process.env.NODE_ENV !== "production" && (
-        <>
-        </>
-      )}
-    </>
+        </div>
+      </aside>
+      <MessageSection transaction={transaction} sessionUser={sessionUser} />
+    </div>
   );
 }

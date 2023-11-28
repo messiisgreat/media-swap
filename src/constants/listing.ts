@@ -57,13 +57,6 @@ export const TRANSACTION_BUTTON_STATUS = {
   3: "取引評価",
 }
 
-/** 取引ステーテス遷移 */
-export const NEXT_TRANSACTION_STATUS = {
-  0 : 1, // 支払い前: 支払い完了
-  1 : 2, // 発送前: 発送完了
-  2 : 3, // 受取前: 受取完了
-}
-
 /** 取引評価選択肢 */
 export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
   { id: "1".padStart(24, "0"), name: "良い", rating: 1 },
