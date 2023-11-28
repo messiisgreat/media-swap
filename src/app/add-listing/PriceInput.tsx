@@ -21,6 +21,7 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const amount = Number(e.target.value);
+    if (e.target.value) e.target.value = String(amount);
     const result = valueSchema.safeParse(amount);
     if (result.success) {
       const handingCharge = Math.round(amount * HANDING_CHARGE_RATE);
