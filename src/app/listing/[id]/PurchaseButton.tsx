@@ -27,12 +27,12 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if (!buyerId) {
-      signIn();
+      await signIn();
       return;
     }
     const transactionId = await purchasing(listingId, userCouponId);
     router.push(`/transactions/${transactionId}`);
-  }, [listingId, buyerId, userCouponId, router]);
+  }, [buyerId, listingId, userCouponId, router]);
 
   return (
     <Button onClick={handleOnClick} {...props}>
