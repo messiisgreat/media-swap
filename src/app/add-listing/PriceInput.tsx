@@ -17,7 +17,7 @@ type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
  */
 export const PriceInput = ({ ...props }: PriceInputProps) => {
   const [amount, setAmount] = useState<number | "">("");
-  const isOverLimit = amount !== "" && (amount > MAX || amount < MIN);
+  const isOutOfRange = amount !== "" && (amount > MAX || amount < MIN);
   const handlingCharge =
     amount === "" ? "" : Math.round(amount * HANDING_CHARGE_RATE);
   const amountAfterCharge =
@@ -31,6 +31,8 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
       } else {
         setAmount(0);
       }
+    } else {
+      setAmount("");
     }
   }, []);
 
@@ -47,7 +49,7 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
         {...props}
       />
       <label className="label-text-alt flex justify-between text-error">
-        {isOverLimit
+        {isOutOfRange
           ? `¥${new Intl.NumberFormat().format(
               MIN,
             )}以上¥${new Intl.NumberFormat().format(MAX)}以下で入力してください`
