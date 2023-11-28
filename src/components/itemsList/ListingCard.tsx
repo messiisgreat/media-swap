@@ -1,6 +1,6 @@
 import { SoldOutBadge } from "@/components/itemsList/SoldOutBadge";
-import { findListingById } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
+import { Listing } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -20,8 +20,8 @@ const PriceBadge = ({
   </div>
 );
 
-type Props = {
-  listing: Awaited<ReturnType<typeof findListingById>>;
+type ListingCardProps = {
+  listing: Listing & { images: { imageURL: string }[] };
 };
 
 /**
@@ -29,7 +29,7 @@ type Props = {
  * @param  listing 表示に必要なリレーション先をインクルード済みのListing
  * @returns div
  */
-export function ListingCard({ listing }: Props) {
+export function ListingCard({ listing }: ListingCardProps) {
   const formattedPrice = listing.price ? formatPrice(listing.price) : "N/A";
 
   const isSoldOut = !!listing.transactionId;

@@ -69,11 +69,11 @@ export default async function ListingPage({
         </div>
         <Badge className="badge-lg">¥{listing.price}</Badge>
         <TitleUnderbar title="説明" />
-        <div className="p-4 bg-white shadow-md rounded-lg my-2">
+        <div className="my-2 w-full rounded-lg bg-white p-4 shadow-md">
           <p className="my-4 text-gray-600">{listing.description}</p>
         </div>
         <TitleUnderbar title="商品情報" />
-        <div className="p-4 bg-white shadow-md rounded-lg my-2">
+        <div className="my-2 w-full rounded-lg bg-white p-4 shadow-md">
           <div className="mb-4">
             <p className="font-semibold text-gray-700">商品の状態</p>
             <p className="text-gray-600">{listing.productCondition?.name}</p>
@@ -84,7 +84,7 @@ export default async function ListingPage({
               {listing.tags.map((tag) => (
                 <p
                   key={tag.id}
-                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+                  className="rounded-full bg-blue-100 px-2 py-1 text-blue-800"
                 >
                   {tag.tag.text}
                 </p>
