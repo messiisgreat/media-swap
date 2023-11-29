@@ -61,7 +61,7 @@ export default async function ListingPage({
       <Carousel images={images} />
       <PageTitle title={listing.productName!} />
       <div className="flex w-full justify-end">
-        <Toolbar listingId={listing.id} sessionUser={user} />
+        <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
@@ -89,7 +89,6 @@ export default async function ListingPage({
           <PurchaseButton
             disabled={!userId || isOwner}
             listingId={listing.id}
-            buyerId={userId!}
             userCouponId={null}
           />
         )}

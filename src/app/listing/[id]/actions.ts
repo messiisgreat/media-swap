@@ -100,24 +100,24 @@ export const addCommentReport = async (
 /**
  * コメントを削除する
  * @param commentId コメントID
- * @param userId 削除を行うユーザーID
  * @returns
  */
-export const removeComment = async (commentId: string, userId: string) => {
+export const removeComment = async (commentId: string) => {
+  const user = await getSessionUser();
+  if (!user) throw new Error("ログインしてください");
+  const userId = user.id;
   return await deleteListingComment(commentId, userId);
 };
 
 /**
  * 商品の通報
  * @param listingId 商品ID
- * @param userId 通報ユーザーID
  * @param reason 通報理由
  * @param verificationCode reCAPTCHA認証コード
  * @returns 
  */
 export const addListingReport = async (
   listingId: string,
-  userId: string,
   reason: string,
   verificationCode: string,
 ) => {
@@ -134,6 +134,9 @@ export const addListingReport = async (
       error: true,
     };
   }
+  const user = await getSessionUser();
+  if (!user) throw new Error("ログインしてください");
+  const userId = user.id;
   return await createListingReport(listingId, userId, reason);
 }
 

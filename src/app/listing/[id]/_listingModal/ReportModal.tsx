@@ -53,7 +53,6 @@ export const useReportModal = ({ listingId, sessionUser }: Props) => {
       try {
         const res = await addListingReport(
           listingId,
-          sessionUser.id,
           reason,
           verificationCode || "",
         );
