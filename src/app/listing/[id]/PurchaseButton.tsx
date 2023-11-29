@@ -31,6 +31,7 @@ export const PurchaseButton = ({
       const signInResult = await signIn();
       if (!signInResult) {
         toast.error("ログインに失敗しました。");
+        return;
       }
     }
     const transactionId = await purchasing(listingId, userCouponId);
