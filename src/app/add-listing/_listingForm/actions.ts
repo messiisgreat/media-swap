@@ -29,10 +29,6 @@ const create = async (
   const { tags, imageFiles, isPublic, postageIsIncluded, ...rest } = formData;
   const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
-  // imagesが(string | undefined)[]型の場合、undefinedを除外する
-  const filteredImages = images.filter(
-    (image): image is string => image !== undefined,
-  );
   const listing: UnregisteredListing = {
     previousPrice,
     sellerId: userId,
@@ -40,7 +36,7 @@ const create = async (
     postageIsIncluded: strToBool(postageIsIncluded),
     ...rest,
   };
-  return createListingWithTagsAndImages(listing, tagTexts, filteredImages);
+  return createListingWithTagsAndImages(listing, tagTexts, images);
 };
 
 /**

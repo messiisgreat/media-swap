@@ -48,5 +48,6 @@ export async function uploadToCloudinary(files: File[]) {
     ),
   );
 
-  return Promise.all(uploadPromises);
+  const uploadResults = await Promise.all(uploadPromises);
+  return uploadResults.filter((url): url is string => url !== undefined);
 }
