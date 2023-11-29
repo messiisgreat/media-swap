@@ -2,6 +2,7 @@ import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ProtButton } from "@/app/listing/[id]/ProtButton";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
+import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
@@ -53,10 +54,15 @@ export default async function ListingPage({
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
 
+  
+
   return (
-    <>
+    <VerifyProvider>
       <Carousel images={images} />
       <PageTitle title={listing.productName!} />
+      <div className="flex w-full justify-end">
+        <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+      </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
@@ -83,7 +89,6 @@ export default async function ListingPage({
           <PurchaseButton
             disabled={!userId || isOwner}
             listingId={listing.id}
-            buyerId={userId!}
             userCouponId={null}
           />
         )}
@@ -106,13 +111,11 @@ export default async function ListingPage({
         </div>
       </Section>
       <TitleUnderbar title="コメント" />
-      <VerifyProvider>
         <CommentSection
           listingId={listing.id}
           sessionUser={user}
           isListingOwner={isOwner}
         />
-      </VerifyProvider>
-    </>
+    </VerifyProvider>
   );
 }

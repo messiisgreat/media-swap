@@ -1,5 +1,5 @@
 "use client";
-import { addCommentReport } from "@/app/listing/[id]/actions";
+import { addListingReport } from "@/app/listing/[id]/actions";
 import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import { LimitTextarea } from "@/components/form/LimitElements";
 import { useVerify } from "@/components/form/securityVerifier/hooks";
@@ -9,20 +9,20 @@ import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
-  commentId: string | null;
+  listingId: string;
   sessionUser: Session["user"] | null;
 };
 
 /**
- * コメントの通報モーダル
+ * 商品の通報モーダル
  * @param param0.selectedComment 通報するコメントのID
  * @param param0.sessionUser ログインユーザー
  * @returns open, close, ReportModal
  */
-export const useReportModal = ({ commentId, sessionUser }: Props) => {
+export const useReportModal = ({ listingId, sessionUser }: Props) => {
   const getVerificationCode = useVerify();
 
-  const reportComment = useCallback(
+  const reportListing = useCallback(
     async (f: FormData) => {
       const reason = f.get("report_reason") as string;
 
@@ -35,11 +35,6 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
 
       if (reason.length > 1000) {
         toast.error("1000文字以内で入力してください");
-        return;
-      }
-
-      if (!commentId) {
-        toast.error("通報するコメントが選択されていません");
         return;
       }
 
@@ -56,8 +51,8 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
       }
 
       try {
-        const res = await addCommentReport(
-          commentId,
+        const res = await addListingReport(
+          listingId,
           reason,
           verificationCode || "",
         );
@@ -65,28 +60,28 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
           toast.error(res.message);
           return;
         }
-        toast.success("コメントを通報しました。");
+        toast.success("商品を通報しました。");
       } catch (e: unknown) {
         if (String(e).toLowerCase().includes("already")) {
-          toast.error("あなたは既にこのコメントを通報しています。");
+          toast.error("あなたは既にこの商品を通報しています。");
         }
-        toast.error("コメントの通報に失敗しました。");
+        toast.error("商品の通報に失敗しました。");
       }
     },
-    [getVerificationCode, commentId, sessionUser],
+    [getVerificationCode, sessionUser, listingId],
   );
 
   const { open, FormActionModal } = useFormActionModal(
-    reportComment,
+    reportListing,
     "通報する",
   );
 
   const ReportModal = useCallback(
     () => (
       <FormActionModal>
-        <H className="text-center text-lg font-bold">コメントの通報</H>
+        <H className="text-center text-lg font-bold">商品の通報</H>
         <p className="py-2">
-          こちらはコメントの違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
+          こちらは商品の違反報告用のフォームです。基本的に返信は行っておりませんので予めご了承ください。虚偽の通報はペナルティの対象になりますのでご注意ください。
         </p>
         <LimitTextarea
           className="h-24"
