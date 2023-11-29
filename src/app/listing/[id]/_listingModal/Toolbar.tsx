@@ -2,6 +2,7 @@
 import { useReportModal } from "@/app/listing/[id]/_listingModal/ReportModal";
 import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
 import { Session } from "next-auth";
+import { useDeleteModal } from "@/app/listing/[id]/_listingModal/DeleteModal";
 
 /**
  * 削除/通報用のツールバー
@@ -11,13 +12,20 @@ import { Session } from "next-auth";
 export default function Toolbar({
   listingId,
   sessionUser,
+  isListingOwner
 }: {
   listingId: string;
   sessionUser: Session["user"] | null;
+  isListingOwner: boolean;
 }) {
   const { openReportModal, ReportModal } = useReportModal({
     listingId,
     sessionUser,
+  });
+  const { openDeleteModal, DeleteModal } = useDeleteModal({
+    listingId,
+    sessionUser,
+    isListingOwner
   });
 
   return (
@@ -40,7 +48,11 @@ export default function Toolbar({
               通報
             </div>
           </li>
-          <li>
+          <li
+            onClick={() => {
+              openDeleteModal();
+            }}
+          >
             <div className="flex items-center whitespace-nowrap">
               <FaTrash />
               削除
@@ -49,6 +61,7 @@ export default function Toolbar({
         </ul>
       </div>
       <ReportModal />
+      <DeleteModal />
     </>
   );
 }
