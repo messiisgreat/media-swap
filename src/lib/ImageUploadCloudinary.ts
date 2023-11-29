@@ -40,28 +40,13 @@ async function uploadSingleFile(
  */
 export async function uploadToCloudinary(files: File[]) {
   console.log("files", files);
-  // 変換が必要な場合は、サーバーサイドのAPIを呼び出す
-  const convertFiles = async (file: File) => {
-    if (file.type === "image/heic" || file.type === "image/heif") {
-      // ここでサーバーサイドのAPIを呼び出します。
-      const convertedFile = await fetch("/api/convert", {
-        method: "POST",
-        body: file,
-      });
-      return convertedFile;
-    }
-    return file;
-  };
-  const uploadPromises = files.map(async (file) => {
-    const processedFile = await convertFiles(file);
-    if (processedFile instanceof File) {
-      return uploadSingleFile(
-        processedFile,
-        env.CLOUDINARY_UPLOAD_URL,
-        env.CLOUDINARY_UPLOAD_PRESET,
-      );
-    }
-  });
+  const uploadPromises = files.map((file) =>
+    uploadSingleFile(
+      file,
+      env.CLOUDINARY_UPLOAD_URL,
+      env.CLOUDINARY_UPLOAD_PRESET,
+    ),
+  );
 
   return Promise.all(uploadPromises);
 }
