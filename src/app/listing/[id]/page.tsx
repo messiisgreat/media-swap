@@ -6,7 +6,7 @@ import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section, TitleUnderbar } from "@/components/structure";
+import { Section, TitleUnderbar } from "@/components/structure";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
@@ -52,16 +52,17 @@ export default async function ListingPage({
   const images = listing.images;
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
-  const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
-
-  
+  const isOwner = userId === listing.sellerId;
+  const price = listing.price?.toLocaleString();
 
   return (
     <VerifyProvider>
       <Carousel images={images} />
-      <PageTitle title={listing.productName!} />
-      <div className="flex w-full justify-end">
-        <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+      {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
+      <div className="w-full">
+        <h1 className="text-left text-lg font-bold lg:text-2xl">
+          {listing.productName!}
+        </h1>
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
@@ -73,8 +74,21 @@ export default async function ListingPage({
             </Link>
           ))}
         </div>
-        <Badge className="badge-lg">¥{listing.price}</Badge>
-        <p>{listing.description}</p>
+        <div>
+          <span className="text-sm text-neutral-400">¥</span>
+          <span className="text-2xl">{price}</span>
+        </div>
+        <div className="flex w-full justify-end">
+          <Toolbar
+            listingId={listing.id}
+            sessionUser={user}
+            isListingOwner={isOwner}
+          />
+        </div>
+        <h2 className="text-lg font-bold text-neutral-400">商品の説明</h2>
+        <pre className="text-base whitespace-pre-wrap">
+          {listing.description}
+        </pre>
         {listing.transactionId ? (
           <div>
             <p>すでに商品を購入しています！</p>
@@ -111,11 +125,11 @@ export default async function ListingPage({
         </div>
       </Section>
       <TitleUnderbar title="コメント" />
-        <CommentSection
-          listingId={listing.id}
-          sessionUser={user}
-          isListingOwner={isOwner}
-        />
+      <CommentSection
+        listingId={listing.id}
+        sessionUser={user}
+        isListingOwner={isOwner}
+      />
     </VerifyProvider>
   );
 }
