@@ -61,7 +61,6 @@ export const CommentSection = ({
 
   const postComment = async (
     f: FormData,
-    sessionUser: Session["user"],
     productId: string,
   ) => {
     const text = f.get("comment") as string;
@@ -75,7 +74,7 @@ export const CommentSection = ({
 
     setPosting(true);
     try {
-      await addComment(text, sessionUser, productId);
+      await addComment(text, productId);
       toast.success("コメントを書き込みました。");
       formRef.current?.reset();
       setComments(await fetchComments(productId));
@@ -99,7 +98,7 @@ export const CommentSection = ({
           ) : null}
           <form
             className="flex flex-col items-start gap-4"
-            action={(f) => postComment(f, sessionUser, listingId)}
+            action={(f) => postComment(f, listingId)}
             ref={formRef}
           >
             <LimitTextarea
@@ -144,7 +143,7 @@ export const CommentSection = ({
                       {parseRelativeTime(comment.createdAt)}
                     </p>
                     {sessionUser ? (
-                      <div className="dropdown-end dropdown-bottom dropdown">
+                      <div className="dropdown dropdown-end dropdown-bottom">
                         <label
                           tabIndex={0}
                           className="btn btn-ghost h-[initial] min-h-0 p-2"
