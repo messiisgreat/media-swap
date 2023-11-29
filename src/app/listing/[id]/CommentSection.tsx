@@ -144,7 +144,7 @@ export const CommentSection = ({
                       {parseRelativeTime(comment.createdAt)}
                     </p>
                     {sessionUser ? (
-                      <div className="dropdown-end dropdown-bottom dropdown">
+                      <div className="dropdown dropdown-end dropdown-bottom">
                         <label
                           tabIndex={0}
                           className="btn btn-ghost h-[initial] min-h-0 p-2"
