@@ -46,7 +46,8 @@ export function ImageInput({ id, labelText, ...props }: Props) {
             const outputBlob = Array.isArray(output) ? output[0] : output; // Assuming we use the first Blob if it's an array
 
             // Create a new File object from the Blob
-            return new File([outputBlob], `${file.name}.jpeg`, {
+            const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
+            return new File([outputBlob], newName, {
               type: "image/jpeg",
             });
           } catch (error) {
