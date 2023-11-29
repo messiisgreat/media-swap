@@ -136,12 +136,6 @@ devDependencies:
   '@testing-library/user-event':
     specifier: ^14.4.3
     version: 14.5.1(@testing-library/dom@9.3.3)
-  '@types/formidable':
-    specifier: ^3.4.5
-    version: 3.4.5
-  '@types/heic-convert':
-    specifier: ^1.2.3
-    version: 1.2.3
   '@types/jest':
     specifier: ^29.5.3
     version: 29.5.8
@@ -1274,20 +1268,10 @@ packages:
       '@types/ms': 0.7.34
     dev: true
 
-  /@types/formidable@3.4.5:
-    resolution: {integrity: sha512-s7YPsNVfnsng5L8sKnG/Gbb2tiwwJTY1conOkJzTMRvJAlLFW1nEua+ADsJQu8N1c0oTHx9+d5nqg10WuT9gHQ==}
-    dependencies:
-      '@types/node': 20.9.0
-    dev: true
-
   /@types/graceful-fs@4.1.9:
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
     dependencies:
       '@types/node': 20.9.0
-    dev: true
-
-  /@types/heic-convert@1.2.3:
-    resolution: {integrity: sha512-5LJ2fGuVk/gnOLihoT56xJwrXxfnNepGvrHwlW5ZtT3HS4jO1AqBaAHCxXUpnY9UaD3zYcyxXMRM2fNN1AFF/Q==}
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.6:
