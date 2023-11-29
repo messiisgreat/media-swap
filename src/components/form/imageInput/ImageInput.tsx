@@ -3,7 +3,6 @@
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
 import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
-import heic2any from "heic2any";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -36,20 +35,24 @@ export function ImageInput({ id, labelText, ...props }: Props) {
         const ext = file?.name.split(".").pop()?.toLowerCase();
         if (ext === "heic" || ext === "heif") {
           try {
-            const output = await heic2any({
-              blob: file,
-              toType: "image/jpeg",
-              quality: 0.7,
-            });
+            if (typeof window !== "undefined") {
+              // import heic2any from "heic2any";
+              // eslint-disable-next-line @typescript-eslint/no-var-requires
+              const heic2any = require("heic2any");
+              const output = await heic2any({
+                blob: file,
+                toType: "image/jpeg",
+                quality: 0.7,
+              });
+              // Check if the output is a single Blob or an array of Blobs
+              const outputBlob = Array.isArray(output) ? output[0] : output; // Assuming we use the first Blob if it's an array
 
-            // Check if the output is a single Blob or an array of Blobs
-            const outputBlob = Array.isArray(output) ? output[0] : output; // Assuming we use the first Blob if it's an array
-
-            // Create a new File object from the Blob
-            const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
-            return new File([outputBlob], newName, {
-              type: "image/jpeg",
-            });
+              // Create a new File object from the Blob
+              const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
+              return new File([outputBlob], newName, {
+                type: "image/jpeg",
+              });
+            }
           } catch (error) {
             console.error("Error converting HEIC/HEIF file:", error);
             return file; // Return the original file in case of an error
@@ -62,12 +65,17 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = processedFiles.slice(0, spaceLeft);
-      const filesWithPreview = acceptedFiles.map((file: File) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        }),
+      const filesWithPreview = acceptedFiles.map((file: File | undefined) =>
+        file
+          ? Object.assign(file, { preview: URL.createObjectURL(file) })
+          : undefined,
       ) as FileWithPreview[];
-      return [...previousFiles, ...filesWithPreview];
+      return [
+        ...previousFiles,
+        ...filesWithPreview.filter(
+          (file): file is FileWithPreview => file !== undefined,
+        ),
+      ];
     });
   }, []);
 
