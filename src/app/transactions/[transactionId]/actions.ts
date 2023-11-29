@@ -1,6 +1,11 @@
 "use server";
 
-import { createTransactionComment, getTransactionComments, markAsReadTransactionComments } from "@/services/transaction";
+import {
+  createTransactionComment,
+  getTransactionComments,
+  markAsReadTransactionComments,
+  updateTransactionStatus,
+} from "@/services/transaction";
 import { Session } from "next-auth";
 
 /**
@@ -12,11 +17,26 @@ import { Session } from "next-auth";
 export const fetchMessages = async (transactionId: string, userId: string) => {
   const [comments] = await Promise.all([
     getTransactionComments(transactionId),
-    markAsReadTransactionComments(transactionId, userId)
+    markAsReadTransactionComments(transactionId, userId),
   ]);
   return comments;
 };
 
+/**
+ * トランザクションのステータスを更新する
+ *
+ * @param id - トランザクションの取引ID
+ * @param stateId - 設定する新しい状態ID
+ */
+export const updateTransactionStateByTransactionId = async (
+  id: string,
+  stateId: number,
+) => {
+  await updateTransactionStatus({
+    id,
+    transactionStatus: stateId,
+  });
+};
 /**
  * メッセージを送信
  * @param message メッセージ
@@ -27,9 +47,9 @@ export const fetchMessages = async (transactionId: string, userId: string) => {
 export const sendMessage = async (
   message: string,
   sessionUser: Session["user"],
-  transactionId: string
+  transactionId: string,
 ) => {
   if (message.length > 300)
     throw new Error("メッセージは300文字以内で入力してください");
   await createTransactionComment(message, sessionUser.id, transactionId);
-}
+};
