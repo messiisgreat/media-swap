@@ -8,21 +8,22 @@ import {
   getComments,
 } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
-import { Session } from "next-auth";
-import { updateListingTransactionId, createListingReport } from "@/services/listing";
+import { updateListingTransactionId, createListingReport, deleteListing, findListingById } from "@/services/listing";
+import { getSessionUser } from "@/utils";
 
 /**
  * 購入ボタンを押したときのサーバー側処理
  * 取引を追加し、商品ページをrevalidateする
  * @param listingId - 購入対象の出品ID
- * @param buyerId - 購入対象のユーザーID
  * @param userCouponId - 購入対象のクーポンID
  */
 export const purchasing = async (
   listingId: string,
-  buyerId: string,
   userCouponId: string | null,
 ) => {
+  const buyer = await getSessionUser();
+  if (!buyer) throw new Error("ログインしてください");
+  const buyerId = buyer.id;
   const transaction = await createTransaction(listingId, buyerId, userCouponId);
   const transactionId = transaction.id;
   await updateListingTransactionId({ id: listingId }, transactionId);
@@ -32,16 +33,16 @@ export const purchasing = async (
 /**
  * コメントを書く
  * @param text コメント
- * @param sessionUser セッションユーザー
  * @param listingId 商品ID
  */
 export const addComment = async (
   text: string,
-  sessionUser: Session["user"],
   listingId: string,
 ) => {
   if (text.length > 300)
     throw new Error("コメントは300文字以内で入力してください");
+  const sessionUser = await getSessionUser();
+  if (!sessionUser) throw new Error("ログインしてください");
   await createComment(text, sessionUser.id, listingId);
 };
 
@@ -68,14 +69,12 @@ export const merchant = async (listingId: string, buyerId: string) => {
 /**
  * コメントの通報
  * @param commentId コメントID
- * @param userId 通報ユーザーID
  * @param reason 通報理由
  * @param verificationCode reCAPTCHA v3で取得した値
  * @returns
  */
 export const addCommentReport = async (
   commentId: string,
-  userId: string,
   reason: string,
   verificationCode: string,
 ) => {
@@ -92,6 +91,9 @@ export const addCommentReport = async (
       error: true,
     };
   }
+  const user = await getSessionUser();
+  if (!user) throw new Error("ログインしてください");
+  const userId = user.id;
   return await createCommentReport(commentId, userId, reason);
 };
 
@@ -133,4 +135,18 @@ export const addListingReport = async (
     };
   }
   return await createListingReport(listingId, userId, reason);
+}
+
+/**
+ * 商品の削除
+ * @param listingId 商品ID
+ * @returns 
+ */
+export const removeListing = async (listingId: string) => {
+  const listing = await findListingById(listingId);
+  const user = await getSessionUser();
+  if (listing.sellerId !== user?.id) {
+    throw new Error("商品の削除権限がありません");
+  }
+  return await deleteListing(listingId);
 }

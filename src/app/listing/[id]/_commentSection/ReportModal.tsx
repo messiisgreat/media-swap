@@ -58,7 +58,6 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
       try {
         const res = await addCommentReport(
           commentId,
-          sessionUser.id,
           reason,
           verificationCode || "",
         );
