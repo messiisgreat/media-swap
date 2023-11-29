@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ComponentProps, useCallback } from "react";
+import toast from "react-hot-toast";
 
 type Props = ComponentProps<typeof Button> & {
   listingId: string;
@@ -27,7 +28,12 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if (!buyerId) {
-      await signIn();
+      try {
+        await signIn();
+      } catch (e) {
+        console.error(e);
+        toast.error("ログインに失敗しました。");
+      }
       return;
     }
     const transactionId = await purchasing(listingId, userCouponId);
