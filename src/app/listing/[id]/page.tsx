@@ -7,6 +7,7 @@ import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/components/structure";
+import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
@@ -60,9 +61,9 @@ export default async function ListingPage({
       <Carousel images={images} />
       {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
       <div className="w-full">
-        <h1 className="text-left text-lg font-bold lg:text-2xl">
+        <H className="text-left text-lg font-bold lg:text-2xl">
           {listing.productName!}
-        </h1>
+        </H>
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
@@ -85,7 +86,7 @@ export default async function ListingPage({
             isListingOwner={isOwner}
           />
         </div>
-        <h2 className="text-lg font-bold text-neutral-400">商品の説明</h2>
+        <H className="text-lg font-bold text-neutral-400">商品の説明</H>
         <pre className="whitespace-pre-wrap text-base">
           {listing.description}
         </pre>
