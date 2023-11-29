@@ -63,9 +63,9 @@ export const createListingWithTagsAndImages = async (
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListingById = cache(async (id: string, deleted = false) => {
+export const findListingById = cache(async (id: string, isDeleted = false) => {
   return prisma.listing.findUniqueOrThrow({
-    where: { id, isPublic: true, isDeleted: deleted },
+    where: { id, isPublic: true, isDeleted },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
