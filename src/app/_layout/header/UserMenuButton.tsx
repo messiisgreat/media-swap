@@ -4,6 +4,7 @@ import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 type UserMenuButtonProps = {
   session: Session | null;
@@ -44,7 +45,7 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
       </label>
       <ul
         tabIndex={0}
-        className="menu dropdown-content rounded-box menu-sm z-30 mt-3 w-52 bg-base-100 p-2 shadow"
+        className="menu dropdown-content menu-sm z-30 mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
       >
         {user ? (
           <>
@@ -54,9 +55,9 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
               </button>
             </li>
             <li>
-              <button onClick={() => signOut({ callbackUrl: "/mypage" })}>
+              <Link href="/mypage">
                 マイページ
-              </button>
+              </Link>
             </li>
           </>
         ) : (

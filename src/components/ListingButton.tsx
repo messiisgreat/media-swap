@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { ButtonAsLink } from "@/components/Button";
 import { LuBox } from "react-icons/lu";
 
 /**
@@ -7,16 +7,16 @@ import { LuBox } from "react-icons/lu";
  */
 export const ListingButton = ({ className }: { className?: string }) => {
   return (
-    <Link
+    <ButtonAsLink
       href="/add-listing"
       title="出品する"
-      className={`flex h-16 w-16 flex-col items-center justify-center gap-1 
-      rounded-full bg-primary font-bold text-white hover:bg-primary-focus ${
-        className ? className : ""
+      className={`flex h-16 w-16 flex-col items-center justify-center 
+      gap-1 rounded-full font-bold text-white ${
+        className || ""
       }`}
     >
       <LuBox size={28} />
       <span className="text-xs">出品</span>
-    </Link>
+    </ButtonAsLink>
   );
 };
