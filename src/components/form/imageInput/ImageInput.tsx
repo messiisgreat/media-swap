@@ -3,6 +3,7 @@
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
 import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
+import heic2any from "heic2any";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -31,7 +32,31 @@ export function ImageInput({ id, labelText, ...props }: Props) {
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await Promise.all(
-      droppedFiles.map((file) => addGrayBackground(file)),
+      droppedFiles.map(async (file) => {
+        const ext = file?.name.split(".").pop()?.toLowerCase();
+        if (ext === "heic" || ext === "heif") {
+          try {
+            const output = await heic2any({
+              blob: file,
+              toType: "image/jpeg",
+              quality: 0.7,
+            });
+
+            // Check if the output is a single Blob or an array of Blobs
+            const outputBlob = Array.isArray(output) ? output[0] : output; // Assuming we use the first Blob if it's an array
+
+            // Create a new File object from the Blob
+            return new File([outputBlob], `${file.name}.jpeg`, {
+              type: "image/jpeg",
+            });
+          } catch (error) {
+            console.error("Error converting HEIC/HEIF file:", error);
+            return file; // Return the original file in case of an error
+          }
+        } else {
+          return addGrayBackground(file);
+        }
+      }),
     );
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
@@ -49,6 +74,8 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     onDrop,
     accept: {
       "image/*": [],
+      ".heic": [],
+      ".heif": [],
     },
     multiple: true,
     noClick: true,
