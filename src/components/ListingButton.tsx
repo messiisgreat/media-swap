@@ -12,7 +12,7 @@ export const ListingButton = ({ className }: { className?: string }) => {
       title="出品する"
       className={`flex h-16 w-16 flex-col items-center justify-center 
       gap-1 rounded-full font-bold text-white ${
-        className ? className : ""
+        className || ""
       }`}
     >
       <LuBox size={28} />
