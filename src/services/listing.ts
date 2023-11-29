@@ -59,12 +59,13 @@ export const createListingWithTagsAndImages = async (
  * 商品を取得する
  *
  * @param {string} id - 取得対象の製品のID
+ * @param {boolean} deleted - 削除済みの製品を取得するかどうか
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListingById = cache(async (id: string) => {
+export const findListingById = cache(async (id: string, deleted = false) => {
   return prisma.listing.findUniqueOrThrow({
-    where: { id, isPublic: true },
+    where: { id, isPublic: true, isDeleted: deleted },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
@@ -92,7 +93,7 @@ export type ListingOrderBy =
 export const findListings = cache(
   async (page: number, size: number, orderBy: ListingOrderBy) => {
     return prisma.listing.findMany({
-      where: { isPublic: true },
+      where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -124,7 +125,7 @@ export const findListingsByProductName = cache(
     orderBy: ListingOrderBy,
   ) => {
     return prisma.listing.findMany({
-      where: { productName: { contains: query }, isPublic: true },
+      where: { productName: { contains: query }, isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -152,7 +153,7 @@ export const findListingsBySellerId = cache(
     isPublic?: boolean,
   ) => {
     return prisma.listing.findMany({
-      where: { sellerId, isPublic: isPublic },
+      where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -172,7 +173,7 @@ export const findListingsBySellerId = cache(
  * 商品総数を取得する
  */
 export const countListings = cache(async () => {
-  return prisma.listing.count();
+  return prisma.listing.count({ where: { isPublic: true, isDeleted: false }});
 });
 
 /**
@@ -180,7 +181,7 @@ export const countListings = cache(async () => {
  * @param query 検索クエリ
  */
 export const countListingsByProductName = cache(async (query: string) => {
-  return prisma.listing.count({ where: { productName: { contains: query } } });
+  return prisma.listing.count({ where: { productName: { contains: query }, isDeleted: false } });
 });
 
 /**
@@ -188,7 +189,7 @@ export const countListingsByProductName = cache(async (query: string) => {
  */
 export const countListingsBySellerId = cache(
   async (sellerId: string, isPublic?: boolean) => {
-    return prisma.listing.count({ where: { sellerId, isPublic: isPublic } });
+    return prisma.listing.count({ where: { sellerId, isPublic: isPublic, isDeleted: false } });
   },
 );
 
@@ -201,6 +202,7 @@ export const countListingsByBuyerId = cache(async (buyerId: string) => {
       transaction: {
         buyerId,
       },
+      isDeleted: false,
     },
   });
 });
@@ -221,6 +223,7 @@ export const findListingsByBuyerId = cache(
           buyerId,
         },
         isPublic: true,
+        isDeleted: false,
       },
       skip: (page - 1) * size,
       take: size,
@@ -243,7 +246,10 @@ export const findListingsByBuyerId = cache(
  * @param id - 削除対象の商品のID
  */
 export const deleteListing = async (id: string) => {
-  return prisma.listing.delete({ where: { id } });
+  return prisma.listing.update({
+    where: { id },
+    data: { isDeleted: true },
+  });
 };
 
 /**
