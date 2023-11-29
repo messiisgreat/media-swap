@@ -56,6 +56,9 @@ dependencies:
   heic-convert:
     specifier: ^2.0.0
     version: 2.0.0
+  heic2any:
+    specifier: ^0.0.4
+    version: 0.0.4
   jotai:
     specifier: ^2.5.1
     version: 2.5.1(@types/react@18.2.37)(react@18.2.0)
@@ -3364,6 +3367,10 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       libheif-js: 1.17.1
+    dev: false
+
+  /heic2any@0.0.4:
+    resolution: {integrity: sha512-3lLnZiDELfabVH87htnRolZ2iehX9zwpRyGNz22GKXIu0fznlblf0/ftppXKNqS26dqFSeqfIBhAmAj/uSp0cA==}
     dev: false
 
   /hexoid@1.0.0:
