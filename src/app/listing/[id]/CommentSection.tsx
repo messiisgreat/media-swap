@@ -152,7 +152,7 @@ export const CommentSection = ({
                         </label>
                         <ul
                           tabIndex={0}
-                          className="menu dropdown-content rounded-box z-[1] w-24 gap-2 bg-base-100 p-2 text-red-500 shadow"
+                          className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 text-red-500 shadow"
                         >
                           {comment.userId !== sessionUser.id ? (
                             <li
