@@ -86,7 +86,7 @@ export default async function ListingPage({
           />
         </div>
         <h2 className="text-lg font-bold text-neutral-400">商品の説明</h2>
-        <pre className="text-base whitespace-pre-wrap">
+        <pre className="whitespace-pre-wrap text-base">
           {listing.description}
         </pre>
         {listing.transactionId ? (
