@@ -9,7 +9,7 @@ import {
 } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
 import { Session } from "next-auth";
-import { updateListingTransactionId } from "@/services/listing";
+import { updateListingTransactionId, createListingReport } from "@/services/listing";
 
 /**
  * 購入ボタンを押したときのサーバー側処理
@@ -104,3 +104,33 @@ export const addCommentReport = async (
 export const removeComment = async (commentId: string, userId: string) => {
   return await deleteListingComment(commentId, userId);
 };
+
+/**
+ * 商品の通報
+ * @param listingId 商品ID
+ * @param userId 通報ユーザーID
+ * @param reason 通報理由
+ * @param verificationCode reCAPTCHA認証コード
+ * @returns 
+ */
+export const addListingReport = async (
+  listingId: string,
+  userId: string,
+  reason: string,
+  verificationCode: string,
+) => {
+  if (!verificationCode) {
+    return {
+      message: "認証を行ってください",
+      error: true,
+    };
+  }
+  const verifyResult = await fetchVerifyResult(verificationCode);
+  if (!verifyResult) {
+    return {
+      message: "認証に失敗しました。再度認証を行ってください",
+      error: true,
+    };
+  }
+  return await createListingReport(listingId, userId, reason);
+}

@@ -277,3 +277,36 @@ export const updateListingTransactionId  = async (
     },
   });
 };
+
+/**
+ * 商品を通報
+ * @param listingId 商品ID
+ * @param reporterId 通報ユーザーID
+ * @param reason 通報理由
+ * @returns 
+ */
+export const createListingReport = async (
+  listingId: string,
+  reporterId: string,
+  reason: string,
+) => {
+  // 既に同じユーザーによる通報があるか確認
+  const existingReport = await prisma.listingReport.findFirst({
+    where: {
+      listingId,
+      userId: reporterId,
+    },
+  });
+
+  if (existingReport) {
+    throw new Error("This comment has already been reported by the user.");
+  }
+
+  return prisma.listingReport.create({
+    data: {
+      listingId,
+      userId: reporterId,
+      comment: reason,
+    },
+  });
+}

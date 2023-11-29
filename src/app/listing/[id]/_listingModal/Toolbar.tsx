@@ -1,0 +1,54 @@
+"use client";
+import { useReportModal } from "@/app/listing/[id]/_listingModal/ReportModal";
+import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
+import { Session } from "next-auth";
+
+/**
+ * 削除/通報用のツールバー
+ * @todo 編集もここかも
+ * @returns
+ */
+export default function Toolbar({
+  listingId,
+  sessionUser,
+}: {
+  listingId: string;
+  sessionUser: Session["user"] | null;
+}) {
+  const { openReportModal, ReportModal } = useReportModal({
+    listingId,
+    sessionUser,
+  });
+
+  return (
+    <>
+      <div className="dropdown dropdown-end dropdown-bottom">
+        <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
+          <FaEllipsis />
+        </label>
+        <ul
+          tabIndex={0}
+          className="menu dropdown-content rounded-box z-[1] w-24 gap-2 bg-base-100 p-2 text-red-500 shadow"
+        >
+          <li
+            onClick={() => {
+              openReportModal();
+            }}
+          >
+            <div className="flex items-center whitespace-nowrap">
+              <FaFlag />
+              通報
+            </div>
+          </li>
+          <li>
+            <div className="flex items-center whitespace-nowrap">
+              <FaTrash />
+              削除
+            </div>
+          </li>
+        </ul>
+      </div>
+      <ReportModal />
+    </>
+  );
+}
