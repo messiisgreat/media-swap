@@ -42,7 +42,7 @@ export const useDeleteModal = ({
     }
 
     try {
-      await removeComment(commentId, sessionUser.id);
+      await removeComment(commentId);
       toast.success("コメントを削除しました。");
       setComments((prev) =>
         prev!.filter((comment) => comment.id !== commentId),
