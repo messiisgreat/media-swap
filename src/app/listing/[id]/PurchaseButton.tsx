@@ -28,13 +28,10 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if (!buyerId) {
-      try {
-        await signIn();
-      } catch (e) {
-        console.error(e);
+      const signInResult = await signIn();
+      if (!signInResult) {
         toast.error("ログインに失敗しました。");
       }
-      return;
     }
     const transactionId = await purchasing(listingId, userCouponId);
     router.push(`/transactions/${transactionId}`);
