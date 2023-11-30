@@ -16,7 +16,7 @@ type useFormActionModalResult = {
  * @returns open,  FormActionModal
  */
 export const useFormActionModal = (
-  action: (formData: FormData) => void,
+  action: (formData: FormData) => void | Promise<void>,
   actionText: string = "実行する",
 ): useFormActionModalResult => {
   const { open, close, Dialog } = useDialog();
@@ -33,8 +33,8 @@ export const useFormActionModal = (
           </button>
           <form
             className="flex flex-col gap-4"
-            action={(f) => {
-              action(f);
+            action={async (f) => {
+              await action(f);
               close();
             }}
           >

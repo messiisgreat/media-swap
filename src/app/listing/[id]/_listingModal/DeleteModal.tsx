@@ -1,16 +1,15 @@
-import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
-import { removeComment } from "@/app/listing/[id]/actions";
+import { removeListing } from "@/app/listing/[id]/actions";
 import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import { H } from "@/components/structure/H";
-import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { FaFlag } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 
 type Props = {
-  commentId: string | null;
+  listingId: string;
   sessionUser: Session["user"] | null;
   isListingOwner: boolean;
 };
@@ -19,46 +18,38 @@ type Props = {
  * コメントの削除モーダル
  */
 export const useDeleteModal = ({
-  commentId,
+  listingId,
   sessionUser,
   isListingOwner,
 }: Props) => {
-  const setComments = useSetAtom(commentsAtom);
-
-  const deleteComment = useCallback(async () => {
-    if (!commentId) {
-      toast.error("削除するコメントが選択されていません");
-      return;
-    }
-
+  const router = useRouter();
+  const deleteListing = useCallback(async () => {
     if (!sessionUser) {
       toast.error("ログインしてください");
       return;
     }
 
     if (!isListingOwner) {
-      toast.error("商品の出品者のみがコメントを削除できます");
+      toast.error("商品の出品者のみが商品を削除できます");
       return;
     }
 
     try {
-      await removeComment(commentId);
-      toast.success("コメントを削除しました。");
-      setComments((prev) =>
-        prev!.filter((comment) => comment.id !== commentId),
-      );
+      await removeListing(listingId);
+      toast.success("商品を削除しました。");
+      router.push("/");
     } catch (e: unknown) {
-      toast.error("コメントの削除に失敗しました。");
+      toast.error("商品の削除に失敗しました。");
     }
-  }, [commentId, sessionUser, isListingOwner, setComments]);
+  }, [listingId, sessionUser, isListingOwner, router]);
 
-  const { open, FormActionModal } = useFormActionModal(deleteComment, "削除");
+  const { open, FormActionModal } = useFormActionModal(deleteListing, "削除");
 
   const DeleteModal = useCallback(
     () => (
       <FormActionModal>
-        <H className="text-center text-lg font-bold">コメントの削除</H>
-        <p className="py-2">コメントを削除してもよろしいですか？</p>
+        <H className="text-center text-lg font-bold">商品の削除</H>
+        <p className="py-2">商品を削除してもよろしいですか？</p>
         <div className="alert alert-warning mb-4" role="alert">
           <FaTriangleExclamation className="text-2xl" />
           <p>この操作は取り消せません。</p>
@@ -66,7 +57,7 @@ export const useDeleteModal = ({
         <div className="alert mb-4" role="alert">
           <FaFlag className="text-2xl" />
           <p>
-            利用規約に違反しているコメントの場合は、先に通報を行ってください。
+            一時的に出品を停止したい場合は、商品の編集画面から「出品を停止する」を選択してください。
           </p>
         </div>
       </FormActionModal>

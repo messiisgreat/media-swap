@@ -59,12 +59,13 @@ export const createListingWithTagsAndImages = async (
  * 商品を取得する
  *
  * @param {string} id - 取得対象の製品のID
+ * @param {boolean} deleted - 削除済みの製品を取得するかどうか
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListingById = cache(async (id: string) => {
+export const findListingById = cache(async (id: string, isDeleted = false) => {
   return prisma.listing.findUniqueOrThrow({
-    where: { id, isPublic: true },
+    where: { id, isPublic: true, isDeleted },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
       tags: {
@@ -92,7 +93,7 @@ export type ListingOrderBy =
 export const findListings = cache(
   async (page: number, size: number, orderBy: ListingOrderBy) => {
     return prisma.listing.findMany({
-      where: { isPublic: true },
+      where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -124,7 +125,11 @@ export const findListingsByProductName = cache(
     orderBy: ListingOrderBy,
   ) => {
     return prisma.listing.findMany({
-      where: { productName: { contains: query }, isPublic: true },
+      where: {
+        productName: { contains: query },
+        isPublic: true,
+        isDeleted: false,
+      },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -152,7 +157,7 @@ export const findListingsBySellerId = cache(
     isPublic?: boolean,
   ) => {
     return prisma.listing.findMany({
-      where: { sellerId, isPublic: isPublic },
+      where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -172,7 +177,7 @@ export const findListingsBySellerId = cache(
  * 商品総数を取得する
  */
 export const countListings = cache(async () => {
-  return prisma.listing.count();
+  return prisma.listing.count({ where: { isPublic: true, isDeleted: false } });
 });
 
 /**
@@ -180,7 +185,9 @@ export const countListings = cache(async () => {
  * @param query 検索クエリ
  */
 export const countListingsByProductName = cache(async (query: string) => {
-  return prisma.listing.count({ where: { productName: { contains: query } } });
+  return prisma.listing.count({
+    where: { productName: { contains: query }, isDeleted: false },
+  });
 });
 
 /**
@@ -188,7 +195,9 @@ export const countListingsByProductName = cache(async (query: string) => {
  */
 export const countListingsBySellerId = cache(
   async (sellerId: string, isPublic?: boolean) => {
-    return prisma.listing.count({ where: { sellerId, isPublic: isPublic } });
+    return prisma.listing.count({
+      where: { sellerId, isPublic: isPublic, isDeleted: false },
+    });
   },
 );
 
@@ -201,6 +210,7 @@ export const countListingsByBuyerId = cache(async (buyerId: string) => {
       transaction: {
         buyerId,
       },
+      isDeleted: false,
     },
   });
 });
@@ -221,6 +231,7 @@ export const findListingsByBuyerId = cache(
           buyerId,
         },
         isPublic: true,
+        isDeleted: false,
       },
       skip: (page - 1) * size,
       take: size,
@@ -243,7 +254,10 @@ export const findListingsByBuyerId = cache(
  * @param id - 削除対象の商品のID
  */
 export const deleteListing = async (id: string) => {
-  return prisma.listing.delete({ where: { id } });
+  return prisma.listing.update({
+    where: { id },
+    data: { isDeleted: true },
+  });
 };
 
 /**
@@ -266,14 +280,47 @@ export const updateListing = async (
  * @param listing - 更新対象の商品
  * @param transactionId - 更新後のtransactionId
  */
-export const updateListingTransactionId  = async (
+export const updateListingTransactionId = async (
   listing: { id: string } & Partial<Listing>,
-  transactionId: string
+  transactionId: string,
 ) => {
   return prisma.listing.update({
     where: { id: listing.id },
     data: {
-      transactionId: transactionId
+      transactionId: transactionId,
+    },
+  });
+};
+
+/**
+ * 商品を通報
+ * @param listingId 商品ID
+ * @param reporterId 通報ユーザーID
+ * @param reason 通報理由
+ * @returns
+ */
+export const createListingReport = async (
+  listingId: string,
+  reporterId: string,
+  reason: string,
+) => {
+  // 既に同じユーザーによる通報があるか確認
+  const existingReport = await prisma.listingReport.findFirst({
+    where: {
+      listingId,
+      userId: reporterId,
+    },
+  });
+
+  if (existingReport) {
+    throw new Error("This comment has already been reported by the user.");
+  }
+
+  return prisma.listingReport.create({
+    data: {
+      listingId,
+      userId: reporterId,
+      comment: reason,
     },
   });
 };

@@ -1,11 +1,12 @@
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
-import { ProtButton } from "@/app/listing/[id]/ProtButton";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
+import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section, TitleUnderbar } from "@/components/structure";
+import { Section, TitleUnderbar } from "@/components/structure";
+import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
@@ -51,12 +52,19 @@ export default async function ListingPage({
   const images = listing.images;
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
-  const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
+  const isOwner = userId === listing.sellerId;
+  const price = listing.price?.toLocaleString("ja-JP");
+  const shippingMethod = listing.postageIsIncluded ? "送料込み" : "着払い";
 
   return (
-    <>
+    <VerifyProvider>
       <Carousel images={images} />
-      <PageTitle title={listing.productName!} />
+      {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
+      <div className="w-full">
+        <H className="text-left text-lg font-bold lg:text-2xl">
+          {listing.productName!}
+        </H>
+      </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
@@ -67,8 +75,22 @@ export default async function ListingPage({
             </Link>
           ))}
         </div>
-        <Badge className="badge-lg">¥{listing.price}</Badge>
-        <p>{listing.description}</p>
+        <div>
+          <span className="text-sm text-neutral-400">¥</span>
+          <span className="text-2xl">{price}</span>
+          <span className="pl-1 text-sm">{shippingMethod}</span>
+        </div>
+        <div className="flex w-full justify-end">
+          <Toolbar
+            listingId={listing.id}
+            sessionUser={user}
+            isListingOwner={isOwner}
+          />
+        </div>
+        <H className="text-lg font-bold text-neutral-400">商品の説明</H>
+        <pre className="whitespace-pre-wrap text-base">
+          {listing.description}
+        </pre>
         {listing.transactionId ? (
           <div>
             <p>すでに商品を購入しています！</p>
@@ -80,39 +102,21 @@ export default async function ListingPage({
             </ButtonAsLink>
           </div>
         ) : (
-          <PurchaseButton
-            disabled={!userId || isOwner}
-            listingId={listing.id}
-            buyerId={userId!}
-            userCouponId={null}
-          />
+          !isOwner && (
+            <PurchaseButton
+              listingId={listing.id}
+              buyerId={userId!}
+              userCouponId={null}
+            />
+          )
         )}
-        <div className="mt-4 flex flex-col gap-2">
-          <ProtButton data={listing} status={0}>
-            支払前
-          </ProtButton>
-          <ProtButton data={listing} status={1}>
-            支払完了
-          </ProtButton>
-          <ProtButton data={listing} status={2}>
-            発送済
-          </ProtButton>
-          <ProtButton data={listing} status={3}>
-            受取完了
-          </ProtButton>
-          <ProtButton data={listing} status={4}>
-            取引キャンセル
-          </ProtButton>
-        </div>
       </Section>
       <TitleUnderbar title="コメント" />
-      <VerifyProvider>
-        <CommentSection
-          listingId={listing.id}
-          sessionUser={user}
-          isListingOwner={isOwner}
-        />
-      </VerifyProvider>
-    </>
+      <CommentSection
+        listingId={listing.id}
+        sessionUser={user}
+        isListingOwner={isOwner}
+      />
+    </VerifyProvider>
   );
 }
