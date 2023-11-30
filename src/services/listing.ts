@@ -125,7 +125,11 @@ export const findListingsByProductName = cache(
     orderBy: ListingOrderBy,
   ) => {
     return prisma.listing.findMany({
-      where: { productName: { contains: query }, isPublic: true, isDeleted: false },
+      where: {
+        productName: { contains: query },
+        isPublic: true,
+        isDeleted: false,
+      },
       skip: (page - 1) * size,
       take: size,
       include: {
@@ -173,7 +177,7 @@ export const findListingsBySellerId = cache(
  * 商品総数を取得する
  */
 export const countListings = cache(async () => {
-  return prisma.listing.count({ where: { isPublic: true, isDeleted: false }});
+  return prisma.listing.count({ where: { isPublic: true, isDeleted: false } });
 });
 
 /**
@@ -181,7 +185,9 @@ export const countListings = cache(async () => {
  * @param query 検索クエリ
  */
 export const countListingsByProductName = cache(async (query: string) => {
-  return prisma.listing.count({ where: { productName: { contains: query }, isDeleted: false } });
+  return prisma.listing.count({
+    where: { productName: { contains: query }, isDeleted: false },
+  });
 });
 
 /**
@@ -189,7 +195,9 @@ export const countListingsByProductName = cache(async (query: string) => {
  */
 export const countListingsBySellerId = cache(
   async (sellerId: string, isPublic?: boolean) => {
-    return prisma.listing.count({ where: { sellerId, isPublic: isPublic, isDeleted: false } });
+    return prisma.listing.count({
+      where: { sellerId, isPublic: isPublic, isDeleted: false },
+    });
   },
 );
 
@@ -272,14 +280,14 @@ export const updateListing = async (
  * @param listing - 更新対象の商品
  * @param transactionId - 更新後のtransactionId
  */
-export const updateListingTransactionId  = async (
+export const updateListingTransactionId = async (
   listing: { id: string } & Partial<Listing>,
-  transactionId: string
+  transactionId: string,
 ) => {
   return prisma.listing.update({
     where: { id: listing.id },
     data: {
-      transactionId: transactionId
+      transactionId: transactionId,
     },
   });
 };
@@ -289,7 +297,7 @@ export const updateListingTransactionId  = async (
  * @param listingId 商品ID
  * @param reporterId 通報ユーザーID
  * @param reason 通報理由
- * @returns 
+ * @returns
  */
 export const createListingReport = async (
   listingId: string,
@@ -315,4 +323,4 @@ export const createListingReport = async (
       comment: reason,
     },
   });
-}
+};

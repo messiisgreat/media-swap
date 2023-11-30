@@ -9,6 +9,10 @@ import {
  * @returns footer
  */
 export function Footer() {
-
-  return <><FooterMobileContent /><FooterContent /></>;
+  return (
+    <>
+      <FooterMobileContent />
+      <FooterContent />
+    </>
+  );
 }

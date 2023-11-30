@@ -45,10 +45,7 @@ export const updateTransactionStateByTransactionId = async (
  * @param transactionId 取引ID
  * @returns
  */
-export const sendMessage = async (
-  message: string,
-  transactionId: string,
-) => {
+export const sendMessage = async (message: string, transactionId: string) => {
   const sessionUser = await getSessionUser();
   if (!sessionUser) throw new Error("ログインしてください");
   if (message.length > 300)

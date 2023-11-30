@@ -12,7 +12,7 @@ import { useDeleteModal } from "@/app/listing/[id]/_listingModal/DeleteModal";
 export default function Toolbar({
   listingId,
   sessionUser,
-  isListingOwner
+  isListingOwner,
 }: {
   listingId: string;
   sessionUser: Session["user"] | null;
@@ -25,7 +25,7 @@ export default function Toolbar({
   const { openDeleteModal, DeleteModal } = useDeleteModal({
     listingId,
     sessionUser,
-    isListingOwner
+    isListingOwner,
   });
 
   return (
