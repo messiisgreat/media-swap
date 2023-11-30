@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-elements */
 "use client";
 
 import { useLevel } from "@/components/structure/context";
