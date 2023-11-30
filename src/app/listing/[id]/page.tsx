@@ -53,7 +53,7 @@ export default async function ListingPage({
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
-  const price = listing.price?.toLocaleString();
+  const price = listing.price?.toLocaleString("ja-JP");
   const shippingMethod = listing.postageIsIncluded ? "送料込み" : "着払い";
 
   return (
