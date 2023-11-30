@@ -2,7 +2,10 @@
 
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
-import { processDroppedFiles } from "@/components/form/imageInput/utils";
+import {
+  addFileWithPreview,
+  processDroppedFiles,
+} from "@/components/form/imageInput/utils";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -31,21 +34,7 @@ export function ImageInput({ id, labelText, ...props }: Props) {
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await processDroppedFiles(droppedFiles);
-    setFiles((previousFiles) => {
-      const spaceLeft = 10 - previousFiles.length;
-      const acceptedFiles = processedFiles.slice(0, spaceLeft);
-      const filesWithPreview = acceptedFiles.map((file: File | undefined) =>
-        file
-          ? Object.assign(file, { preview: URL.createObjectURL(file) })
-          : undefined,
-      ) as FileWithPreview[];
-      return [
-        ...previousFiles,
-        ...filesWithPreview.filter(
-          (file): file is FileWithPreview => file !== undefined,
-        ),
-      ];
-    });
+    setFiles((prevFiles) => addFileWithPreview(prevFiles, processedFiles, 10));
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({

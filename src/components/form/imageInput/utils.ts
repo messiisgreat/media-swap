@@ -1,5 +1,7 @@
 import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 
+type FileWithPreview = File & { preview: string };
+
 /**
  * ドロップされたファイルを処理する
  * @param droppedFiles ドロップされたファイル
@@ -32,5 +34,21 @@ export const processDroppedFiles = async (droppedFiles: File[]) => {
         return addGrayBackground(file);
       }
     }),
-  );
+  ).then((files) => files.filter((file): file is FileWithPreview => !!file));
+};
+
+/**
+ * ファイルを追加する
+ * @param existingFiles 既存のファイル
+ * @param newFiles 追加するファイル
+ * @param maxFiles 最大ファイル数
+ */
+export const addFileWithPreview = (
+  existingFiles: FileWithPreview[],
+  newFiles: FileWithPreview[],
+  maxFiles: number,
+): FileWithPreview[] => {
+  const spaceLeft = maxFiles - existingFiles.length;
+  const acceptedFiles = newFiles.slice(0, spaceLeft);
+  return [...existingFiles, ...acceptedFiles];
 };
