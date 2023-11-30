@@ -1,9 +1,9 @@
 "use client";
 
 import { Input } from "@/components/form/Elements";
+import { HANDING_CHARGE_RATE } from "@/constants/listing";
 import { ChangeEvent, ComponentProps, useState } from "react";
 import { z } from "zod";
-import { HANDING_CHARGE_RATE } from "@/constants/listing";
 
 type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
 
@@ -15,9 +15,7 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
   const [handlingCharge, setHandlingCharge] = useState(0);
   const [amountAfterCharge, setAmountAfterCharge] = useState(0);
   const [isOverLimit, setIsOverLimit] = useState(false);
-  const valueSchema = z
-    .number()
-    .refine((val) => 300 <= val && val <= 10000000);
+  const valueSchema = z.number().refine((val) => 300 <= val && val <= 10000000);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const amount = Number(e.target.value);
@@ -46,11 +44,11 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
         onChange={handleChange}
         {...props}
       />
-      { isOverLimit &&
+      {isOverLimit && (
         <label className="label-text-alt flex justify-between text-error">
           300～10,000,000円の範囲内で入力してください。
         </label>
-      }
+      )}
       <div className="flex justify-between">
         <label>販売手数料</label>
         <div>

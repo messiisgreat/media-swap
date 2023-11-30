@@ -26,7 +26,8 @@ const create = async (
   userId: string,
   previousPrice: number | null = null,
 ) => {
-  const { tags, imageFiles, isPublic, postageIsIncluded, ...rest } = formData;
+  const { tags, imageFiles, isPublic, postageIsIncluded, price, ...rest } =
+    formData;
   const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
   const listing: UnregisteredListing = {
@@ -34,6 +35,7 @@ const create = async (
     sellerId: userId,
     isPublic: strToBool(isPublic),
     postageIsIncluded: strToBool(postageIsIncluded),
+    price: Number(price),
     ...rest,
   };
   return createListingWithTagsAndImages(listing, tagTexts, images);
