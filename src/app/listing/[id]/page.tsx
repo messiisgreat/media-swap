@@ -1,6 +1,5 @@
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
-import { ProtButton } from "@/app/listing/[id]/ProtButton";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
@@ -101,29 +100,14 @@ export default async function ListingPage({
             </ButtonAsLink>
           </div>
         ) : (
-          <PurchaseButton
-            disabled={!userId || isOwner}
-            listingId={listing.id}
-            userCouponId={null}
-          />
+          !isOwner && (
+            <PurchaseButton
+              listingId={listing.id}
+              buyerId={userId!}
+              userCouponId={null}
+            />
+          )
         )}
-        <div className="mt-4 flex flex-col gap-2">
-          <ProtButton data={listing} status={0}>
-            支払前
-          </ProtButton>
-          <ProtButton data={listing} status={1}>
-            支払完了
-          </ProtButton>
-          <ProtButton data={listing} status={2}>
-            発送済
-          </ProtButton>
-          <ProtButton data={listing} status={3}>
-            受取完了
-          </ProtButton>
-          <ProtButton data={listing} status={4}>
-            取引キャンセル
-          </ProtButton>
-        </div>
       </Section>
       <TitleUnderbar title="コメント" />
       <CommentSection

@@ -1,5 +1,6 @@
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
+import { TransactionChangeButton } from "@/app/transactions/[transactionId]/TransactionChangeButton";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/services/transaction";
 import { getSessionUser } from "@/utils/session";
@@ -43,6 +44,10 @@ export default async function Transaction({
           transaction={transaction}
           sessionUser={sessionUser}
         />
+        {/* 通常の取引更新用ボタン */}
+        <TransactionChangeButton transaction={transaction} />
+        {/* 取引キャンセル用ボタン */}
+        <TransactionChangeButton transaction={transaction} isCancel={true} />
         <div>
           <p>出品者情報</p>
           {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}
@@ -64,7 +69,6 @@ export default async function Transaction({
           </div>
         </div>
       </aside>
-
       <MessageSection transaction={transaction} sessionUser={sessionUser} />
     </div>
   );

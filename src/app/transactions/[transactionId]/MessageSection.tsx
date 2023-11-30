@@ -41,7 +41,7 @@ export function MessageSection({
   const reloadMessage = useCallback(async () => {
     setIsReloading(true);
     try {
-      const res = await fetchMessages(transaction.id, sessionUser.id);
+      const res = await fetchMessages(transaction.id);
       setMessages(res);
       chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight);
     } catch (e) {
@@ -50,7 +50,7 @@ export function MessageSection({
     } finally {
       setIsReloading(false);
     }
-  }, [transaction.id, sessionUser.id]);
+  }, [transaction.id]);
 
   useEffect(() => {
     reloadMessage();
@@ -71,8 +71,8 @@ export function MessageSection({
     }
 
     try {
-      await sendMessage(message, sessionUser, transaction.id);
-      setMessages(await fetchMessages(transaction.id, sessionUser.id));
+      await sendMessage(message, transaction.id);
+      setMessages(await fetchMessages(transaction.id));
       toast.success("メッセージを送信しました。");
       setTimeout(
         () =>
