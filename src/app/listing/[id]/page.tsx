@@ -54,6 +54,7 @@ export default async function ListingPage({
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
   const price = listing.price?.toLocaleString();
+  const shippingMethod = listing.postageIsIncluded ? "送料込み" : "着払い";
 
   return (
     <VerifyProvider>
@@ -77,6 +78,7 @@ export default async function ListingPage({
         <div>
           <span className="text-sm text-neutral-400">¥</span>
           <span className="text-2xl">{price}</span>
+          <span className="pl-1 text-sm">{shippingMethod}</span>
         </div>
         <div className="flex w-full justify-end">
           <Toolbar
