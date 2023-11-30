@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { SITE_NAME } from "@/constants/site";
 
 /**
@@ -7,9 +8,9 @@ export default function GuideActionPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">{SITE_NAME}ガイド</h2>
+        <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
         <div className="py-6">
-          <h3 className="text-lg font-bold">禁止されている行為</h3>
+          <H className="text-lg font-bold">禁止されている行為</H>
           <p className="py-4">
             {SITE_NAME}
             は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。
@@ -20,7 +21,7 @@ export default function GuideActionPage() {
           </p>
         </div>
         <div className="py-6">
-          <h4 className="text-lg font-bold">取引に関する注意点</h4>
+          <H className="text-lg font-bold">取引に関する注意点</H>
           <ul className="list-disc px-4">
             <li>{SITE_NAME}が提供していない支払い手段の使用を推奨すること</li>
             <li>商品情報が不明確な取引</li>
@@ -33,7 +34,7 @@ export default function GuideActionPage() {
           </ul>
         </div>
         <div className="py-6">
-          <h4 className="text-lg font-bold">発送に関する注意</h4>
+          <H className="text-lg font-bold">発送に関する注意</H>
           <ul className="list-disc px-4">
             <li>
               価格に送料が含まれている商品を、送料を除外して(着払い)で送る行為
@@ -45,7 +46,7 @@ export default function GuideActionPage() {
           </ul>
         </div>
         <div className="py-6">
-          <h4 className="text-lg font-bold">出品に関する注意点</h4>
+          <H className="text-lg font-bold">出品に関する注意点</H>
           <ul className="list-disc px-4">
             <li>
               法的な許可や報告、ライセンスが必要なアイテムを、それらの確認なしにリスト化すること
@@ -68,7 +69,7 @@ export default function GuideActionPage() {
           </ul>
         </div>
         <div className="py-6">
-          <h4 className="text-lg font-bold">その他</h4>
+          <H className="text-lg font-bold">その他</H>
           <ul className="list-disc px-4">
             <li>他のサービスへの誘導</li>
             <li>不快と感じる行為</li>

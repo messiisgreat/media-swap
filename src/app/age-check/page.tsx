@@ -1,4 +1,5 @@
 import { AgeChechContainer } from "@/app/age-check/AgeCheckContainer";
+import { H } from "@/components/structure/H";
 
 /**
  * 年齢確認ページ
@@ -6,8 +7,8 @@ import { AgeChechContainer } from "@/app/age-check/AgeCheckContainer";
 export default function AgeCheckPage() {
   return (
     <div className="my-16 flex flex-col items-center">
-      <h1 className="text-2xl">年齢確認</h1>
-      <h2 className="my-4 text-lg font-bold">あなたは18歳以上ですか？</h2>
+      <H className="text-2xl">年齢確認</H>
+      <H className="my-4 text-lg font-bold">あなたは18歳以上ですか？</H>
       <p className="text-xs text-gray-400">
         ここから先は、アダルトコンテンツが含まれる可能性がありますので、
       </p>

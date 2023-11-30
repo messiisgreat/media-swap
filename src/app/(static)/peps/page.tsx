@@ -1,4 +1,4 @@
-import React from "react";
+import { H } from "@/components/structure/H";
 
 /**
  * PEPsページ
@@ -7,9 +7,9 @@ export default function PepsPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">
+        <H className="text-center text-xl font-bold">
           外国PEPsの定義（外国の公的機関で要職を持つ方々）
-        </h2>
+        </H>
         <p className="py-6">
           外国PEPsとは、外国のリーダーや外国の政府、中央銀行や同等の組織で要職にある人々を指します。具体的には、以下の1～8の「外国の公的機関での要職」に、1)
           現職の方、2) 以前その役職にいた方、または3) 上記1) と2)

@@ -1,4 +1,5 @@
 import closeIcon from "@/app/no-available-service/close.webp";
+import { H } from "@/components/structure/H";
 import Image from "next/image";
 
 /**
@@ -9,7 +10,7 @@ export default function NoAvailableServicePage() {
   return (
     <div className="my-12 flex flex-col items-center">
       <Image src={closeIcon} alt="" width={120} height={120} />
-      <h1 className="my-10 text-4xl font-bold text-red-500">年齢確認</h1>
+      <H className="my-10 text-4xl font-bold text-red-500">年齢確認</H>
       <p className="font-bold text-orange-600">
         このサイトはアダルトコンテンツを含む為
       </p>

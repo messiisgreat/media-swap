@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { CORPORATE_NAME } from "@/constants/site";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function CookiePage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">外部送信ポリシー</h2>
+        <H className="text-center text-xl font-bold">外部送信ポリシー</H>
         <p className="py-6">
           この外部送信ポリシー (以下「本ポリシー」といいます) は、
           {CORPORATE_NAME}のうち、
@@ -37,20 +38,20 @@ export default function CookiePage() {
           に規定するとおりとします。
         </p>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             1. お客様端末からの第三者への情報転送に関する説明
-          </h3>
+          </H>
           <p>
             本サービスは、オンラインフリーマーケットサービスです。ユーザー（次条で定義します。）間の物品の売買の場・機会を提供するもので、ユーザー間の売買契約、出品、購入等の保証等に関しては、すべて当事者であるユーザーの自己責任とし、弊社は自ら売買を行うものではなく、売買の委託を受けるものでもありません。弊社は、本規約中に別段の定めがある場合を除き、売買契約の取消し、解約、解除、返品、返金、保証など取引の遂行には一切関与しません。また、本サービスは、競りの方法（オークション）により物品の売買を行おうとする者のあっせんを行うものではありません。
             お客様が本サービスを使用した際、お客様の端末から、弊社が認可した第三者に向けて、関連する情報が転送される可能性がございます。詳細な情報や、その目的、そして転送を停止（オプトアウト）する手段などは、以下の部分で明示しております。
           </p>
           <div>
-            <h4 className="text-lg font-bold">アクセス情報の解析</h4>
+            <H className="text-lg font-bold">アクセス情報の解析</H>
             <p>
               本サービスにおけるユーザーアクセスを詳しく調査し、各ページの訪問頻度や滞在期間、使用条件やユーザーの居住地域、訪問源や検索されたキーワード等の情報を把握して、サービスの使いやすさの向上、コンテンツの調整、広告効果の確認等の目的で、以下のサービスへのデータ転送を行っております。詳しい内容は、下記をご覧ください。
             </p>
             <div>
-              <h5 className="text-lg font-bold">Google アナリティクス</h5>
+              <H className="text-lg font-bold">Google アナリティクス</H>
               <p>
                 Google Analytics
                 には、各ページの訪問回数や滞在期間、利用条件や地域別のユーザー数、アクセス源や検索フレーズ等の解析ツールが含まれています。また、Google
@@ -59,12 +60,12 @@ export default function CookiePage() {
             </div>
           </div>
           <div>
-            <h4 className="text-lg font-bold">機能補助</h4>
+            <H className="text-lg font-bold">機能補助</H>
             <p>
               正確なフォント表示や画像のホスティング、コンテンツの取り扱いや個人情報の管理など、このサイトやアプリケーションを提供するために要求される機能をサポートする目的で、下記のサービスに個人データを転送しています。それらのサービスの詳細は、以下でご覧いただけます。
             </p>
             <div>
-              <h5 className="text-lg font-bold">Googleタグマネージャー</h5>
+              <H className="text-lg font-bold">Googleタグマネージャー</H>
               <p>
                 Google Tag Manager
                 はウェブサイトやアプリケーションで使われる第三者提供のサービスのコードを統制し、ユーザーのアクションや表示ページ、利用環境に応じて、適切な第三者のサービスを必要に応じて起動する機能を持っています。
@@ -73,11 +74,11 @@ export default function CookiePage() {
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             2. お客様のデバイスから私たちが受け取る情報の詳細
-          </h3>
+          </H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">(1) 取得する情報の内容</h4>
+            <H className="text-lg font-bold">(1) 取得する情報の内容</H>
             <p>
               私たちが提供するサービスや、パートナーや第三者が提供するサービスの使用・アクセス時に、お客様のデバイスより、関連する情報を収集する場合がございます。私たちが取得するデータには、以下の内容が該当します。
             </p>
@@ -92,7 +93,7 @@ export default function CookiePage() {
             </ol>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">(2) 取得する情報の利用目的</h4>
+            <H className="text-lg font-bold">(2) 取得する情報の利用目的</H>
             <p>弊社は、取得した情報を以下の目的で利用します。</p>
             <ol className="list-decimal px-4">
               <li>本サービスの提供のため</li>
@@ -115,9 +116,9 @@ export default function CookiePage() {
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">3. Cookie の利用について</h3>
+          <H className="text-lg font-bold">3. Cookie の利用について</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">(1) Cookie とは</h4>
+            <H className="text-lg font-bold">(1) Cookie とは</H>
             <p>
               本サービスのウェブページは、弊社グループまたは弊社グループが認可した第三者によってCookieを活用し、お客様の端末情報を取得しております。ここでいう「Cookie」とは、お客様がウェブサイトを閲覧するとき、その使用デバイスに保存されるとともに、ウェブサーバとブラウザ間で交換される、特定の情報を持つ小さなテキストデータのことを指します。
             </p>
@@ -131,7 +132,7 @@ export default function CookiePage() {
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">(2) Cookie の利用停止</h4>
+            <H className="text-lg font-bold">(2) Cookie の利用停止</H>
             <p>
               お客様は、ブラウザの設定を通じて Cookie
               の活用を制限し、さらに、お客様のデバイス上にある Cookie

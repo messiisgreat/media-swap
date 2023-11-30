@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { SITE_NAME } from "@/constants/site";
 
 /**
@@ -7,9 +8,9 @@ export default function GuideListingPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">{SITE_NAME}ガイド</h2>
+        <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
         <div className="py-6">
-          <h3 className="text-lg font-bold">禁止されている出品物</h3>
+          <H className="text-lg font-bold">禁止されている出品物</H>
           <p className="py-4">
             {SITE_NAME}
             は、誰しもが商品を手軽に購入や販売できるフリマプラットフォームです。

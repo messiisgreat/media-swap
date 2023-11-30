@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { CORPORATE_NAME, SITE_NAME } from "@/constants/site";
 
 /**
@@ -7,9 +8,9 @@ export default function ShikinPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">
+        <H className="text-center text-xl font-bold">
           資金決済法に従った有償ポイントの表示
-        </h2>
+        </H>
         <table className="min-w-full bg-white">
           <tbody>
             <tr>

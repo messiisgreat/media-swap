@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { CORPORATE_NAME, SITE_NAME } from "@/constants/site";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function TOSPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">{SITE_NAME}利用規約</h2>
+        <H className="text-center text-xl font-bold">{SITE_NAME}利用規約</H>
         <p className="py-6">
           この規約（以下「本利用規約」といいます。）は、{CORPORATE_NAME}
           （以下「弊社」といいます。）が運営するインターネットサービス「
@@ -16,9 +17,9 @@ export default function TOSPage() {
           」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。
         </p>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 1 条 本サービスの内容及び弊社の役割
-          </h3>
+          </H>
           <ol className="list-decimal px-4">
             <li>
               本サービスは、インターネット上のフリーマーケットの形をとっています。これは、ユーザー同士の商品の取引の場を設けるサービスであり、ユーザーが結ぶ売買契約や商品の掲載、購入に関わる保障などは、すべて該当するユーザーの責任となります。我々は商品の売買を直接行ったり、それを代理で行うものではありません。また、我々は本規定で特別に記述がない限り、取引の実施、取引のキャンセルや解約、返品、返金、保証などの事項に関与しないものとします。さらに、本サービスはオークション形式での取引を仲介するものではありません。
@@ -29,9 +30,9 @@ export default function TOSPage() {
           </ol>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 2 条 定義</h3>
+          <H className="text-lg font-bold">第 2 条 定義</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 定義</h4>
+            <H className="text-lg font-bold">1. 定義</H>
             <p>
               本利用規約に於いて、以下の言葉は、特別に定義された場合や文脈によって異なる意味が明らかな場合を除いて、以下の定義を持つものと認識されます。
             </p>
@@ -85,51 +86,51 @@ export default function TOSPage() {
             </ul>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 適用範囲</h4>
+            <H className="text-lg font-bold">2. 適用範囲</H>
             <p>
               この項目での定義は、特に指定されている場合や文脈から異なる意味と取るべき場合を除き、本利用規約だけでなく、プライバシーポリシーとガイドでも、同様に適用するものと認識してください。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 3 条 本規約への同意及び本規約の変更
-          </h3>
+          </H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 本規約への同意及び適用</h4>
+            <H className="text-lg font-bold">1. 本規約への同意及び適用</H>
             <p>
               本規約は、本サービスの利用に関する条件をユーザーと弊社との間で定めることを目的とし、ユーザーと弊社の間の本サービスの利用に関わる一切の関係に適用されます。ユーザーは、本規約に同意をしたうえで、本規約の定めに従って本サービスを利用するものとし、ユーザーは、本サービスを利用することにより本規約に同意をしたものとみなされます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 未成年者の場合</h4>
+            <H className="text-lg font-bold">2. 未成年者の場合</H>
             <p>未成年のユーザーは、本サービスの使用が認められません。</p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 本規約の変更</h4>
+            <H className="text-lg font-bold">3. 本規約の変更</H>
             <p>
               弊社は、必要に応じて、運営するウェブサイトやアプリケーション上で告知することにより、規約を時折更新する権利を有します。規約が修正された後にサービスを使用した場合、ユーザーはその変更に納得したとみなされるものとします。変更後の規約に納得できない場合は、サービスの使用を中止してください。弊社は、規約の更新や修正から生じるユーザーの損害について、弊社の意図的な行為や過誤を除いて、責任を持たないものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 4 条 ユーザーの登録とアカウントの詳細
-          </h3>
+          </H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 登録</h4>
+            <H className="text-lg font-bold">1. 登録</H>
             <p>
               ユーザーとしての登録は、登録者本人のみが実施するものとし、登録する際には正確な情報を提供してください。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 複数登録の禁止</h4>
+            <H className="text-lg font-bold">2. 複数登録の禁止</H>
             <p>
               個別のユーザーや登録を希望する者（以下、「ユーザー等」と称します）は、重複しての登録は認められません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 登録拒否</h4>
+            <H className="text-lg font-bold">3. 登録拒否</H>
             <p>
               弊社は、ユーザー登録をされようとする方が以下各号のいずれかに該当する場合、ユーザー登録の申請を承認しないことがあります。
             </p>
@@ -156,44 +157,44 @@ export default function TOSPage() {
             </ol>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. ユーザー等の確約</h4>
+            <H className="text-lg font-bold">4. ユーザー等の確約</H>
             <p>
               ユーザー等は、反社会的勢力に該当しないことを保証し、将来もそうであることを保証します。また、自分自身や他者を介して、過度な要求や脅迫的な態度、風説の拡散や偽情報を使用しての評判損傷、またはその他の不当な行為をしないことを約束します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 登録内容の変更</h4>
+            <H className="text-lg font-bold">5. 登録内容の変更</H>
             <p>
               ユーザーは、登録情報に何らかの変更がある場合、すぐにそれを更新する義務があります。正確な情報の保持はユーザーの責任です。変更せずに放置した場合、私たちは情報が変わっていないとみなすことができます。変更通知後も、変更前の情報を基にした取引や手続きが存在する場合があります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. アカウント情報の管理</h4>
+            <H className="text-lg font-bold">6. アカウント情報の管理</H>
             <p>
               ユーザーは、入力したメールアドレス、パスワード等の情報（以下「アカウント情報」といいます。）を自ら管理する責任を負います。ユーザーは、アカウント情報を第三者に利用させることや、譲渡、売買、質入、貸与、賃貸その他形態を問わず処分することはできません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               7. アカウント情報の不正利用について
-            </h4>
+            </H>
             <p>
               アカウント情報の不適切な管理やミス、第三者による不正利用、不正アクセス等の結果として生じる損害については、ユーザーが全ての責任を負うこととします。ただし、弊社の意図的なミスや過失が原因の場合はこの限りではありません。不正利用により弊社に損害が発生した場合、ユーザーはその損害を弊社に賠償しなければなりません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">8. アカウント情報の漏えい</h4>
+            <H className="text-lg font-bold">8. アカウント情報の漏えい</H>
             <p>
               ユーザーは、アカウント情報が第三者に漏えいした場合又はそのおそれがある場合、速やかに弊社まで連絡するものとします。また、その際に弊社の指示がある場合にはこれに従うものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 5 条 登録の解除及び利用制限</h3>
+          <H className="text-lg font-bold">第 5 条 登録の解除及び利用制限</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               1. ユーザーの登録解除・サービス利用制限
-            </h4>
+            </H>
             <p>
               弊社は、ユーザーが以下の事由のいずれかに該当する場合や該当すると弊社が合理的に判断した状況下で、事前の告知なく、ユーザーの登録を解除、もしくは本サービスへの一部または全部のアクセス制限、利用中止等を実施し得ます。また、その理由についての開示義務を持たないことを明示します。さらに、弊社は、ユーザーが以下の事由に該当していないことを確認するため、必要と見なす身元確認を要求し得ます。この確認が完了するまで、一部または全部へのアクセス制限や利用中止といった措置を施すことが可能です。
             </p>
@@ -219,58 +220,56 @@ export default function TOSPage() {
             </ol>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. サービスの利用禁止等</h4>
+            <H className="text-lg font-bold">2. サービスの利用禁止等</H>
             <p>
               弊社は、上記措置を受けたユーザーに対して、未来における弊社提供のサービスへの利用及びアクセスの禁止措置を取ることが可能です。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 弊社の免責</h4>
+            <H className="text-lg font-bold">3. 弊社の免責</H>
             <p>
               弊社は、上記措置に伴う損害について、弊社の意図的または重大な過失が原因でない限り、責任を持たないものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 6 条 退会に関する事項</h3>
+          <H className="text-lg font-bold">第 6 条 退会に関する事項</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 退会手続きの流れ</h4>
+            <H className="text-lg font-bold">1. 退会手続きの流れ</H>
             <p>
               ユーザーが退会を希望する場合、弊社にその意向を伝えることができます。弊社の審査を経て退会が承認されると、退会が可能です。ただし、未解決の取引や商品の送付等の手続きが残っている場合、これらの手続きが完了するまで退会は許可されません。そのため、ユーザーは、関連する全ての手続きを早急に、そして本規約に則り適切に行い、完了した後に退会の手続きを再度申請してください。退会を希望する際に売上金や残高、ポイントを持っている場合、それらを全額引き出すか利用することを推奨いたします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 弊社の責任範囲</h4>
+            <H className="text-lg font-bold">2. 弊社の責任範囲</H>
             <p>
               この項目での手続きから生じる損害に関して、弊社の意図的な行動や過失が原因でない限り、弊社の責任は生じません。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 7 条 個人情報等の取扱い</h3>
+          <H className="text-lg font-bold">第 7 条 個人情報等の取扱い</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. プライバシーポリシー</h4>
+            <H className="text-lg font-bold">1. プライバシーポリシー</H>
             <p>
               弊社は、本規約に加え、プライバシーポリシーに基づき個人情報を適切に管理します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
-              2. プライバシーポリシーへの同意
-            </h4>
+            <H className="text-lg font-bold">2. プライバシーポリシーへの同意</H>
             <p>
               ユーザーは、本サービスを使用又は閲覧する前に、プライバシーポリシーを確認し、その内容を理解し同意することを条件として、本サービスを活用します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. ユーザーによる利用</h4>
+            <H className="text-lg font-bold">3. ユーザーによる利用</H>
             <p>
               ユーザーは、本サービスを経由して取得した個人情報について、本サービスの利用範囲内でのみ活用可能で、その他の方法での使用は認められません。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 8 条 禁止事項</h3>
+          <H className="text-lg font-bold">第 8 条 禁止事項</H>
           <p>
             弊社は、本サービスに接したユーザー及び第三者の、
             <Link
@@ -283,15 +282,15 @@ export default function TOSPage() {
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 9 条 商品出品規定</h3>
+          <H className="text-lg font-bold">第 9 条 商品出品規定</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 出品手続等</h4>
+            <H className="text-lg font-bold">1. 出品手続等</H>
             <p>
               出品者は、弊社が定める手続きに沿って商品の出品を実施しなければなりません。出品を開始する前に、弊社との加盟店契約の締結が求められます。また、出品者は、本規約とともに、弊社が提供する「加盟店規約（出品者用）」に従い、本サービスを使用します。特定の出品方法に関して、弊社は基準を持ち、その基準を満たさない出品者は、該当の出品方法の使用が制約される場合があります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 出品禁止商品</h4>
+            <H className="text-lg font-bold">2. 出品禁止商品</H>
             <p>
               出品者は
               <Link
@@ -304,25 +303,25 @@ export default function TOSPage() {
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 商品説明等</h4>
+            <H className="text-lg font-bold">3. 商品説明等</H>
             <p>
               ユーザーは、商品を出品する際に、真に売却する意思のない出品、その商品情報だけでは正しく商品を理解できない又は混乱する可能性のある出品、商品説明で十分な説明を行わない出品等を行ってはなりません。また、出品者は、出品する商品と関係のない画像等を当該出品情報として掲載してはいけません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. 法令遵守</h4>
+            <H className="text-lg font-bold">4. 法令遵守</H>
             <p>
               ユーザーは、出品にあたっては、古物営業法、特定商取引に関する法律、不当景品類及び不当表示防止法、不正競争防止法、商標法、著作権法その他の法令を遵守しなければなりません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 特定ユーザーへの販売</h4>
+            <H className="text-lg font-bold">5. 特定ユーザーへの販売</H>
             <p>
               ユーザーは、一部の特定ユーザーだけを対象とした出品は許されません。弊社は状況を鑑みて、特定のユーザーを対象とした出品がなされているかの判断を行う権利を有しています。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. 出品に関する本規約違反</h4>
+            <H className="text-lg font-bold">6. 出品に関する本規約違反</H>
             <p>
               出品に関して、弊社が本規約又は加盟店規約に違反する又は不適切であると合理的な理由に基づき判断した場合、弊社は、第
               5
@@ -330,73 +329,73 @@ export default function TOSPage() {
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">7. 弊社の免責</h4>
+            <H className="text-lg font-bold">7. 弊社の免責</H>
             <p>
               ユーザーの出品等によって、ユーザー及び第三者に生じる損害につき、弊社の故意又は過失に起因する場合を除き、弊社は責任を負わないものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 10 条 商品の購入</h3>
+          <H className="text-lg font-bold">第 10 条 商品の購入</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 購入手続</h4>
+            <H className="text-lg font-bold">1. 購入手続</H>
             <p>
               ユーザーは、弊社が指定する方法で、購入を希望する場合は注文を進めます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 購入意思等</h4>
+            <H className="text-lg font-bold">2. 購入意思等</H>
             <p>
               ユーザーは、意図的に購入しない注文や、弊社が不正と判断する注文を実施することは認められません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 必要情報</h4>
+            <H className="text-lg font-bold">3. 必要情報</H>
             <p>
               弊社が設定する取引可能な期間内に、弊社のサーバーが商品の代金や売買の意思を示すデータ等、弊社が指定する情報を受け取らなかった場合、その注文は無効となります。ユーザーはこれを了承するものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. 自らの出品物の購入禁止等</h4>
+            <H className="text-lg font-bold">4. 自らの出品物の購入禁止等</H>
             <p>
               出品者自身が自らの商品を購入することは認められません。商品の出品取り消しを希望する場合、ユーザーは弊社の指定する方法に従うものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 弊社の免責</h4>
+            <H className="text-lg font-bold">5. 弊社の免責</H>
             <p>
               ユーザーが行う注文や購入により、ユーザーや第三者が被る損害について、弊社の意図的または過失による場合を除き、弊社はその責任を持たないものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 11 条 お支払いと取引処理</h3>
+          <H className="text-lg font-bold">第 11 条 お支払いと取引処理</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 売買契約の成立</h4>
+            <H className="text-lg font-bold">1. 売買契約の成立</H>
             <p>
               商品の購入手続きが完了した際に、該当商品の売買契約が確定されるものと考えます。売買契約に基づく権利や義務は、第三者に移譲、提供、または他の方法で変更することは認められません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 支払いの期限と送料</h4>
+            <H className="text-lg font-bold">2. 支払いの期限と送料</H>
             <p>
               売買契約の成立時に、購入者は指定された方法で商品代金と利用料を支払う義務があります。送料について、出品者が支払う場合は商品代金に含まれ、購入者が支払う場合は、着払いで商品が発送されることとなります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 発送</h4>
+            <H className="text-lg font-bold">3. 発送</H>
             <p>
               出品者は、購入者からの支払いが完了した後、商品を発送する責任があります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. 商品等に関するトラブル</h4>
+            <H className="text-lg font-bold">4. 商品等に関するトラブル</H>
             <p>
               商品に関するトラブルが発生した場合、出品者と購入者の間で解消するものとします。しかしながら、私たちの判断により、私たちもその話し合いに参加することが可能です。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. キャンセル及び商品の瑕疵</h4>
+            <H className="text-lg font-bold">5. キャンセル及び商品の瑕疵</H>
             <p>
               本サービスを使用する際、出品者と購入者の同意がなければ、商品を注文した後のキャンセルは許可されません。商品に欠陥が見られる場合や商品説明と異なる場合、または不適切な梱包により配送中に商品が損傷した場合、出品者がその責任を持ちます。出品者は、返金、返品、修理、交換などの対応を行う義務があります。ただし、第
               12 条第 3
@@ -404,7 +403,7 @@ export default function TOSPage() {
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. お支払い方法</h4>
+            <H className="text-lg font-bold">6. お支払い方法</H>
             <ul>
               <li>
                 (1)
@@ -417,7 +416,7 @@ export default function TOSPage() {
             </ul>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">7. 不払・支払遅延等</h4>
+            <H className="text-lg font-bold">7. 不払・支払遅延等</H>
             <ul>
               <li>
                 (1)
@@ -440,16 +439,16 @@ export default function TOSPage() {
             </ul>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">8. 弊社の免責</h4>
+            <H className="text-lg font-bold">8. 弊社の免責</H>
             <p>
               ユーザーがサービスに入力した決済方法や金融機関の情報が第三者によって使われたり、入力内容に誤りがあった場合、または弊社がこの条に基づく措置をとったりとらなかった場合の損害について、弊社の故意または過失が原因でない限り、弊社はその責任を持ちません。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 12 条 ユーザー評価の取り決め</h3>
+          <H className="text-lg font-bold">第 12 条 ユーザー評価の取り決め</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 購入者に対する評価のルール</h4>
+            <H className="text-lg font-bold">1. 購入者に対する評価のルール</H>
             <p>
               購入者は、商品の受領後、迅速にその状態を確認し、弊社の指定する方法で出品者に評価を付けるべきです。ただし、商品に欠陥が見られる場合や商品の説明と異なる状況の際など、第
               11 条第 5
@@ -457,20 +456,20 @@ export default function TOSPage() {
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 出品者からの評価手続き</h4>
+            <H className="text-lg font-bold">2. 出品者からの評価手続き</H>
             <p>
               購入者が評価を完了したのち、弊社が定める方法に基づき、出品者も購入者に対して評価を行います。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 取引終了の条件</h4>
+            <H className="text-lg font-bold">3. 取引終了の条件</H>
             <p>
               商品の代金が支払われてから2週間以内に購入者から商品受領の通知があり、上述の出品者の評価も完了していれば、その取引を終了とみなします。もし指定の期間中に購入者の評価がなく、出品者が必要な手続きを実施した場合や弊社が取引完了と判断する状況では、その取引を終了したと考えることができます。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 13 条 弊社の売買契約の取消権</h3>
+          <H className="text-lg font-bold">第 13 条 弊社の売買契約の取消権</H>
           <ul>
             <li>
               1.
@@ -495,17 +494,15 @@ export default function TOSPage() {
           </ul>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
-            第 14 条 販売手数料等及び売上申請
-          </h3>
+          <H className="text-lg font-bold">第 14 条 販売手数料等及び売上申請</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 販売手数料等</h4>
+            <H className="text-lg font-bold">1. 販売手数料等</H>
             <p>
               出品者は、商品の売買契約成立時に、本サービスで定められた販売手数料を弊社に支払うものとします。この手数料は、商品の販売価格に基づいて弊社のガイドで示される料率で計算され、出品者の設定時には表示されます。しかし、第16条第3項など特定の場合には調整されることがあると理解してください。弊社と出品者との加盟店契約により、決済会社が商品代金から販売手数料を差し引いて徴収することに出品者は同意するものとします。さらに、出品者が弊社のガイドで示す配送方法を選択した場合、配送業者への支払いは弊社に委託され、その額は商品代金から差し引かれます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 引出申請</h4>
+            <H className="text-lg font-bold">2. 引出申請</H>
             <ul>
               <li>
                 (1)
@@ -525,60 +522,56 @@ export default function TOSPage() {
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
-            第 15 条 残高及びポイントの取扱い
-          </h3>
+          <H className="text-lg font-bold">第 15 条 残高及びポイントの取扱い</H>
           <p>
             ユーザーは、本サービスにおける商品購入において、残高及びポイントを利用することができます。残高、ポイントの内容及びこれらの利用条件については、利用規約に定めるとおりとします。
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 16 条 割引券に関する規定</h3>
+          <H className="text-lg font-bold">第 16 条 割引券に関する規定</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 割引券の獲得方法</h4>
+            <H className="text-lg font-bold">1. 割引券の獲得方法</H>
             <p>
               本サービスの各種キャンペーンや弊社が指定する手段を通じて、ユーザーは割引券を取得可能です。割引券の獲得に関する条件は、本サービス内で弊社が提示する内容に基づきます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 割引券の活用方法</h4>
+            <H className="text-lg font-bold">2. 割引券の活用方法</H>
             <p>
               ユーザーは、保持する割引券を本サービスでの商品の購入に適用することができます。割引券の利用に際する条件は、本サービス内で弊社が公開する情報に準拠します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 割引券の利用時の取扱い</h4>
+            <H className="text-lg font-bold">3. 割引券の利用時の取扱い</H>
             <p>
               商品の購入に割引券が適用される場合、該当商品の出品者は、その商品の販売価格から割引券の額または割合を差し引いた価格を、該当商品の価格とみなすことにあらかじめ合意します。そのような場合、弊社は割引券の割引額を販売手数料から控除します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
-              4. 割引券の他の利用形態について
-            </h4>
+            <H className="text-lg font-bold">4. 割引券の他の利用形態について</H>
             <p>
               ユーザーは、割引券を弊社が指定する商品購入の以外での利用や、現金や財物などの利益への交換は認められません。また、いかなる理由があっても、割引券の返金は行われません。ただし、法律上の必要が生じた場合は除き、その際の返金方法は、法的要件に基づき弊社が設定し、ウェブサイト等で告知します。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 割引券の利用期間</h4>
+            <H className="text-lg font-bold">5. 割引券の利用期間</H>
             <p>
               割引券は、取得日から180日間または弊社が前もって定めた期間内でのみ使用できます。期限を過ぎた未使用の割引券は無効となり、その後の利用は認められません。割引券の有効期間の基点は、取引キャンセルなどによる返還を含めて、元々の取得日となります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               6. 退会または登録取り消し時の処理
-            </h4>
+            </H>
             <p>
               何らかの理由でユーザーが退会、あるいはユーザー登録が取り消された場合、該当ユーザーが所持している全ての割引券は無効となり、その後の使用は許されません。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 17 条 弊社の商品出品・販売に関する取り決め
-          </h3>
+          </H>
           <ol className="list-decimal px-4">
             <li>
               本サービス内で、弊社が商品を出品または販売することが考えられます。しかしそれによって、本サービスがユーザー同士の取引の場所や機会を提供するオンラインフリーマーケットとしての性格が変わるわけではありません。
@@ -599,9 +592,9 @@ export default function TOSPage() {
           </ol>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 18 条 商品の弊社からの発送に関する事項
-          </h3>
+          </H>
           <ol className="list-decimal px-4">
             <li>
               本サービスにおける商品の販売を弊社が担当する場合、商品は、弊社から直接、もしくは配送業者を介して購入者に届けられます。その際、弊社や弊社が選定した配送業者が、配送の詳細や日時確認のため、夜を含めて購入者へ電話等での連絡を行うことがあることを、購入者は了承するものとします。
@@ -615,17 +608,17 @@ export default function TOSPage() {
           </ol>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 19 条 サービス間の移動</h3>
+          <H className="text-lg font-bold">第 19 条 サービス間の移動</H>
           <p>
             本サービスの使用中に、ユーザーは弊社グループや第三者が提供する別のサービス（以下「外部サービス」と称します。）へと遷移することが考えられます。このような遷移について、ユーザーはあらかじめ同意したものとみなされます。ユーザーは、本規約と外部サービスの利用規約を守りながら、本サービスと外部サービスを使用してください。ただし、弊社は外部サービスに関する保証を提供しておりません。
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 20 条 本サービスの一時停止・修正及び終了
-          </h3>
+          </H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 本サービスの一時停止</h4>
+            <H className="text-lg font-bold">1. 本サービスの一時停止</H>
             <p>
               弊社は、以下に挙げる状況のいずれかが生じた際、予告なく本サービスの全てまたは一部の提供を一時的に停止することがあります。
             </p>
@@ -652,156 +645,152 @@ export default function TOSPage() {
             </ul>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 本サービスの修正及び終了</h4>
+            <H className="text-lg font-bold">2. 本サービスの修正及び終了</H>
             <p>
               弊社は、法令に基づいて、本サービスの形態を変える、またはサービスの提供を終了する場合があります。サービスの終了をする際は、弊社の判断により、ユーザーへ事前にその旨を告知または公示します。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
-            第 21 条 知的財産権及びコンテンツ
-          </h3>
+          <H className="text-lg font-bold">第 21 条 知的財産権及びコンテンツ</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 知的財産権の所在</h4>
+            <H className="text-lg font-bold">1. 知的財産権の所在</H>
             <p>
               本サービス内のすべての素材の権利は、弊社もしくは該当する権利を保持する第三者が所有しています。利用者は、これらの素材に対し権利を持つことはありません。そして、許可無しにそれらの権利を侵す行為を行ってはいけません。本規約での利用許諾は、当該素材の権利の使用を含むものではない点をご理解ください。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 弊社の利用権</h4>
+            <H className="text-lg font-bold">2. 弊社の利用権</H>
             <p>
               出品者から投稿される写真や情報等は、本サービスの推進や管理、研究のために、弊社や弊社が指名する者が使用することができます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. コンテンツに係る責任</h4>
+            <H className="text-lg font-bold">3. コンテンツに係る責任</H>
             <p>
               本サービス上でユーザー等によって公開されるコンテンツの責任は、公開者が持ちます。弊社は、これらの内容の正当性や品質などを保証しません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. コンテンツの評価</h4>
+            <H className="text-lg font-bold">4. コンテンツの評価</H>
             <p>
               ユーザーは、他の利用者が公開するコンテンツの情報や品質を自身で判断するべきです。弊社は、コンテンツの利用により生じる問題に関し、意図的または過失によらない限り、責任を持ちません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. データのバックアップ</h4>
+            <H className="text-lg font-bold">5. データのバックアップ</H>
             <p>
               弊社は、コンテンツの保存に関しては義務を持ちません。ユーザーがバックアップを必要とする場合、それはユーザーの責任となります。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. コンテンツの修正や削除</h4>
+            <H className="text-lg font-bold">6. コンテンツの修正や削除</H>
             <p>
               弊社は、利用者が本規約に反する、または不適切であると判断される行為をした場合、該当するコンテンツを事前通知なしに修正や削除する権利を有します。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             第 22 条 ユーザーにおける責務と接続環境
-          </h3>
+          </H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 設備・環境の整備</h4>
+            <H className="text-lg font-bold">1. 設備・環境の整備</H>
             <p>
               ユーザーは、本サービスを享受する上で要するコンピューター、スマートフォンなどの機器、ソフトウェア、通信線路などの通信設備は、自己のコストと責任で取り揃え、維持管理を行うものとします。弊社は、全ての機器などとの互換性を保障しないとともに、これらの設置や利用に関するサポートも提供しません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 通信経路の認識</h4>
+            <H className="text-lg font-bold">2. 通信経路の認識</H>
             <p>
               本サービスの利用時、多様なネットワークを経ることがあることをユーザーは承知の上、接続中のネットワークや機器により、データや信号の内容が変化する可能性があることを了承の上、本サービスを使用するものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 手続きの効力発生時期</h4>
+            <H className="text-lg font-bold">3. 手続きの効力発生時期</H>
             <p>
               ユーザーが本サービス上での入力、出品、購入、退会などの行為は、該当の情報が弊社のサーバーに送信され、弊社のシステムにて反映された際に、正式に成立と認識されるものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. トラブルの対応</h4>
+            <H className="text-lg font-bold">4. トラブルの対応</H>
             <p>
               本サービスに関連するユーザー同士、あるいはユーザーと第三者との間での問題（未来の本サービス利用を前提とした問題を含む）は、ユーザー自身のコストと責任で対応・解決することとし、それにより弊社に損害が発生した場合、ユーザーはその損害を共同で賠償するものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 第三者との問題処理</h4>
+            <H className="text-lg font-bold">5. 第三者との問題処理</H>
             <p>
               ユーザーと第三者との間で、本サービスに関連した全ての問題や紛争について、ユーザーは自己の責任とコストで取り組むものとし、弊社はこれに介入しないものとします。紛争がユーザーの過失や故意により生じた場合、ユーザーは弊社の被った損害を連帯して補填するものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. 賠償の責務</h4>
+            <H className="text-lg font-bold">6. 賠償の責務</H>
             <p>
               弊社とユーザーとの間での紛争がユーザーの故意や過失により生じた場合、ユーザーは弊社の受けた損害に関し、賠償の義務を負うものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 23 条 保証の否認と責任の除外</h3>
+          <H className="text-lg font-bold">第 23 条 保証の否認と責任の除外</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               1. サービスの品質に関する保証の否認
-            </h4>
+            </H>
             <p>
               弊社は、本サービスの内容や水準、品質、またはその結果に関して、何らの保証を行いません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 弊社の責任除外</h4>
+            <H className="text-lg font-bold">2. 弊社の責任除外</H>
             <p>
               本サービスに関する不正確や不明確な情報、行為等が原因でユーザーまたは第三者に損害が発生した場合、弊社が故意や過失でない限り、弊社はその損害に関する責任を担いません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               3. 情報の正確性や有用性の保証の否認
-            </h4>
+            </H>
             <p>
               弊社は、本サービスに基づいてユーザーなどに情報提供することがありますが、その情報の正確性や有益性を保障するものではございません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               4. ウィルス等の有害要素に対する保証の否認
-            </h4>
+            </H>
             <p>
               本サービスに関わるコンテンツ中のコンピュータウィルスやその他有害な要素の存在に関して、弊社は保証を提供しておりません。また、そのような有害要素が原因となる損害について、弊社が故意や過失でない限り、弊社はユーザーや第三者に対して責任を持たないものとします。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 24 条 損害賠償</h3>
+          <H className="text-lg font-bold">第 24 条 損害賠償</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
-              1. ユーザーによる違反とその責任
-            </h4>
+            <H className="text-lg font-bold">1. ユーザーによる違反とその責任</H>
             <p>
               本規約をユーザーが違反した際、該当ユーザーは違反によって被害を受けた他のユーザーや第三者に対して、損害賠償を含むすべての責任を担います。さらに、その違反によって、弊社に損害が発生した場合、該当ユーザーおよび関連する当事者は、その損害の賠償を共同で行います。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">
+            <H className="text-lg font-bold">
               2. 当社のサービスに関する免責事項
-            </h4>
+            </H>
             <p>
               本サービスの提供停止、終了、変更、ユーザー登録の取り消し、コンテンツの除去や消失、または本サービス利用に伴うデータの喪失や機器の故障等、ユーザーが被る損害に対して、弊社の意図的または過失によるものを除いて、弊社は賠償の責任を持ちません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 弊社の賠償責任の限定</h4>
+            <H className="text-lg font-bold">3. 弊社の賠償責任の限定</H>
             <p>
               もし弊社がユーザーへの損害賠償責任を有する場合でも、その責任の範囲は、弊社の不履行または違法行為により生じた実際の直接的で一般的な損害のみに制限されます。ただし、これは弊社の故意や重大な過失が原因の場合は除外されます。
             </p>
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">第 25 条 一般規定</h3>
+          <H className="text-lg font-bold">第 25 条 一般規定</H>
           <div className="py-2">
-            <h4 className="text-lg font-bold">1. 通知手段</h4>
+            <H className="text-lg font-bold">1. 通知手段</H>
             <ul>
               <li>
                 (1)
@@ -814,37 +803,37 @@ export default function TOSPage() {
             </ul>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">2. 譲渡の制約</h4>
+            <H className="text-lg font-bold">2. 譲渡の制約</H>
             <p>
               ユーザーは、本契約における地位や権利、義務などを第三者へ譲渡、移転、担保としての設定、貸し出し、その他の形での処分を行うことは、弊社の文書による許可なしには許されません。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">3. 事業の移転</h4>
+            <H className="text-lg font-bold">3. 事業の移転</H>
             <p>
               弊社が本サービスの運営を第三者に移転する場合（事業の売却、会社の分割など、サービスの運営主体が変わる全てのケースを含む。）、弊社は、該当する事業移転により、ユーザーの契約上の地位や、権利、義務、登録情報などを事業の受け取り手に移転できるものとし、ユーザーはこれを予め了承するものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">4. 部分的効力</h4>
+            <H className="text-lg font-bold">4. 部分的効力</H>
             <p>
               本規約の一部が法的な理由で無効とされる場合でも、その無効とされた部分を除く他の部分は有効であるとみなされます。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">5. 未規定の事項</h4>
+            <H className="text-lg font-bold">5. 未規定の事項</H>
             <p>
               本規約で規定されていない事項や、規約の解釈に関する疑問が生じた場合、弊社とユーザーは誠意をもって話し合い、迅速に解決を図ることとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">6. 使用言語</h4>
+            <H className="text-lg font-bold">6. 使用言語</H>
             <p>
               本規約は日本語が正式な文書とされます。参考のために英語に翻訳される場合でも、日本語の原文が契約としての唯一の効力を持ち、英語の翻訳は効力を有さないものとします。
             </p>
           </div>
           <div className="py-2">
-            <h4 className="text-lg font-bold">7. 適用法と裁判の管轄</h4>
+            <H className="text-lg font-bold">7. 適用法と裁判の管轄</H>
             <p>
               本規約は日本の法律に従って解釈されるものとし、弊社とユーザー間の紛争は東京簡易裁判所もしくは東京地方裁判所を第一審の専属的合意の管轄裁判所とすることとします。
             </p>

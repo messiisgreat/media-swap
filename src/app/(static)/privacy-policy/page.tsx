@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { CORPORATE_NAME } from "@/constants/site";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function PrivacyPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">プライバシーポリシー</h2>
+        <H className="text-center text-xl font-bold">プライバシーポリシー</H>
         <p className="py-6">
           {CORPORATE_NAME}
           は、以下の「プライバシーポリシー」を基準に、お客様並びにお取引のパートナーの皆様（以下、「お客様」と称します）の個人情報を管理いたします。
@@ -16,7 +17,7 @@ export default function PrivacyPage() {
           <br />
           お客様各位におかれましては、弊社が提供する各種サービス（以下まとめて「本サービス」と称します）をご利用いただく際に、以下の「プライバシーポリシー」をよくお読みいただきますようお願い申し上げます。
         </p>
-        <h3 className="text-lg font-bold">1. 取得する情報</h3>
+        <H className="text-lg font-bold">1. 取得する情報</H>
         <div className="py-6">
           <p>
             弊社は「4.取得情報の利用目的」に記載されている目的を達成するため、以下の情報を取り集めます（以下、(1)、(2)、(3)を合わせて「取得情報」と呼びます）。
@@ -62,7 +63,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">2. 取得情報の収集方法</h3>
+        <H className="text-lg font-bold">2. 取得情報の収集方法</H>
         <div className="py-6">
           <p>
             弊社は、本サービスをご利用になるお客様の情報を、以下の方法等により収集します。
@@ -88,11 +89,11 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">3. 取得情報の管理</h3>
+        <H className="text-lg font-bold">3. 取得情報の管理</H>
         <div className="py-6">
           弊社では、収集した情報の管理・利用を行う担当者が、お客様の情報を丁寧に管理し、不正アクセス、紛失、漏えい、改ざんなどが発生しないよう万全を尽くします。また、情報取扱いにおいて最大限の注意を払い、該当業務を遂行します。
         </div>
-        <h3 className="text-lg font-bold">4. 取得情報の利用目的</h3>
+        <H className="text-lg font-bold">4. 取得情報の利用目的</H>
         <div className="py-6">
           <p>
             弊社は、収集した情報を、お客様に通知した利用目的や利用規約に記載されている利用目的、または以下で述べる目的で利用いたします。
@@ -140,7 +141,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">5. 取得情報の第三者への提供</h3>
+        <H className="text-lg font-bold">5. 取得情報の第三者への提供</H>
         <div className="py-6">
           <p>弊社は、以下に定める場合、取得情報を第三者に提供します。</p>
 
@@ -188,21 +189,21 @@ export default function PrivacyPage() {
             弊社が情報提供が必要だと判断した場合は、お客様の承諾を確認した上で、収集した情報を提供することができます。
           </p>
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           6. 取得情報の取扱いに関する第三者への委託
-        </h3>
+        </H>
         <div className="py-6">
           弊社は、「4.
           情報利用の目的」を達成するために必要な限り、収集した情報の全てまたは一部を業務委託先に委ねることができます。その際、私たちが定めた委託先の選定基準を満たしているかどうかを慎重に評価し、情報が適切に管理されるよう契約時に保証します。
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           7. 外国にある第三者への取得情報の提供
-        </h3>
+        </H>
         <div className="py-6">
           弊社は、集めた情報を海外の第三者に渡すことがあり得ます。該当する海外の国々は、日本と同等のプライバシー保護法を持っていない可能性があります。しかしながら、法律で認められているケースを除き、私たちの企業は、日本のプライバシー保護法に準じた基準を満たす者にのみ情報を提供します。また、この基準が継続的に満たされるように、必要な手段を施しています。私たちの企業は、これら必要な手段について、お客様の要望があれば情報を提供する方針ですので、ご希望の方は、「17.
           お問い合わせ」に記載されている窓口にご連絡ください。
         </div>
-        <h3 className="text-lg font-bold">8. 「Cookie」等の利用</h3>
+        <H className="text-lg font-bold">8. 「Cookie」等の利用</H>
         <div className="py-6">
           <p>
             Cookieの利用許可は、お客様の設定によります。ほとんどのWebブラウザは、初期設定でCookieを許可していますが、ブラウザの設定を変更して、Cookieの利用を制限することもできます。
@@ -228,7 +229,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">9. Google アナリティクスについて</h3>
+        <H className="text-lg font-bold">9. Google アナリティクスについて</H>
         <div className="py-6">
           <p>
             弊社は、本サービスの使用状況を把握・解析する目的で、Googleが提供するGoogleアナリティクスを導入しております。Googleアナリティクスの使用条件やGoogleのプライバシーポリシーの詳細は、それぞれの公式サイトをご参照ください。
@@ -260,9 +261,9 @@ export default function PrivacyPage() {
             https://tools.google.com/dlpage/gaoptout?hl=ja
           </a>
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           10. 「ログ」および「機器情報」の使用等
-        </h3>
+        </H>
         <div className="py-6">
           <ul>
             <li>
@@ -281,23 +282,23 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">11. 弊社による個人情報の訂正</h3>
+        <H className="text-lg font-bold">11. 弊社による個人情報の訂正</H>
         <div className="py-6">
           市町村などの名称、郵便番号、金融機関名やクレジットカードの期限といった、商品配送や請求に関連する重要な情報が変わった際、弊社は登録済みの情報を更新することが考えられます。
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           12. 個人情報の管理およびセキュリティ
-        </h3>
+        </H>
         <div className="py-6">
           弊社は、提供された情報を一般ユーザーからアクセス不可能なサーバに安全に保存し、不正なアクセスや情報の損失・破壊・改ざん、漏洩のリスクを最小化するための措置を講じています。
         </div>
-        <h3 className="text-lg font-bold">13. 未成年のお客様</h3>
+        <H className="text-lg font-bold">13. 未成年のお客様</H>
         <div className="py-6">
           未成年のお客様は本サービスを利用することができません。
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           14. 「プライバシーポリシー」の改善および更新
-        </h3>
+        </H>
         <div className="py-6">
           <p>弊社は「プライバシーポリシー」に関し、適宜改善に取り組みます。</p>
 
@@ -312,9 +313,9 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">
+        <H className="text-lg font-bold">
           15. 個人情報の開示・訂正・利用停止等の手続
-        </h3>
+        </H>
         <div className="py-6">
           <p>
             お客様はいつでも自分の登録情報を、当サービスを通じて確認・修正できます。
@@ -342,7 +343,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
         </div>
-        <h3 className="text-lg font-bold">16. お問い合わせ</h3>
+        <H className="text-lg font-bold">16. お問い合わせ</H>
         <div className="py-6">
           <p>
             「プライバシーポリシー」に関するお問い合わせは、弊社の下記担当までお願いします。
@@ -362,20 +363,20 @@ export default function PrivacyPage() {
         </div>
       </div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">
+        <H className="text-center text-xl font-bold">
           金融サービス プライバシーポリシー
-        </h2>
+        </H>
         <div className="py-6">
           <p>
             弊社は、弊社が提供する前払式支払手段の発行の業務及び資金移動業等の決済サービスその他金融関連事業（以下「本件金融サービス」といいます）におけるお客様の情報について以下のとおり取り扱います。
             なお、本ポリシーは、弊社が別途定める「プライバシーポリシー」（以下「共通ポリシー」といいます）と併せて適用されるものとし、両者に矛盾がある場合は、本ポリシーが優先するものとします。
           </p>
 
-          <h3 className="text-lg font-bold">1. 用語の定義</h3>
+          <H className="text-lg font-bold">1. 用語の定義</H>
           <div className="py-6">
             本ポリシーに使用する用語は、本ポリシーにて個別に定義する他は、共通ポリシーにおいて定める意味を有するものとします。
           </div>
-          <h3 className="text-lg font-bold">2. 取得する情報</h3>
+          <H className="text-lg font-bold">2. 取得する情報</H>
           <div className="py-6">
             <p>
               本ポリシーに記載された「1.
@@ -418,7 +419,7 @@ export default function PrivacyPage() {
               <li>l. 本金融サービスの使用状態に関わるその他の情報</li>
             </ul>
           </div>
-          <h3 className="text-lg font-bold">3. 取得情報の利用目的</h3>
+          <H className="text-lg font-bold">3. 取得情報の利用目的</H>
           <div className="py-6">
             <p>
               弊社は、取得した上記 2. 記載の取得情報を、共通ポリシーにおける「4.
@@ -548,7 +549,7 @@ export default function PrivacyPage() {
               </tbody>
             </table>
           </div>
-          <h3 className="text-lg font-bold">4. 取得情報の第三者への提供</h3>
+          <H className="text-lg font-bold">4. 取得情報の第三者への提供</H>
           <div className="py-6">
             <p>
               弊社は、共通ポリシーにおける「5.
@@ -596,9 +597,9 @@ export default function PrivacyPage() {
               </li>
             </ul>
           </div>
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             5. 取得情報の取扱いに関する第三者への委託
-          </h3>
+          </H>
           <div className="py-6">
             弊社は、「3.
             取得情報の利用目的」の達成に必要な範囲内において、取得情報の取扱いの全部または一部を業務委託先に委託することがあります。その際、弊社が定める本件金融サービスにおける委託先選定基準を満たす者であるかを十分審査し、契約にあたっては取得情報が適正に管理されるよう確保します。

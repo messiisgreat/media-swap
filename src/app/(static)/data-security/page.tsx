@@ -1,3 +1,4 @@
+import { H } from "@/components/structure/H";
 import { CORPORATE_ADDRESS, CORPORATE_NAME } from "@/constants/site";
 
 /**
@@ -7,14 +8,14 @@ export default function DataSecurityPage() {
   return (
     <div>
       <div className="border-2">
-        <h2 className="text-center text-xl font-bold">
+        <H className="text-center text-xl font-bold">
           個人データの安全管理に係る基本方針
-        </h2>
+        </H>
         <p className="py-6">
           弊社は、お客様の信頼を最も大切にし、下記の基本方針を基に個人データの厳重な管理を行います。また、個人情報保護法をはじめとする関連する法令や規範を順守し、個人データの安全な管理を約束します。
         </p>
         <div className="py-6">
-          <h3 className="text-lg font-bold">1. 個人データの安全管理方法</h3>
+          <H className="text-lg font-bold">1. 個人データの安全管理方法</H>
           <div className="py-2">
             <p>
               弊社は、個人データの不正アクセスや破壊、改ざん、漏えいを避けるため、利用するコンピュータへのウィルスチェックプログラムを用いて、コンピュータウィルスからの保護を強化し、個人データを適切に保護します。
@@ -25,21 +26,21 @@ export default function DataSecurityPage() {
           </div>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">2. 組織・態勢</h3>
+          <H className="text-lg font-bold">2. 組織・態勢</H>
           <p>
             弊社では、個人情報取扱いとシステム管理のための責任部署を明確に設け、管理責任を持つ役員を指名することで、個人データの安全を確保しております。
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">3. 社内規程等の整備と運用</h3>
+          <H className="text-lg font-bold">3. 社内規程等の整備と運用</H>
           <p>
             弊社は、個人データの安全を確保するために、「個人情報保護規程」「情報セキュリティ管理規程」などの規程を策定し、社員に対して個人データの正しい取り扱いに関する教育を行います。
           </p>
         </div>
         <div className="py-6">
-          <h3 className="text-lg font-bold">
+          <H className="text-lg font-bold">
             4. 個人データの安全管理の問い合わせ・苦情について
-          </h3>
+          </H>
           <p>
             弊社は、個人データの安全管理を徹底的に行っております。その取り組みに関するご質問や苦情については、真摯に受け止め、速やかに対応いたします。
           </p>
