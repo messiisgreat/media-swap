@@ -8,12 +8,6 @@ dependencies:
   '@auth/prisma-adapter':
     specifier: ^1.0.9
     version: 1.0.9(@prisma/client@5.6.0)(nodemailer@6.9.7)
-  '@hookform/resolvers':
-    specifier: ^3.3.2
-    version: 3.3.2(react-hook-form@7.48.2)
-  '@paralleldrive/cuid2':
-    specifier: ^2.2.2
-    version: 2.2.2
   '@prisma/client':
     specifier: ^5.6.0
     version: 5.6.0(prisma@5.6.0)
@@ -62,9 +56,6 @@ dependencies:
   next-auth:
     specifier: 4.24.5
     version: 4.24.5(next@14.0.3)(nodemailer@6.9.7)(react-dom@18.2.0)(react@18.2.0)
-  next-cloudinary:
-    specifier: ^5.7.0
-    version: 5.7.0(next@14.0.3)(react@18.2.0)
   next-compose-middleware:
     specifier: ^1.0.0
     version: 1.0.0
@@ -83,9 +74,6 @@ dependencies:
   react-dropzone:
     specifier: ^14.2.3
     version: 14.2.3(react@18.2.0)
-  react-google-recaptcha:
-    specifier: ^3.1.0
-    version: 3.1.0(react@18.2.0)
   react-google-recaptcha-v3:
     specifier: ^1.10.1
     version: 1.10.1(react-dom@18.2.0)(react@18.2.0)
@@ -552,29 +540,6 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@cloudinary-util/url-loader@3.15.0:
-    resolution: {integrity: sha512-1Xq/woN0cngKY9e1EBgClomkOSmEy+yriBYqy5FUelxc0bCCZXNTMpkhssdUVnMXJbm8TIOBmqgVfqH5u0/DtQ==}
-    dependencies:
-      '@cloudinary-util/util': 2.3.0
-      '@cloudinary/url-gen': 1.13.0
-    dev: false
-
-  /@cloudinary-util/util@2.3.0:
-    resolution: {integrity: sha512-0Gojd+ZRQjJQmlBEAa8Ua94amvx7uWHoUzVUEGi1S8bgF1wPcMqG07cSUGQfRwHsFQ/9XOesx76Df622E+CevA==}
-    dev: false
-
-  /@cloudinary/transformation-builder-sdk@1.8.0:
-    resolution: {integrity: sha512-/QLSDDI+rfYH3bFH+DpgEk8NgSoeqwiea9GW5VXplcpebQOOcFqOzNFM6Hlik3PDqq4JMP4s3E7BoPZ1Rdk/IQ==}
-    dependencies:
-      '@cloudinary/url-gen': 1.13.0
-    dev: false
-
-  /@cloudinary/url-gen@1.13.0:
-    resolution: {integrity: sha512-p7ASCX2fZw1JWtMG2ADd/Y0TfvE5SX9v0TDJDlzXX3OlNxLSuqzLWGgj5oJD4ZTo62FdxH24N8HPZ7NXEXtj5g==}
-    dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.8.0
-    dev: false
-
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
@@ -630,14 +595,6 @@ packages:
   /@eslint/js@8.54.0:
     resolution: {integrity: sha512-ut5V+D+fOoWPgGGNj83GGjnntO39xDy6DWxO0wb7Jp3DcMX0TfIqdzHF85VTQkerdyGmuuMD9AKAo5KiNlf/AQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  /@hookform/resolvers@3.3.2(react-hook-form@7.48.2):
-    resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
-    peerDependencies:
-      react-hook-form: ^7.0.0
-    dependencies:
-      react-hook-form: 7.48.2(react@18.2.0)
-    dev: false
 
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
@@ -1212,11 +1169,6 @@ packages:
     dev: false
     optional: true
 
-  /@noble/hashes@1.3.2:
-    resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
-    engines: {node: '>= 16'}
-    dev: false
-
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1237,12 +1189,6 @@ packages:
 
   /@panva/hkdf@1.1.1:
     resolution: {integrity: sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA==}
-    dev: false
-
-  /@paralleldrive/cuid2@2.2.2:
-    resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
-    dependencies:
-      '@noble/hashes': 1.3.2
     dev: false
 
   /@prisma/client@5.6.0(prisma@5.6.0):
@@ -4641,18 +4587,6 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /next-cloudinary@5.7.0(next@14.0.3)(react@18.2.0):
-    resolution: {integrity: sha512-5Zk01Dur4tbTJOI2sd0R6KEE0w79ywSjdkOK1hdvQ/jm0Utj8JAovQo96S7/AWY9ZbqSz7MiEAkkzgtRtuxRqQ==}
-    peerDependencies:
-      next: ^12 || ^13 || ^14
-      react: ^17 || ^18
-    dependencies:
-      '@cloudinary-util/url-loader': 3.15.0
-      '@cloudinary-util/util': 2.3.0
-      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-    dev: false
-
   /next-compose-middleware@1.0.0:
     resolution: {integrity: sha512-VF4S75yaEiLWBFDBI2RNW3tOPtbnsQBwAg/bsPp3cA82Nb3hb4JQYjczaUIvxSQqzL4SeaAwknzQtP6dRQYcNQ==}
     dev: false
@@ -5279,16 +5213,6 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  /react-async-script@1.2.0(react@18.2.0):
-    resolution: {integrity: sha512-bCpkbm9JiAuMGhkqoAiC0lLkb40DJ0HOEJIku+9JDjxX3Rcs+ztEOG13wbrOskt3n2DTrjshhaQ/iay+SnGg5Q==}
-    peerDependencies:
-      react: '>=16.4.1'
-    dependencies:
-      hoist-non-react-statics: 3.3.2
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: false
-
   /react-dnd-html5-backend@14.1.0:
     resolution: {integrity: sha512-6ONeqEC3XKVf4eVmMTe0oPds+c5B9Foyj8p/ZKLb7kL2qh9COYxiBHv3szd6gztqi/efkmriywLUVlPotqoJyw==}
     dependencies:
@@ -5350,25 +5274,6 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react-google-recaptcha@3.1.0(react@18.2.0):
-    resolution: {integrity: sha512-cYW2/DWas8nEKZGD7SCu9BSuVz8iOcOLHChHyi7upUuVhkpkhYG/6N3KDiTQ3XAiZ2UAZkfvYKMfAHOzBOcGEg==}
-    peerDependencies:
-      react: '>=16.4.1'
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-async-script: 1.2.0(react@18.2.0)
-    dev: false
-
-  /react-hook-form@7.48.2(react@18.2.0):
-    resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
-    engines: {node: '>=12.22.0'}
-    peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
