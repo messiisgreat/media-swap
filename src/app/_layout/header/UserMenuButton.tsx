@@ -55,9 +55,7 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
               </button>
             </li>
             <li>
-              <Link href="/mypage">
-                マイページ
-              </Link>
+              <Link href="/mypage">マイページ</Link>
             </li>
           </>
         ) : (

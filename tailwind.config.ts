@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       flex: {
-        '28': '0 0 28%',
-        '100': '0 0 100%'
-      }
-    }
+        "28": "0 0 28%",
+        "100": "0 0 100%",
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

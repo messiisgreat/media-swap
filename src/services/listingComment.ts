@@ -20,7 +20,7 @@ export const getComments = async (
     include: { user: { select: { name: true, image: true } } },
   });
   return comments.filter((comment) => !comment.deletedAt);
-}
+};
 
 /**
  * コメントを追加する
@@ -80,17 +80,14 @@ export async function createCommentReport(
  * コメントを削除する
  * @param commentId コメントID
  * @param userId 削除を行うユーザーID
- * @returns 
+ * @returns
  * @throws コメントが見つからない場合
  * @throws 出品者以外が削除しようとした場合
  */
-export async function deleteListingComment(
-  commentId: string,
-  userId: string,
-) {
+export async function deleteListingComment(commentId: string, userId: string) {
   const comment = await prisma.listingComment.findUnique({
     where: { id: commentId },
-    include: { listing: { select: { sellerId: true } } }
+    include: { listing: { select: { sellerId: true } } },
   });
   if (!comment) {
     throw new Error("Comment not found");

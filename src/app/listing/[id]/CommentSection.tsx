@@ -59,10 +59,7 @@ export const CommentSection = ({
       });
   }, [listingId, setComments]);
 
-  const postComment = async (
-    f: FormData,
-    productId: string,
-  ) => {
+  const postComment = async (f: FormData, productId: string) => {
     const text = f.get("comment") as string;
 
     if (!text || typeof text !== "string") return;

@@ -8,7 +8,12 @@ import {
   getComments,
 } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
-import { updateListingTransactionId, createListingReport, deleteListing, findListingById } from "@/services/listing";
+import {
+  updateListingTransactionId,
+  createListingReport,
+  deleteListing,
+  findListingById,
+} from "@/services/listing";
 import { getSessionUser } from "@/utils";
 
 /**
@@ -35,10 +40,7 @@ export const purchasing = async (
  * @param text コメント
  * @param listingId 商品ID
  */
-export const addComment = async (
-  text: string,
-  listingId: string,
-) => {
+export const addComment = async (text: string, listingId: string) => {
   if (text.length > 300)
     throw new Error("コメントは300文字以内で入力してください");
   const sessionUser = await getSessionUser();
@@ -114,7 +116,7 @@ export const removeComment = async (commentId: string) => {
  * @param listingId 商品ID
  * @param reason 通報理由
  * @param verificationCode reCAPTCHA認証コード
- * @returns 
+ * @returns
  */
 export const addListingReport = async (
   listingId: string,
@@ -138,12 +140,12 @@ export const addListingReport = async (
   if (!user) throw new Error("ログインしてください");
   const userId = user.id;
   return await createListingReport(listingId, userId, reason);
-}
+};
 
 /**
  * 商品の削除
  * @param listingId 商品ID
- * @returns 
+ * @returns
  */
 export const removeListing = async (listingId: string) => {
   const listing = await findListingById(listingId);
@@ -152,4 +154,4 @@ export const removeListing = async (listingId: string) => {
     throw new Error("商品の削除権限がありません");
   }
   return await deleteListing(listingId);
-}
+};
