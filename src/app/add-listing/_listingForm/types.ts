@@ -60,10 +60,13 @@ export const ProductFormSchema: ZodType<ProductFormValues> = z.object({
   }),
   price: z
     .string()
+    .refine((price) => !isNaN(Number(price)), {
+      message: "価格は数値で入力してください",
+    })
     .refine((price) => Number(price) < 300, {
       message: "価格は300円以上で入力してください",
     })
-    .refine((price) => Number(price) > 10000, {
+    .refine((price) => Number(price) > 10000000, {
       message: "価格は10,000,000円以下で入力してください",
     }),
   description: z
