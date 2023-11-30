@@ -28,7 +28,9 @@ export const processDroppedFiles = async (droppedFiles: File[]) => {
           }
         } catch (error) {
           console.error("Error converting HEIC/HEIF file:", error);
-          return file;
+          throw new Error(
+            `Failed to convert image file: ${file.name}. ${error}`,
+          );
         }
       } else {
         return addGrayBackground(file);
