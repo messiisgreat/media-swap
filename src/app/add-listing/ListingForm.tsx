@@ -71,9 +71,10 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       <LimitTextarea
         labelText="商品の説明"
         name="description"
-        placeholder="商品の説明を入力してください"
+        placeholder={`内容、サイズ、ページ数、発行年月日、注意事項など\n\n例）2018年に制作した同人誌です。B5サイズで全30ページ。内容はファンタジー要素が満載で、読み応え抜群です。一部ページに軽微な折れがありますが、全体的に状態は良好です。お求めやすい価格で提供していますので、ぜひご検討ください。`}
         required
         maxLength={1000}
+        rows={10}
         defaultValue={state.values.description}
       />
       <ListingTagInput
