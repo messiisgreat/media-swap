@@ -1,8 +1,8 @@
 "use client";
 
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
-import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
+import { processDroppedFiles } from "@/components/form/imageInput/utils";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -30,33 +30,7 @@ export function ImageInput({ id, labelText, ...props }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
-    const processedFiles = await Promise.all(
-      droppedFiles.map(async (file) => {
-        const ext = file?.name.split(".").pop()?.toLowerCase();
-        if (ext === "heic" || ext === "heif") {
-          try {
-            if (typeof window !== "undefined") {
-              const heic2any = (await import("heic2any")).default; // 動的import
-              const output = await heic2any({
-                blob: file,
-                toType: "image/jpeg",
-                quality: 0.7,
-              });
-              const outputBlob = Array.isArray(output) ? output[0] : output; // outputがBlobの配列かどうかをチェックする
-              const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg"; // 拡張子をheic/heifからjpgに変更する
-              return new File([outputBlob], newName, {
-                type: "image/jpeg",
-              });
-            }
-          } catch (error) {
-            console.error("Error converting HEIC/HEIF file:", error);
-            return file;
-          }
-        } else {
-          return addGrayBackground(file);
-        }
-      }),
-    );
+    const processedFiles = await processDroppedFiles(droppedFiles);
     setFiles((previousFiles) => {
       const spaceLeft = 10 - previousFiles.length;
       const acceptedFiles = processedFiles.slice(0, spaceLeft);
