@@ -25,7 +25,9 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.value !== "") {
-      const validated = valueSchema.safeParse(Number(e.currentTarget.value));
+      const numberCurrentTarget = Number(e.currentTarget.value);
+      e.currentTarget.value = String(numberCurrentTarget);
+      const validated = valueSchema.safeParse(numberCurrentTarget);
       if (validated.success) {
         setAmount(validated.data);
       } else {
