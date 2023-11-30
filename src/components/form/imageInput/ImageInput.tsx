@@ -36,26 +36,21 @@ export function ImageInput({ id, labelText, ...props }: Props) {
         if (ext === "heic" || ext === "heif") {
           try {
             if (typeof window !== "undefined") {
-              // import heic2any from "heic2any";
-              // eslint-disable-next-line @typescript-eslint/no-var-requires
-              const heic2any = require("heic2any");
+              const heic2any = (await import("heic2any")).default; // 動的import
               const output = await heic2any({
                 blob: file,
                 toType: "image/jpeg",
                 quality: 0.7,
               });
-              // Check if the output is a single Blob or an array of Blobs
-              const outputBlob = Array.isArray(output) ? output[0] : output; // Assuming we use the first Blob if it's an array
-
-              // Create a new File object from the Blob
-              const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
+              const outputBlob = Array.isArray(output) ? output[0] : output; // outputがBlobの配列かどうかをチェックする
+              const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg"; // 拡張子をheic/heifからjpgに変更する
               return new File([outputBlob], newName, {
                 type: "image/jpeg",
               });
             }
           } catch (error) {
             console.error("Error converting HEIC/HEIF file:", error);
-            return file; // Return the original file in case of an error
+            return file;
           }
         } else {
           return addGrayBackground(file);
