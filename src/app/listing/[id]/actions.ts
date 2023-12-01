@@ -1,8 +1,12 @@
 "use server";
 
 import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
-import { CORPORATE_MAIL, SITE_NAME, SITE_URL } from "@/constants/site";
+import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
+import {
+  createBuyerMailContent,
+  createSellerMailContent,
+} from "@/lib/mailTemplate";
 import {
   createListingReport,
   deleteListing,
@@ -165,43 +169,30 @@ export const removeListing = async (listingId: string) => {
  */
 export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const listing = await findListingById(listingId);
-  const listingName = listing.productName;
+  const listingName = listing.productName!;
+  const listingPrice = listing.price!;
   const buyer = await getSessionUser();
   if (!buyer || !buyer.email) throw new Error("ログインしてください");
-  const buyerName = buyer.name;
+  const buyerName = buyer.name!;
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
   if (!seller || !seller.name) throw new Error("出品者が見つかりませんでした");
   const sellerName = seller?.name;
   const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
-  const sellerText = `${sellerName}様
-  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
-  あなたの出品した商品 ${listingName} が購入されました。
-
-
-  商品の発送準備をお願いします。
-  発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
-  購入者とのやり取りは取引ページをご利用ください。
-
-  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
-
-  ${SITE_URL}
-  `;
   const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listingName}`;
-  const buyerText = `${buyerName}様
-  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
-  以下の商品を購入しました。
 
-  商品名: ${listingName}
-  金額: ${listing.price}円
-
-  出品者の ${sellerName} 様が商品の発送準備を進めています。
-  出品者とのやり取りは取引ページをご利用ください。
-
-  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
-
-  ${SITE_URL}
-  `;
+  const sellerText = createSellerMailContent(
+    sellerName,
+    listingName,
+    SITE_NAME,
+  );
+  const buyerText = createBuyerMailContent(
+    buyerName,
+    listingName,
+    listingPrice,
+    sellerName,
+    SITE_NAME,
+  );
   try {
     await sendMailToUser(buyer.email, buyerSubject, buyerText);
     await sendMailToUser(seller.email, sellerSubject, sellerText);
