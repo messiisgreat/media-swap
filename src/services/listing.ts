@@ -1,8 +1,7 @@
-import { Listing } from "@prisma/client";
-import "server-only";
-
 import prisma from "@/lib/prisma";
+import { Listing } from "@prisma/client";
 import { cache } from "react";
+import "server-only";
 
 /** データベース未登録のListing型 */
 export type UnregisteredListing = Omit<
