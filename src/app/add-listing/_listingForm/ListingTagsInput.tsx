@@ -11,6 +11,14 @@ type Props = {
 };
 
 type NewTag = Omit<Tag, "id" | "createdAt">;
+
+/**
+ * タグを入力するコンポーネント
+ * formから認識できるようにhidden inputに値を設定している
+ * @param Props.name  formのname属性
+ * @param {Tag[]} Props.suggestedTags データベースから取得したタグの配列
+ * @returns JSX.Element
+ */
 export function ListingTagsInput({ name, suggestedTags }: Props) {
   const [newTags, setNewTags] = useState<Array<NewTag>>([]);
 
@@ -42,13 +50,13 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
       {newTags.length > 0 && (
         <div>
           <label className="text-sm text-neutral-400">Tags</label>
-          <div className="grid grid-cols-2 gap-2 mt-2">
+          <div className="mt-2 grid grid-cols-2 gap-2">
             {newTags.map((tag) => (
               <span
                 key={tag.text}
-                className="w-full px-3 py-2 bg-white border border-primary shadow-md rounded-md flex justify-between items-center"
+                className="flex w-full items-center justify-between rounded-md border border-primary bg-white px-3 py-2 shadow-md"
               >
-                <span className="flex justify-start items-center gap-2">
+                <span className="flex items-center justify-start gap-2">
                   <IoPricetagOutline />
                   <p className="text-sm">{tag.text}</p>
                 </span>
