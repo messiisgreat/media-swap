@@ -1,9 +1,7 @@
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
-import {
-  ItemDescription,
-  ItemInfomation,
-} from "@/app/listing/[id]/ItemInformation";
+import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
+import { ItemInfomation } from "@/app/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
