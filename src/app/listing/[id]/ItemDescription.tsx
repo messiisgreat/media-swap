@@ -1,7 +1,5 @@
 "use client";
 
-import { findListingById } from "@/services/listing";
-import { Prisma } from "@prisma/client";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -10,7 +8,7 @@ const textClass = "text-gray-600";
 
 type Props = {
   /** 商品クエリの結果 */
-  listing: Prisma.PromiseReturnType<typeof findListingById>;
+  description: string | null;
   /** 折りたたむ文字数 */
   charLimit?: number;
 };
@@ -19,14 +17,16 @@ type Props = {
  * 商品説明を表示する
  * 指定した文字数を超える場合は折りたたむ
  */
-export const ItemDescription = ({ listing, charLimit = 128 }: Props) => {
-  const shouldCollapseDescription = listing.description!.length > charLimit;
+export const ItemDescription = ({ description, charLimit = 128 }: Props) => {
+  const shouldCollapseDescription = (description?.length || 0) > charLimit;
   const collapseClass = shouldCollapseDescription ? "truncate" : "";
   const [isCollapsed, setIsCollapsed] = useState(shouldCollapseDescription);
   const toggleDescription = () => setIsCollapsed((prev) => !prev);
   return (
     <div className={baseClass}>
-      <p className={twMerge(textClass, collapseClass)}>{listing.description}</p>
+      <p className={twMerge(textClass, collapseClass)}>
+        {description ?? "説明がありません。"}
+      </p>
       {shouldCollapseDescription && (
         <button
           className="cursor-pointer bg-blue-600 underline hover:bg-blue-700"

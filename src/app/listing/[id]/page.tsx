@@ -67,7 +67,7 @@ export default async function ListingPage({
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
         <TitleUnderbar title="説明" />
-        <ItemDescription listing={listing} />
+        <ItemDescription description={listing.description} />
         <TitleUnderbar title="商品情報" />
         <ItemInfomation listing={listing} />
         {listing.transactionId ? (
