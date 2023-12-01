@@ -1,6 +1,5 @@
 import { removeListing } from "@/app/listing/[id]/actions";
 import { useFormActionModal } from "@/components/dialog/useFormActionModal";
-import { Section } from "@/components/structure";
 import { H } from "@/components/structure/H";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -51,16 +50,16 @@ export const useDeleteModal = ({
       <FormActionModal>
         <H className="text-center text-lg font-bold">商品の削除</H>
         <p className="py-2">商品を削除してもよろしいですか？</p>
-        <Section className="alert alert-warning mb-4" role="alert">
+        <div className="alert alert-warning mb-4" role="alert">
           <FaTriangleExclamation className="text-2xl" />
           <p>この操作は取り消せません。</p>
-        </Section>
-        <Section className="alert mb-4" role="alert">
+        </div>
+        <div className="alert mb-4" role="alert">
           <FaFlag className="text-2xl" />
           <p>
             一時的に出品を停止したい場合は、商品の編集画面から「出品を停止する」を選択してください。
           </p>
-        </Section>
+        </div>
       </FormActionModal>
     ),
     [FormActionModal],

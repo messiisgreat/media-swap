@@ -1,4 +1,3 @@
-import { Section } from "@/components/structure";
 import { H } from "@/components/structure/H";
 import { SITE_NAME } from "@/constants/site";
 
@@ -10,7 +9,7 @@ export default function GuideListingPage() {
     <div>
       <div className="border-2">
         <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
-        <Section className="py-6">
+        <div className="py-6">
           <H className="text-lg font-bold">禁止されている出品物</H>
           <p className="py-4">
             {SITE_NAME}
@@ -20,8 +19,8 @@ export default function GuideListingPage() {
           <p className="py-4">
             これらの活動を検知した際には、アカウントの使用制約などの処置を考慮することがございます。
           </p>
-        </Section>
-        <Section className="py-6">
+        </div>
+        <div className="py-6">
           <ul className="list-disc px-4">
             <li>ダウンロードコンテンツやデジタルコンテンツなどの電子データ</li>
             <li>不正な手段で取得したアイテムや盗品</li>
@@ -32,7 +31,7 @@ export default function GuideListingPage() {
             <li>個人情報を含む出品・投稿、個人情報の不正利用</li>
             <li>その他、不適切と判断されるもの</li>
           </ul>
-        </Section>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { removeComment } from "@/app/listing/[id]/actions";
 import { useFormActionModal } from "@/components/dialog/useFormActionModal";
-import { Section } from "@/components/structure";
 import { H } from "@/components/structure/H";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
@@ -60,16 +59,16 @@ export const useDeleteModal = ({
       <FormActionModal>
         <H className="text-center text-lg font-bold">コメントの削除</H>
         <p className="py-2">コメントを削除してもよろしいですか？</p>
-        <Section className="alert alert-warning mb-4" role="alert">
+        <div className="alert alert-warning mb-4" role="alert">
           <FaTriangleExclamation className="text-2xl" />
           <p>この操作は取り消せません。</p>
-        </Section>
-        <Section className="alert mb-4" role="alert">
+        </div>
+        <div className="alert mb-4" role="alert">
           <FaFlag className="text-2xl" />
           <p>
             利用規約に違反しているコメントの場合は、先に通報を行ってください。
           </p>
-        </Section>
+        </div>
       </FormActionModal>
     ),
     [FormActionModal],
