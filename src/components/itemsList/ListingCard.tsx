@@ -1,5 +1,5 @@
 import { SoldOutBadge } from "@/components/itemsList/SoldOutBadge";
-import { findListingById } from "@/services/listing";
+import { findListings } from "@/services/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const PriceBadge = ({
 );
 
 type Props = {
-  listing: Awaited<ReturnType<typeof findListingById>>;
+  listing: Awaited<ReturnType<typeof findListings>>[number];
 };
 
 /**

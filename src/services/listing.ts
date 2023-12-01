@@ -1,8 +1,7 @@
-import "server-only";
-
 import prisma from "@/lib/prisma";
 import { Listing } from "@prisma/client";
 import { cache } from "react";
+import "server-only";
 
 /** データベース未登録のListing型 */
 export type UnregisteredListing = Omit<
@@ -73,6 +72,9 @@ export const findListingById = cache(async (id: string, isDeleted = false) => {
           tag: true,
         },
       },
+      productCondition: true,
+      shippingDays: true,
+      shippingMethod: true,
     },
   });
 });

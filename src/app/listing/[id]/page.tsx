@@ -1,7 +1,8 @@
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
+import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
+import { ItemInfomation } from "@/app/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
-import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
@@ -10,7 +11,6 @@ import { H } from "@/components/structure/H";
 import { findListingById } from "@/services/listing";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
-import Link from "next/link";
 
 type ListingPageProps = {
   params: {
@@ -48,13 +48,10 @@ export default async function ListingPage({
   params: { id },
 }: ListingPageProps) {
   const listing = await findListingById(id);
-  const tags = listing.tags.map((t) => t.tag);
   const images = listing.images;
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
-  const price = listing.price?.toLocaleString("ja-JP");
-  const shippingMethod = listing.postageIsIncluded ? "送料込み" : "着払い";
 
   return (
     <VerifyProvider>
@@ -65,42 +62,21 @@ export default async function ListingPage({
           {listing.productName!}
         </H>
       </div>
+      <div className="w-full">
+        <Badge className="badge-lg">¥{listing.price}</Badge>
+      </div>
       <Section className="flex w-full flex-col items-start gap-4">
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <Link key={tag.id} href={`/search?tagid=${tag.id}`}>
-              <Badge className="badge-lg cursor-pointer border-none bg-yellow-400 font-medium shadow-md">
-                {tag.text}
-              </Badge>
-            </Link>
-          ))}
-        </div>
-        <div>
-          <span className="text-sm text-neutral-400">¥</span>
-          <span className="text-2xl">{price}</span>
-          <span className="pl-1 text-sm">{shippingMethod}</span>
-        </div>
-        <div className="flex w-full justify-end">
-          <Toolbar
-            listingId={listing.id}
-            sessionUser={user}
-            isListingOwner={isOwner}
-          />
-        </div>
-        <H className="text-lg font-bold text-neutral-400">商品の説明</H>
-        <pre className="whitespace-pre-wrap text-base">
-          {listing.description}
-        </pre>
+        <TitleUnderbar title="説明" />
+        <ItemDescription description={listing.description} />
+        <TitleUnderbar title="商品情報" />
+        <ItemInfomation listing={listing} />
         {listing.transactionId ? (
-          <div>
-            <p>すでに商品を購入しています！</p>
-            <ButtonAsLink
-              href={`/transactions/${listing.transactionId}`}
-              secondary
-            >
-              取引へ進む
-            </ButtonAsLink>
-          </div>
+          <ButtonAsLink
+            href={`/transactions/${listing.transactionId}`}
+            secondary
+          >
+            取引へ進む
+          </ButtonAsLink>
         ) : (
           !isOwner && (
             <PurchaseButton
@@ -110,13 +86,13 @@ export default async function ListingPage({
             />
           )
         )}
+        <TitleUnderbar title="コメント" />
+        <CommentSection
+          listingId={listing.id}
+          sessionUser={user}
+          isListingOwner={isOwner}
+        />
       </Section>
-      <TitleUnderbar title="コメント" />
-      <CommentSection
-        listingId={listing.id}
-        sessionUser={user}
-        isListingOwner={isOwner}
-      />
     </VerifyProvider>
   );
 }
