@@ -59,10 +59,12 @@ export default async function ListingPage({
     <VerifyProvider>
       <Carousel images={images} />
       {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
-      <div className="flex justify-around">
+      <div className="w-full">
         <H className="text-left text-lg font-bold lg:text-2xl">
           {listing.productName!}
         </H>
+      </div>
+      <div className="w-full">
         <Badge className="badge-lg">¥{listing.price}</Badge>
       </div>
       <Section className="flex w-full flex-col items-start gap-4">
@@ -70,7 +72,6 @@ export default async function ListingPage({
         <ItemDescription listing={listing} />
         <TitleUnderbar title="商品情報" />
         <ItemInfomation listing={listing} />
-
         {listing.transactionId ? (
           <ButtonAsLink
             href={`/transactions/${listing.transactionId}`}
@@ -87,7 +88,6 @@ export default async function ListingPage({
             />
           )
         )}
-
         <TitleUnderbar title="コメント" />
         <CommentSection
           listingId={listing.id}
