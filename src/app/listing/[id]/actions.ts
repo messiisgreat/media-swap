@@ -1,6 +1,7 @@
 "use server";
 
 import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
+import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
 import {
   createListingReport,
@@ -166,37 +167,42 @@ export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const listing = await findListingById(listingId);
   const buyer = await getSessionUser();
   if (!buyer) throw new Error("ログインしてください");
-  // TODO: sellerはsellerIdに紐づいたUserオブジェクトを取得する
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
+  const sellerName = seller?.name;
   if (!seller) throw new Error("出品者が見つかりませんでした");
-  const subject = "【フリマアプリ】商品が購入されました";
-  const text = `${buyer.name}様
-  この度はフリマアプリをご利用いただき、誠にありがとうございます。
+  const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
+  const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listing.productName}`;
+  const buyerText = `${buyer.name}様
+  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
+  ${sellerName} 様、
+  
+  あなたの出品した 以下の商品が購入されました。
+
+  商品名: ${listing.productName}
+  金額: ${listing.price}円
+
+  商品の発送準備をお願いします。
+  発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
+  購入者とのやり取りは取引ページをご利用ください。
+
+  ※このメールに心当たりのない場合は、お手数ですが${SITE_NAME}までご連絡ください。
+  `;
+  const sellerText = `${seller.name}様
+  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
   以下の商品が購入されました。
 
   商品名: ${listing.productName}
   金額: ${listing.price}円
 
-  取引の詳細はマイページからご確認ください。
+  出品者の ${sellerName} 様が商品の発送準備を進めています。商品が発送され次第、追跡情報を含む発送確認のメールをお送りします。
 
-  ※このメールに心当たりのない場合は、お手数ですがフリマアプリまでご連絡ください。
+  出品者とのやり取りは取引ページをご利用ください。
+
+  ※このメールに心当たりのない場合は、お手数ですが${SITE_NAME}までご連絡ください。
   `;
-  const sellerText = `${seller}様
-  この度はフリマアプリをご利用いただき、誠にありがとうございます。
-  以下の商品が購入されました。
-
-  商品名: ${listing.productName}
-  金額: ${listing.price}円
-  取引ID: ${listing.transactionId}
-
-  取引の詳細はマイページからご確認ください。
-
-  ※このメールに心当たりのない場合は、お手数ですがフリマアプリまでご連絡ください。
-  `;
-  // TODO: sessionから取得したユーザーのメールアドレスを取得する
   if (typeof buyer.email === "string") {
-    await sendMailToUser(buyer.email, subject, text);
+    await sendMailToUser(buyer.email, buyerSubject, buyerText);
   }
-  await sendMailToUser(seller.email, subject, sellerText);
+  await sendMailToUser(seller.email, sellerSubject, sellerText);
 };

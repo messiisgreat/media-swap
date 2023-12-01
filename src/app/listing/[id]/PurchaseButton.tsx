@@ -1,14 +1,17 @@
 "use client";
 
-import { purchasing } from "@/app/listing/[id]/actions";
+import {
+  purchasing,
+  sendMailToBuyerAndSeller,
+} from "@/app/listing/[id]/actions";
 import { Button } from "@/components/Button";
+import { useFormActionModal } from "@/components/dialog/useFormActionModal";
+import { H } from "@/components/structure/H";
+import { Listing } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { H } from "@/components/structure/H";
 import { ComponentProps, useCallback } from "react";
-import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import toast from "react-hot-toast";
-import { Listing } from "@prisma/client";
 
 type Props = ComponentProps<typeof Button> & {
   listing: Listing;
@@ -40,7 +43,8 @@ export const PurchaseButton = ({
         return;
       }
     }
-    const transactionId = await purchasing(listing.id, userCouponId);
+    const transactionId = await purchasing(listingId, userCouponId);
+    await sendMailToBuyerAndSeller(listingId);
     router.push(`/transactions/${transactionId}`);
   }, [buyerId, listing, userCouponId, router]);
 
