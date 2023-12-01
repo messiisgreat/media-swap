@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/form";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";
 import { Tag } from "react-tag-input";
 
@@ -22,28 +22,34 @@ type NewTag = Omit<Tag, "id" | "createdAt">;
 export function ListingTagsInput({ name, suggestedTags }: Props) {
   const [newTags, setNewTags] = useState<Array<NewTag>>([]);
 
-  const onKeyDownEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // ブラウザでIME確定時のEnterキー入力をハンドリングしないようにするためにkeyCodeを確認する
-    if (e.keyCode !== 13 || e.currentTarget.value === "") {
-      return;
-    }
+  const onKeyDownEnter = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      // ブラウザでIME確定時のEnterキー入力をハンドリングしないようにするためにkeyCodeを確認する
+      if (e.keyCode !== 13 || e.currentTarget.value === "") {
+        return;
+      }
 
-    const isExist = newTags.find((tag) => tag.text === e.currentTarget.value);
-    if (isExist) {
+      const isExist = newTags.find((tag) => tag.text === e.currentTarget.value);
+      if (isExist) {
+        e.currentTarget.value = "";
+        return;
+      }
+
+      const newTag = {
+        text: e.currentTarget.value,
+      };
+      setNewTags([...newTags, newTag]);
       e.currentTarget.value = "";
-      return;
-    }
+    },
+    [newTags, setNewTags],
+  );
 
-    const newTag = {
-      text: e.currentTarget.value,
-    };
-    setNewTags([...newTags, newTag]);
-    e.currentTarget.value = "";
-  };
-
-  const onClickDelete = (tagName: string) => {
-    setNewTags(newTags.filter((tag) => tag.text !== tagName));
-  };
+  const onClickDelete = useCallback(
+    (tagName: string) => {
+      setNewTags(newTags.filter((tag) => tag.text !== tagName));
+    },
+    [newTags, setNewTags],
+  );
 
   return (
     <div className="flex flex-col gap-3">
