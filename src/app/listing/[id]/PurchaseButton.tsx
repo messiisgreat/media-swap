@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ComponentProps, useCallback } from "react";
+import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import toast from "react-hot-toast";
 
 type Props = ComponentProps<typeof Button> & {
@@ -38,9 +39,14 @@ export const PurchaseButton = ({
     router.push(`/transactions/${transactionId}`);
   }, [buyerId, listingId, userCouponId, router]);
 
+  const { open, FormActionModal } = useFormActionModal(handleOnClick, "購入");
+
   return (
-    <Button onClick={handleOnClick} {...props}>
-      購入手続きへ
-    </Button>
+    <>
+      <Button onClick={open} {...props}>
+        購入手続きへ
+      </Button>
+      <FormActionModal>商品名</FormActionModal>
+    </>
   );
 };
