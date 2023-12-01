@@ -26,7 +26,8 @@ const create = async (
   userId: string,
   previousPrice: number | null = null,
 ) => {
-  const { tags, imageFiles, isPublic, postageIsIncluded, ...rest } = formData;
+  const { tags, imageFiles, isPublic, postageIsIncluded, price, ...rest } =
+    formData;
   const tagTexts = parseTags(tags);
   const images = await uploadToCloudinary(imageFiles);
   const listing: UnregisteredListing = {
@@ -34,6 +35,7 @@ const create = async (
     sellerId: userId,
     isPublic: strToBool(isPublic),
     postageIsIncluded: strToBool(postageIsIncluded),
+    price: Number(price),
     ...rest,
   };
   return createListingWithTagsAndImages(listing, tagTexts, images);
@@ -54,6 +56,9 @@ export const listingItem = async (
   const session = await getSession();
   const userId = session?.user.id;
   const { verificationCode, ...rest } = values;
+  // 文字列の'isPublic'をブール値に変換
+  const isPublicBool = strToBool(values.isPublic);
+
   if (!userId) {
     return {
       ...prevState,
@@ -66,11 +71,9 @@ export const listingItem = async (
   if (verifyResult) {
     return verifyResult;
   } else {
-    if (!values.isPublic) {
-      const listing = await create(rest, userId, previousPrice);
-      redirect(
-        `/add-listing/complete?listing_id=${listing.id}&is_public=false`,
-      );
+    if (!isPublicBool) {
+      await create(rest, userId, previousPrice);
+      redirect(`/mypage/draft`);
     } else {
       const validated = ProductFormSchema.safeParse(values);
       if (!validated.success) {

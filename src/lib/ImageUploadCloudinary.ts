@@ -6,6 +6,7 @@ async function uploadSingleFile(
   upload_preset: string,
 ): Promise<string> {
   const formData = new FormData();
+
   formData.append("file", file);
   formData.append("folder", "swappy");
   formData.append("upload_preset", upload_preset);
@@ -47,5 +48,6 @@ export async function uploadToCloudinary(files: File[]) {
     ),
   );
 
-  return Promise.all(uploadPromises);
+  const uploadResults = await Promise.all(uploadPromises);
+  return uploadResults.filter((url) => typeof url == "string");
 }

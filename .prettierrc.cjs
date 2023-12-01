@@ -3,4 +3,4 @@ module.exports = {
   semi: true,
   useTabs: false,
   singleQuote: false,
-}
+};

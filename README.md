@@ -122,6 +122,12 @@ pnpm run build
 
 お疲れ様でした！！！！
 
+### 9.prettierの設定(commit時にprettierを走らせる)
+
+```bash
+pnpm prepare
+```
+
 
 ## ローカル開発環境構築(まだ動かない人がいます(windows))
 

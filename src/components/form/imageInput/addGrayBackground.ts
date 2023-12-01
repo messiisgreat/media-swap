@@ -11,10 +11,10 @@ export async function addGrayBackground(file: File): Promise<File> {
       // オブジェクトURLの解放
       URL.revokeObjectURL(objectUrl);
       const maxLength = Math.max(img.width, img.height);
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement("canvas");
       canvas.width = maxLength;
       canvas.height = maxLength;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
 
       if (!ctx) {
         reject(new Error("Could not create canvas context."));
@@ -22,7 +22,7 @@ export async function addGrayBackground(file: File): Promise<File> {
       }
 
       // 灰色の背景を設定
-      ctx.fillStyle = '#808080';
+      ctx.fillStyle = "#808080";
       ctx.fillRect(0, 0, maxLength, maxLength);
 
       // 画像を中央に配置
@@ -30,17 +30,26 @@ export async function addGrayBackground(file: File): Promise<File> {
       const offsetY = (maxLength - img.height) / 2;
       ctx.drawImage(img, offsetX, offsetY, img.width, img.height);
 
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          reject(new Error("Canvas toBlob failed."));
-          return;
-        }
-        resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-      }, 'image/jpeg', 1);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Canvas toBlob failed."));
+            return;
+          }
+          resolve(
+            new File([blob], file.name, {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            }),
+          );
+        },
+        "image/jpeg",
+        1,
+      );
     };
     img.onerror = () => {
       URL.revokeObjectURL(objectUrl);
-      reject(new Error("Image loading error."))
+      reject(new Error("Image loading error."));
     };
   });
 }

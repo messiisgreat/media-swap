@@ -7,7 +7,7 @@ type Props = Omit<
   "isOpen" | "onClose" | "rootElement"
 >;
 
-type Result = {
+type useDialogResult = {
   /** dialogを開く関数 */
   open: () => void;
   /** dialogを閉じる関数 */
@@ -20,7 +20,7 @@ type Result = {
  * ダイアログを扱うためのフック
  * @returns open, close, Dialog
  */
-export const useDialog = (): Result => {
+export const useDialog = (): useDialogResult => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const open = useCallback((): void => {

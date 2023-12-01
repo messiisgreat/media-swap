@@ -16,7 +16,7 @@ export const getFormValues = <T extends FormObject>(
     const value = isArrayOfFiles(formObject[key])
       ? (formData.getAll(key) as File[])
       : Number.isInteger(formObject[key])
-      ? Number(formData.get(key))
-      : (formData.get(key) as T[typeof key]);
+        ? Number(formData.get(key))
+        : (formData.get(key) as T[typeof key]);
     return { ...acc, [key]: value };
   }, {} as T);

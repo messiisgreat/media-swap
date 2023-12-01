@@ -124,10 +124,11 @@ model UserCoupon {
     userId   String  @map("user_id") @db.ObjectId // ユーザーID外部キー
     couponId String  @map("coupon_id") @db.ObjectId // クーポンID外部キー
     isUsed   Boolean @default(false) @map("is_used") // 使用済みフラグ
+    transactionId String? @map("transaction_id") @db.ObjectId
 
     user        User         @relation(fields: [userId], references: [id])
     coupon      Coupon       @relation(fields: [couponId], references: [id])
-    Transaction Transaction?
+    transaction Transaction? @relation(fields: [transactionId], references: [id])
 
     @@map("user_coupons")
 }
@@ -328,14 +329,14 @@ model Transaction {
     buyerId             String   @map("buyer_id") @db.ObjectId // 購入者ID外部キー
     externalPaymentId   String?  @map("external_payment_id") // 外部決済ID
     isCanceled          Boolean  @default(false) @map("is_canceled") // 取引キャンセルフラグ
-    userCouponId        String?  @unique @map("user_coupon_id") @db.ObjectId // ユーザークーポンID外部キー
+    userCouponId        String?  @map("user_coupon_id") @db.ObjectId // ユーザークーポンID外部キー
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
     transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
 
     buyer             User        @relation("buyer", fields: [buyerId], references: [id])
     listing           Listing     @relation(fields: [listingId], references: [id])
     transactionStatus Int
-    userCoupon        UserCoupon? @relation(fields: [userCouponId], references: [id])
+    userCoupon        UserCoupon[]
 
     transactionRating   TransactionRating[]
     transactionComments TransactionComment[]

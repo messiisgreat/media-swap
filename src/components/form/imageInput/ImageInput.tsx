@@ -1,8 +1,11 @@
 "use client";
 
 import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
-import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
 import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
+import {
+  addFileWithPreview,
+  processDroppedFiles,
+} from "@/components/form/imageInput/utils";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -30,25 +33,16 @@ export function ImageInput({ id, labelText, ...props }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onDrop = useCallback(async (droppedFiles: File[]) => {
-    const processedFiles = await Promise.all(
-      droppedFiles.map((file) => addGrayBackground(file)),
-    );
-    setFiles((previousFiles) => {
-      const spaceLeft = 10 - previousFiles.length;
-      const acceptedFiles = processedFiles.slice(0, spaceLeft);
-      const filesWithPreview = acceptedFiles.map((file: File) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        }),
-      ) as FileWithPreview[];
-      return [...previousFiles, ...filesWithPreview];
-    });
+    const processedFiles = await processDroppedFiles(droppedFiles);
+    setFiles((prevFiles) => addFileWithPreview(prevFiles, processedFiles, 10));
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
       "image/*": [],
+      ".heic": [],
+      ".heif": [],
     },
     multiple: true,
     noClick: true,

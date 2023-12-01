@@ -15,8 +15,8 @@ type Props = {
 };
 
 /**
- *  出品商品一覧を表示するページ
- * /mypage/listings
+ *  下書き商品一覧を表示するページ
+ * /mypage/draft
  */
 export default async function Page({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
@@ -27,14 +27,14 @@ export default async function Page({
   }
   return (
     <>
-      <PageTitle title="出品商品一覧" />
+      <PageTitle title="下書き商品一覧" />
       <ItemsListContainer
         page={page}
         size={size}
         sort={sort}
         order={order}
         sellerId={user.id}
-        isPublic={true}
+        isPublic={false}
       />
     </>
   );

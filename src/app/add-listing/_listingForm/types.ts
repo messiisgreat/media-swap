@@ -8,7 +8,7 @@ export type ProductFormValues = {
   /** 商品の状態 */
   productConditionId: string;
   /** 価格 */
-  price: number;
+  price: string;
   /** 商品の説明 */
   description: string;
   /** 送料込みかどうか */
@@ -35,7 +35,7 @@ export const initialProductFormValues: ProductFormState = {
   values: {
     productName: "",
     productConditionId: "",
-    price: 0,
+    price: "",
     description: "",
     postageIsIncluded: "",
     shippingDaysId: "",
@@ -59,9 +59,16 @@ export const ProductFormSchema: ZodType<ProductFormValues> = z.object({
     invalid_type_error: "商品の状態を選択してください",
   }),
   price: z
-    .number({ invalid_type_error: "不正な値です" })
-    .min(300, { message: "価格は300円以上で入力してください" })
-    .max(10000000, { message: "価格は10,000,000円以下で入力してください" }),
+    .string()
+    .refine((price) => !isNaN(Number(price)), {
+      message: "価格は数値で入力してください",
+    })
+    .refine((price) => Number(price) >= 300, {
+      message: "価格は300円以上で入力してください",
+    })
+    .refine((price) => Number(price) <= 10000000, {
+      message: "価格は10,000,000円以下で入力してください",
+    }),
   description: z
     .string()
     .min(1, { message: "商品の説明は必須です" })

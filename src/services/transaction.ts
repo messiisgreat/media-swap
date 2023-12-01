@@ -12,7 +12,11 @@ import { cache } from "react";
 export const findTransaction = cache(async (id: string) => {
   return prisma.transaction.findUnique({
     where: { id },
-    include: { transactionComments: true, buyer: true, listing: { include: { seller: true } } }
+    include: {
+      transactionComments: true,
+      buyer: true,
+      listing: { include: { seller: true } },
+    },
   });
 });
 
@@ -54,7 +58,9 @@ export const createTransaction = async (
  * @param transaction - 更新する取引
  * @returns 更新された取引
  */
-export const updateTransaction = async (transaction: { id: string } & Partial<Transaction>) => {
+export const updateTransaction = async (
+  transaction: { id: string } & Partial<Transaction>,
+) => {
   return prisma.transaction.update({
     where: { id: transaction.id },
     data: transaction,
@@ -66,12 +72,14 @@ export const updateTransaction = async (transaction: { id: string } & Partial<Tr
  * @param transaction - 更新する取引
  * @returns 更新された取引
  */
-export const updateTransactionStatus = async (transaction: { id: string } & Partial<Transaction>) => {
+export const updateTransactionStatus = async (
+  transaction: { id: string } & Partial<Transaction>,
+) => {
   return prisma.transaction.update({
     where: { id: transaction.id },
     data: {
       transactionStatus: transaction.transactionStatus,
-    }
+    },
   });
 };
 
@@ -87,7 +95,7 @@ export const getTransactionComments = async (transactionId: string) => {
     orderBy: { createdAt: "asc" },
   });
   return comments;
-}
+};
 
 /**
  * 取引メッセージを作成
@@ -98,7 +106,7 @@ export const getTransactionComments = async (transactionId: string) => {
 export const createTransactionComment = async (
   text: string,
   userId: string,
-  transactionId: string
+  transactionId: string,
 ) => {
   await prisma.transactionComment.create({
     data: {
@@ -108,16 +116,16 @@ export const createTransactionComment = async (
     },
     include: { user: true },
   });
-}
+};
 
 /**
  * 既読にする
- * @param transactionId 取引ID 
+ * @param transactionId 取引ID
  * @param userId メッセージを見た側のユーザーID
  */
 export const markAsReadTransactionComments = async (
   transactionId: string,
-  userId: string
+  userId: string,
 ) => {
   await prisma.transactionComment.updateMany({
     where: {
@@ -129,4 +137,4 @@ export const markAsReadTransactionComments = async (
       isRead: true,
     },
   });
-}
+};

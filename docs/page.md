@@ -13,6 +13,7 @@
 - 参考(メルカリ)
 
 ![screencapture-jp-mercari-sell-create-2023-10-26-14_26_46](https://github.com/developerhost/media-swap/assets/50170789/d9a6cb59-703e-4b12-955f-9ce5aea868df)
+
 </details>
 
 ### 商品詳細ページ("/listing/[id]")
@@ -22,7 +23,6 @@
 - 現状
 
 ![screencapture-swappy-jp-products-65348f217070d4004f98b41a-2023-10-26-14_48_08](https://github.com/developerhost/media-swap/assets/50170789/78cc34af-02ca-40ee-ba8b-0ed5e4d0d05b)
-
 
 - 参考(メルカリ)
 
@@ -38,9 +38,7 @@
 
 ![screencapture-localhost-3000-add-product-2023-10-26-14_53_36](https://github.com/developerhost/media-swap/assets/50170789/2c306c30-5e6d-4631-a01b-7dab598f7d7a)
 
-
 - 参考(メルカリ)
-
 
 ![screencapture-jp-mercari-sell-create-2023-10-26-14_53_57](https://github.com/developerhost/media-swap/assets/50170789/e80be44b-7025-496d-90b0-a29af89160fa)
 
@@ -53,9 +51,6 @@
 - 現状
 
 ![screencapture-localhost-3000-age-check-2023-10-26-14_58_14](https://github.com/developerhost/media-swap/assets/50170789/b0d62993-6d41-4b38-8868-7e7b665a5ad2)
-
-
-
 
 - 参考(DMM)
 
@@ -71,7 +66,6 @@
 
 ![screencapture-localhost-3000-no-available-service-2023-10-26-15_01_09](https://github.com/developerhost/media-swap/assets/50170789/e08994f2-3bbc-4fef-8f7e-eca8d78dc1da)
 
-
 TODO: ホームに戻るボタンをつけた方がいいかも
 
 </details>
@@ -81,7 +75,7 @@ TODO: ホームに戻るボタンをつけた方がいいかも
 <details><summary>画像</summary>
 
 - 現状
-なし
+  なし
 
 - 参考(メルカリ)
 
@@ -96,12 +90,11 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 <details><summary>画像</summary>
 
 - 現状
-なし
+  なし
 
 - 参考(メルカリ)
 
 ![screencapture-jp-mercari-mypage-purchases-2023-10-26-15_06_15](https://github.com/developerhost/media-swap/assets/50170789/c51586c2-384e-472a-b6a0-d0c4ab1cc4bb)
-
 
 </details>
 
@@ -110,12 +103,11 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 <details><summary>画像</summary>
 
 - 現状
-なし
+  なし
 
 - 参考(メルカリ)
 
 ![screencapture-jp-mercari-mypage-listings-2023-10-26-15_07_38](https://github.com/developerhost/media-swap/assets/50170789/ebbd3749-03a2-4b05-be39-61bf15fbcbd6)
-
 
 </details>
 
@@ -124,7 +116,7 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 <details><summary>画像</summary>
 
 - 現状
-なし
+  なし
 
 - 参考(メルカリ)
 
@@ -139,9 +131,9 @@ TODO: 住所登録のみ必須。他はとりあえずいらないかな。
 <details><summary>画像</summary>
 
 - 現状
-作成中
+  作成中
 
 - 参考(メルカリ)
-TODO: のちに追加する
+  TODO: のちに追加する
 
 </details>

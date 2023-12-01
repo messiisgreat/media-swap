@@ -14,8 +14,8 @@ export const links: LinkSection[] = [
   {
     title: `${SITE_NAME}について`,
     items: [
-      { text: "会社概要(運営会社)", url: "/about" },
-      { text: "採用情報", url: "/recruit" },
+      { text: "会社概要(運営会社)", url: "https://magenta111384.studio.site" },
+      { text: "採用情報", url: "https://magenta111384.studio.site/contact" },
     ],
   },
   {

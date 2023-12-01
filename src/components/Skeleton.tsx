@@ -1,6 +1,6 @@
 /**
  * 読み込み中のスケルトンコンポーネント
- * @returns 
+ * @returns
  */
 export function Skeleton() {
   return (

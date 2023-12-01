@@ -1,9 +1,13 @@
 "use client";
 
 import { Input } from "@/components/form/Elements";
-import { ChangeEvent, ComponentProps, useState } from "react";
-import { z } from "zod";
 import { HANDING_CHARGE_RATE } from "@/constants/listing";
+import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
+import { z } from "zod";
+
+const MIN = 300;
+const MAX = 10000000;
+const valueSchema = z.number().refine((val) => MIN <= val && val <= MAX);
 
 type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
 
@@ -12,44 +16,47 @@ type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
  * @returns input,label,div
  */
 export const PriceInput = ({ ...props }: PriceInputProps) => {
-  const [handlingCharge, setHandlingCharge] = useState(0);
-  const [amountAfterCharge, setAmountAfterCharge] = useState(0);
-  const [isOverLimit, setIsOverLimit] = useState(false);
-  const valueSchema = z
-    .number()
-    .refine((val) => 300 <= val && val <= 10000000);
+  const [amount, setAmount] = useState<number | "">("");
+  const isOutOfRange = amount !== "" && (amount > MAX || amount < MIN);
+  const handlingCharge =
+    amount === "" ? "" : Math.round(amount * HANDING_CHARGE_RATE);
+  const amountAfterCharge =
+    handlingCharge === "" || amount === "" ? "" : amount - handlingCharge;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const amount = Number(e.target.value);
-    const result = valueSchema.safeParse(amount);
-    if (result.success) {
-      const handingCharge = Math.round(amount * HANDING_CHARGE_RATE);
-      const amountAfterCharge = amount - handingCharge;
-      setHandlingCharge(handingCharge);
-      setAmountAfterCharge(amountAfterCharge);
-      setIsOverLimit(false);
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.value !== "") {
+      const numberCurrentTarget = Number(e.currentTarget.value);
+      e.currentTarget.value = String(numberCurrentTarget);
+      const validated = valueSchema.safeParse(numberCurrentTarget);
+      if (validated.success) {
+        setAmount(validated.data);
+      } else {
+        setAmount(0);
+      }
     } else {
-      setHandlingCharge(0);
-      setAmountAfterCharge(0);
-      setIsOverLimit(true);
+      setAmount("");
     }
-  };
+  }, []);
+
   return (
     <>
       <Input
         type="number"
         placeholder="0"
-        min={0}
+        min={MIN}
+        max={MAX}
         inputMode="numeric"
         className="w-full text-right font-bold [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         onChange={handleChange}
         {...props}
       />
-      { isOverLimit &&
-        <label className="label-text-alt flex justify-between text-error">
-          300～10,000,000円の範囲内で入力してください。
-        </label>
-      }
+      <label className="label-text-alt flex justify-between text-error">
+        {isOutOfRange
+          ? `¥${new Intl.NumberFormat().format(
+              MIN,
+            )}以上¥${new Intl.NumberFormat().format(MAX)}以下で入力してください`
+          : "　"}
+      </label>
       <div className="flex justify-between">
         <label>販売手数料</label>
         <div>

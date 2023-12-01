@@ -22,7 +22,7 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
-    if: (github.event_name == 'issue_comment' && contains(github.event.comment.body, '[run review]') && github.event.issue.pull_request) || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '[run review]')) || (github.event_name == 'pull_request' && !contains(github.event.pull_request.title, 'release') && !contains(github.event.pull_request.title, 'Release'))
+    if: (github.event_name == 'issue_comment' && contains(github.event.comment.body, '[run review]') && github.event.issue.pull_request) || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '[run review]')) || (github.event_name == 'pull_request' && github.base_ref != 'main' && !contains(github.event.pull_request.title, 'release') && !contains(github.event.pull_request.title, 'Release') && !contains(github.event.pull_request.title, 'WIP') && !contains(github.event.pull_request.title, 'NOAI'))
     timeout-minutes: 15
     steps:
       - uses: coderabbitai/openai-pr-reviewer@latest
