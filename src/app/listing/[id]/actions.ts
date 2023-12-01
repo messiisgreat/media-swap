@@ -167,17 +167,17 @@ export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const listing = await findListingById(listingId);
   const listingName = listing.productName;
   const buyer = await getSessionUser();
-  if (!buyer) throw new Error("ログインしてください");
+  if (!buyer || !buyer.email) throw new Error("ログインしてください");
   const buyerName = buyer.name;
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
+  if (!seller || !seller.name) throw new Error("出品者が見つかりませんでした");
   const sellerName = seller?.name;
-  if (!seller) throw new Error("出品者が見つかりませんでした");
   const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
   const sellerText = `${sellerName}様
   この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
   あなたの出品した商品 ${listingName} が購入されました。
-  
+
 
   商品の発送準備をお願いします。
   発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
@@ -202,10 +202,10 @@ export const sendMailToBuyerAndSeller = async (listingId: string) => {
 
   ${SITE_URL}
   `;
-  if (typeof buyer.email === "string") {
+  try {
     await sendMailToUser(buyer.email, buyerSubject, buyerText);
-  }
-  if (typeof seller.email === "string") {
     await sendMailToUser(seller.email, sellerSubject, sellerText);
+  } catch (error) {
+    throw new Error(`メールの送信に失敗しました:${error}`);
   }
 };
