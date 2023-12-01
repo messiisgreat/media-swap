@@ -38,4 +38,4 @@ export const categoryOptions = {
   2: "ご意見",
   3: "ご感想",
   4: "その他",
-};
+} as const;
