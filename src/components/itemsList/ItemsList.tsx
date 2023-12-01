@@ -1,6 +1,12 @@
 import { ListingCard } from "@/components/itemsList/ListingCard";
 import { findListings } from "@/services/listing";
 
+// findListings 関数からの戻り値の型
+type ListingsQueryResult = Awaited<ReturnType<typeof findListings>>;
+
+// 配列の1個分の型
+type ListingQueryResult = ListingsQueryResult[number];
+
 /**
  * 商品一覧を表示する
  * @param listings findListings関数で取得した商品一覧
@@ -9,7 +15,7 @@ import { findListings } from "@/services/listing";
 export const ItemsList = ({
   listings,
 }: {
-  listings: Awaited<ReturnType<typeof findListings>>;
+  listings: ListingQueryResult[];
 }) => (
   <>
     {listings.length ? (

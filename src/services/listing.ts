@@ -1,7 +1,7 @@
+import { Listing } from "@prisma/client";
 import "server-only";
 
 import prisma from "@/lib/prisma";
-import { Listing } from "@prisma/client";
 import { cache } from "react";
 
 /** データベース未登録のListing型 */
@@ -74,7 +74,7 @@ export const findListingById = cache(async (id: string) => {
       },
       productCondition: true,
       shippingDays: true,
-      shippingMethod: true
+      shippingMethod: true,
     },
   });
 });

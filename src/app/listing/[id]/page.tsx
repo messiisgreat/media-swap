@@ -52,6 +52,9 @@ export default async function ListingPage({
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
+  const dtClass = "my-2 w-full rounded-lg bg-white p-4 shadow-md"
+  const ddClass = "font-semibold text-gray-700"
+  const ddColor = "text-gray-600"
 
   return (
     <>
@@ -69,17 +72,17 @@ export default async function ListingPage({
         </div>
         <Badge className="badge-lg">¥{listing.price}</Badge>
         <TitleUnderbar title="説明" />
-        <div className="my-2 w-full rounded-lg bg-white p-4 shadow-md">
+        <div className={dtClass}>
           <p className="my-4 text-gray-600">{listing.description}</p>
         </div>
         <TitleUnderbar title="商品情報" />
-        <div className="my-2 w-full rounded-lg bg-white p-4 shadow-md">
+        <div className={dtClass}>
           <div className="mb-4">
-            <p className="font-semibold text-gray-700">商品の状態</p>
-            <p className="text-gray-600">{listing.productCondition?.name}</p>
+            <p className={ddClass}>商品の状態</p>
+            <p className={ddColor}>{listing.productCondition?.name}</p>
           </div>
           <div className="mb-4">
-            <p className="font-semibold text-gray-700">タグ名</p>
+            <p className={ddClass}>タグ名</p>
             <div className="flex flex-wrap gap-2">
               {listing.tags.map((tag) => (
                 <p
@@ -93,16 +96,16 @@ export default async function ListingPage({
           </div>
           <div className="mb-4">
             <div className="grid grid-cols-2 gap-2">
-              <p className="font-semibold text-gray-700">配送方法</p>
-              <p className="text-gray-600">{listing.shippingMethod?.name}</p>
-              <p className="font-semibold text-gray-700">送料の負担について</p>
-              <p className="text-gray-600">
+              <p className={ddClass}>配送方法</p>
+              <p className={ddColor}>{listing.shippingMethod?.name}</p>
+              <p className={ddClass}>送料の負担について</p>
+              <p className={ddColor}>
                 {listing.shippingMethod?.amount
                   ? "送料別(購入者負担)"
                   : "送料込み(出品者負担)"}
               </p>
-              <p className="font-semibold text-gray-700">配送までの日数</p>
-              <p className="text-gray-600">
+              <p className={ddClass}>配送までの日数</p>
+              <p className={ddColor}>
                 {listing.shippingDays?.maxDays}日以内
               </p>
             </div>
