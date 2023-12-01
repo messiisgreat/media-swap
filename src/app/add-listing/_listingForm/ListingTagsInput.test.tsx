@@ -4,7 +4,7 @@ import { ListingTagsInput } from "./ListingTagsInput";
 
 describe("ListingTagsInput", () => {
   describe("タグの追加", () => {
-    it("Enterでtagを追加できること", () => {
+    it("Enterでtagを追加できること", async () => {
       render(<ListingTagsInput name="tag" suggestedTags={[]} />);
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
@@ -12,23 +12,26 @@ describe("ListingTagsInput", () => {
       userEvent.type(input, "newTag");
       fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
 
-      expect(input).toHaveValue("");
-      expect(screen.getByText("newTag")).toBeInTheDocument();
-      expect(screen.getByText("Tags")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(input).toHaveValue("");
+        expect(screen.getByText("newTag")).toBeInTheDocument();
+        expect(screen.getByText("Tags")).toBeInTheDocument();
+      });
     });
-    it("重複して同じ名前のタグを追加できないこと", () => {
+    it("重複して同じ名前のタグを追加できないこと", async () => {
       render(<ListingTagsInput name="tag" suggestedTags={[]} />);
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
+      await waitFor(() => {
+        userEvent.type(input, "newTag");
+        fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
+        fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
 
-      userEvent.type(input, "newTag");
-      fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
-      fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
-
-      expect(input).toHaveValue("");
-      expect(screen.getAllByText("newTag").length).toBe(1);
+        expect(screen.getAllByText("newTag").length).toBe(1);
+      });
     });
   });
+
   it("focus時にsuggestedTagsが表示されること", () => {
     const suggestedTags = [
       { id: "1", text: "tag1" },

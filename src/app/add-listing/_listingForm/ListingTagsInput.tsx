@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components";
 import { Input } from "@/components/form";
 import { useCallback, useState } from "react";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";
@@ -21,6 +22,7 @@ type NewTag = Omit<Tag, "id" | "createdAt">;
  */
 export function ListingTagsInput({ name, suggestedTags }: Props) {
   const [newTags, setNewTags] = useState<Array<NewTag>>([]);
+  const [inputValue, setInputValue] = useState("");
 
   const onKeyDownEnter = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -31,7 +33,7 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
 
       const isExist = newTags.find((tag) => tag.text === e.currentTarget.value);
       if (isExist) {
-        e.currentTarget.value = "";
+        setInputValue("");
         return;
       }
 
@@ -39,7 +41,7 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
         text: e.currentTarget.value,
       };
       setNewTags([...newTags, newTag]);
-      e.currentTarget.value = "";
+      setInputValue("");
     },
     [newTags, setNewTags],
   );
@@ -50,6 +52,24 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
     },
     [newTags, setNewTags],
   );
+
+  const onClickAdd = useCallback(() => {
+    if (!inputValue) {
+      return;
+    }
+
+    const isExist = newTags.find((tag) => tag.text === inputValue);
+    if (isExist) {
+      setInputValue("");
+      return;
+    }
+
+    const newTag = {
+      text: inputValue,
+    };
+    setNewTags([...newTags, newTag]);
+    setInputValue("");
+  }, [setNewTags, newTags, inputValue, setInputValue]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -82,9 +102,13 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
         list="tags"
         name="showTag"
         type="text"
+        value={inputValue}
         placeholder="タグ名を入力してください"
         onKeyDown={(e) => {
           onKeyDownEnter(e);
+        }}
+        onChange={(e) => {
+          setInputValue(e.target.value);
         }}
       />
       <datalist id="tags">
@@ -96,6 +120,7 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
           />
         ))}
       </datalist>
+      <Button onClick={() => onClickAdd()}>タグを追加</Button>
       {/* Server Action用のinput */}
       <Input
         type="hidden"
