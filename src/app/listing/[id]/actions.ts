@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
-import { SITE_NAME } from "@/constants/site";
+import { CORPORATE_MAIL, SITE_NAME, SITE_URL } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
 import {
   createListingReport,
@@ -165,44 +165,46 @@ export const removeListing = async (listingId: string) => {
  */
 export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const listing = await findListingById(listingId);
+  const listingName = listing.productName;
   const buyer = await getSessionUser();
   if (!buyer) throw new Error("ログインしてください");
+  const buyerName = buyer.name;
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
   const sellerName = seller?.name;
   if (!seller) throw new Error("出品者が見つかりませんでした");
   const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
-  const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listing.productName}`;
-  const buyerText = `${buyer.name}様
+  const sellerText = `${sellerName}様
   この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
-  ${sellerName} 様、
-  
-  あなたの出品した 以下の商品が購入されました。
-
-  商品名: ${listing.productName}
-  金額: ${listing.price}円
+  あなたの出品した商品 ${listingName} が購入されました。
 
   商品の発送準備をお願いします。
   発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
   購入者とのやり取りは取引ページをご利用ください。
 
-  ※このメールに心当たりのない場合は、お手数ですが${SITE_NAME}までご連絡ください。
-  `;
-  const sellerText = `${seller.name}様
-  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
-  以下の商品が購入されました。
+  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
 
-  商品名: ${listing.productName}
+  ${SITE_URL}
+  `;
+  const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listingName}`;
+  const buyerText = `${buyerName}様
+  この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
+  以下の商品を購入しました。
+
+  商品名: ${listingName}
   金額: ${listing.price}円
 
-  出品者の ${sellerName} 様が商品の発送準備を進めています。商品が発送され次第、追跡情報を含む発送確認のメールをお送りします。
-
+  出品者の ${sellerName} 様が商品の発送準備を進めています。
   出品者とのやり取りは取引ページをご利用ください。
 
-  ※このメールに心当たりのない場合は、お手数ですが${SITE_NAME}までご連絡ください。
+  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
+
+  ${SITE_URL}
   `;
   if (typeof buyer.email === "string") {
     await sendMailToUser(buyer.email, buyerSubject, buyerText);
   }
-  await sendMailToUser(seller.email, sellerSubject, sellerText);
+  if (typeof seller.email === "string") {
+    await sendMailToUser(seller.email, sellerSubject, sellerText);
+  }
 };
