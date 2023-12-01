@@ -1,12 +1,12 @@
 "use server";
 
-import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
-import { SITE_NAME } from "@/constants/site";
-import { sendMailToUser } from "@/lib/mail";
 import {
   createBuyerMailContent,
   createSellerMailContent,
-} from "@/lib/mailTemplate";
+} from "@/app/listing/[id]/mailTemplate";
+import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
+import { SITE_NAME } from "@/constants/site";
+import { sendMailToUser } from "@/lib/mail";
 import {
   createListingReport,
   deleteListing,
