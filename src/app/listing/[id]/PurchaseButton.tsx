@@ -17,9 +17,12 @@ type Props = ComponentProps<typeof Button> & {
 };
 
 /**
- * 商品購入ボタン
- * @param param0.productId 商品ID
- * @returns button
+ * 購入ボタンコンポーネントをレンダリングします。
+ *
+ * @param Props.listing - リスティングオブジェクトです。
+ * @param Props.buyerId - 購入者のIDです。
+ * @param Props.userCouponId - ユーザークーポンのIDです。
+ * @returns {JSX.Element} レンダリングされた購入ボタンコンポーネントです。
  */
 export const PurchaseButton = ({
   listing,
