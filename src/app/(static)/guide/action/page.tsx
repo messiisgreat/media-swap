@@ -1,3 +1,4 @@
+import { Section } from "@/components/structure";
 import { H } from "@/components/structure/H";
 import { SITE_NAME } from "@/constants/site";
 
@@ -9,7 +10,7 @@ export default function GuideActionPage() {
     <div>
       <div className="border-2">
         <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
-        <div className="py-6">
+        <Section className="py-6">
           <H className="text-lg font-bold">禁止されている行為</H>
           <p className="py-4">
             {SITE_NAME}
@@ -19,8 +20,8 @@ export default function GuideActionPage() {
           <p className="py-4">
             これらの活動を検知した際には、アカウントの使用制約などの処置を考慮することがございます。
           </p>
-        </div>
-        <div className="py-6">
+        </Section>
+        <Section className="py-6">
           <H className="text-lg font-bold">取引に関する注意点</H>
           <ul className="list-disc px-4">
             <li>{SITE_NAME}が提供していない支払い手段の使用を推奨すること</li>
@@ -32,8 +33,8 @@ export default function GuideActionPage() {
             </li>
             <li>商品の交換や部分的な交換</li>
           </ul>
-        </div>
-        <div className="py-6">
+        </Section>
+        <Section className="py-6">
           <H className="text-lg font-bold">発送に関する注意</H>
           <ul className="list-disc px-4">
             <li>
@@ -44,8 +45,8 @@ export default function GuideActionPage() {
             <li>支払い前に出品者に商品の発送を要求する行為</li>
             <li>受取が困難な場所を商品の到着先として選択する行為</li>
           </ul>
-        </div>
-        <div className="py-6">
+        </Section>
+        <Section className="py-6">
           <H className="text-lg font-bold">出品に関する注意点</H>
           <ul className="list-disc px-4">
             <li>
@@ -67,8 +68,8 @@ export default function GuideActionPage() {
             <li>虚偽の設定、または誤った情報を記載すること</li>
             <li>他会員が撮影した画像、文章などを無断で使用すること</li>
           </ul>
-        </div>
-        <div className="py-6">
+        </Section>
+        <Section className="py-6">
           <H className="text-lg font-bold">その他</H>
           <ul className="list-disc px-4">
             <li>他のサービスへの誘導</li>
@@ -83,7 +84,7 @@ export default function GuideActionPage() {
             <li>選挙活動に関連する行為</li>
             <li>その他、適さないと見なされる行為</li>
           </ul>
-        </div>
+        </Section>
       </div>
     </div>
   );

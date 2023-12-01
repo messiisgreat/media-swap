@@ -92,7 +92,7 @@ export default async function ListingPage({
           {listing.description}
         </pre>
         {listing.transactionId ? (
-          <div>
+          <Section>
             <p>すでに商品を購入しています！</p>
             <ButtonAsLink
               href={`/transactions/${listing.transactionId}`}
@@ -100,7 +100,7 @@ export default async function ListingPage({
             >
               取引へ進む
             </ButtonAsLink>
-          </div>
+          </Section>
         ) : (
           !isOwner && (
             <PurchaseButton
