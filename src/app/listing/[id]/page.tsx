@@ -1,7 +1,6 @@
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
-import Toolbar from "@/app/listing/[id]/_listingModal/Toolbar";
 import { Badge } from "@/components/Badge";
 import { ButtonAsLink } from "@/components/Button";
 import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
@@ -53,9 +52,9 @@ export default async function ListingPage({
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId; //出品者かどうかで表示を変えられるので、後で活用する
-  const dtClass = "my-2 w-full rounded-lg bg-white p-4 shadow-md"
-  const ddClass = "font-semibold text-gray-700"
-  const ddColor = "text-gray-600"
+  const dtClass = "my-2 w-full rounded-lg bg-white p-4 shadow-md";
+  const ddClass = "font-semibold text-gray-700";
+  const ddColor = "text-gray-600";
 
   return (
     <VerifyProvider>
@@ -111,9 +110,7 @@ export default async function ListingPage({
                   : "送料込み(出品者負担)"}
               </p>
               <p className={ddClass}>配送までの日数</p>
-              <p className={ddColor}>
-                {listing.shippingDays?.maxDays}日以内
-              </p>
+              <p className={ddColor}>{listing.shippingDays?.maxDays}日以内</p>
             </div>
           </div>
         </div>
