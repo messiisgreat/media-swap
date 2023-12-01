@@ -177,6 +177,7 @@ export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const sellerText = `${sellerName}様
   この度は${SITE_NAME}をご利用いただき、誠にありがとうございます。
   あなたの出品した商品 ${listingName} が購入されました。
+  
 
   商品の発送準備をお願いします。
   発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
