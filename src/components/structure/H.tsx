@@ -1,3 +1,6 @@
+// このファイルでは見出しタグの使用を許可する必要があるため、ESLintの該当ルールを無効化しています。
+// これはHコンポーネントが見出しタグを抽象化するためのものであり、直接的な使用を避けるためのものです。
+/* eslint-disable react/forbid-elements */
 "use client";
 
 import { useLevel } from "@/components/structure/context";
