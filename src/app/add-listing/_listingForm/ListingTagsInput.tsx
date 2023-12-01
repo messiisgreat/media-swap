@@ -63,8 +63,9 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
                 <span
                   data-testid="delete"
                   onClick={() => onClickDelete(tag.text)}
+                  className="cursor-pointer"
                 >
-                  <IoClose class="cursor-pointer" />
+                  <IoClose />
                 </span>
               </span>
             ))}
