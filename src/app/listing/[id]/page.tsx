@@ -104,7 +104,7 @@ export default async function ListingPage({
         ) : (
           !isOwner && (
             <PurchaseButton
-              listingId={listing.id}
+              listing={listing}
               buyerId={userId!}
               userCouponId={null}
             />
