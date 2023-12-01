@@ -177,7 +177,7 @@ export const sendMailToBuyerAndSeller = async (listingId: string) => {
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
   if (!seller || !seller.name) throw new Error("出品者が見つかりませんでした");
-  const sellerName = seller?.name;
+  const sellerName = seller.name;
   const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
   const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listingName}`;
 
