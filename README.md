@@ -37,7 +37,7 @@
 ![スクリーンショット 2023-11-14 13 55 17](https://github.com/developerhost/media-swap/assets/50170789/b9f28296-38fe-4362-ba96-0157e6b169a4)
 
 ### 2. 自身のOrganizationを作成する
-歯車マークの左あるトグルを押下し、View All Organizationsを押下する
+歯車マークの左にあるトグルを押下し、View All Organizationsを押下する
 ![スクリーンショット 2023-12-02 12 45 05](https://github.com/developerhost/media-swap/assets/87302837/9f6c694b-53b9-4c32-bb46-29c09e306c87)
 
 
