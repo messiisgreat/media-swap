@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { ReCAPTCHASignature } from "./reCAPTCHASignature";
 
 /**
  * セキュリティ認証情報を取得するコンポーネント
@@ -18,6 +19,7 @@ export const VerifyProvider = ({ children }: { children: ReactNode }) => {
       language="ja"
     >
       {children}
+      <ReCAPTCHASignature></ReCAPTCHASignature>
     </GoogleReCaptchaProvider>
   );
 };
