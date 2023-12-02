@@ -12,11 +12,7 @@ type ListingQueryResult = ListingsQueryResult[number];
  * @param listings findListings関数で取得した商品一覧
  * @returns div
  */
-export const ItemsList = ({
-  listings,
-}: {
-  listings: ListingQueryResult[];
-}) => (
+export const ItemsList = ({ listings }: { listings: ListingQueryResult[] }) => (
   <>
     {listings.length ? (
       <div className="grid grid-cols-3 gap-1">
