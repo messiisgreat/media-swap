@@ -1,10 +1,11 @@
 import { TextLink } from "@/components";
 import "./reCAPTCHA.css";
+import { memo } from "react";
 
 /**
  * recaptchaの利用規約
  */
-export const ReCAPTCHASignature = () => {
+export const ReCAPTCHASignature = memo(() => {
   return (
     <span>
       このサイトは reCAPTCHA によって保護されており、Googleの
@@ -24,4 +25,4 @@ export const ReCAPTCHASignature = () => {
       が適用されます。
     </span>
   );
-};
+});
