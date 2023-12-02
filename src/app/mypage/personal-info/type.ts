@@ -3,7 +3,7 @@ import { ZodType, z } from "zod";
 
 export type PersonalInfoFormValues = {
   /** 名前 */
-  name: string;
+  // name: string;
   /** メールアドレス */
   email: string;
   /** 郵便番号 */
@@ -26,7 +26,7 @@ export type PersonalInfoFormState = FormState<PersonalInfoFormValues>;
 /** お問い合わせフォームの初期値 */
 export const initialPersonalInfoFormValues: PersonalInfoFormState = {
   values: {
-    name: "",
+    // name: "",
     email: "",
     postalCode: "",
     prefecture: "",
@@ -43,7 +43,7 @@ export const initialPersonalInfoFormValues: PersonalInfoFormState = {
 /** お問い合わせフォームのバリデーション */
 export const PersonalInfoFormSchema: ZodType<PersonalInfoFormValues> = z.object(
   {
-    name: z.string().min(1, { message: "お名前を入力してください" }),
+    // name: z.string().min(1, { message: "お名前を入力してください" }),
     email: z.string().min(1, { message: "メールアドレスを入力してください" }),
     postalCode: z.string().min(1, { message: "郵便番号を入力してください" }),
     prefecture: z.string().min(1, { message: "都道府県を入力してください" }),
