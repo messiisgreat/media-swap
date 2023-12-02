@@ -19,7 +19,7 @@ export const VerifyProvider = ({ children }: { children: ReactNode }) => {
       language="ja"
     >
       {children}
-      <ReCAPTCHASignature></ReCAPTCHASignature>
+      <ReCAPTCHASignature />
     </GoogleReCaptchaProvider>
   );
 };
