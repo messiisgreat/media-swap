@@ -2,12 +2,12 @@
 
 import { PriceInput } from "@/app/add-listing/PriceInput";
 import {
+  ListingTagsInput,
   SubmitContainer,
   TestDataButton,
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
-import { ListingTagsInput } from "@/app/add-listing/_listingForm/ListingTagsInput";
 import { Select } from "@/components/form";
 import { LimitInput, LimitTextarea } from "@/components/form/LimitElements";
 import { useFormMessageToaster } from "@/components/form/hooks";
