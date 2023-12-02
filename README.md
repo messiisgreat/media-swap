@@ -38,13 +38,15 @@
 
 ### 2. 自身のOrganizationを作成する
 歯車マークの左あるトグルを押下し、View All Organizationsを押下する
-[ここに画像]()
+![スクリーンショット 2023-12-02 12 45 05](https://github.com/developerhost/media-swap/assets/87302837/9f6c694b-53b9-4c32-bb46-29c09e306c87)
+
 
 Create New Organizationを押下する
-[ここに画像]()
+![スクリーンショット 2023-12-02 12 43 49](https://github.com/developerhost/media-swap/assets/87302837/537ff729-ffa8-4246-bdf4-93d6cf9f517e)
 
 Name Your Organizationに任意の名前を入力し、以下の設定でnextを押下する
-[ここに画像]()
+![スクリーンショット 2023-12-02 12 42 07](https://github.com/developerhost/media-swap/assets/87302837/da007b4b-c045-4489-bb9f-2cdc093cdc7a)
+
 
 Members and Securityは編集せずCreate Organizationを押下する
 
