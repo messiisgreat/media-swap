@@ -1,5 +1,8 @@
 import "./reCAPTCHA.css";
 
+/**
+ * recaptchaの利用規約
+ */
 export const ReCAPTCHASignature = () => {
   return (
     <span>
