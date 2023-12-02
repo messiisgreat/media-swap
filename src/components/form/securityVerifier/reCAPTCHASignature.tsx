@@ -5,7 +5,7 @@ import { memo } from "react";
 /**
  * recaptchaの利用規約
  */
-export const ReCAPTCHASignature = memo(() => {
+export const ReCAPTCHASignature = memo(function ReCAPTCHASignature() {
   return (
     <span>
       このサイトは reCAPTCHA によって保護されており、Googleの
