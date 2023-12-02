@@ -24,7 +24,7 @@ export const useFormActionModal = (
   const FormActionModal = useCallback(
     ({ children }: { children: ReactNode }) => (
       <Dialog>
-        <div className="modal-box">
+        <div className="modal-box mx-auto">
           <button
             className="btn btn-circle btn-ghost btn-md absolute right-2 top-2"
             onClick={close}
