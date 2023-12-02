@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TextLink } from "@/components";
 import "./reCAPTCHA.css";
 
 /**
@@ -8,21 +8,19 @@ export const ReCAPTCHASignature = () => {
   return (
     <span>
       このサイトは reCAPTCHA によって保護されており、Googleの
-      <Link
+      <TextLink
         href="https://policies.google.com/privacy"
         rel="noopener noreferrer"
-        className="ReCAPTCHASignature"
       >
         プライバシーポリシー
-      </Link>
+      </TextLink>
       と
-      <Link
+      <TextLink
         href="https://policies.google.com/terms"
         rel="noopener noreferrer"
-        className="ReCAPTCHASignature"
       >
         利用規約
-      </Link>
+      </TextLink>
       が適用されます。
     </span>
   );
