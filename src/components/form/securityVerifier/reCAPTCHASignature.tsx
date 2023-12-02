@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./reCAPTCHA.css";
 
 /**
@@ -7,13 +8,21 @@ export const ReCAPTCHASignature = () => {
   return (
     <span>
       このサイトは reCAPTCHA によって保護されており、Googleの
-      <a href="https://policies.google.com/privacy" rel="noopener noreferrer">
+      <Link
+        href="https://policies.google.com/privacy"
+        rel="noopener noreferrer"
+        className="ReCAPTCHASignature"
+      >
         プライバシーポリシー
-      </a>
+      </Link>
       と
-      <a href="https://policies.google.com/terms" rel="noopener noreferrer">
+      <Link
+        href="https://policies.google.com/terms"
+        rel="noopener noreferrer"
+        className="ReCAPTCHASignature"
+      >
         利用規約
-      </a>
+      </Link>
       が適用されます。
     </span>
   );

@@ -1,3 +1,7 @@
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.ReCAPTCHASignature {
+  color: #1a73e8;
+}
