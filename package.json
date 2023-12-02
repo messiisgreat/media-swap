@@ -43,7 +43,7 @@
     "next-auth": "4.24.5",
     "next-compose-middleware": "^1.0.0",
     "nodemailer": "^6.9.7",
-    "postcss": "8.4.31",
+    "postcss": "8.4.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
