@@ -34,8 +34,8 @@ describe("ListingTagsInput", () => {
 
   it("focus時にsuggestedTagsが表示されること", () => {
     const suggestedTags = [
-      { id: "1", text: "tag1" },
-      { id: "2", text: "tag2" },
+      { id: "1", text: "tag1", createdAt: new Date() },
+      { id: "2", text: "tag2", createdAt: new Date() },
     ];
     render(<ListingTagsInput name="tag" suggestedTags={suggestedTags} />);
 
