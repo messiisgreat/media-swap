@@ -2,7 +2,7 @@
 
 import { PriceInput } from "@/app/add-listing/PriceInput";
 import {
-  ListingTagInput,
+  ListingTagsInput,
   SubmitContainer,
   TestDataButton,
   initialProductFormValues,
@@ -46,6 +46,11 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
     <form
       action={action}
       className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1"
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+        }
+      }}
     >
       <ImageInput
         labelText="出品画像(最大10枚)"
@@ -77,11 +82,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
         rows={10}
         defaultValue={state.values.description}
       />
-      <ListingTagInput
-        tags={tags}
-        name="tags"
-        placeholder="タグ名を入力してください"
-      />
+      <ListingTagsInput suggestedTags={tags} name="tags" />
       <TitleUnderbar title="配送について" />
       <Select
         name="postageIsIncluded"

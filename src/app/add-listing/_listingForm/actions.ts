@@ -15,12 +15,6 @@ import {
 import { getSession, strToBool } from "@/utils";
 import { redirect } from "next/navigation";
 
-const parseTags = (tagsString: string) => {
-  if (!tagsString) return [];
-  const tags: { id: string; text: string }[] = JSON.parse(tagsString);
-  return tags.map((tag) => tag.text);
-};
-
 const create = async (
   formData: Omit<ProductFormValues, "verificationCode">,
   userId: string,
@@ -28,7 +22,7 @@ const create = async (
 ) => {
   const { tags, imageFiles, isPublic, postageIsIncluded, price, ...rest } =
     formData;
-  const tagTexts = parseTags(tags);
+  const tagTexts = tags.split(",");
   const images = await uploadToCloudinary(imageFiles);
   const listing: UnregisteredListing = {
     previousPrice,

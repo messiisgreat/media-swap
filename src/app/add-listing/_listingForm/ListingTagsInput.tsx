@@ -2,9 +2,9 @@
 
 import { Button } from "@/components";
 import { Input } from "@/components/form";
+import { Tag } from "@prisma/client";
 import { useCallback, useState } from "react";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";
-import { Tag } from "react-tag-input";
 
 type Props = {
   name: string;
