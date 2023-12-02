@@ -6,7 +6,7 @@ import {
 } from "@/app/mypage/personal-info/type";
 import { getFormValues } from "@/components/form";
 import { isVerifyForm } from "@/components/form/securityVerifier/verifyForm";
-import { createAddress } from "@/services/address";
+import { upsertAddress } from "@/services/address";
 import { updateEmail } from "@/services/user";
 import { getSession } from "@/utils";
 
@@ -47,7 +47,7 @@ export const personalInfoFormAction = async (
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  const address = await createAddress(
+  const address = await upsertAddress(
     userId,
     rest.postalCode,
     rest.prefecture,

@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { Address } from "@prisma/client";
 
 /**
- * 住所を登録する関数
+ * 住所を登録,更新する関数
  * @param userId ユーザーID
  * @param postalCode 郵便番号
  * @param prefecture 都道府県
@@ -14,7 +14,7 @@ import { Address } from "@prisma/client";
  * @param phoneNumber 電話番号
  * @returns 登録した住所
  */
-export const createAddress = async (
+export const upsertAddress = async (
   userId: string,
   postalCode: string,
   prefecture: string,
@@ -23,8 +23,19 @@ export const createAddress = async (
   addressLine2: string | null,
   phoneNumber: string,
 ): Promise<Address> => {
-  return await prisma.address.create({
-    data: {
+  return await prisma.address.upsert({
+    where: {
+      userId,
+    },
+    update: {
+      postalCode,
+      prefecture,
+      city,
+      addressLine1,
+      addressLine2,
+      phoneNumber,
+    },
+    create: {
       userId,
       postalCode,
       prefecture,
