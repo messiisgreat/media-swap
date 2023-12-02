@@ -45,7 +45,10 @@ export default async function Transaction({
           sessionUser={sessionUser}
         />
         {/* 通常の取引更新用ボタン */}
-        <TransactionChangeButton transaction={transaction} />
+        <TransactionChangeButton
+          transaction={transaction}
+          sessionUser={sessionUser}
+        />
         {/* 取引キャンセル用ボタン */}
         <TransactionChangeButton transaction={transaction} isCancel={true} />
         <div>
