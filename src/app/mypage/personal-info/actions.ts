@@ -5,9 +5,8 @@ import {
   PersonalInfoFormState,
 } from "@/app/mypage/personal-info/type";
 import { getFormValues } from "@/components/form";
-import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
+import { isVerifyForm } from "@/components/form/securityVerifier/verifyForm";
 import { createAddress } from "@/services/address";
-import { updateEmail } from "@/services/user";
 import { getSession } from "@/utils";
 
 /**
@@ -31,30 +30,39 @@ export const personalInfoFormAction = async (
       message: "セッションが切れました。再度ログインしてください。",
     };
   }
-  const verifyResult = await verifyForm(prevState, verificationCode);
-  if (verifyResult) {
-    return verifyResult;
-  } else {
-    const validated = PersonalInfoFormSchema.safeParse(values);
-    if (!validated.success) {
-      return {
-        ...prevState,
-        errors: validated.error.flatten().fieldErrors,
-      };
-    }
-    const address = await createAddress({ ...rest, userId });
-    if (!address) {
-      return {
-        ...prevState,
-        message: "住所の登録に失敗しました。時間をおいて再度お試しください。",
-      };
-    }
-    if (rest.email) {
-      await updateEmail(userId, rest.email);
-    }
+
+  const [isVerify, message] = await isVerifyForm(verificationCode);
+  if (!isVerify) {
     return {
       ...prevState,
-      message: "住所を登録しました。",
+      message: message,
     };
   }
+
+  const validated = PersonalInfoFormSchema.safeParse(values);
+  if (!validated.success) {
+    return {
+      ...prevState,
+      errors: validated.error.flatten().fieldErrors,
+    };
+  }
+  const address = await createAddress(
+    userId,
+    rest.postalCode,
+    rest.prefecture,
+    rest.city,
+    rest.addressLine1,
+    rest.addressLine2,
+    rest.phoneNumber,
+  );
+  if (!address) {
+    return {
+      ...prevState,
+      message: "住所の登録に失敗しました。時間をおいて再度お試しください。",
+    };
+  }
+  return {
+    ...prevState,
+    message: "個人情報設定を更新しました。",
+  };
 };

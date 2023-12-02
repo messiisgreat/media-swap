@@ -27,3 +27,21 @@ export const verifyForm = async <T>(
     return null;
   }
 };
+
+/**
+ * 認証コードを検証する
+ * @param verificationCode 認証コード
+ * @returns　認証に成功した場合はtrueを返す
+ */
+export const isVerifyForm = async (
+  verificationCode: string,
+): Promise<[boolean, string]> => {
+  if (!verificationCode) {
+    return [false, "認証コードが送信されていません"];
+  }
+  const isVerify = await fetchVerifyResult(verificationCode);
+  if (!isVerify) {
+    return [false, "認証に失敗しました。時間を置いてお試しくください"];
+  }
+  return [true, ""];
+};
