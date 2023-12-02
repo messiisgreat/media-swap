@@ -46,7 +46,7 @@ const PREFECTURES = [
   "宮崎県",
   "鹿児島県",
   "沖縄県",
-];
+] as const;
 
 export const PREFECTURE_OBJ = PREFECTURES.map((prefecture) => ({
   id: prefecture,
