@@ -30,6 +30,12 @@ export default function AddressForm() {
   return (
     <form action={action}>
       <Input
+        labelText="メールアドレス"
+        autoComplete="email address"
+        placeholder="例: swappy@email.com"
+        defaultValue={state.values.email}
+      />
+      <Input
         labelText="郵便番号"
         autoComplete="shipping postal-code"
         placeholder="例: 1234567"

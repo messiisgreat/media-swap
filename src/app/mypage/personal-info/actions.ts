@@ -7,6 +7,7 @@ import {
 import { getFormValues } from "@/components/form";
 import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
 import { createAddress } from "@/services/address";
+import { updateEmail } from "@/services/user";
 import { getSession } from "@/utils";
 
 /**
@@ -47,6 +48,9 @@ export const personalInfoFormAction = async (
         ...prevState,
         message: "住所の登録に失敗しました。時間をおいて再度お試しください。",
       };
+    }
+    if (rest.email) {
+      await updateEmail(userId, rest.email);
     }
     return {
       ...prevState,
