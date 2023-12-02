@@ -5,11 +5,12 @@
 0. slackに招待する
 1. git clone <git@github.com>:developerhost/media-swap.git
 2. node.js LTSをインストールする <https://nodejs.org/en/download/>
-3. pnpmをインストールする `npm install -g pnpm`
-4. パッケージをインストールする `pnpm install`
-5. .envファイルを作成し設定する
-6. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
-7. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
+3. 使用するnode.jsバージョンを18.17.0以上に設定する
+4. pnpmをインストールする `npm install -g pnpm`
+5. パッケージをインストールする `pnpm install`
+6. .envファイルを作成し設定する
+7. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
+8. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
 
 ## 共有したいリンク集
 

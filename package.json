@@ -39,6 +39,7 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "heic2any": "^0.0.4",
     "jotai": "^2.6.0",
+    "mongodb": "^6.3.0",
     "next": "14.0.3",
     "next-auth": "4.24.5",
     "next-compose-middleware": "^1.0.0",
