@@ -34,13 +34,10 @@ export const TransactionChangeButton = ({
   const [nextStatus, setNextStatus] = useState(transaction.transactionStatus);
 
   useEffect(() => {
-    if (isCancel) {
-      setNextStatus(TRANSACTION_STATUS.CANCELLED);
-    } else if (status !== undefined) {
-      setNextStatus(status);
-    } else {
-      setNextStatus(transaction.transactionStatus + 1);
-    }
+    const newStatus = isCancel
+      ? TRANSACTION_STATUS.CANCELLED
+      : status ?? transaction.transactionStatus + 1;
+    setNextStatus(newStatus);
   }, [isCancel, status, transaction.transactionStatus]);
 
   const handleClick = () => {
@@ -49,28 +46,18 @@ export const TransactionChangeButton = ({
   };
 
   const isVisibleButton = () => {
-    if (
-      transaction.transactionStatus === TRANSACTION_STATUS.BEFORE_PAYMENT &&
-      sessionUser?.id === transaction.buyerId
-    ) {
-      return true;
-    }
-    if (
-      transaction.transactionStatus === TRANSACTION_STATUS.COMPLETE_PAYMENT &&
-      sessionUser?.id !== transaction.buyerId
-    ) {
-      return true;
-    }
-    if (
-      transaction.transactionStatus === TRANSACTION_STATUS.SENT &&
-      sessionUser?.id === transaction.buyerId
-    ) {
-      return true;
-    }
-    if (transaction.transactionStatus === TRANSACTION_STATUS.RECEIVED) {
-      return true;
-    } else {
-      return false;
+    const isBuyer = sessionUser?.id === transaction.buyerId;
+    switch (transaction.transactionStatus) {
+      case TRANSACTION_STATUS.BEFORE_PAYMENT:
+        return isBuyer;
+      case TRANSACTION_STATUS.COMPLETE_PAYMENT:
+        return !isBuyer;
+      case TRANSACTION_STATUS.SENT:
+        return isBuyer;
+      case TRANSACTION_STATUS.RECEIVED:
+        return true;
+      default:
+        return false;
     }
   };
 
