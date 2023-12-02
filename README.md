@@ -7,9 +7,10 @@
 2. node.js LTSをインストールする <https://nodejs.org/en/download/>
 3. pnpmをインストールする `npm install -g pnpm`
 4. パッケージをインストールする `pnpm install`
-5. .envファイルを作成し設定する
-6. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
-7. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
+5. [環境変数最新チャンネル](https://discord.com/channels/1173435345354887198/1173435866522329108)を参照し、最新の環境変数の値をもとに.envファイルをcloneしたディレクトリの直下に作成する
+6. `pnpm prisma generate`を実行する
+7. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
+8. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
 
 ## 共有したいリンク集
 
@@ -29,14 +30,27 @@
 
 [mongodb](https://www.mongodb.com/ja-jp)
 
-まだユーザーがない人は作成
+ユーザー登録をしていない場合は登録する
 これはgoogleでもgithubでもどちらでもOK
 
 ![スクリーンショット 2023-11-14 13 55 09](https://github.com/developerhost/media-swap/assets/50170789/b9ef59a2-4d1a-4b11-afc9-9ef265a3ab19)
 ![スクリーンショット 2023-11-14 13 55 17](https://github.com/developerhost/media-swap/assets/50170789/b9f28296-38fe-4362-ba96-0157e6b169a4)
 
-### 2. 自分のプロジェクトを作成する
+### 2. 自身のOrganizationを作成する
+歯車マークの左にあるトグルを押下し、View All Organizationsを押下する
+![スクリーンショット 2023-12-02 12 45 05](https://github.com/developerhost/media-swap/assets/87302837/9f6c694b-53b9-4c32-bb46-29c09e306c87)
 
+
+Create New Organizationを押下する
+![スクリーンショット 2023-12-02 12 43 49](https://github.com/developerhost/media-swap/assets/87302837/537ff729-ffa8-4246-bdf4-93d6cf9f517e)
+
+Name Your Organizationに任意の名前を入力し、以下の設定でnextを押下する
+![スクリーンショット 2023-12-02 12 42 07](https://github.com/developerhost/media-swap/assets/87302837/da007b4b-c045-4489-bb9f-2cdc093cdc7a)
+
+
+Members and Securityは編集せずCreate Organizationを押下する
+
+### 3. 自分のプロジェクトを作成する
 ![スクリーンショット 2023-11-14 13 58 49](https://github.com/developerhost/media-swap/assets/50170789/e92795ba-0758-4f0f-a683-7c2ec05e13b7)
 
 - クラスターはM0
@@ -47,14 +61,14 @@
 ![スクリーンショット 2023-11-14 12 57 48](https://github.com/developerhost/media-swap/assets/50170789/e52341b5-575f-4f41-af1e-232f0d636b45)
 ![スクリーンショット 2023-11-14 12 58 07](https://github.com/developerhost/media-swap/assets/50170789/b3b5ad2b-f6ee-486a-90bf-ff5cb93bed81)
 
-### 3.自分のユーザーネームとパスワードを設定する
+### 4.自分のユーザーネームとパスワードを設定する
 
 - パスワードはコピペして保存しておくこと
 - パスワードは外部公開しないでください
 
 ![スクリーンショット 2023-11-14 12 58 35](https://github.com/developerhost/media-swap/assets/50170789/e42a4a0f-81ec-4037-a6fd-94eeaa753adb)
 
-### 4. 接続設定をする
+### 5. 接続設定をする
 
 ![スクリーンショット 2023-11-14 13 00 51](https://github.com/developerhost/media-swap/assets/50170789/763dee5c-9e3d-419c-8add-64aaff73eb08)
 
@@ -62,7 +76,7 @@
 
 Connectを押して、Driversを選択
 
-### 5. urlを設定する
+### 6. urlを設定する
 
 .envファイルに自分のmongoDBのURLを設定する
 
@@ -83,7 +97,7 @@ DATABASE_URL="mongodb+srv://<your_username>:<your_password>@cluster0.z8hkn6f.mon
 ecommerceの綴りとか注意！！！！
 
 
-### 6. データベースを作成
+### 7. データベースを作成
 
 ![スクリーンショット 2023-11-14 13 16 37](https://github.com/developerhost/media-swap/assets/50170789/b1d6c775-0343-417e-a0a3-e128ea5b113b)
 
@@ -98,7 +112,7 @@ Brouse CollectionからAdd My Own Dataをクリックして、Database nameに"e
 ![スクリーンショット 2023-11-14 13 17 52](https://github.com/developerhost/media-swap/assets/50170789/07992f26-91ac-4491-88a7-8d7117a7ba51)
 
 
-### 7. db pushする
+### 8. db pushする
 
 ターミナルで
 
@@ -110,7 +124,7 @@ pnpm run db:push
 
 自分の先ほど作成したmongoDBのプロジェクトのデータベースにスキーマ定義がされていたらOK
 
-### 8. seedを作成する
+### 9. seedを作成する
 
 ターミナルで
 
@@ -122,7 +136,7 @@ pnpm run build
 
 お疲れ様でした！！！！
 
-### 9.prettierの設定(commit時にprettierを走らせる)
+### 10.prettierの設定(commit時にprettierを走らせる)
 
 ```bash
 pnpm prepare
@@ -130,12 +144,13 @@ pnpm prepare
 
 
 ## ローカル開発環境構築(まだ動かない人がいます(windows))
+※リモートのmongoDBを作成する手順を完了すれば、こちらは実行しなくて良い
 
 ### dockerの起動・停止コマンド
 
 - 起動コマンド `docker-compose up -d`
 - 停止コマンド `docker-compose down`
-  
+
 ### リストアの方法
 
 ローカルのデータベースを更新したい場合は以下のような操作を行う
