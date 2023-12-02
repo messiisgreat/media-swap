@@ -27,12 +27,12 @@ type Props = Omit<
 type NewTag = Omit<Tag, "createdAt">;
 
 /**
- * タグを入力するコンポーネント
+ * タグを入力するコンポーネント「非推奨」
  * formから認識できるようにhidden inputに値を設定している
  * @param tags データベースから取得したタグの配列
  * @returns div
  * @see https://github.com/react-tags/react-tags
- * @todo 直接refを渡せなかったり、CSSが不自由なのでできれば別のライブラリの使用を検討する
+ * @todo 移行後に削除する
  */
 export function ListingTagInput({ tags, name, ...props }: Props) {
   const [enteredTags, setEnteredTags] = useState<NewTag[]>([]);
