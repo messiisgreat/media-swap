@@ -56,7 +56,7 @@ export const TRANSACTION_BUTTON_STATUS = {
   2: "受取完了",
   3: "取引評価",
   4: "取引キャンセル",
-};
+} as const;
 
 /** 取引評価選択肢 */
 export const TRANSACTION_RATING_OPTION: TransactionRatingOption[] = [
