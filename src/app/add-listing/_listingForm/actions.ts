@@ -60,25 +60,27 @@ export const listingItem = async (
     };
   }
 
-  const verifyResult = await verifyForm(prevState, verificationCode);
+  const [isVerify, message] = await verifyForm(verificationCode);
+  if (!isVerify) {
+    return {
+      ...prevState,
+      message: message,
+    };
+  }
 
-  if (verifyResult) {
-    return verifyResult;
+  if (!isPublicBool) {
+    await create(rest, userId, previousPrice);
+    redirect(`/mypage/draft`);
   } else {
-    if (!isPublicBool) {
-      await create(rest, userId, previousPrice);
-      redirect(`/mypage/draft`);
-    } else {
-      const validated = ProductFormSchema.safeParse(values);
-      if (!validated.success) {
-        return {
-          ...prevState,
-          errors: validated.error.flatten().fieldErrors,
-          message: "入力に不備があります",
-        };
-      }
-      const listing = await create(rest, userId, previousPrice);
-      redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=true`);
+    const validated = ProductFormSchema.safeParse(values);
+    if (!validated.success) {
+      return {
+        ...prevState,
+        errors: validated.error.flatten().fieldErrors,
+        message: "入力に不備があります",
+      };
     }
+    const listing = await create(rest, userId, previousPrice);
+    redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=true`);
   }
 };

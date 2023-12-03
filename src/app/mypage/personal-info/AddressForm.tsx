@@ -13,7 +13,7 @@ import { useFormState } from "react-dom";
  *住所フォーム
  *
  */
-export default function AddressForm() {
+export const AddressForm = () => {
   const [state, dispatch] = useFormState(
     personalInfoFormAction,
     initialPersonalInfoFormValues,
@@ -28,20 +28,30 @@ export default function AddressForm() {
   };
 
   return (
-    <form action={action}>
+    <form action={action} className="grid gap-3">
       <Input
+        name="email"
+        labelText="メールアドレス"
+        autoComplete="email address"
+        placeholder="例: swappy@email.com"
+        defaultValue={state.values.email}
+      />
+      <Input
+        name="postalCode"
         labelText="郵便番号"
         autoComplete="shipping postal-code"
         placeholder="例: 1234567"
         defaultValue={state.values.postalCode}
       />
       <Select
+        name="prefecture"
         labelText="都道府県"
         options={objToAssociative(PREFECTURE_OBJ)}
         autoComplete="shipping address-level1"
         defaultValue={state.values.prefecture}
       />
       <Input
+        name="city"
         labelText="市区町村 (例: 川崎市川崎区)"
         type="text"
         autoComplete="shipping address-level2"
@@ -49,6 +59,7 @@ export default function AddressForm() {
         defaultValue={state.values.city}
       />
       <Input
+        name="addressLine1"
         labelText="町域・番地(例: 旭町1-1)"
         type="text"
         autoComplete="shipping address-line1"
@@ -56,6 +67,7 @@ export default function AddressForm() {
         defaultValue={state.values.addressLine1}
       />
       <Input
+        name="addressLine2"
         labelText="建物名など(例: ○○マンション101号)"
         type="text"
         autoComplete="shipping address-line2"
@@ -63,6 +75,7 @@ export default function AddressForm() {
         defaultValue={state.values.addressLine2}
       />
       <Input
+        name="phoneNumber"
         labelText="電話番号"
         type="tel"
         autoComplete="shipping phone-number"
@@ -72,4 +85,4 @@ export default function AddressForm() {
       <SubmitButton>更新</SubmitButton>
     </form>
   );
-}
+};

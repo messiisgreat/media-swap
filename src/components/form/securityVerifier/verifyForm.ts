@@ -1,29 +1,23 @@
-import { FormState } from "@/components/form";
 import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
+
+const errNotSendVerificationCode = "認証コードが送信されていません";
+const errFailedAtVerification =
+  "認証に失敗しました。時間を置いてお試しくください";
 
 /**
  * 認証コードを検証する
- * @param prevState 前の状態
  * @param verificationCode 認証コード
- * @returns エラーメッセージを含んだ状態を返す。認証に成功した場合はnullを返す
+ * @returns　認証に成功した場合はtrueを返す、失敗した場合はfalseとエラーメッセージを返す
  */
-export const verifyForm = async <T>(
-  prevState: FormState<T>,
+export const verifyForm = async (
   verificationCode: string,
-): Promise<FormState<T> | null> => {
+): Promise<[boolean, string]> => {
   if (!verificationCode) {
-    return {
-      ...prevState,
-      message: "認証コードが送信されていません",
-    };
+    return [false, errNotSendVerificationCode];
   }
-  const verifyResult = await fetchVerifyResult(verificationCode);
-  if (!verifyResult) {
-    return {
-      ...prevState,
-      message: "認証に失敗しました。時間を置いてお試しください。",
-    };
-  } else {
-    return null;
+  const isVerify = await fetchVerifyResult(verificationCode);
+  if (!isVerify) {
+    return [false, errFailedAtVerification];
   }
+  return [true, ""];
 };
