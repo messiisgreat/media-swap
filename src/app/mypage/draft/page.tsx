@@ -1,5 +1,6 @@
 import { ItemsListContainer } from "@/components/itemsList/ItemsListContainer";
 import { PageTitle } from "@/components/structure/PageTitle";
+import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { getSessionUser } from "@/utils/session";
 import { Listing } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -27,7 +28,7 @@ export default async function Page({
   }
   return (
     <>
-      <PageTitle title="下書き商品一覧" />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.DRAFT]} />
       <ItemsListContainer
         page={page}
         size={size}
