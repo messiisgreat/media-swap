@@ -6,12 +6,13 @@
 1. git clone <git@github.com>:developerhost/media-swap.git
 2. node.js LTSをインストールする <https://nodejs.org/en/download/>
 3. 使用するnode.jsバージョンを18.17.0以上に設定する
-4. pnpmをインストールする `npm install -g pnpm`
-5. パッケージをインストールする `pnpm install`
-6. [環境変数最新チャンネル](https://discord.com/channels/1173435345354887198/1173435866522329108)を参照し、最新の環境変数の値をもとに.envファイルをcloneしたディレクトリの直下に作成する
-7. `pnpm prisma generate`を実行する
-8. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
-9. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
+4.   参考　https://qiita.com/Sr_Bangs/items/bda855068576905a441f
+5. pnpmをインストールする `npm install -g pnpm`
+6. パッケージをインストールする `pnpm install`
+7. [環境変数最新チャンネル](https://discord.com/channels/1173435345354887198/1173435866522329108)を参照し、最新の環境変数の値をもとに.envファイルをcloneしたディレクトリの直下に作成する
+8. `pnpm prisma generate`を実行する
+9. `pnpm run dev`を実行し、localhost:3000にアクセスして動作すればOK
+10. MongoDB,vercel, google analytics, S3の中身を見る必要がある方はメールアドレスをslackで橋田に送ってください。プロジェクトに招待します。
 
 ## 共有したいリンク集
 
