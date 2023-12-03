@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import { Transaction } from "@prisma/client";
 import { Button } from "@/components";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
 import { updateTransactionStateByTransactionId } from "@/app/transactions/[transactionId]/actions";
-import {
-  TRANSACTION_STATUS,
-  TRANSACTION_BUTTON_STATUS,
-} from "@/constants/listing";
+import { TRANSACTION_STATUS } from "@/constants/listing";
 
 /**
  * 取引ステータス変更ボタンコンポーネント
@@ -20,10 +18,12 @@ import {
  */
 export const TransactionChangeButton = ({
   transaction,
+  sessionUser,
   status,
   isCancel = false,
 }: {
   transaction: Transaction;
+  sessionUser?: Session["user"];
   status?: number;
   isCancel?: boolean;
 }) => {
@@ -31,13 +31,10 @@ export const TransactionChangeButton = ({
   const [nextStatus, setNextStatus] = useState(transaction.transactionStatus);
 
   useEffect(() => {
-    if (isCancel) {
-      setNextStatus(TRANSACTION_STATUS.CANCELLED);
-    } else if (status !== undefined) {
-      setNextStatus(status);
-    } else {
-      setNextStatus(transaction.transactionStatus + 1);
-    }
+    const newStatus = isCancel
+      ? TRANSACTION_STATUS.CANCELLED
+      : status ?? transaction.transactionStatus + 1;
+    setNextStatus(newStatus);
   }, [isCancel, status, transaction.transactionStatus]);
 
   const handleClick = () => {
@@ -45,16 +42,38 @@ export const TransactionChangeButton = ({
     router.refresh();
   };
 
+  const isVisibleButton = () => {
+    const isBuyer = sessionUser?.id === transaction.buyerId;
+    switch (transaction.transactionStatus) {
+      case TRANSACTION_STATUS.BEFORE_PAYMENT:
+        return isBuyer;
+      case TRANSACTION_STATUS.COMPLETE_PAYMENT:
+        return !isBuyer;
+      case TRANSACTION_STATUS.SENT:
+        return isBuyer;
+      case TRANSACTION_STATUS.RECEIVED:
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  const transactionButtonStatus = [
+    "支払完了",
+    "発送完了",
+    "受取完了",
+    "取引評価",
+    "取引キャンセル",
+  ];
+
   return (
     <>
       {!isCancel ? (
-        <Button onClick={handleClick}>
-          {
-            TRANSACTION_BUTTON_STATUS[
-              transaction.transactionStatus as keyof typeof TRANSACTION_BUTTON_STATUS
-            ]
-          }
-        </Button>
+        isVisibleButton() && (
+          <Button onClick={handleClick}>
+            {transactionButtonStatus[transaction.transactionStatus]}
+          </Button>
+        )
       ) : (
         <Button onClick={handleClick}>取引キャンセル</Button>
       )}
