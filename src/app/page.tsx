@@ -1,4 +1,4 @@
-import { ItemsListContainer } from "@/ui/itemsList/ItemsListContainer";
+import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { Listing } from "@prisma/client";
 
 type Props = {

@@ -1,3 +1,4 @@
+import ItemsList from "@/features/itemsList";
 import {
   ListingOrderBy,
   countListings,
@@ -11,7 +12,6 @@ import {
 } from "@/repositories/listing";
 import { PaginationBar } from "@/ui";
 import { ListingButton } from "@/ui/ListingButton";
-import ItemsList from "@/ui/itemsList";
 
 type CommonProps = {
   page: number;

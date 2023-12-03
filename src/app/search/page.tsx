@@ -1,4 +1,4 @@
-import { ItemsListContainer } from "@/ui/itemsList/ItemsListContainer";
+import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { TitleUnderbar } from "@/ui/structure/TitleUnderbar";
 import { Listing } from "@prisma/client";
 import { Metadata } from "next";
