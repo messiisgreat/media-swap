@@ -1,4 +1,4 @@
-import { AgeChechContainer } from "@/app/age-check/AgeCheckContainer";
+import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
 import { H } from "@/components/structure/H";
 
 /**
@@ -15,7 +15,7 @@ export default function AgeCheckPage() {
       <p className="mb-10 text-xs text-gray-400">
         18歳以上の方のみがご利用いただけます。
       </p>
-      <AgeChechContainer />
+      <AgeCheckContents />
     </div>
   );
 }
