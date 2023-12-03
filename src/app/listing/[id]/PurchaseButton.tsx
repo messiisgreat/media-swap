@@ -2,27 +2,26 @@
 
 import { purchasing } from "@/app/listing/[id]/actions";
 import { Button } from "@/components/Button";
+import { useFormActionModal } from "@/components/dialog/useFormActionModal";
+import { H } from "@/components/structure/H";
+import { Listing } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { H } from "@/components/structure/H";
 import { ComponentProps, useCallback } from "react";
-import { useFormActionModal } from "@/components/dialog/useFormActionModal";
 import toast from "react-hot-toast";
-import { Listing } from "@prisma/client";
 
 type Props = ComponentProps<typeof Button> & {
+  /** 購入する出品オブジェクト */
   listing: Listing;
-  buyerId: string;
+  /** 購入するユーザーID */
+  buyerId?: string;
+  /** 購入するユーザークーポンID */
   userCouponId: string | null;
 };
 
 /**
  * 購入ボタンコンポーネントをレンダリングします。
- *
- * @param Props.listing - リスティングオブジェクトです。
- * @param Props.buyerId - 購入者のIDです。
- * @param Props.userCouponId - ユーザークーポンのIDです。
- * @returns {JSX.Element} レンダリングされた購入ボタンコンポーネントです。
+ * @returns React.Fragment > Button, FormActionModal
  */
 export const PurchaseButton = ({
   listing,
@@ -34,14 +33,14 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if (!buyerId) {
-      const signInResult = await signIn();
-      if (!signInResult) {
-        toast.error("ログインに失敗しました。");
-        return;
-      }
+      signIn();
     }
-    const transactionId = await purchasing(listing.id, userCouponId);
-    router.push(`/transactions/${transactionId}`);
+    const result = await purchasing(listing.id, userCouponId);
+    if (result.isSuccess) {
+      router.push(`/transactions/${result.value.transactionId}`);
+    } else {
+      toast.error(result.error.errorMessage);
+    }
   }, [buyerId, listing, userCouponId, router]);
 
   const { open, FormActionModal } = useFormActionModal(handleOnClick, "購入");

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { TRANSACTION_STATUS } from "@/constants/listing";
 import prisma from "@/lib/prisma";
 import { Transaction } from "@prisma/client";
 import { cache } from "react";
@@ -24,7 +25,7 @@ export const findTransaction = cache(async (id: string) => {
  * 取引を追加する
  * @param listingId - 取引対象の出品ID
  * @param buyerId - 取引対象のユーザーID
- * @param userCouponId - 取引対象のクーポンID
+ * @param userCouponId - 取引対象のクーポンID (オプション)
  * @returns 追加された取引
  */
 export const createTransaction = async (
@@ -47,8 +48,12 @@ export const createTransaction = async (
   };
   return prisma.transaction.create({
     data: {
-      transactionStatus: 0,
+      transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
       ...transaction,
+    },
+    include: {
+      listing: { include: { seller: true } },
+      buyer: true,
     },
   });
 };
