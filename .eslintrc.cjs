@@ -12,6 +12,7 @@ module.exports = {
     "plugin:tailwindcss/recommended",
     "prettier",
     "plugin:jsdoc/recommended-typescript-error",
+    "plugin:storybook/recommended",
   ],
   root: true,
   env: {
