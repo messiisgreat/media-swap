@@ -5,7 +5,7 @@ import {
   ProductFormState,
   ProductFormValues,
 } from "@/app/add-listing/_listingForm/types";
-import { isVerifyForm } from "@/components/form/securityVerifier/verifyForm";
+import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/components/form/utils";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
@@ -66,7 +66,7 @@ export const listingItem = async (
     };
   }
 
-  const [isVerify, message] = await isVerifyForm(verificationCode);
+  const [isVerify, message] = await verifyForm(verificationCode);
   if (!isVerify) {
     return {
       ...prevState,

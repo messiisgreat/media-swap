@@ -5,7 +5,7 @@ import {
   PersonalInfoFormState,
 } from "@/app/mypage/personal-info/type";
 import { getFormValues } from "@/components/form";
-import { isVerifyForm } from "@/components/form/securityVerifier/verifyForm";
+import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
 import { upsertAddress } from "@/services/address";
 import { updateEmail } from "@/services/user";
 import { getSession } from "@/utils";
@@ -32,7 +32,7 @@ export const personalInfoFormAction = async (
     };
   }
 
-  const [isVerify, message] = await isVerifyForm(verificationCode);
+  const [isVerify, message] = await verifyForm(verificationCode);
   if (!isVerify) {
     return {
       ...prevState,
