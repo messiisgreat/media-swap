@@ -13,7 +13,7 @@ import { useFormState } from "react-dom";
  *住所フォーム
  *
  */
-export default function AddressForm() {
+export const AddressForm = () => {
   const [state, dispatch] = useFormState(
     personalInfoFormAction,
     initialPersonalInfoFormValues,
@@ -28,7 +28,7 @@ export default function AddressForm() {
   };
 
   return (
-    <form action={action}>
+    <form action={action} className="grid gap-3">
       <Input
         name="email"
         labelText="メールアドレス"
@@ -85,4 +85,4 @@ export default function AddressForm() {
       <SubmitButton>更新</SubmitButton>
     </form>
   );
-}
+};
