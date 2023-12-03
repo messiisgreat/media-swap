@@ -36,7 +36,6 @@ const dataSecurities = [
         <p>
           <a
             href={"/inquiry"}
-            target="_blank"
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             お問い合わせフォーム
