@@ -36,11 +36,11 @@ export const PurchaseButton = ({
       signIn();
     }
     const result = await purchasing(listing.id, userCouponId);
-    if (result.isFailure) {
-      toast.error(result.value!);
+    if (result.isSuccess) {
+      router.push(`/transactions/${result.value.transactionId}`);
+    } else {
+      toast.error(result.error.errorMessage);
     }
-    const transactionId = await purchasing(listing.id, userCouponId);
-    router.push(`/transactions/${transactionId}`);
   }, [buyerId, listing, userCouponId, router]);
 
   const { open, FormActionModal } = useFormActionModal(handleOnClick, "購入");

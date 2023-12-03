@@ -23,9 +23,10 @@ import { getSessionUser } from "@/utils";
 import { Prisma } from "@prisma/client";
 import { Result } from "result-type-ts";
 
-type PurchasingResult =
-  | Result.Failure<{ errorMessage: string }>
-  | { transactionId: string };
+type PurchasingResult = Result<
+  { transactionId: string },
+  { errorMessage: string }
+>;
 
 /**
  * 購入ボタンを押したときのサーバー側処理
@@ -36,7 +37,7 @@ type PurchasingResult =
 export const purchasing = async (
   listingId: string,
   userCouponId: string | null,
-): Promise<Result<PurchasingResult>> => {
+): Promise<PurchasingResult> => {
   const buyer = await getSessionUser();
   if (buyer === undefined) {
     return Result.failure({ errorMessage: "ログインしてください" });
@@ -51,12 +52,12 @@ export const purchasing = async (
     await sendMailToBuyerAndSeller(transaction);
   if (!sellerResult) {
     return Result.failure({
-      erroMessage: "出品者へのメール送信に失敗しました",
+      errorMessage: "出品者へのメール送信に失敗しました",
     });
   }
   if (!buyerResult) {
     return Result.failure({
-      erroMessage: "購入者へのメール送信に失敗しました",
+      errorMessage: "購入者へのメール送信に失敗しました",
     });
   }
   return Result.success({ transactionId });
