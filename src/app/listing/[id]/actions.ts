@@ -166,14 +166,18 @@ export const removeListing = async (listingId: string) => {
 /**
  * 商品が購入された際に出品者と購入者にメールを送信する
  * @param listingId 商品ID
+ * @param buyerId 購入者ID
  */
-export const sendMailToBuyerAndSeller = async (listingId: string) => {
+export const sendMailToBuyerAndSeller = async (
+  listingId: string,
+  buyerId: string,
+) => {
   const listing = await findListingById(listingId);
   const listingName = listing.productName!;
   const listingPrice = listing.price!;
-  const buyer = await getSessionUser();
-  if (!buyer || !buyer.email) throw new Error("ログインしてください");
-  const buyerName = buyer.name!;
+  const buyer = await findUserById(buyerId);
+  if (!buyer || !buyer.name) throw new Error("ログインしてください");
+  const buyerName = buyer.name;
   const sellerId = listing.sellerId;
   const seller = await findUserById(sellerId);
   if (!seller || !seller.name) throw new Error("出品者が見つかりませんでした");
