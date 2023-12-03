@@ -81,7 +81,7 @@ export default async function ListingPage({
           !isOwner && (
             <PurchaseButton
               listing={listing}
-              buyerId={userId!}
+              buyerId={userId}
               userCouponId={null}
             />
           )

@@ -11,7 +11,6 @@ import {
   createListingReport,
   deleteListing,
   findListingById,
-  updateListingTransactionId,
 } from "@/services/listing";
 import {
   createComment,
@@ -20,26 +19,47 @@ import {
   getComments,
 } from "@/services/listingComment";
 import { createTransaction } from "@/services/transaction";
-import { findUserById } from "@/services/user";
 import { getSessionUser } from "@/utils";
+import { Prisma } from "@prisma/client";
+import { Result } from "result-type-ts";
+
+type PurchasingResult =
+  | Result.Failure<{ errorMessage: string }>
+  | { transactionId: string };
 
 /**
  * 購入ボタンを押したときのサーバー側処理
- * 取引を追加し、商品ページをrevalidateする
+ *
  * @param listingId - 購入対象の出品ID
  * @param userCouponId - 購入対象のクーポンID
  */
 export const purchasing = async (
   listingId: string,
   userCouponId: string | null,
-) => {
+): Promise<Result<PurchasingResult>> => {
   const buyer = await getSessionUser();
-  if (!buyer) throw new Error("ログインしてください");
-  const buyerId = buyer.id;
-  const transaction = await createTransaction(listingId, buyerId, userCouponId);
+  if (buyer === undefined) {
+    return Result.failure({ errorMessage: "ログインしてください" });
+  }
+  const transaction = await createTransaction(
+    listingId,
+    buyer.id,
+    userCouponId,
+  );
   const transactionId = transaction.id;
-  await updateListingTransactionId({ id: listingId }, transactionId);
-  return transactionId;
+  const { sellerResult, buyerResult } =
+    await sendMailToBuyerAndSeller(transaction);
+  if (!sellerResult) {
+    return Result.failure({
+      erroMessage: "出品者へのメール送信に失敗しました",
+    });
+  }
+  if (!buyerResult) {
+    return Result.failure({
+      erroMessage: "購入者へのメール送信に失敗しました",
+    });
+  }
+  return Result.success({ transactionId });
 };
 
 /**
@@ -165,23 +185,23 @@ export const removeListing = async (listingId: string) => {
 
 /**
  * 商品が購入された際に出品者と購入者にメールを送信する
- * @param listingId 商品ID
- * @param buyerId 購入者ID
+ * @param transaction 取引情報
+ * @returns メール送信結果 {出品者, 購入者}
  */
 export const sendMailToBuyerAndSeller = async (
-  listingId: string,
-  buyerId: string,
+  transaction: Prisma.PromiseReturnType<typeof createTransaction>,
 ) => {
-  const listing = await findListingById(listingId);
+  const listing = transaction.listing;
   const listingName = listing.productName!;
   const listingPrice = listing.price!;
-  const buyer = await findUserById(buyerId);
-  if (!buyer || !buyer.name) throw new Error("ログインしてください");
-  const buyerName = buyer.name;
-  const sellerId = listing.sellerId;
-  const seller = await findUserById(sellerId);
-  if (!seller || !seller.name) throw new Error("出品者が見つかりませんでした");
-  const sellerName = seller.name;
+  const sellerName = listing.seller.name;
+  const buyerName = transaction.buyer.name;
+  const sellerEmail = listing.seller.email;
+  const buyerEmail = transaction.buyer.email;
+
+  if (sellerName === null || buyerName === null) {
+    return { sellerResult: false, buyerResult: false };
+  }
   const sellerSubject = `【${SITE_NAME}】商品が購入されました。発送手続きをお願いします。`;
   const buyerSubject = `【${SITE_NAME}】購入確定のお知らせ：${listingName}`;
 
@@ -197,10 +217,10 @@ export const sendMailToBuyerAndSeller = async (
     sellerName,
     SITE_NAME,
   );
-  try {
-    await sendMailToUser(buyer.email, buyerSubject, buyerText);
-    await sendMailToUser(seller.email, sellerSubject, sellerText);
-  } catch (error) {
-    throw new Error(`メールの送信に失敗しました:${error}`);
-  }
+
+  const [sellerResult, buyerResult] = await Promise.all([
+    sendMailToUser(sellerEmail, sellerSubject, sellerText),
+    sendMailToUser(buyerEmail, buyerSubject, buyerText),
+  ]);
+  return { sellerResult, buyerResult };
 };

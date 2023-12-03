@@ -3,11 +3,11 @@ import { Transaction } from "@prisma/client";
 import { Session } from "next-auth";
 import { IconType } from "react-icons";
 import {
+  FaBriefcase,
   FaClock,
   FaMoneyCheckAlt,
-  FaTruck,
-  FaBriefcase,
   FaTimes,
+  FaTruck,
 } from "react-icons/fa";
 
 function StatusAlert({
