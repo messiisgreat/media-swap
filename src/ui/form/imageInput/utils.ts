@@ -1,4 +1,4 @@
-import { addGrayBackground } from "@/components/form/imageInput/addGrayBackground";
+import { addGrayBackground } from "@/ui/form/imageInput/addGrayBackground";
 
 type FileWithPreview = File & { preview: string };
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { Input } from "@/components/form/Elements";
 import { HANDING_CHARGE_RATE } from "@/constants/listing";
+import { Input } from "@/ui/form/Elements";
 import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
 import { z } from "zod";
 

@@ -1,4 +1,4 @@
-import { FormState } from "@/components/form/type";
+import { FormState } from "@/ui/form/type";
 import { ZodType, z } from "zod";
 
 /** 出品情報登録フォームの値を表す型 */

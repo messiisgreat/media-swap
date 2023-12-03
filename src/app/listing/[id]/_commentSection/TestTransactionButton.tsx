@@ -1,5 +1,5 @@
 import { merchant } from "@/app/listing/[id]/actions";
-import { Button } from "@/components";
+import { Button } from "@/ui";
 import { redirect } from "next/navigation";
 
 type Props = {

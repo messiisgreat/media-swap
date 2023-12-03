@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { Dialog as Component } from "@/components/dialog/Dialog";
+import { Dialog as Component } from "@/ui/dialog/Dialog";
 
 type Props = Omit<
   Parameters<typeof Component>[0],

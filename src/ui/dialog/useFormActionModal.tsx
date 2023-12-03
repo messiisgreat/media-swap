@@ -1,5 +1,5 @@
-import { useDialog } from "@/components/dialog";
-import { SubmitButton } from "@/components/form/SubmitButton";
+import { useDialog } from "@/ui/dialog";
+import { SubmitButton } from "@/ui/form/SubmitButton";
 import { ReactNode, useCallback } from "react";
 
 type useFormActionModalResult = {

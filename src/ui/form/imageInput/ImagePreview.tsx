@@ -1,4 +1,4 @@
-import { useImageModal } from "@/components/dialog";
+import { useImageModal } from "@/ui/dialog";
 import Image from "next/image";
 
 type Props = {

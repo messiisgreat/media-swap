@@ -1,6 +1,6 @@
-import { ItemsListContainer } from "@/components/itemsList/ItemsListContainer";
-import { PageTitle } from "@/components/structure/PageTitle";
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
+import { ItemsListContainer } from "@/ui/itemsList/ItemsListContainer";
+import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
 import { Listing } from "@prisma/client";
 import { redirect } from "next/navigation";

@@ -3,7 +3,7 @@
 /* eslint-disable react/forbid-elements */
 "use client";
 
-import { useLevel } from "@/components/structure/context";
+import { useLevel } from "@/ui/structure/context";
 import { HTMLProps, ReactNode } from "react";
 
 type Props = HTMLProps<HTMLHeadingElement> & {

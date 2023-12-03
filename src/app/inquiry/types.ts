@@ -1,4 +1,4 @@
-import { FormState } from "@/components/form";
+import { FormState } from "@/ui/form";
 import { ZodType, z } from "zod";
 
 type InquiryFormValues = {

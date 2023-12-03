@@ -7,10 +7,10 @@ import {
 } from "@/app/listing/[id]/_commentSection";
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
 import { addComment, fetchComments } from "@/app/listing/[id]/actions";
-import { Skeleton } from "@/components/Skeleton";
-import { LimitTextarea } from "@/components/form/LimitElements";
-import { SubmitButton } from "@/components/form/SubmitButton";
-import { Section } from "@/components/structure";
+import { Skeleton } from "@/ui/Skeleton";
+import { LimitTextarea } from "@/ui/form/LimitElements";
+import { SubmitButton } from "@/ui/form/SubmitButton";
+import { Section } from "@/ui/structure";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { useAtom } from "jotai";
 import { Session } from "next-auth";

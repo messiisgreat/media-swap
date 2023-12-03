@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Textarea } from "@/components/form/Elements";
+import { Input, Textarea } from "@/ui/form/Elements";
 import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
 
 type CommonProps = {

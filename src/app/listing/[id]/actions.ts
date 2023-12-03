@@ -4,21 +4,21 @@ import {
   createBuyerMailContent,
   createSellerMailContent,
 } from "@/app/listing/[id]/mailTemplate";
-import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
 import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
 import {
   createListingReport,
   deleteListing,
   findListingById,
-} from "@/services/listing";
+} from "@/repositories/listing";
 import {
   createComment,
   createCommentReport,
   deleteListingComment,
   getComments,
-} from "@/services/listingComment";
-import { createTransaction } from "@/services/transaction";
+} from "@/repositories/listingComment";
+import { createTransaction } from "@/repositories/transaction";
+import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
 import { Prisma } from "@prisma/client";
 import { Result } from "result-type-ts";

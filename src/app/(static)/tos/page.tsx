@@ -1,6 +1,6 @@
-import { Section } from "@/components/structure";
-import { H } from "@/components/structure/H";
 import { CORPORATE_NAME, SITE_NAME } from "@/constants/site";
+import { Section } from "@/ui/structure";
+import { H } from "@/ui/structure/H";
 import Link from "next/link";
 import { ReactNode } from "react";
 

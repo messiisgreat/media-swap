@@ -1,6 +1,3 @@
-import { PaginationBar } from "@/components";
-import { ListingButton } from "@/components/ListingButton";
-import ItemsList from "@/components/itemsList";
 import {
   ListingOrderBy,
   countListings,
@@ -11,7 +8,10 @@ import {
   findListingsByBuyerId,
   findListingsByProductName,
   findListingsBySellerId,
-} from "@/services/listing";
+} from "@/repositories/listing";
+import { PaginationBar } from "@/ui";
+import { ListingButton } from "@/ui/ListingButton";
+import ItemsList from "@/ui/itemsList";
 
 type CommonProps = {
   page: number;
