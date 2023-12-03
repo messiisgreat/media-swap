@@ -19,22 +19,22 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
 
-  const handleOutsideClick = (event: MouseEvent) => {
-    const detailsElement = dropdownRef.current;
-
-    if (event.target instanceof HTMLElement) {
-      const target = event.target;
-
-      if (
-        detailsElement &&
-        (!detailsElement.contains(target) || target.closest("li"))
-      ) {
-        detailsElement.removeAttribute("open");
-      }
-    }
-  };
-
   useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const detailsElement = dropdownRef.current;
+
+      if (event.target instanceof HTMLElement) {
+        const target = event.target;
+
+        if (
+          detailsElement &&
+          (!detailsElement.contains(target) || target.closest("li"))
+        ) {
+          detailsElement.removeAttribute("open");
+        }
+      }
+    };
+
     document.addEventListener("click", handleOutsideClick);
     return () => {
       document.removeEventListener("click", handleOutsideClick);
