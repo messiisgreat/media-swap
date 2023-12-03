@@ -147,7 +147,6 @@ export const CommentSection = ({
                           className="btn btn-ghost h-[initial] min-h-0 p-2"
                         >
                           <FaEllipsis />
-                          git
                         </label>
                         <ul
                           tabIndex={0}
