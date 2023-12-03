@@ -1,5 +1,6 @@
 import { ItemsListContainer } from "@/components/itemsList/ItemsListContainer";
 import { PageTitle } from "@/components/structure/PageTitle";
+import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { getSessionUser } from "@/utils/session";
 import { Listing } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -16,7 +17,7 @@ type Props = {
 
 /**
  *  購入商品一覧を表示するページ
- * /mypage/listings
+ * /mypage/purchases
  */
 export default async function Page({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
@@ -27,7 +28,7 @@ export default async function Page({
   }
   return (
     <>
-      <PageTitle title="購入商品一覧" />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.PURCHASES]} />
       <ItemsListContainer
         page={page}
         size={size}
