@@ -21,14 +21,15 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
     const handleOutsideClick = (event: MouseEvent) => {
       const detailsElement = document.querySelector(".dropdown");
 
-      const target = event.target as HTMLElement;
+      if (event.target instanceof HTMLElement) {
+        const target = event.target;
 
-      if (
-        detailsElement &&
-        target &&
-        (!detailsElement.contains(target) || target.closest("li"))
-      ) {
-        detailsElement.removeAttribute("open");
+        if (
+          detailsElement &&
+          (!detailsElement.contains(target) || target.closest("li"))
+        ) {
+          detailsElement.removeAttribute("open");
+        }
       }
     };
 
