@@ -6,8 +6,8 @@ import {
   InquiryFormState,
   initialInquiryFormValues,
 } from "@/app/inquiry/types";
-import { getFormValues } from "@/components/form/utils";
 import { sendMailToAdmin, sendMailToUser } from "@/lib/mail";
+import { getFormValues } from "@/ui/form/utils";
 
 /**
  * フォームに入力されたお問い合わせ内容を送信する

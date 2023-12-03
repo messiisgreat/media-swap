@@ -1,6 +1,6 @@
 "use client";
 
-import { useImageModal } from "@/components/dialog";
+import { useImageModal } from "@/ui/dialog";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";

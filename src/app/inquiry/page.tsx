@@ -1,6 +1,6 @@
 import { MailForm } from "@/app/inquiry/MailForm";
-import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section } from "@/components/structure";
+import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
+import { PageTitle, Section } from "@/ui/structure";
 
 /**
  * お問い合わせページ

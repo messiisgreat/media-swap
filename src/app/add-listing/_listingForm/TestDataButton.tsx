@@ -1,9 +1,9 @@
-import { Button } from "@/components";
 import {
   PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
 } from "@/constants/listing";
+import { Button } from "@/ui";
 import { ComponentProps } from "react";
 
 const setTestData = (selector: string, testData: string): void => {

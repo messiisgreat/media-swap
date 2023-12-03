@@ -1,7 +1,7 @@
 import { ListingForm } from "@/app/add-listing/ListingForm";
-import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section } from "@/components/structure";
-import { findTags } from "@/services/tag";
+import { findTags } from "@/repositories/tag";
+import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
+import { PageTitle, Section } from "@/ui/structure";
 import { getSession } from "@/utils/session";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

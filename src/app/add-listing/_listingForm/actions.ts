@@ -5,13 +5,13 @@ import {
   ProductFormState,
   ProductFormValues,
 } from "@/app/add-listing/_listingForm/types";
-import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
-import { getFormValues } from "@/components/form/utils";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
   createListingWithTagsAndImages,
-} from "@/services/listing";
+} from "@/repositories/listing";
+import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
+import { getFormValues } from "@/ui/form/utils";
 import { getSession, strToBool } from "@/utils";
 import { redirect } from "next/navigation";
 

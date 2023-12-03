@@ -1,5 +1,5 @@
 import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
-import { H } from "@/components/structure/H";
+import { H } from "@/ui/structure/H";
 
 /**
  * 年齢確認ページ

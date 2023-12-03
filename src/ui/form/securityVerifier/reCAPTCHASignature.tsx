@@ -1,6 +1,6 @@
-import { TextLink } from "@/components";
-import "./reCAPTCHA.css";
+import { TextLink } from "@/ui";
 import { memo } from "react";
+import "./reCAPTCHA.css";
 
 /**
  * recaptchaの利用規約

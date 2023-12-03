@@ -1,11 +1,11 @@
 "use client";
 import { personalInfoFormAction } from "@/app/mypage/personal-info/actions";
 import { initialPersonalInfoFormValues } from "@/app/mypage/personal-info/type";
-import { Input, Select } from "@/components/form";
-import { SubmitButton } from "@/components/form/SubmitButton";
-import { useFormMessageToaster } from "@/components/form/hooks";
-import { useVerify } from "@/components/form/securityVerifier/hooks";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
+import { Input, Select } from "@/ui/form";
+import { SubmitButton } from "@/ui/form/SubmitButton";
+import { useFormMessageToaster } from "@/ui/form/hooks";
+import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { objToAssociative } from "@/utils/converter";
 import { useFormState } from "react-dom";
 

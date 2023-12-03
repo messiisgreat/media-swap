@@ -1,4 +1,4 @@
-import { Main } from "@/components/structure";
+import { Main } from "@/ui/structure";
 import { ReactNode } from "react";
 
 /**

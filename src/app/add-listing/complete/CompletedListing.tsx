@@ -1,5 +1,5 @@
-import { Button } from "@/components/Button";
-import { findListingById } from "@/services/listing";
+import { findListingById } from "@/repositories/listing";
+import { Button } from "@/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 

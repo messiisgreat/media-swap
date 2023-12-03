@@ -1,6 +1,6 @@
 "use client";
 
-import { FormState } from "@/components/form";
+import { FormState } from "@/ui/form";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 

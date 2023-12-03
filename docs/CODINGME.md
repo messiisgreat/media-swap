@@ -10,6 +10,88 @@
 
 <https://nextjs.org/docs/app/building-your-application/routing/colocation>
 
+## 各ディレクトリの意味
+
+```
+.
+├── app
+│   ├── (static)
+│   ├── _layout
+│   ├── api
+├── components
+├── constants
+├── images
+├── lib
+├── middlewares
+├── services
+├── test
+├── types
+└── utils
+```
+
+### app
+
+こちらはルーティング目的のファイルのみ配置する
+そのページでしか使わない機能などは基本的にそのフォルダ内に置く
+例: add-listing/ListingForm.tsxなど
+
+参考
+https://nextjs.org/docs/app/building-your-application/routing/colocation#store-project-files-outside-of-app
+
+### \_layout
+
+プライベートフォルダーは、フォルダーの前にアンダースコアを付けることで作成できます。
+これによりフォルダーとそのすべてのサブフォルダーがルーティングから除外されます。
+
+つまりここにはルーティングすべきでないものを配置します。
+
+### (static)
+
+ルート グループは、フォルダーを括弧で囲むことによって作成できます。
+これはフォルダーが意味のあるまとまりになります。そして()をつけるとurlパスに含まれません。
+ここは静的なページを配置します。
+
+### ui
+
+アプリケーション全体で使うuiを入れる
+
+### constants
+
+使い回す定数を全て入れる
+
+### lib
+
+ライブラリのラッパーや設定済みのインスタンスをexportするファイルなどを置く。
+
+### middleware
+
+middlewareの処理を書く
+
+### repositories
+
+DB操作系の処理を入れる
+
+### types
+
+型定義を入れる
+
+### utils
+
+アプリケーション全体で使う共通ロジックを置く。
+
+### features
+
+ある特定の機能、ドメインでしか使わないapiへのアクセサや定数、型、hooks、コンポーネントなど全てを詰め込む場所。
+ただし現在はないので、必要になったら作成する。
+
+### 参考
+
+https://zenn.dev/yodaka/articles/eca2d4bf552aeb
+
+https://nextjs.org/docs/getting-started/project-structure
+
+https://medium.com/@mertenercan/nextjs-13-folder-structure-c3453d780366
+
 ## コード規則
 
 1. タイプセーフな実装を心がける

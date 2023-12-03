@@ -1,7 +1,7 @@
-import { TextLink } from "@/components";
-import { Section } from "@/components/structure";
-import { H } from "@/components/structure/H";
 import { CORPORATE_ADDRESS, CORPORATE_NAME } from "@/constants/site";
+import { TextLink } from "@/ui";
+import { Section } from "@/ui/structure";
+import { H } from "@/ui/structure/H";
 import { ReactNode } from "react";
 
 type Item = {

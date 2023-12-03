@@ -1,5 +1,5 @@
-import { Badge } from "@/components/Badge";
-import { findListingById } from "@/services/listing";
+import { findListingById } from "@/repositories/listing";
+import { Badge } from "@/ui/Badge";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 

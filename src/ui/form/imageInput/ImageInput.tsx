@@ -1,11 +1,11 @@
 "use client";
 
-import { ImagePreview } from "@/components/form/imageInput/ImagePreview";
-import { fetchImageAndConvertToFile } from "@/components/form/imageInput/fetcher";
+import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
+import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
 import {
   addFileWithPreview,
   processDroppedFiles,
-} from "@/components/form/imageInput/utils";
+} from "@/ui/form/imageInput/utils";
 import {
   ComponentPropsWithoutRef,
   useCallback,

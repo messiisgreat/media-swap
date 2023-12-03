@@ -3,12 +3,12 @@ import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
 import { ItemInfomation } from "@/app/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/listing/[id]/PurchaseButton";
-import { Badge } from "@/components/Badge";
-import { ButtonAsLink } from "@/components/Button";
-import { VerifyProvider } from "@/components/form/securityVerifier/VerifyProvider";
-import { Section, TitleUnderbar } from "@/components/structure";
-import { H } from "@/components/structure/H";
-import { findListingById } from "@/services/listing";
+import { findListingById } from "@/repositories/listing";
+import { Badge } from "@/ui/Badge";
+import { ButtonAsLink } from "@/ui/Button";
+import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
+import { Section, TitleUnderbar } from "@/ui/structure";
+import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
 import { Metadata } from "next";
 

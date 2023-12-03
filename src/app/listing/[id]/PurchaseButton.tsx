@@ -1,9 +1,9 @@
 "use client";
 
 import { purchasing } from "@/app/listing/[id]/actions";
-import { Button } from "@/components/Button";
-import { useFormActionModal } from "@/components/dialog/useFormActionModal";
-import { H } from "@/components/structure/H";
+import { Button } from "@/ui";
+import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
+import { H } from "@/ui/structure/H";
 import { Listing } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";

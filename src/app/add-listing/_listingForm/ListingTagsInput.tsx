@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components";
-import { Input } from "@/components/form";
+import { Button } from "@/ui";
+import { Input } from "@/ui/form";
 import { Tag } from "@prisma/client";
 import { useCallback, useState } from "react";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";

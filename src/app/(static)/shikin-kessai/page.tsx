@@ -1,5 +1,5 @@
-import { H } from "@/components/structure/H";
 import { CORPORATE_NAME, SITE_NAME } from "@/constants/site";
+import { H } from "@/ui/structure/H";
 
 /**
  * 資金決済法ページ

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, TextLink } from "@/components";
-import { Section, TitleUnderbar } from "@/components/structure";
+import { Button, TextLink } from "@/ui";
+import { Section, TitleUnderbar } from "@/ui/structure";
 import { useEffect } from "react";
 
 /**

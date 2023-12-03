@@ -1,5 +1,5 @@
-import { SoldOutBadge } from "@/components/itemsList/SoldOutBadge";
-import { findListings } from "@/services/listing";
+import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
+import { findListings } from "@/repositories/listing";
 import { formatPrice } from "@/utils/format";
 import Image from "next/image";
 import Link from "next/link";

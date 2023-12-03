@@ -1,4 +1,4 @@
-import { ButtonAsLink } from "@/components/Button";
+import { ButtonAsLink } from "@/ui/Button";
 import { LuBox } from "react-icons/lu";
 
 /**

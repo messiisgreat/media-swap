@@ -1,6 +1,6 @@
 import { removeListing } from "@/app/listing/[id]/actions";
-import { useFormActionModal } from "@/components/dialog/useFormActionModal";
-import { H } from "@/components/structure/H";
+import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
+import { H } from "@/ui/structure/H";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";

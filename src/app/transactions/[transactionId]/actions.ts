@@ -5,7 +5,7 @@ import {
   getTransactionComments,
   markAsReadTransactionComments,
   updateTransactionStatus,
-} from "@/services/transaction";
+} from "@/repositories/transaction";
 import { getSessionUser } from "@/utils";
 
 /**

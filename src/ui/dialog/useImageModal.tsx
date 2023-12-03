@@ -1,4 +1,4 @@
-import { useDialog } from "@/components/dialog";
+import { useDialog } from "@/ui/dialog";
 import Image from "next/image";
 import { useCallback } from "react";
 

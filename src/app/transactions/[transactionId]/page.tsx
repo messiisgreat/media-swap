@@ -2,7 +2,7 @@ import { MessageSection } from "@/app/transactions/[transactionId]/MessageSectio
 import { TransactionChangeButton } from "@/app/transactions/[transactionId]/TransactionChangeButton";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
-import { findTransaction } from "@/services/transaction";
+import { findTransaction } from "@/repositories/transaction";
 import { getSessionUser } from "@/utils/session";
 import Image from "next/image";
 import { notFound } from "next/navigation";

@@ -1,5 +1,5 @@
 import closeIcon from "@/app/no-available-service/close.webp";
-import { H } from "@/components/structure/H";
+import { H } from "@/ui/structure/H";
 import Image from "next/image";
 
 /**

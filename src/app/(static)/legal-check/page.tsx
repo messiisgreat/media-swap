@@ -1,4 +1,4 @@
-import { H } from "@/components/structure/H";
+import { H } from "@/ui/structure/H";
 
 /**
  * 法務確認についてのページ

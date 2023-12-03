@@ -1,5 +1,5 @@
-import { ListingCard } from "@/components/itemsList/ListingCard";
-import { findListings } from "@/services/listing";
+import { ListingCard } from "@/features/itemsList/ListingCard";
+import { findListings } from "@/repositories/listing";
 
 // findListings 関数からの戻り値の型
 type ListingsQueryResult = Awaited<ReturnType<typeof findListings>>;

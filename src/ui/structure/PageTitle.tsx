@@ -1,4 +1,4 @@
-import { H } from "@/components/structure/H";
+import { H } from "@/ui/structure/H";
 
 type Props = {
   title: string;

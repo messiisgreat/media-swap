@@ -1,4 +1,4 @@
-import { fetchVerifyResult } from "@/components/form/securityVerifier/fetcher";
+import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 
 const errNotSendVerificationCode = "認証コードが送信されていません";
 const errFailedAtVerification =

@@ -4,10 +4,10 @@ import {
   PersonalInfoFormSchema,
   PersonalInfoFormState,
 } from "@/app/mypage/personal-info/type";
-import { getFormValues } from "@/components/form";
-import { verifyForm } from "@/components/form/securityVerifier/verifyForm";
-import { upsertAddress } from "@/services/address";
-import { updateEmail } from "@/services/user";
+import { upsertAddress } from "@/repositories/address";
+import { updateEmail } from "@/repositories/user";
+import { getFormValues } from "@/ui/form";
+import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSession } from "@/utils";
 
 /**
