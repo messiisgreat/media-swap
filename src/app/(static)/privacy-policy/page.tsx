@@ -1,3 +1,4 @@
+import { TextLink } from "@/components";
 import { Section } from "@/components/structure";
 import { H } from "@/components/structure/H";
 import { CORPORATE_NAME } from "@/constants/site";
@@ -364,14 +365,7 @@ const privacies = [
         <p>〒160-0022 東京都新宿区新宿７丁目２６−７</p>
         <p>{CORPORATE_NAME} 個人情報担当者宛</p>
         <p>
-          お問い合わせフォーム：{" "}
-          <a
-            href={"https://forms.gle/pFZjV5xMxwxcRDV1A"}
-            target="_blank"
-            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-          >
-            https://forms.gle/pFZjV5xMxwxcRDV1A
-          </a>
+          <TextLink href={"/inquiry"}>お問い合わせフォーム</TextLink>
         </p>
       </>
     ),
