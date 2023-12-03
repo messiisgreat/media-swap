@@ -6,10 +6,7 @@ import { Button } from "@/components";
 import { useRouter } from "next/navigation";
 import { Session } from "next-auth";
 import { updateTransactionStateByTransactionId } from "@/app/transactions/[transactionId]/actions";
-import {
-  TRANSACTION_STATUS,
-  TRANSACTION_BUTTON_STATUS,
-} from "@/constants/listing";
+import { TRANSACTION_STATUS } from "@/constants/listing";
 
 /**
  * 取引ステータス変更ボタンコンポーネント
@@ -61,16 +58,20 @@ export const TransactionChangeButton = ({
     }
   };
 
+  const transactionButtonStatus = [
+    "支払完了",
+    "発送完了",
+    "受取完了",
+    "取引評価",
+    "取引キャンセル",
+  ];
+
   return (
     <>
       {!isCancel ? (
         isVisibleButton() && (
           <Button onClick={handleClick}>
-            {
-              TRANSACTION_BUTTON_STATUS[
-                transaction.transactionStatus as keyof typeof TRANSACTION_BUTTON_STATUS
-              ]
-            }
+            {transactionButtonStatus[transaction.transactionStatus]}
           </Button>
         )
       ) : (
