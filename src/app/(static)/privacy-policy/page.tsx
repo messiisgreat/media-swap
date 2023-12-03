@@ -365,12 +365,7 @@ const privacies = [
         <p>〒160-0022 東京都新宿区新宿７丁目２６−７</p>
         <p>{CORPORATE_NAME} 個人情報担当者宛</p>
         <p>
-          <TextLink
-            href={"/inquiry"}
-            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-          >
-            お問い合わせフォーム
-          </TextLink>
+          <TextLink href={"/inquiry"}>お問い合わせフォーム</TextLink>
         </p>
       </>
     ),
