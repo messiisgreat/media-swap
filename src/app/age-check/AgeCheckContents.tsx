@@ -5,6 +5,8 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { addAgeCheckedCookie } from "./actions";
 
+class CookieError extends Error {}
+
 /**
  * 年齢確認ボタンを取りまとめるコンポーネント
  * はいをクリック: 確認済みフラグをCookieに追加してトップに遷移
@@ -22,8 +24,8 @@ export const AgeCheckContents = () => {
     setLoading(true);
     try {
       addAgeCheckedCookie();
-    } catch (e) {
-      console.error(e);
+    } catch (e: unknown) {
+      throw new CookieError("Cookieの保存に失敗しました");
     } finally {
       setLoading(false);
     }
