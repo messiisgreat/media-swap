@@ -4,7 +4,7 @@ import {
   ProductFormSchema,
   ProductFormState,
   ProductFormValues,
-} from "@/app/add-listing/_listingForm/types";
+} from "@/features/itemsFormContents/types";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
   UnregisteredListing,
