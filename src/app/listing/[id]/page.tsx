@@ -1,4 +1,5 @@
-import Carousel from "@/app/listing/[id]/Carousel";
+// import Carousel from "@/app/listing/[id]/Carousel";
+import TempCarousel from "@/app/listing/[id]/TempCarousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
 import { ItemInfomation } from "@/app/listing/[id]/ItemInformation";
@@ -55,7 +56,7 @@ export default async function ListingPage({
 
   return (
     <VerifyProvider>
-      <Carousel images={images} />
+      <TempCarousel images={images} />
       {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
       <div className="w-full">
         <H className="text-left text-lg font-bold lg:text-2xl">
