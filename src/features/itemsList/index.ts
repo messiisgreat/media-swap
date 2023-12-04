@@ -1,1 +1,1 @@
-export { ItemsList as default } from "./ItemsList";
+export { ItemsList as default } from "@/features/itemsList/ItemsList";

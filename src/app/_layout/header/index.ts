@@ -1,1 +1,1 @@
-export { Header } from "./Header";
+export { Header } from "@/app/_layout/header/Header";

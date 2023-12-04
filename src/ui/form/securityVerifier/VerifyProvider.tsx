@@ -1,8 +1,8 @@
 "use client";
 
+import { ReCAPTCHASignature } from "@/ui/form/securityVerifier/reCAPTCHASignature";
 import { ReactNode } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { ReCAPTCHASignature } from "./reCAPTCHASignature";
 
 /**
  * セキュリティ認証情報を取得するコンポーネント

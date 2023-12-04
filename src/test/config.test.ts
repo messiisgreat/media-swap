@@ -1,4 +1,4 @@
-import { add } from "./sample";
+import { add } from "@/test/sample";
 
 describe("Sample unit test.", () => {
   test("1 + 2 = 3", () => {

@@ -18,15 +18,15 @@
 │   ├── (static)
 │   ├── _layout
 │   ├── api
-├── components
-├── constants
+├── ui - uiに関するもの
+├── constants - 定数
 ├── images
-├── lib
+├── lib - 外部ライブラリなど
 ├── middlewares
-├── services
+├── repositories - DB操作
 ├── test
 ├── types
-└── utils
+└── utils - 共通ロジック
 ```
 
 ### app

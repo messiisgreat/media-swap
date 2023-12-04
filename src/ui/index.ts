@@ -1,3 +1,3 @@
-export { Button } from "./Button";
-export { PaginationBar } from "./PaginationBar";
-export { TextLink } from "./TextLink";
+export { Button } from "@/ui/Button";
+export { PaginationBar } from "@/ui/PaginationBar";
+export { TextLink } from "@/ui/TextLink";
