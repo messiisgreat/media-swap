@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { ListingTagsInput } from "./ListingTagsInput";
+import { ItemTagsInput } from "./ItemTagsInput";
 
-describe("ListingTagsInput", () => {
+describe("ItemTagsInput", () => {
   describe("タグの追加", () => {
     it("Enterでtagを追加できること", async () => {
-      render(<ListingTagsInput name="tag" suggestedTags={[]} />);
+      render(<ItemTagsInput name="tag" suggestedTags={[]} />);
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
 
@@ -19,7 +19,7 @@ describe("ListingTagsInput", () => {
       });
     });
     it("重複して同じ名前のタグを追加できないこと", async () => {
-      render(<ListingTagsInput name="tag" suggestedTags={[]} />);
+      render(<ItemTagsInput name="tag" suggestedTags={[]} />);
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
       await waitFor(() => {
@@ -37,7 +37,7 @@ describe("ListingTagsInput", () => {
       { id: "1", text: "tag1", createdAt: new Date() },
       { id: "2", text: "tag2", createdAt: new Date() },
     ];
-    render(<ListingTagsInput name="tag" suggestedTags={suggestedTags} />);
+    render(<ItemTagsInput name="tag" suggestedTags={suggestedTags} />);
 
     const input = screen.getByPlaceholderText("タグ名を入力してください");
 
@@ -47,7 +47,7 @@ describe("ListingTagsInput", () => {
     expect(screen.getByTestId("test-tag2")).toBeInTheDocument();
   });
   it("タグの削除ができること", async () => {
-    render(<ListingTagsInput name="tag" suggestedTags={[]} />);
+    render(<ItemTagsInput name="tag" suggestedTags={[]} />);
 
     const input = screen.getByPlaceholderText("タグ名を入力してください");
 

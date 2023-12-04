@@ -1,14 +1,13 @@
-"use client";
-
 import { Button } from "@/ui";
 import { Input } from "@/ui/form";
 import { Tag } from "@prisma/client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";
 
 type Props = {
   name: string;
   suggestedTags: Tag[];
+  selectedTags?: Tag[];
 };
 
 type NewTag = Omit<Tag, "id" | "createdAt">;
@@ -20,7 +19,16 @@ type NewTag = Omit<Tag, "id" | "createdAt">;
  * @param {Tag[]} Props.suggestedTags データベースから取得したタグの配列
  * @returns JSX.Element
  */
-export function ListingTagsInput({ name, suggestedTags }: Props) {
+export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
+  const selectedTagNames = useMemo(() => {
+    return (
+      selectedTags?.map((tag) => {
+        return {
+          text: tag.text,
+        };
+      }) ?? []
+    );
+  }, [selectedTags]);
   const [newTags, setNewTags] = useState<Array<NewTag>>([]);
   const [inputValue, setInputValue] = useState("");
 
@@ -71,6 +79,9 @@ export function ListingTagsInput({ name, suggestedTags }: Props) {
     setInputValue("");
   }, [setNewTags, newTags, inputValue, setInputValue]);
 
+  useEffect(() => {
+    setNewTags(selectedTagNames);
+  }, [selectedTagNames, setNewTags]);
   return (
     <div className="flex flex-col gap-3">
       {newTags.length > 0 && (
