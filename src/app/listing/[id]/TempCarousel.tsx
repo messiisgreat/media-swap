@@ -1,9 +1,8 @@
 "use client";
 
 import { useImageModal } from "@/ui/dialog";
-import { set } from "date-fns";
 import Image from "next/image";
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 /**
  * 商品ページのカルーセル
