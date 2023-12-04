@@ -18,11 +18,15 @@ export default function TempCarousel({
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleClick = (e: any, index: number, lenOfSlides: number) => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLElement>,
+    index: number,
+    lenOfSlides: number,
+  ) => {
     setSelectedIndex(index);
 
     const container = containerRef.current;
-    const element = e.target;
+    const element = e.target as HTMLElement;
     const elementLeft = element.offsetLeft;
     const elementWidth = element.offsetWidth;
     const containerWidth = container?.offsetWidth;
