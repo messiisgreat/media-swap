@@ -1,4 +1,3 @@
-// import Carousel from "@/app/listing/[id]/Carousel";
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
