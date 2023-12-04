@@ -1,5 +1,5 @@
 import { PRODUCT_CONDITION } from "@/constants/listing";
-import { ListingTagsInput } from "@/features/itemsFormContents/detailsContents/ListingTagsInput";
+import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 import { Select } from "@/ui/form";
 import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
 import ImageInput from "@/ui/form/imageInput";
@@ -68,7 +68,7 @@ export const DetailsContents = ({
         rows={10}
         defaultValue={description}
       />
-      <ListingTagsInput
+      <ItemTagsInput
         suggestedTags={tags}
         name="tags"
         selectedTags={selectedTags}

@@ -19,7 +19,7 @@ type NewTag = Omit<Tag, "id" | "createdAt">;
  * @param {Tag[]} Props.suggestedTags データベースから取得したタグの配列
  * @returns JSX.Element
  */
-export function ListingTagsInput({ name, suggestedTags, selectedTags }: Props) {
+export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
   const selectedTagNames = useMemo(() => {
     return (
       selectedTags?.map((tag) => {
