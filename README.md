@@ -108,7 +108,7 @@ ecommerceの綴りとか注意！！！！
 
 ![スクリーンショット 2023-11-14 13 15 07](https://github.com/developerhost/media-swap/assets/50170789/54f6a1ab-b727-46f9-917d-b85c3e298678)
 
-Brouse CollectionからAdd My Own Dataをクリックして、Database nameに"ecommerce"を設定してください
+Browse CollectionからAdd My Own Dataをクリックして、Database nameに"ecommerce"を設定してください
 
 [!warning]
 Eコマースの綴りは"ecommerce"なので、間違えないようにコピペしてください
