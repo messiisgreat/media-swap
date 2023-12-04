@@ -15,11 +15,13 @@ export default function TempCarousel({
   images: { imageURL: string }[];
 }) {
   const slides = images.map((image) => image.imageURL);
+  const imageRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClick = (e: any, index: number, lenOfSlides: number) => {
     setSelectedIndex(index);
+
     const container = containerRef.current;
     const element = e.target;
 
@@ -27,6 +29,14 @@ export default function TempCarousel({
     const elementWidth = element.offsetWidth;
     const containerWidth = container?.offsetWidth;
     const scrollWidth = container?.scrollWidth;
+
+    const image = imageRef.current;
+    const imageWidth = image?.offsetWidth;
+
+    if (imageWidth) {
+      const imageScrollLeft = index * imageWidth;
+      image.style.transform = `translateX(${-imageScrollLeft}px)`;
+    }
 
     if (containerWidth && elementWidth && elementLeft && scrollWidth) {
       const gap =
@@ -43,7 +53,7 @@ export default function TempCarousel({
   return (
     <div className="grid w-full select-none gap-4">
       <div className="overflow-hidden">
-        <div className="flex touch-pan-y">
+        <div className="flex touch-pan-y" ref={imageRef}>
           {slides.map((imageURL, index) => (
             <Image
               key={imageURL}
