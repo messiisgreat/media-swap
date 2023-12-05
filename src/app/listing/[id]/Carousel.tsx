@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState, useRef } from "react";
 
-import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 
 import { useImageModal } from "@/ui/dialog";
@@ -11,49 +10,54 @@ import { useImageModal } from "@/ui/dialog";
  * 商品ページのカルーセル
  * @param images - 画像のURL一覧が含まれたオブジェクトの配列
  */
-export default function Carousel({
+export default function TempCarousel({
   images,
 }: {
   images: { imageURL: string }[];
 }) {
   const slides = images.map((image) => image.imageURL);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaMainRef, emblaMainApi] = useEmblaCarousel();
-  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
-    containScroll: "keepSnaps",
-    dragFree: true,
-  });
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLElement>,
+    index: number,
+    lenOfSlides: number,
+  ) => {
+    setSelectedIndex(index);
+
+    const container = containerRef.current;
+    const element = e.target as HTMLElement;
+    const elementLeft = element.offsetLeft;
+    const elementWidth = element.offsetWidth;
+    const containerWidth = container?.offsetWidth;
+    const scrollWidth = container?.scrollWidth;
+
+    const image = imageRef.current;
+    const imageWidth = image?.offsetWidth;
+
+    if (imageWidth) {
+      const imageScrollLeft = index * imageWidth;
+      image.style.transform = `translateX(${-imageScrollLeft}px)`;
+    }
+
+    if (containerWidth && elementWidth && elementLeft && scrollWidth) {
+      const gap =
+        (scrollWidth % (elementWidth * lenOfSlides)) / (lenOfSlides + 1);
+      const padding = elementLeft - index * (elementWidth + gap) - gap;
+      const scrollLeft =
+        elementLeft - padding - containerWidth / 2 + elementWidth / 2;
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+    }
+  };
+
   const { open, ImageModal } = useImageModal(images[selectedIndex].imageURL);
-
-  const onThumbClick = useCallback(
-    (index: number) => {
-      if (!emblaMainApi || !emblaThumbsApi) return;
-      emblaMainApi.scrollTo(index);
-    },
-    [emblaMainApi, emblaThumbsApi],
-  );
-
-  const onSelect = useCallback(() => {
-    if (!emblaMainApi || !emblaThumbsApi) return;
-    setSelectedIndex(emblaMainApi.selectedScrollSnap());
-    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
-  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex]);
-
-  useEffect(() => {
-    if (!emblaMainApi) return;
-    onSelect();
-    emblaMainApi.on("select", onSelect);
-    emblaMainApi.on("reInit", onSelect);
-    return () => {
-      emblaMainApi.off("select", onSelect);
-      emblaMainApi.off("reInit", onSelect);
-    };
-  }, [emblaMainApi, onSelect]);
 
   return (
     <div className="grid w-full select-none gap-4">
-      <div className="overflow-hidden" ref={emblaMainRef}>
-        <div className="flex touch-pan-y">
+      <div className="overflow-hidden">
+        <div className="flex touch-pan-y" ref={imageRef}>
           {slides.map((imageURL, index) => (
             <Image
               key={imageURL}
@@ -69,15 +73,14 @@ export default function Carousel({
         <ImageModal />
       </div>
       <div
-        className="flex flex-row gap-4 overflow-x-scroll bg-black/70 py-1"
-        ref={emblaThumbsRef}
+        className="flex flex-row gap-4 overflow-x-scroll bg-black/70 px-4 py-1"
+        ref={containerRef}
       >
         {slides.map((imageURL, index) => (
           <Image
             key={imageURL}
             role="button"
             aria-label="表示画像選択"
-            onClick={() => onThumbClick(index)}
             className={`block cursor-pointer touch-manipulation transition-opacity duration-200
                                 ${
                                   index == selectedIndex
@@ -89,6 +92,7 @@ export default function Carousel({
             alt={`サムネイル-${index}`}
             width={100}
             height={100}
+            onClick={(e) => handleClick(e, index, slides.length)}
           />
         ))}
       </div>
