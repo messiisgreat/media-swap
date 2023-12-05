@@ -1,4 +1,3 @@
-import { TRANSACTION_STATUS } from "@/constants/listing";
 import { Transaction } from "@prisma/client";
 import { Session } from "next-auth";
 import { IconType } from "react-icons";
@@ -9,6 +8,8 @@ import {
   FaTimes,
   FaTruck,
 } from "react-icons/fa";
+
+import { TRANSACTION_STATUS } from "@/constants/listing";
 
 function StatusAlert({
   icon,

@@ -1,7 +1,8 @@
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
-import { TitleUnderbar } from "@/ui/structure/TitleUnderbar";
 import { Listing } from "@prisma/client";
 import { Metadata } from "next";
+
+import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
+import { TitleUnderbar } from "@/ui/structure/TitleUnderbar";
 
 type SearchPageProps = {
   searchParams: {

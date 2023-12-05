@@ -1,3 +1,7 @@
+import { ReactNode } from "react";
+
+import Link from "next/link";
+
 import {
   CORPORATE_ADDRESS,
   CORPORATE_DELEGATE,
@@ -9,8 +13,6 @@ import {
 } from "@/constants/site";
 import { Section } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
-import Link from "next/link";
-import { ReactNode } from "react";
 
 type Item = {
   title: string;

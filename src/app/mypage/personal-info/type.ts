@@ -1,5 +1,6 @@
-import { FormState } from "@/ui/form";
 import { ZodType, z } from "zod";
+
+import { FormState } from "@/ui/form";
 
 export type PersonalInfoFormValues = {
   /** 名前 */

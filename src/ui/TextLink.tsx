@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { ComponentProps } from "react";
+
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 type TextLinkProps = ComponentProps<typeof Link>;

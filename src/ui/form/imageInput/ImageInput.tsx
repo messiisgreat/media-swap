@@ -1,11 +1,5 @@
 "use client";
 
-import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
-import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
-import {
-  addFileWithPreview,
-  processDroppedFiles,
-} from "@/ui/form/imageInput/utils";
 import {
   ComponentPropsWithoutRef,
   useCallback,
@@ -13,9 +7,17 @@ import {
   useRef,
   useState,
 } from "react";
+
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
+
+import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
+import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
+import {
+  addFileWithPreview,
+  processDroppedFiles,
+} from "@/ui/form/imageInput/utils";
 
 type FileWithPreview = File & { preview: string };
 

@@ -1,9 +1,10 @@
+import { Listing } from "@prisma/client";
+import { redirect } from "next/navigation";
+
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
-import { Listing } from "@prisma/client";
-import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: {

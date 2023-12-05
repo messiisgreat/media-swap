@@ -1,5 +1,6 @@
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { Listing } from "@prisma/client";
+
+import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 
 type Props = {
   searchParams: {

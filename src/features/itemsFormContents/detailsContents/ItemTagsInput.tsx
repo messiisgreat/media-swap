@@ -1,8 +1,10 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { Tag } from "@prisma/client";
+import { IoClose, IoPricetagOutline } from "react-icons/io5";
+
 import { Button } from "@/ui";
 import { Input } from "@/ui/form";
-import { Tag } from "@prisma/client";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { IoClose, IoPricetagOutline } from "react-icons/io5";
 
 type Props = {
   name: string;

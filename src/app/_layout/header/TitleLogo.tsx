@@ -1,8 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
+
 import { SITE_NAME } from "@/constants/site";
 import logo from "@/images/logo.png";
 import { H } from "@/ui/structure/H";
-import Image from "next/image";
-import Link from "next/link";
 
 type TitleLogoProps = {
   className?: string;

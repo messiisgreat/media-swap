@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { AiFillBell, AiFillCamera, AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
+
 import { useScrollingState } from "@/app/_layout/anchorMenuHooks";
 
 type NaviMenu = {

@@ -1,6 +1,7 @@
+import Link from "next/link";
+
 import { FooterIcons } from "@/app/_layout/footer/FooterIcons";
 import { links } from "@/app/_layout/footer/LinkContents";
-import Link from "next/link";
 
 /**
  * モバイル用のフッター

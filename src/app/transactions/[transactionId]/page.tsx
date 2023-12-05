@@ -1,12 +1,13 @@
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { FaChevronRight } from "react-icons/fa";
+
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
 import { TransactionChangeButton } from "@/app/transactions/[transactionId]/TransactionChangeButton";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { getSessionUser } from "@/utils/session";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { FaChevronRight } from "react-icons/fa";
 
 /**
  * 取引画面

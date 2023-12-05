@@ -1,3 +1,7 @@
+import { useId } from "react";
+
+import { Tag } from "@prisma/client";
+
 import { PRODUCT_CONDITION } from "@/constants/listing";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 import { Select } from "@/ui/form";
@@ -5,8 +9,6 @@ import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
 import ImageInput from "@/ui/form/imageInput";
 import { TitleUnderbar } from "@/ui/structure";
 import { objToAssociative } from "@/utils/converter";
-import { Tag } from "@prisma/client";
-import { useId } from "react";
 
 type Props = {
   productName: string;

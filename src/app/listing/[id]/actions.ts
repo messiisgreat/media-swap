@@ -1,5 +1,8 @@
 "use server";
 
+import { Prisma } from "@prisma/client";
+import { Result } from "result-type-ts";
+
 import {
   createBuyerMailContent,
   createSellerMailContent,
@@ -20,8 +23,6 @@ import {
 import { createTransaction } from "@/repositories/transaction";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
-import { Prisma } from "@prisma/client";
-import { Result } from "result-type-ts";
 
 type PurchasingResult = Result<
   { transactionId: string },

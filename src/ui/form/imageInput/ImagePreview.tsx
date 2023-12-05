@@ -1,5 +1,6 @@
-import { useImageModal } from "@/ui/dialog";
 import Image from "next/image";
+
+import { useImageModal } from "@/ui/dialog";
 
 type Props = {
   file: File & { preview: string };

@@ -1,9 +1,11 @@
 "use client";
 
-import { addAgeCheckedCookie } from "@/app/age-check/actions";
-import Link from "next/link";
 import { useState } from "react";
+
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+
+import { addAgeCheckedCookie } from "@/app/age-check/actions";
 
 class CookieError extends Error {}
 

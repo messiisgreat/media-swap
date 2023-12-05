@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { ComponentProps, memo } from "react";
+
+import Link from "next/link";
 
 type CommonProps = {
   outline?: boolean;

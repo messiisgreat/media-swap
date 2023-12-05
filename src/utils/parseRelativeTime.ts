@@ -1,4 +1,5 @@
 // https://panda-program.com/posts/ts-diff-time
+import { isToday, isYesterday } from "date-fns";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
@@ -8,7 +9,6 @@ import differenceInWeeks from "date-fns/differenceInWeeks";
 import differenceInYears from "date-fns/differenceInYears";
 import format from "date-fns/format";
 import { utcToZonedTime } from "date-fns-tz";
-import { isToday, isYesterday } from "date-fns";
 
 /**
  * 相対時間を計算する

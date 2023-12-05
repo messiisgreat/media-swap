@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 import Carousel from "@/app/listing/[id]/Carousel";
 import { CommentSection } from "@/app/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/listing/[id]/ItemDescription";
@@ -10,7 +12,6 @@ import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
-import { Metadata } from "next";
 
 type ListingPageProps = {
   params: {

@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import closeIcon from "@/app/no-available-service/close.webp";
 import { H } from "@/ui/structure/H";
-import Image from "next/image";
 
 /**
  * 年齢確認で「いいえ」を押したときのページ

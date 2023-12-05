@@ -1,7 +1,8 @@
 import "server-only";
 
-import prisma from "@/lib/prisma";
 import { ListingComment, User } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
 
 export type CommentWithPartialUser = ListingComment & {
   user: Partial<Pick<User, "name" | "image">>;

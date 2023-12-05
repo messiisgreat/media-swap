@@ -1,5 +1,6 @@
-import { DetailsContents } from "@/features/itemsFormContents/detailsContents/DetailsContents";
 import { Meta, StoryObj } from "@storybook/react";
+
+import { DetailsContents } from "@/features/itemsFormContents/detailsContents/DetailsContents";
 
 export default {
   component: DetailsContents,

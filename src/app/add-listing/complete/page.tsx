@@ -1,5 +1,6 @@
-import { CompletedListing } from "@/app/add-listing/complete/CompletedListing";
 import { Metadata } from "next";
+
+import { CompletedListing } from "@/app/add-listing/complete/CompletedListing";
 
 /** キャッシュしない */
 export const dynamic = "force-dynamic";

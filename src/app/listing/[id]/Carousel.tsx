@@ -1,9 +1,11 @@
 "use client";
 
-import { useImageModal } from "@/ui/dialog";
+import { useCallback, useEffect, useState } from "react";
+
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+
+import { useImageModal } from "@/ui/dialog";
 
 /**
  * 商品ページのカルーセル
