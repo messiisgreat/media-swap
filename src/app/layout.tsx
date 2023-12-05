@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
+import { CookiesProvider } from "next-client-cookies/server";
 import { Toaster } from "react-hot-toast";
 
 import {
+  AgeCheckProvider,
   ClientProvider,
   Container,
   Footer,
@@ -46,13 +48,17 @@ export default function RootLayout({
     <html lang="ja">
       <body className={inter.className}>
         <GoogleTagManager />
-        <ClientProvider>
-          <Header />
-          <Container>{children}</Container>
-          <Footer />
-          <Toaster />
-          <AnchorMenu />
-        </ClientProvider>
+        <CookiesProvider>
+          <ClientProvider>
+            <AgeCheckProvider>
+              <Header />
+              <Container>{children}</Container>
+              <Footer />
+              <Toaster />
+              <AnchorMenu />
+            </AgeCheckProvider>
+          </ClientProvider>
+        </CookiesProvider>
       </body>
     </html>
   );
