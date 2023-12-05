@@ -3,11 +3,12 @@
 import { ComponentProps } from "react";
 
 import { useFormStatus } from "react-dom";
+import { Button } from "..";
 
-type Props = {
+type SubmitButtonProps = {
   /** 送信中に子要素を非表示にするかどうか */
   hideChildrenInPending?: boolean;
-} & Omit<ComponentProps<"button">, "type" | "disabled">;
+} & Omit<ComponentProps<typeof Button>, "type" | "disabled">;
 
 /**
  * フォームに設置する送信ボタン
@@ -17,20 +18,28 @@ type Props = {
 export const SubmitButton = ({
   children,
   className,
+  outline = false,
+  secondary = false,
   hideChildrenInPending = false,
   ...props
-}: Props) => {
+}: SubmitButtonProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <button
-      {...props}
-      className={`btn btn-primary ${className}`}
-      type="submit"
-      disabled={pending}
-    >
-      {pending && <span className="loading loading-spinner"></span>}
-      {pending && hideChildrenInPending ? null : children}
-    </button>
+    <>
+      <Button
+        {...props}
+        className={className}
+        outline={outline}
+        secondary={secondary}
+        type="submit"
+        disabled={pending}
+      >
+        {pending && (
+          <span className="loading loading-spinner" aria-hidden="true"></span>
+        )}
+        {hideChildrenInPending && pending ? null : children}
+      </Button>
+    </>
   );
 };

@@ -4,12 +4,12 @@ import { Tag } from "@prisma/client";
 import { useFormState } from "react-dom";
 
 import {
-  SubmitContainer,
   TestDataButton,
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
 import { ItemsFormContents } from "@/features/itemsFormContents";
+import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 
@@ -53,7 +53,12 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
           price: state.values.price,
         }}
       />
-      <SubmitContainer />
+      <SubmitButton outline={true} name="isPublic" value="false">
+        下書きに保存する
+      </SubmitButton>
+      <SubmitButton name="isPublic" value="true">
+        出品する
+      </SubmitButton>
       {process.env.NODE_ENV !== "production" && (
         <TestDataButton
           className="fixed left-3 max-sm:bottom-20 sm:bottom-3"
