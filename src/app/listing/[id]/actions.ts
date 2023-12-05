@@ -1,7 +1,6 @@
 "use server";
 
 import { Prisma } from "@prisma/client";
-import { Result } from "result-type-ts";
 
 import {
   createBuyerMailContent,
@@ -24,11 +23,6 @@ import { createTransaction } from "@/repositories/transaction";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
 
-type PurchasingResult = Result<
-  { transactionId: string },
-  { errorMessage: string }
->;
-
 /**
  * 購入ボタンを押したときのサーバー側処理
  *
@@ -38,10 +32,10 @@ type PurchasingResult = Result<
 export const purchasing = async (
   listingId: string,
   userCouponId: string | null,
-): Promise<PurchasingResult> => {
+) => {
   const buyer = await getSessionUser();
   if (buyer === undefined) {
-    return Result.failure({ errorMessage: "ログインしてください" });
+    throw new Error("ログインしてください");
   }
   const transaction = await createTransaction(
     listingId,
@@ -52,16 +46,12 @@ export const purchasing = async (
   const { sellerResult, buyerResult } =
     await sendMailToBuyerAndSeller(transaction);
   if (!sellerResult) {
-    return Result.failure({
-      errorMessage: "出品者へのメール送信に失敗しました",
-    });
+    throw new Error("出品者へのメール送信に失敗しました");
   }
   if (!buyerResult) {
-    return Result.failure({
-      errorMessage: "購入者へのメール送信に失敗しました",
-    });
+    throw new Error("購入者へのメール送信に失敗しました");
   }
-  return Result.success({ transactionId });
+  return transactionId;
 };
 
 /**

@@ -3,8 +3,8 @@
 import { ComponentProps, useCallback } from "react";
 
 import { Listing } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { purchasing } from "@/app/listing/[id]/actions";
@@ -34,14 +34,14 @@ export const PurchaseButton = ({
   const router = useRouter();
 
   const handleOnClick = useCallback(async () => {
-    if (!buyerId) {
-      signIn();
-    }
-    const result = await purchasing(listing.id, userCouponId);
-    if (result.isSuccess) {
-      router.push(`/transactions/${result.value.transactionId}`);
-    } else {
-      toast.error(result.error.errorMessage);
+    try {
+      if (!buyerId) {
+        signIn();
+      }
+      const transaction = await purchasing(listing.id, userCouponId);
+      router.push(`/transactions/${transaction}`);
+    } catch (error) {
+      toast.error("購入に失敗しました");
     }
   }, [buyerId, listing, userCouponId, router]);
 
