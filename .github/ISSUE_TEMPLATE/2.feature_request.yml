@@ -14,8 +14,6 @@ body:
         例:
         - 機能追加: /xxx にアクセスすると Y が起こる
         - 機能改善: /xxx にアクセスすると Y が起こるが、Z が起こるべき
-    validations:
-      required: true
   - type: dropdown
     attributes:
       label: 重要度
@@ -24,8 +22,7 @@ body:
         - '低 (積極的に取り掛からなくてもいい)'
         - '中 (取り掛かったほうがいい)'
         - '高 (すぐに取り掛かったほうがいい)'
-    validations:
-      required: true
+      default: 0
   - type: textarea
     attributes:
       label: 他の情報

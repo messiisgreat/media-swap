@@ -1,4 +1,4 @@
-name: バグ
+name: バグ/エラー
 description: 修正しなければいけないバグのIssue
 labels: ['bug']
 body:
@@ -14,8 +14,6 @@ body:
         例:
         1. /xxx にアクセス
         2. Yが起こる
-    validations:
-      required: true
   - type: textarea
     attributes:
       label: 現在の挙動・予期される動作
@@ -24,8 +22,6 @@ body:
         例:
         - 現在の挙動: Yが起こる
         - 予期される動作: Zが起こるべき
-    validations:
-      required: true
   - type: dropdown
     attributes:
       label: 重要度
@@ -34,8 +30,7 @@ body:
         - '低 (積極的に修正しなくてもいい)'
         - '中 (修正したほうがいい)'
         - '高 (すぐに修正したほうがいい)'
-    validations:
-      required: true
+      default: 0
   - type: textarea
     attributes:
       label: 他の情報
