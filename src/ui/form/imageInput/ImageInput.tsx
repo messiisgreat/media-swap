@@ -7,11 +7,11 @@ import {
   useRef,
   useState,
 } from "react";
-
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
 
+import { TestDataButton } from "@/app/add-listing/_listingForm";
 import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
 import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
 import {
@@ -19,7 +19,7 @@ import {
   processDroppedFiles,
 } from "@/ui/form/imageInput/utils";
 
-type FileWithPreview = File & { preview: string };
+export type FileWithPreview = File & { preview: string };
 
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
@@ -32,8 +32,8 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  */
 export function ImageInput({ id, labelText, ...props }: Props) {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-
+  const inputRef = useRef<HTMLInputElement>(null!);
+  const isDev = process.env.NODE_ENV !== "production";
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await processDroppedFiles(droppedFiles);
     setFiles((prevFiles) => addFileWithPreview(prevFiles, processedFiles, 10));
@@ -50,22 +50,10 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     noClick: true,
   });
 
+  // アンマウント時に画像のプレビューを削除してメモリリークを防ぐ
   useEffect(() => {
-    const dataTransfer = new DataTransfer();
-    files.forEach((file) => {
-      dataTransfer.items.add(file);
-    });
-    if (inputRef.current) {
-      inputRef.current.files = dataTransfer.files;
-    }
-  }, [files]);
-
-  useEffect(() => {
-    return () =>
-      files.forEach((file: FileWithPreview) =>
-        URL.revokeObjectURL(file.preview),
-      );
-  }, [files]);
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  });
 
   // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
@@ -77,27 +65,26 @@ export function ImageInput({ id, labelText, ...props }: Props) {
           fetchImageAndConvertToFile()
             .then((file) => {
               const fileWithPreview = Object.assign(file, {
+                file,
                 preview: URL.createObjectURL(file),
-              }) as FileWithPreview;
+              });
               dataTransfer.items.add(file);
-              if (inputRef.current) {
-                inputRef.current.files = dataTransfer.files;
-              }
+              inputRef.current.files = dataTransfer.files;
               setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
             })
             .catch((error) => console.error("Error:", error));
         }
       }
     };
-    if (process.env.NODE_ENV !== "production") {
+    if (isDev) {
       document.addEventListener("click", handleClick);
     }
     return () => {
-      if (process.env.NODE_ENV !== "production") {
+      if (isDev) {
         document.removeEventListener("click", handleClick);
       }
     };
-  }, [files]);
+  }, [files, isDev]);
 
   const removeFile = (name: string) => {
     setFiles(files.filter((file) => file.name !== name));
@@ -115,14 +102,16 @@ ${
       <ul className="grid grid-cols-3 gap-2">
         {files.map((file) => (
           <li key={file.name} className="relative">
-            <button
-              type="button"
-              className="absolute right-4 top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
-              onClick={() => removeFile(file.name)}
-            >
-              <FaTimes color="white" />
-            </button>
-            <ImagePreview file={file} />
+            <div className="relative w-fit">
+              <button
+                type="button"
+                className="absolute -right-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
+                onClick={() => removeFile(file.name)}
+              >
+                <FaTimes color="white" />
+              </button>
+              <ImagePreview file={file} />
+            </div>
           </li>
         ))}
       </ul>
@@ -144,6 +133,12 @@ ${
           <p className="font-bold">画像を選択する</p>
         </div>
       </label>
+      {isDev && (
+        <TestDataButton
+          className="fixed left-3 max-sm:bottom-20 sm:bottom-3"
+          id="test-button"
+        />
+      )}
     </div>
   );
 }

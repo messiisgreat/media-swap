@@ -48,7 +48,7 @@ export const Dialog: React.FC<DialogProps> = ({
       return;
     }
     onClose();
-  }, [onClose]);
+  }, [onClose, hasClosableOverlay]);
 
   const handleClickContent = useCallback(
     (event: React.MouseEvent<HTMLDivElement>): void => {

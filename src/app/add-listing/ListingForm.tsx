@@ -4,7 +4,6 @@ import { Tag } from "@prisma/client";
 import { useFormState } from "react-dom";
 
 import {
-  TestDataButton,
   initialProductFormValues,
   listingItem,
 } from "@/app/add-listing/_listingForm";
@@ -59,12 +58,6 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
       <SubmitButton name="isPublic" value="true">
         出品する
       </SubmitButton>
-      {process.env.NODE_ENV !== "production" && (
-        <TestDataButton
-          className="fixed left-3 max-sm:bottom-20 sm:bottom-3"
-          id="test-button"
-        />
-      )}
     </form>
   );
 };
