@@ -1,5 +1,6 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 /**
  * 現在の認証セッション情報を取得します。

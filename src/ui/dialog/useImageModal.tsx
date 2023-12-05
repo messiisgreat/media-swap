@@ -1,6 +1,8 @@
-import { useDialog } from "@/ui/dialog";
-import Image from "next/image";
 import { useCallback } from "react";
+
+import Image from "next/image";
+
+import { useDialog } from "@/ui/dialog";
 
 /**
  * 画像を拡大してモーダル表示するためのフック

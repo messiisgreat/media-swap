@@ -1,7 +1,8 @@
 "use client";
 
-import { HeadingLevelContext, useLevel } from "@/ui/structure/context";
 import { ComponentProps } from "react";
+
+import { HeadingLevelContext, useLevel } from "@/ui/structure/context";
 
 /**
  * HTMLのsection要素のラッパー

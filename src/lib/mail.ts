@@ -1,6 +1,7 @@
+import { createTransport, SendMailOptions } from "nodemailer";
+
 import { SITE_NAME } from "@/constants/site";
 import { env } from "@/utils/serverEnv";
-import { createTransport, SendMailOptions } from "nodemailer";
 
 const sendMail = async (options: SendMailOptions): Promise<boolean> => {
   const transporter = createTransport({

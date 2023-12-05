@@ -1,6 +1,7 @@
-import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+
+import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 
 describe("ItemTagsInput", () => {
   describe("タグの追加", () => {

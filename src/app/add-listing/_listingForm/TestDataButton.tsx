@@ -1,10 +1,11 @@
+import { ComponentProps } from "react";
+
 import {
   PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
 } from "@/constants/listing";
 import { Button } from "@/ui";
-import { ComponentProps } from "react";
 
 const setTestData = (selector: string, testData: string): void => {
   const element = document.querySelector(selector);

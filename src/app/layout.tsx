@@ -1,3 +1,6 @@
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+
 import {
   ClientProvider,
   Container,
@@ -6,12 +9,10 @@ import {
   Header,
 } from "@/app/_layout";
 import { AnchorMenu } from "@/app/_layout/AnchorMenu";
-
 import "@/app/globals.css";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
+
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 

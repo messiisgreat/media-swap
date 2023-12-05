@@ -1,6 +1,7 @@
-import { exclude } from "@/middlewares/exclude";
-import { ComposableMiddleware } from "next-compose-middleware";
 import { NextResponse } from "next/server";
+import { ComposableMiddleware } from "next-compose-middleware";
+
+import { exclude } from "@/middlewares/exclude";
 
 /**
  * 年齢認証を通過していない場合に年齢認証画面にリダイレクトするミドルウェア

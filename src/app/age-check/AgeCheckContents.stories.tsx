@@ -1,5 +1,6 @@
-import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
 import { Meta, StoryObj } from "@storybook/react";
+
+import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
 
 export default {
   component: AgeCheckContents,

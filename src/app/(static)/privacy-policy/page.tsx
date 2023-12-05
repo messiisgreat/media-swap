@@ -1,9 +1,11 @@
+import { Fragment, ReactNode } from "react";
+
+import Link from "next/link";
+
 import { CORPORATE_NAME } from "@/constants/site";
 import { TextLink } from "@/ui";
 import { Section } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
-import Link from "next/link";
-import { Fragment, ReactNode } from "react";
 
 type Item = {
   title: string;

@@ -1,5 +1,14 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { Transaction, TransactionComment } from "@prisma/client";
+import Image from "next/image";
+import { Session } from "next-auth";
+import toast from "react-hot-toast";
+import { BiSend } from "react-icons/bi";
+import { FaSyncAlt } from "react-icons/fa";
+
 import {
   fetchMessages,
   sendMessage,
@@ -10,13 +19,6 @@ import { Skeleton } from "@/ui/Skeleton";
 import { LimitInput } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
-import { Transaction, TransactionComment } from "@prisma/client";
-import { Session } from "next-auth";
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { BiSend } from "react-icons/bi";
-import { FaSyncAlt } from "react-icons/fa";
 
 /**
  * 取引画面のメッセージ

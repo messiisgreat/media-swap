@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { Button, TextLink } from "@/ui";
 import { Section, TitleUnderbar } from "@/ui/structure";
-import { useEffect } from "react";
 
 /**
  * 何らかのエラーが発生した場合に表示するコンポーネント

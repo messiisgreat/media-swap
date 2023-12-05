@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 import {
   ProductFormSchema,
   ProductFormState,
@@ -13,7 +15,6 @@ import {
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
 import { getSession, strToBool } from "@/utils";
-import { redirect } from "next/navigation";
 
 const create = async (
   formData: Omit<ProductFormValues, "verificationCode">,

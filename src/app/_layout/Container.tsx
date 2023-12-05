@@ -1,5 +1,6 @@
-import { Main } from "@/ui/structure";
 import { ReactNode } from "react";
+
+import { Main } from "@/ui/structure";
 
 /**
  * 画面幅に応じてメインコンテンツの横幅を調整し、中央寄せにするコンポーネント

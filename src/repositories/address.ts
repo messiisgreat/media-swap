@@ -1,7 +1,8 @@
 import "server-only";
 
-import prisma from "@/lib/prisma";
 import { Address } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
 
 /**
  * 住所を登録,更新する関数

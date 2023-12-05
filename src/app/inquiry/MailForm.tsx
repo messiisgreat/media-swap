@@ -1,12 +1,13 @@
 "use client";
 
+import { useFormState } from "react-dom";
+
 import { sendInquiry } from "@/app/inquiry/actions";
 import { categoryOptions, initialInquiryFormValues } from "@/app/inquiry/types";
 import { Input, Select, Textarea } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
-import { useFormState } from "react-dom";
 
 /**
  * お問い合わせフォーム

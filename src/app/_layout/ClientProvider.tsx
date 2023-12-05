@@ -1,8 +1,10 @@
 "use client";
 
-import { useViewport } from "@/app/_layout/viewPort";
-import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
+
+import { SessionProvider } from "next-auth/react";
+
+import { useViewport } from "@/app/_layout/viewPort";
 
 /**
  * サイト全体に適用するcontextや、client側実行コードを設定するコンポーネント

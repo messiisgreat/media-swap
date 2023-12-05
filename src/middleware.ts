@@ -1,6 +1,7 @@
-import { ageCheckMiddleware } from "@/middlewares/ageCheck";
-import { composeMiddleware } from "next-compose-middleware";
 import { NextRequest, NextResponse } from "next/server";
+import { composeMiddleware } from "next-compose-middleware";
+
+import { ageCheckMiddleware } from "@/middlewares/ageCheck";
 
 /**
  * 年齢認証を通過していない場合に年齢認証画面にリダイレクトするミドルウェア

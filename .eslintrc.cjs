@@ -75,5 +75,28 @@ module.exports = {
       { forbid: ["h1", "h2", "h3", "h4", "h5", "h6"] },
     ],
     "no-restricted-imports": ["error", { patterns: ["./", "../"] }],
+    "import/order": [
+      "error",
+      {
+        groups: ["builtin", "external", "internal", "object", "type"],
+        pathGroups: [
+          {
+            pattern: "{react,react-dom/**,react-router-dom}",
+            group: "builtin",
+            position: "before",
+          },
+          {
+            pattern: "@app/**",
+            group: "internal",
+            position: "before",
+          },
+        ],
+        pathGroupsExcludedImportTypes: ["builtin", "object"],
+        alphabetize: {
+          order: "asc",
+        },
+        "newlines-between": "always",
+      },
+    ],
   },
 };

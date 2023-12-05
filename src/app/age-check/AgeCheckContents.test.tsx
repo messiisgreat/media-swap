@@ -1,7 +1,8 @@
-import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
-import { addAgeCheckedCookie } from "@/app/age-check/actions";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { AgeCheckContents } from "@/app/age-check/AgeCheckContents";
+import { addAgeCheckedCookie } from "@/app/age-check/actions";
 
 jest.mock("./actions", () => ({
   addAgeCheckedCookie: jest.fn(),

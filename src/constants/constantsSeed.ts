@@ -1,10 +1,11 @@
+import { PrismaClient } from "@prisma/client";
+
 import {
   PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
   TRANSACTION_RATING_OPTION,
 } from "@/constants/listing";
-import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 

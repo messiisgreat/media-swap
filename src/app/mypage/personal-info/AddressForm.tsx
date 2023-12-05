@@ -1,4 +1,6 @@
 "use client";
+import { useFormState } from "react-dom";
+
 import { personalInfoFormAction } from "@/app/mypage/personal-info/actions";
 import { initialPersonalInfoFormValues } from "@/app/mypage/personal-info/type";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
@@ -7,7 +9,6 @@ import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { objToAssociative } from "@/utils/converter";
-import { useFormState } from "react-dom";
 
 /**
  *住所フォーム

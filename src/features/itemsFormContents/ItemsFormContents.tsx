@@ -1,6 +1,7 @@
+import React from "react";
+
 import DeliveryContents from "@/features/itemsFormContents/deliveryContents";
 import DetailsContents from "@/features/itemsFormContents/detailsContents";
-import React from "react";
 
 type Props = {
   detailsContentsProps: React.ComponentProps<typeof DetailsContents>;
