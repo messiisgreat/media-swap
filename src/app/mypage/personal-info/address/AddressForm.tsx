@@ -1,8 +1,9 @@
 "use client";
+
 import { useFormState } from "react-dom";
 
-import { personalInfoFormAction } from "@/app/mypage/personal-info/actions";
-import { initialPersonalInfoFormValues } from "@/app/mypage/personal-info/type";
+import { addressFormAction } from "@/app/mypage/personal-info/address/actions";
+import { initialAddressFormValues } from "@/app/mypage/personal-info/address/type";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { Input, Select } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
@@ -11,13 +12,12 @@ import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { objToAssociative } from "@/utils/converter";
 
 /**
- *住所フォーム
- *
+ * 住所フォーム
  */
 export const AddressForm = () => {
   const [state, dispatch] = useFormState(
-    personalInfoFormAction,
-    initialPersonalInfoFormValues,
+    addressFormAction,
+    initialAddressFormValues,
   );
   const getVerificationCode = useVerify();
   useFormMessageToaster(state);
@@ -30,13 +30,6 @@ export const AddressForm = () => {
 
   return (
     <form action={action} className="grid gap-3">
-      <Input
-        name="email"
-        labelText="メールアドレス"
-        autoComplete="email address"
-        placeholder="例: swappy@email.com"
-        defaultValue={state.values.email}
-      />
       <Input
         name="postalCode"
         labelText="郵便番号"

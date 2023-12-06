@@ -1,11 +1,10 @@
 "use server";
 
 import {
-  PersonalInfoFormSchema,
-  PersonalInfoFormState,
-} from "@/app/mypage/personal-info/type";
+  AddressFormSchema,
+  AddressFormState,
+} from "@/app/mypage/personal-info/address/type";
 import { upsertAddress } from "@/repositories/address";
-import { updateEmail } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSession } from "@/utils";
@@ -16,10 +15,10 @@ import { getSession } from "@/utils";
  * @param prevState 前の状態
  * @param formData FormData
  */
-export const personalInfoFormAction = async (
-  prevState: PersonalInfoFormState,
+export const addressFormAction = async (
+  prevState: AddressFormState,
   formData: FormData,
-): Promise<PersonalInfoFormState> => {
+): Promise<AddressFormState> => {
   const values = getFormValues(formData, prevState.values);
   const session = await getSession();
   const userId = session?.user.id;
@@ -40,7 +39,7 @@ export const personalInfoFormAction = async (
     };
   }
 
-  const validated = PersonalInfoFormSchema.safeParse(values);
+  const validated = AddressFormSchema.safeParse(values);
   if (!validated.success) {
     return {
       ...prevState,
@@ -59,14 +58,11 @@ export const personalInfoFormAction = async (
   if (!address) {
     return {
       ...prevState,
-      message: "住所の登録に失敗しました。時間をおいて再度お試しください。",
+      message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
     };
-  }
-  if (rest.email) {
-    await updateEmail(userId, rest.email);
   }
   return {
     ...prevState,
-    message: "個人情報設定を更新しました。",
+    message: "住所設定を更新しました。",
   };
 };
