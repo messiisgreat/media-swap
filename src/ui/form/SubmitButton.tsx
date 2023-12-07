@@ -26,7 +26,6 @@ export const SubmitButton = ({
   const { pending } = useFormStatus();
 
   return (
-    <>
       <Button
         {...props}
         className={className}
@@ -36,10 +35,9 @@ export const SubmitButton = ({
         disabled={pending}
       >
         {pending && (
-          <span className="loading loading-spinner" aria-hidden="true"></span>
+          <span className="loading loading-spinner" aria-hidden="true"/>
         )}
         {hideChildrenInPending && pending ? null : children}
       </Button>
-    </>
   );
 };

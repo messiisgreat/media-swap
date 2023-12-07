@@ -36,7 +36,6 @@ export const ItemDescription = ({ listing }: Props) => {
  */
 export const ItemInfomation = ({ listing }: Props) => {
   return (
-    <>
       <dl className={baseClass}>
         <dt className={labelClass}>商品の状態</dt>
         <dd className={textClass}>{listing.productCondition?.name}</dd>
@@ -65,6 +64,5 @@ export const ItemInfomation = ({ listing }: Props) => {
           <dd className={textClass}>{listing.shippingDays?.maxDays}日以内</dd>
         </div>
       </dl>
-    </>
   );
 };

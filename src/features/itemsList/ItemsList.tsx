@@ -13,8 +13,7 @@ type ListingQueryResult = ListingsQueryResult[number];
  * @returns div
  */
 export const ItemsList = ({ listings }: { listings: ListingQueryResult[] }) => (
-  <>
-    {listings.length ? (
+    listings.length ? (
       <div className="grid grid-cols-3 gap-1">
         {listings.map((listing) => (
           <ListingCard key={listing.id} listing={listing} />
@@ -22,8 +21,7 @@ export const ItemsList = ({ listings }: { listings: ListingQueryResult[] }) => (
       </div>
     ) : (
       <NoItems />
-    )}
-  </>
+    )
 );
 
 const NoItems = () => (

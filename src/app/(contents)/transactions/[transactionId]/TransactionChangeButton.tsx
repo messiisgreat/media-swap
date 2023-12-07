@@ -69,8 +69,7 @@ export const TransactionChangeButton = ({
   ];
 
   return (
-    <>
-      {!isCancel ? (
+      !isCancel ? (
         isVisibleButton() && (
           <Button onClick={handleClick}>
             {transactionButtonStatus[transaction.transactionStatus]}
@@ -78,7 +77,6 @@ export const TransactionChangeButton = ({
         )
       ) : (
         <Button onClick={handleClick}>取引キャンセル</Button>
-      )}
-    </>
+      )
   );
 };

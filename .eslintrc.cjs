@@ -81,6 +81,8 @@ module.exports = {
       { forbid: ["h1", "h2", "h3", "h4", "h5", "h6"] },
     ],
     "no-restricted-imports": ["error", { patterns: ["./", "../"] }],
+    "react/jsx-no-useless-fragment": ["error"],
+    "react/self-closing-comp": ["error"],
     // "import/order": [
     //   "error",
     //   {

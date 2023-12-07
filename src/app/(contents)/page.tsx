@@ -20,8 +20,6 @@ export default function Home({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
 }: Props) {
   return (
-    <>
       <ItemsListContainer page={page} size={size} sort={sort} order={order} />
-    </>
   );
 }
