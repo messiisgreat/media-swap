@@ -70,7 +70,7 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
           </svg>
         )}
       </summary>
-      <ul className="menu dropdown-content menu-sm z-30 mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
+      <ul className="menu dropdown-content menu-sm absolute right-0 z-30 mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
         {user ? (
           <>
             <li>
