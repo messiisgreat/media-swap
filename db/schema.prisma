@@ -332,6 +332,7 @@ model Transaction {
     userCouponId        String?  @map("user_coupon_id") @db.ObjectId // ユーザークーポンID外部キー
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
     transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
+    trackingNumber      String?
 
     buyer             User         @relation("buyer", fields: [buyerId], references: [id])
     listing           Listing      @relation(fields: [listingId], references: [id])

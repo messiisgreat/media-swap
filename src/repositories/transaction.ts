@@ -18,7 +18,7 @@ export const findTransaction = cache(async (id: string) => {
     include: {
       transactionComments: true,
       buyer: true,
-      listing: { include: { seller: true } },
+      listing: { include: { seller: true, shippingMethod: true } },
     },
   });
 });
@@ -43,6 +43,7 @@ export const createTransaction = async (
     | "purchaseDate"
     | "transactionRatingId"
     | "transactionStatus"
+    | "trackingNumber"
   > = {
     listingId,
     buyerId,
@@ -68,9 +69,10 @@ export const createTransaction = async (
 export const updateTransaction = async (
   transaction: { id: string } & Partial<Transaction>,
 ) => {
+  const { id, ...updateData } = transaction;
   return prisma.transaction.update({
-    where: { id: transaction.id },
-    data: transaction,
+    where: { id: id },
+    data: updateData,
   });
 };
 

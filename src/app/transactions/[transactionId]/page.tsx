@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import { FaChevronRight } from "react-icons/fa";
 
 import { MessageSection } from "@/app/transactions/[transactionId]/MessageSection";
+import { ShippingNotification } from "@/app/transactions/[transactionId]/ShippingNotification";
 import { TransactionChangeButton } from "@/app/transactions/[transactionId]/TransactionChangeButton";
 import { TransactionStatus } from "@/app/transactions/[transactionId]/TransactionStatus";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
+import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { getSessionUser } from "@/utils/session";
 
 /**
@@ -45,6 +47,14 @@ export default async function Transaction({
           transaction={transaction}
           sessionUser={sessionUser}
         />
+        {/* 送り状番号の送信用 */}
+        <VerifyProvider>
+          <ShippingNotification
+            trackingNumber={transaction.trackingNumber}
+            transactionId={transactionId}
+            shippingMethodId={transaction.listing.shippingMethod?.id || ""}
+          />
+        </VerifyProvider>
         {/* 通常の取引更新用ボタン */}
         <TransactionChangeButton
           transaction={transaction}
