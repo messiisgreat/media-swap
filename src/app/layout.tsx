@@ -1,9 +1,7 @@
 import { Inter } from "next/font/google";
-import { CookiesProvider } from "next-client-cookies/server";
 import { Toaster } from "react-hot-toast";
 
 import {
-  AgeCheckProvider,
   ClientProvider,
   Container,
   Footer,
@@ -15,6 +13,7 @@ import "@/app/globals.css";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 
 import type { Metadata } from "next";
+import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,13 +49,11 @@ export default function RootLayout({
         <GoogleTagManager />
         <CookiesProvider>
           <ClientProvider>
-            <AgeCheckProvider>
-              <Header />
-              <Container>{children}</Container>
-              <Footer />
-              <Toaster />
-              <AnchorMenu />
-            </AgeCheckProvider>
+            <Header />
+            <Container>{children}</Container>
+            <Footer />
+            <Toaster />
+            <AnchorMenu />
           </ClientProvider>
         </CookiesProvider>
       </body>

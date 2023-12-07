@@ -11,7 +11,6 @@ import {
   findListingsBySellerId,
 } from "@/repositories/listing";
 import { PaginationBar } from "@/ui";
-import { ListingButton } from "@/ui/ListingButton";
 
 type CommonProps = {
   page: number;
@@ -121,7 +120,6 @@ export const ItemsListContainer = async (props: Props) => {
       {total > 1 && (
         <PaginationBar currentPage={props.page} totalPages={total} />
       )}
-      <ListingButton className="fixed right-8 top-2 z-10 max-md:hidden" />
     </>
   );
 };
