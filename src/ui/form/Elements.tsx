@@ -52,7 +52,6 @@ export const Textarea = forwardRef<
     </div>
   );
 });
-
 type SelectProps = CommonProps & {
   options: { [key: string | number]: string | number };
 };

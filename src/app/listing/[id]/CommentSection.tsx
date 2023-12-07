@@ -1,10 +1,11 @@
 "use client";
 
+import { addComment, fetchComments } from "@/app/listing/[id]/actions";
 import { useEffect, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
-import Image from "next/image";
 import { Session } from "next-auth";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
 
@@ -14,8 +15,8 @@ import {
   useReportModal,
 } from "@/app/listing/[id]/_commentSection";
 import { commentsAtom } from "@/app/listing/[id]/_commentSection/state";
-import { addComment, fetchComments } from "@/app/listing/[id]/actions";
 import { Skeleton } from "@/ui/Skeleton";
+import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { Section } from "@/ui/structure";
@@ -105,6 +106,7 @@ export const CommentSection = ({
               disabled={posting}
               name="comment"
               maxLength={300}
+              onKeyDown={handleCtrlEnterSubmit}
               placeholder="はじめまして。購入を検討しています！"
             />
             <SubmitButton className="btn-secondary self-end">

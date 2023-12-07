@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 import { addListingReport } from "@/app/listing/[id]/actions";
 import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
+import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { H } from "@/ui/structure/H";
@@ -92,6 +93,7 @@ export const useReportModal = ({ listingId, sessionUser }: Props) => {
           minLength={3}
           name="report_reason"
           maxLength={1000}
+          onKeyDown={handleCtrlEnterSubmit}
         />
       </FormActionModal>
     ),

@@ -20,3 +20,20 @@ export const getFormValues = <T extends FormObject>(
         : (formData.get(key) as T[typeof key]);
     return { ...acc, [key]: value };
   }, {} as T);
+
+/**
+ * Ctrl + Enterでフォームを送信する
+ * @param event キーボードイベント
+ */
+export const handleCtrlEnterSubmit = (event: React.KeyboardEvent) => {
+  const isCtrlEnter = event.ctrlKey && event.key === "Enter";
+  if (!isCtrlEnter) return;
+
+  const textArea = event.currentTarget as HTMLTextAreaElement | null;
+  if (!textArea) return;
+
+  const form = textArea.form;
+  if (form) {
+    form.requestSubmit();
+  }
+};
