@@ -56,7 +56,9 @@ export type Props = SearchProps | BuyerProps | SellerProps | AllProps;
  * 渡されたパラメータに応じて取得するデータを選択する
  * @param props page, size, sort, order, query, buyerId, sellerId
  */
-const findlistingsAndCount = async (props: Props) => {
+const findlistingsAndCount = async (
+  props: Props,
+): Promise<[Awaited<ReturnType<typeof findListings>>, number]> => {
   const { page, size, sort, order, query, buyerId, sellerId, isPublic } = props;
   const orderBy: ListingOrderBy = {
     [sort]: order,
@@ -65,8 +67,7 @@ const findlistingsAndCount = async (props: Props) => {
   if (buyerId) {
     const listings = await findListingsByBuyerId(buyerId, page, size, orderBy);
     const count = await countListingsByBuyerId(buyerId);
-    return [listings, count] as const;
-
+    return [listings, count];
     // 下書き商品一覧
   } else if (sellerId && !isPublic) {
     const listings = await findListingsBySellerId(
@@ -77,7 +78,7 @@ const findlistingsAndCount = async (props: Props) => {
       isPublic,
     );
     const count = await countListingsBySellerId(sellerId, isPublic);
-    return [listings, count] as const;
+    return [listings, count];
     // 出品商品一覧
   } else if (sellerId && isPublic) {
     const listings = await findListingsBySellerId(
@@ -88,7 +89,8 @@ const findlistingsAndCount = async (props: Props) => {
       isPublic,
     );
     const count = await countListingsBySellerId(sellerId, isPublic);
-    return [listings, count] as const;
+    return [listings, count];
+    // 検索結果一覧
   } else if (query) {
     const listings = await findListingsByProductName(
       query,
@@ -97,11 +99,12 @@ const findlistingsAndCount = async (props: Props) => {
       orderBy,
     );
     const count = await countListingsByProductName(query);
-    return [listings, count] as const;
+    return [listings, count];
+    // 全商品一覧
   } else {
     const listings = await findListings(page, size, orderBy);
     const count = await countListings();
-    return [listings, count] as const;
+    return [listings, count];
   }
 };
 

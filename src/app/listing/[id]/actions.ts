@@ -22,36 +22,38 @@ import {
 import { createTransaction } from "@/repositories/transaction";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
+import { Result, failure, success } from "@/utils/result";
+
+type PurchasingResult = Result<string, string>;
 
 /**
  * 購入ボタンを押したときのサーバー側処理
- *
  * @param listingId - 購入対象の出品ID
  * @param userCouponId - 購入対象のクーポンID
+ * @returns 購入処理の結果 {ok: true, value: 取引ID} | {ok: false, error: エラーメッセージ}
  */
 export const purchasing = async (
   listingId: string,
   userCouponId: string | null,
-) => {
+): Promise<PurchasingResult> => {
   const buyer = await getSessionUser();
   if (buyer === undefined) {
-    throw new Error("ログインしてください");
+    return failure("ログインしてください");
   }
   const transaction = await createTransaction(
     listingId,
     buyer.id,
     userCouponId,
   );
-  const transactionId = transaction.id;
   const { sellerResult, buyerResult } =
     await sendMailToBuyerAndSeller(transaction);
   if (!sellerResult) {
-    throw new Error("出品者へのメール送信に失敗しました");
+    return failure("出品者へのメール送信に失敗しました");
   }
   if (!buyerResult) {
-    throw new Error("購入者へのメール送信に失敗しました");
+    return failure("購入者へのメール送信に失敗しました");
   }
-  return transactionId;
+  return success(transaction.id);
 };
 
 /**

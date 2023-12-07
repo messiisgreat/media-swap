@@ -19,7 +19,13 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ["./next*", "**/*.js", "**/*.cjs", "pnpm-lock.yaml"],
+  ignorePatterns: [
+    "./next*",
+    "**/*.js",
+    "**/*.cjs",
+    "pnpm-lock.yaml",
+    "__generated__",
+  ],
   rules: {
     "no-restricted-syntax": [
       "error",

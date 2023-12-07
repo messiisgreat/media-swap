@@ -34,14 +34,15 @@ export const PurchaseButton = ({
   const router = useRouter();
 
   const handleOnClick = useCallback(async () => {
-    try {
-      if (!buyerId) {
-        signIn();
+    if (!buyerId) {
+      signIn();
+    } else {
+      const result = await purchasing(listing.id, userCouponId);
+      if (result.isSuccess) {
+        router.push(`/transactions/${result.value}`);
+      } else {
+        toast.error(result.error);
       }
-      const transaction = await purchasing(listing.id, userCouponId);
-      router.push(`/transactions/${transaction}`);
-    } catch (error) {
-      toast.error("購入に失敗しました");
     }
   }, [buyerId, listing, userCouponId, router]);
 
