@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies 📦
         run: bun install
 
+      - name: Run prisma generate 🏭
+        run: bun run prisma generate
+
       - name: Run lint 🧹
         run: bun run lint
 
