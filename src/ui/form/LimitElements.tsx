@@ -1,6 +1,11 @@
 "use client";
 
-import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
+import {
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type ComponentProps,
+} from "react";
 
 import { Input, Textarea } from "@/ui/form/Elements";
 
@@ -66,12 +71,7 @@ export const LimitTextarea = ({
   const isOverLimit = charCount > maxLength;
   return (
     <>
-      <Textarea
-        onChange={(e) => {
-          handleChange(e);
-        }}
-        {...props}
-      />
+      <Textarea onChange={handleChange} {...props} />
       {!hideLimit && (
         <label
           className={`label-text-alt flex justify-between ${

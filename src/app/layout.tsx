@@ -12,7 +12,7 @@ import { AnchorMenu } from "@/app/_layout/AnchorMenu";
 import "@/app/globals.css";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 
-import type { Metadata } from "next";
+import  { type Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });

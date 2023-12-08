@@ -20,7 +20,7 @@ export const reduceImageQuality = async (
           quality: 0.7,
         });
         const outputBlob = Array.isArray(output) ? output[0] : output;
-        const newName = file.name.replace(/\.(heic|heif)$/i, "") + ".jpg";
+        const newName = `${file.name.replace(/\.(heic|heif)$/i, "")}.jpg`;
         const reducedFile = new File([outputBlob], newName, {
           type: "image/jpeg",
         });
@@ -30,7 +30,7 @@ export const reduceImageQuality = async (
       }
     } catch (error) {
       console.error("Error converting HEIC/HEIF file:", error);
-      throw new Error(`Failed to convert image file: ${file.name}. ${error}`);
+      throw new Error(`Failed to convert image file: ${file.name}`);
     }
   } else {
     const grayBackgroundFile = await addGrayBackground(file);

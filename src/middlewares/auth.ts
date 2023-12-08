@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "next-auth/react";
-import { ComposableMiddleware } from "next-compose-middleware";
+import { type ComposableMiddleware } from "next-compose-middleware";
 
 /**
  * 認証していない場合にログイン画面にリダイレクトするミドルウェア

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Address } from "@prisma/client";
+import { type Address } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
 

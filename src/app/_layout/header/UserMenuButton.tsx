@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
+import { type Session } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
 
 import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
 
@@ -43,6 +43,14 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
     };
   }, []);
 
+  const handleSignOut = useCallback(() => {
+    void signOut({ callbackUrl: "/" });
+  }, []);
+
+  const handleSignIn = useCallback(() => {
+    void signIn();
+  }, []);
+
   return (
     <details ref={dropdownRef} className="dropdown">
       <summary className="btn btn-circle btn-ghost">
@@ -74,16 +82,14 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
         {user ? (
           <>
             <li>
-              <button onClick={() => signOut({ callbackUrl: "/" })}>
-                Sign Out
-              </button>
+              <button onClick={handleSignOut}>Sign Out</button>
             </li>
             <li>
               <Link href="/mypage">マイページ</Link>
             </li>
           </>
         ) : (
-          <button onClick={() => signIn()}>Sign In</button>
+          <button onClick={handleSignIn}>Sign In</button>
         )}
       </ul>
     </details>

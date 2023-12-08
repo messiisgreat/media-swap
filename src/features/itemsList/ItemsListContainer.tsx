@@ -1,6 +1,6 @@
 import ItemsList from "@/features/itemsList";
 import {
-  ListingOrderBy,
+  type ListingOrderBy,
   countListings,
   countListingsByBuyerId,
   countListingsByProductName,
@@ -139,7 +139,7 @@ const findlistingsAndCount = async (
 };
 
 /**
- *　データ取得が責務のコンテナ
+ * データ取得が責務のコンテナ
  * @param props page, size, sort, order, query
  */
 export const ItemsListContainer = async (props: Props) => {

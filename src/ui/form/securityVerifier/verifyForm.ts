@@ -7,7 +7,7 @@ const errFailedAtVerification =
 /**
  * 認証コードを検証する
  * @param verificationCode 認証コード
- * @returns　認証に成功した場合はtrueを返す、失敗した場合はfalseとエラーメッセージを返す
+ * @returns 認証に成功した場合はtrueを返す、失敗した場合はfalseとエラーメッセージを返す
  */
 export const verifyForm = async (
   verificationCode: string,

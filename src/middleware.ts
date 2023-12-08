@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { composeMiddleware } from "next-compose-middleware";
+import { type NextRequest, NextResponse } from "next/server";
 
 /**
  * scripts に ミドルウェア を追加する
@@ -7,7 +7,7 @@ import { composeMiddleware } from "next-compose-middleware";
  * @returns NextResponse.redirect | void
  */
 export async function middleware(req: NextRequest) {
-  return composeMiddleware(req, NextResponse.next(), {
+  return await composeMiddleware(req, NextResponse.next(), {
     scripts: [],
   });
 }

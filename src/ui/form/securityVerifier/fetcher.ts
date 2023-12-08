@@ -1,4 +1,4 @@
-import { ReCaptchaResult } from "@/ui/form/securityVerifier/type";
+import { type ReCaptchaResult } from "@/ui/form/securityVerifier/type";
 import { env } from "@/utils/serverEnv";
 
 /**

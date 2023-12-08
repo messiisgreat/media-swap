@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { Listing } from "@prisma/client";
+import { type Listing } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
 import "server-only";
@@ -31,7 +31,7 @@ export const createListingWithTagsAndImages = async (
     ...rest
   } = listing;
 
-  return prisma.listing.create({
+  return await prisma.listing.create({
     data: {
       ...rest,
       seller: { connect: { id: sellerId } },
@@ -65,7 +65,7 @@ export const createListingWithTagsAndImages = async (
  * @throws 製品が見つからない場合はエラーがスローされる
  */
 export const findListingById = cache(async (id: string, isDeleted = false) => {
-  return prisma.listing.findUniqueOrThrow({
+  return await prisma.listing.findUniqueOrThrow({
     where: { id, isPublic: true, isDeleted },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
@@ -96,7 +96,7 @@ export type ListingOrderBy =
  */
 export const findListings = cache(
   async (page: number, size: number, orderBy: ListingOrderBy) => {
-    return prisma.listing.findMany({
+    return await prisma.listing.findMany({
       where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -128,7 +128,7 @@ export const findListingsByProductName = cache(
     size: number,
     orderBy: ListingOrderBy,
   ) => {
-    return prisma.listing.findMany({
+    return await prisma.listing.findMany({
       where: {
         productName: { contains: query },
         isPublic: true,
@@ -160,7 +160,7 @@ export const findListingsBySellerId = cache(
     orderBy: ListingOrderBy,
     isPublic?: boolean,
   ) => {
-    return prisma.listing.findMany({
+    return await prisma.listing.findMany({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -181,7 +181,9 @@ export const findListingsBySellerId = cache(
  * 商品総数を取得する
  */
 export const countListings = cache(async () => {
-  return prisma.listing.count({ where: { isPublic: true, isDeleted: false } });
+  return await prisma.listing.count({
+    where: { isPublic: true, isDeleted: false },
+  });
 });
 
 /**
@@ -189,7 +191,7 @@ export const countListings = cache(async () => {
  * @param query 検索クエリ
  */
 export const countListingsByProductName = cache(async (query: string) => {
-  return prisma.listing.count({
+  return await prisma.listing.count({
     where: { productName: { contains: query }, isDeleted: false },
   });
 });
@@ -199,7 +201,7 @@ export const countListingsByProductName = cache(async (query: string) => {
  */
 export const countListingsBySellerId = cache(
   async (sellerId: string, isPublic?: boolean) => {
-    return prisma.listing.count({
+    return await prisma.listing.count({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
     });
   },
@@ -209,7 +211,7 @@ export const countListingsBySellerId = cache(
  * 指定したユーザーが購入した商品総数を取得する
  */
 export const countListingsByBuyerId = cache(async (buyerId: string) => {
-  return prisma.listing.count({
+  return await prisma.listing.count({
     where: {
       transaction: {
         buyerId,
@@ -229,7 +231,7 @@ export const findListingsByBuyerId = cache(
     size: number,
     orderBy: ListingOrderBy,
   ) => {
-    return prisma.listing.findMany({
+    return await prisma.listing.findMany({
       where: {
         transaction: {
           buyerId,
@@ -258,7 +260,7 @@ export const findListingsByBuyerId = cache(
  * @param id - 削除対象の商品のID
  */
 export const deleteListing = async (id: string) => {
-  return prisma.listing.update({
+  return await prisma.listing.update({
     where: { id },
     data: { isDeleted: true },
   });
@@ -272,7 +274,7 @@ export const deleteListing = async (id: string) => {
 export const updateListing = async (
   listing: { id: string } & Partial<Listing>,
 ) => {
-  return prisma.listing.update({
+  return await prisma.listing.update({
     where: { id: listing.id },
     data: listing,
   });
@@ -288,7 +290,7 @@ export const updateListingTransactionId = async (
   listing: { id: string } & Partial<Listing>,
   transactionId: string,
 ) => {
-  return prisma.listing.update({
+  return await prisma.listing.update({
     where: { id: listing.id },
     data: {
       transactionId: transactionId,
@@ -320,7 +322,7 @@ export const createListingReport = async (
     throw new Error("This comment has already been reported by the user.");
   }
 
-  return prisma.listingReport.create({
+  return await prisma.listingReport.create({
     data: {
       listingId,
       userId: reporterId,

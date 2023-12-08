@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback } from "react";
+import { useCallback, type ComponentProps } from "react";
 
 import { twMerge } from "tailwind-merge";
 
@@ -6,15 +6,25 @@ import { useDialog } from "@/ui/dialog";
 
 /**
  * 「はい」か「いいえ」の確認用モーダルを表示するためのフック
- * @param handleOk 「はい」ボタンを押した時に実行する関数
- * @param handleNo 「いいえ」ボタンを押した時に実行する関数
+ * @param onOkClick 「はい」ボタンを押した時に実行する関数
+ * @param onNoClick 「いいえ」ボタンを押した時に実行する関数
  * @returns open,  CheckModal
  */
 export const useCheckModal = (
-  handleOk: () => void | Promise<void>,
-  handleNo: () => void | Promise<void>,
+  onOkClick: () => void | Promise<void>,
+  onNoClick: () => void | Promise<void>,
 ) => {
-  const { open, close, Dialog } = useDialog();
+  const { handleOpen: open, handleClose: close, Dialog } = useDialog();
+
+  const handleOkClick = useCallback(async () => {
+    await onOkClick();
+    close();
+  }, [onOkClick, close]);
+
+  const handleNoClick = useCallback(async () => {
+    await onNoClick();
+    close();
+  }, [onNoClick, close]);
 
   const linkClass =
     "h-12 btn btn-circle btn-wide border-gray-500 text-lg font-bold";
@@ -30,10 +40,7 @@ export const useCheckModal = (
                 "btn-error bg-red-500 text-white hover:bg-red-700 md:col-start-2 md:col-end-3",
                 linkClass,
               )}
-              onClick={async () => {
-                await handleOk();
-                close();
-              }}
+              onClick={handleOkClick}
             >
               はい
             </button>
@@ -42,10 +49,7 @@ export const useCheckModal = (
                 "bg-white text-black hover:bg-gray-100 md:row-start-1 md:row-end-2",
                 linkClass,
               )}
-              onClick={async () => {
-                await handleNo();
-                close();
-              }}
+              onClick={handleNoClick}
             >
               いいえ
             </button>
@@ -53,7 +57,7 @@ export const useCheckModal = (
         </div>
       </Dialog>
     ),
-    [Dialog, handleOk, handleNo, close],
+    [Dialog, handleOkClick, handleNoClick],
   );
 
   return { open, CheckModal };

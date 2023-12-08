@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconType } from "react-icons";
+import { type IconType } from "react-icons";
 import { AiFillBell, AiFillCamera, AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 

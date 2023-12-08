@@ -1,8 +1,8 @@
 import {
-  ProductCondition,
-  ShippingDays,
-  ShippingMethod,
-  TransactionRatingOption,
+  type ProductCondition,
+  type ShippingDays,
+  type ShippingMethod,
+  type TransactionRatingOption,
 } from "@prisma/client";
 
 // 注意: このファイルは自動生成されます。本番環境に影響してしまうため、リリース後の変更は行わないでください。

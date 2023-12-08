@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-import { Tag } from "@prisma/client";
+import { type Tag } from "@prisma/client";
 
 import { PRODUCT_CONDITION } from "@/constants/listing";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";

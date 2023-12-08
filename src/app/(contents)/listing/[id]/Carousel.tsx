@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
+import { useImageModal } from "@/features/modal";
 import Image from "next/image";
-
-import { useImageModal } from "@/ui/dialog";
 
 /**
  * 商品ページのカルーセル
@@ -52,7 +51,9 @@ export default function TempCarousel({
     }
   };
 
-  const { open, ImageModal } = useImageModal(images[selectedIndex].imageURL);
+  const { handleOpen, ImageModal } = useImageModal(
+    images[selectedIndex].imageURL,
+  );
 
   return (
     <div className="grid w-full select-none gap-4">
@@ -66,7 +67,7 @@ export default function TempCarousel({
               alt={`商品画像-${index}`}
               width={500}
               height={500}
-              onClick={open}
+              onClick={handleOpen}
             />
           ))}
         </div>

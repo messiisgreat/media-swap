@@ -11,7 +11,7 @@ import { signIn } from "next-auth/react";
  * {user ? null : <AuthRedirect />}
  * ```
  */
-export const AuthRedirect = () => {
-  signIn();
+export const AuthRedirect = async () => {
+  await signIn();
   return null;
 };

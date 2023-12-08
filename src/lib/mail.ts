@@ -1,4 +1,4 @@
-import { createTransport, SendMailOptions } from "nodemailer";
+import { createTransport, type SendMailOptions } from "nodemailer";
 
 import { SITE_NAME } from "@/constants/site";
 import { env } from "@/utils/serverEnv";
@@ -12,7 +12,7 @@ const sendMail = async (options: SendMailOptions): Promise<boolean> => {
     },
   });
 
-  return transporter
+  return await transporter
     .sendMail(options)
     .then(() => {
       return true;
@@ -42,7 +42,7 @@ export const sendMailToAdmin = async (
     subject,
     text,
   };
-  return sendMail(options);
+  return await sendMail(options);
 };
 
 /**
@@ -63,5 +63,5 @@ export const sendMailToUser = async (
     subject,
     text,
   };
-  return sendMail(options);
+  return await sendMail(options);
 };

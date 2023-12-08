@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
+import { type Prisma } from "@prisma/client";
 import Link from "next/link";
 
-import { findListingById } from "@/repositories/listing";
+import { type findListingById } from "@/repositories/listing";
 import { Badge } from "@/ui/Badge";
 
 const baseClass = "my-2 w-full rounded-lg bg-white p-4 shadow-md grid gap-4";

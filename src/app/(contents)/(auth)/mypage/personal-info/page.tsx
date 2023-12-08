@@ -15,7 +15,7 @@ import { PageTitle } from "@/ui/structure";
 /**
  * 個人情報設定
  */
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <PageTitle title={MY_PAGE_CONTENT_ENUM_JA[MY_PAGE_CONTENT.PRIVACY]} />

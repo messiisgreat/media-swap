@@ -10,7 +10,7 @@ describe("ItemTagsInput", () => {
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
 
-      userEvent.type(input, "newTag");
+      void userEvent.type(input, "newTag");
       fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
 
       await waitFor(() => {
@@ -24,7 +24,7 @@ describe("ItemTagsInput", () => {
 
       const input = screen.getByPlaceholderText("タグ名を入力してください");
       await waitFor(() => {
-        userEvent.type(input, "newTag");
+        void userEvent.type(input, "newTag");
         fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
         fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
 
@@ -42,7 +42,7 @@ describe("ItemTagsInput", () => {
 
     const input = screen.getByPlaceholderText("タグ名を入力してください");
 
-    userEvent.click(input);
+    void userEvent.click(input);
 
     expect(screen.getByTestId("test-tag1")).toBeInTheDocument();
     expect(screen.getByTestId("test-tag2")).toBeInTheDocument();
@@ -52,11 +52,11 @@ describe("ItemTagsInput", () => {
 
     const input = screen.getByPlaceholderText("タグ名を入力してください");
 
-    userEvent.type(input, "newTag");
+    void userEvent.type(input, "newTag");
     fireEvent.keyDown(input, { keyCode: 13, target: { value: "newTag" } });
 
     const deleteButton = screen.getByTestId("delete");
-    userEvent.click(deleteButton);
+    void userEvent.click(deleteButton);
 
     await waitFor(() => {
       expect(screen.queryByText("newTag")).not.toBeInTheDocument();

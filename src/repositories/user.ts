@@ -11,7 +11,7 @@ import "server-only";
  * @returns ユーザー
  */
 export const findUserById = cache(async (id: string) => {
-  return prisma.user.findUnique({
+  return await prisma.user.findUnique({
     where: { id },
   });
 });
@@ -22,7 +22,7 @@ export const findUserById = cache(async (id: string) => {
  * @param email  - 更新後のメールアドレス
  */
 export const updateEmail = async (userId: string, email: string) => {
-  return prisma.user.update({
+  return await prisma.user.update({
     where: { id: userId },
     data: { email },
   });

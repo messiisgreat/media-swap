@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { Transaction } from "@prisma/client";
-import { Session } from "next-auth";
+import { type Transaction } from "@prisma/client";
+import { type Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 import { updateTransactionStateByTransactionId } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
@@ -40,7 +40,7 @@ export const TransactionChangeButton = ({
   }, [isCancel, status, transaction.transactionStatus]);
 
   const handleClick = () => {
-    updateTransactionStateByTransactionId(transaction.id, nextStatus as number);
+    void updateTransactionStateByTransactionId(transaction.id, nextStatus);
     router.refresh();
   };
 
@@ -68,15 +68,13 @@ export const TransactionChangeButton = ({
     "取引キャンセル",
   ];
 
-  return (
-      !isCancel ? (
-        isVisibleButton() && (
-          <Button onClick={handleClick}>
-            {transactionButtonStatus[transaction.transactionStatus]}
-          </Button>
-        )
-      ) : (
-        <Button onClick={handleClick}>取引キャンセル</Button>
-      )
+  return !isCancel ? (
+    isVisibleButton() && (
+      <Button onClick={handleClick}>
+        {transactionButtonStatus[transaction.transactionStatus]}
+      </Button>
+    )
+  ) : (
+    <Button onClick={handleClick}>取引キャンセル</Button>
   );
 };

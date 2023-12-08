@@ -1,15 +1,15 @@
 "use client";
 
-import { ComponentProps, useCallback } from "react";
+import { useCallback, type ComponentProps } from "react";
 
-import { Listing } from "@prisma/client";
+import { type Listing } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { purchasing } from "@/app/(contents)/listing/[id]/actions";
+import { useFormActionModal } from "@/features/modal";
 import { Button } from "@/ui";
-import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
 import { H } from "@/ui/structure/H";
 
 type Props = ComponentProps<typeof Button> & {
@@ -35,7 +35,7 @@ export const PurchaseButton = ({
 
   const handleOnClick = useCallback(async () => {
     if (!buyerId) {
-      signIn();
+      await signIn();
     } else {
       const result = await purchasing(listing.id, userCouponId);
       if (result.isSuccess) {
@@ -46,11 +46,14 @@ export const PurchaseButton = ({
     }
   }, [buyerId, listing, userCouponId, router]);
 
-  const { open, FormActionModal } = useFormActionModal(handleOnClick, "購入");
+  const { handleOpen, FormActionModal } = useFormActionModal(
+    handleOnClick,
+    "購入",
+  );
 
   return (
     <>
-      <Button onClick={open} {...props}>
+      <Button onClick={handleOpen} {...props}>
         購入手続きへ
       </Button>
       <FormActionModal>

@@ -2,7 +2,7 @@
 
 import {
   TrackingNumberFormScheme,
-  TrackingNumberFormState,
+  type TrackingNumberFormState,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
 import {
   createTransactionComment,
@@ -14,7 +14,7 @@ import {
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
-import { Result, failure, success } from "@/utils/result";
+import { type Result, failure, success } from "@/utils/result";
 
 import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTemplate";
 import { sendMailToUser } from "@/lib/mail";

@@ -1,3 +1,4 @@
+import { type CloudinaryUploadResponse } from "@/lib/cloudinary/type";
 import { env } from "@/utils/serverEnv";
 
 async function uploadSingleFile(
@@ -22,7 +23,7 @@ async function uploadSingleFile(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as CloudinaryUploadResponse;
     if (data.secure_url) {
       return data.secure_url;
     } else {

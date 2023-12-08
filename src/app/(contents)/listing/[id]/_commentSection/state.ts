@@ -1,5 +1,5 @@
 import { atom } from "jotai";
 
-import { CommentWithPartialUser } from "@/repositories/listingComment";
+import { type CommentWithPartialUser } from "@/repositories/listingComment";
 
 export const commentsAtom = atom<CommentWithPartialUser[] | null>(null);

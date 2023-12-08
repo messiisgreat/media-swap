@@ -3,7 +3,7 @@
  * @param file ドロップされたファイル
  */
 export async function addGrayBackground(file: File): Promise<File> {
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     const img = new window.Image();
     const objectUrl = URL.createObjectURL(file);
     img.src = objectUrl;

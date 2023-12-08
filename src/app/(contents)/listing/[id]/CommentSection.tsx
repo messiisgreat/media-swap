@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
@@ -129,71 +129,73 @@ export const CommentSection = ({
         ) : comments.length === 0 ? (
           <p className="text-center">コメントはありません。</p>
         ) : (
-          comments.map((comment) => (
-            <li key={comment.id} className="flex flex-1 items-center gap-4">
-              <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400">
-                <Image
-                  src={comment.user.image || ""}
-                  alt={comment.user.name || "名無し"}
-                  className="rounded-full"
-                  width={64}
-                  height={64}
-                />
-              </div>
-              <div className="flex w-full flex-col">
-                <div className="flex items-center justify-between">
-                  <p className="text-lg font-bold">{comment.user.name}</p>{" "}
-                  <div className="flex items-center gap-2 text-gray-400">
-                    <p className="text-sm">
-                      {parseRelativeTime(comment.createdAt)}
-                    </p>
-                    {sessionUser ? (
-                      <div className="dropdown dropdown-end dropdown-bottom">
-                        <label
-                          tabIndex={0}
-                          className="btn btn-ghost h-[initial] min-h-0 p-2"
-                        >
-                          <FaEllipsis />
-                        </label>
-                        <ul
-                          tabIndex={0}
-                          className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 text-red-500 shadow"
-                        >
-                          {comment.userId !== sessionUser.id ? (
-                            <li
-                              onClick={() => {
-                                setSelectedCommentId(comment.id);
-                                openReportModal();
-                              }}
-                            >
-                              <div className="flex items-center whitespace-nowrap">
-                                <FaFlag />
-                                通報
-                              </div>
-                            </li>
-                          ) : null}
-                          {isListingOwner ? (
-                            <li
-                              onClick={() => {
-                                setSelectedCommentId(comment.id);
-                                openDeleteModal();
-                              }}
-                            >
-                              <div className="flex items-center whitespace-nowrap">
-                                <FaTrash />
-                                削除
-                              </div>
-                            </li>
-                          ) : null}
-                        </ul>
-                      </div>
-                    ) : null}
-                  </div>
+          comments.map((comment) => {
+            const handleReport = () => {
+              setSelectedCommentId(comment.id);
+              openReportModal();
+            };
+
+            const handleDelete = () => {
+              setSelectedCommentId(comment.id);
+              openDeleteModal();
+            };
+
+            return (
+              <li key={comment.id} className="flex flex-1 items-center gap-4">
+                <div className="h-16 w-16 flex-none items-center justify-center rounded-full bg-gray-400">
+                  <Image
+                    src={comment.user.image || ""}
+                    alt={comment.user.name || "名無し"}
+                    className="rounded-full"
+                    width={64}
+                    height={64}
+                  />
                 </div>
-                <p className="text-sm">{comment.comment}</p>
-              </div>
-            </li>
-          ))
+                <div className="flex w-full flex-col">
+                  <div className="flex items-center justify-between">
+                    <p className="text-lg font-bold">{comment.user.name}</p>{" "}
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <p className="text-sm">
+                        {parseRelativeTime(comment.createdAt)}
+                      </p>
+                      {sessionUser ? (
+                        <div className="dropdown dropdown-end dropdown-bottom">
+                          <label
+                            tabIndex={0}
+                            className="btn btn-ghost h-[initial] min-h-0 p-2"
+                          >
+                            <FaEllipsis />
+                          </label>
+                          <ul
+                            tabIndex={0}
+                            className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 text-red-500 shadow"
+                          >
+                            {comment.userId !== sessionUser.id ? (
+                              <li onClick={handleReport}>
+                                <div className="flex items-center whitespace-nowrap">
+                                  <FaFlag />
+                                  通報
+                                </div>
+                              </li>
+                            ) : null}
+                            {isListingOwner ? (
+                              <li onClick={handleDelete}>
+                                <div className="flex items-center whitespace-nowrap">
+                                  <FaTrash />
+                                  削除
+                                </div>
+                              </li>
+                            ) : null}
+                          </ul>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <p className="text-sm">{comment.comment}</p>
+                </div>
+              </li>
+            );
+          })
         )}
       </ul>
       <ReportModal />

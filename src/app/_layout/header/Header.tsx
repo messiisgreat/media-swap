@@ -12,9 +12,7 @@ export async function Header() {
 
   return (
     <header className="navbar justify-around bg-base-100 p-1 md:p-4">
-      <div>
-        <TitleLogo />
-      </div>
+      <TitleLogo />
       <div className="flex gap-2">
         <SearchWindow />
         <UserMenuButton session={session} />

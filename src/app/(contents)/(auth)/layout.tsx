@@ -1,6 +1,6 @@
 import { AuthRedirect } from "@/app/(contents)/(auth)/AuthRedirect";
 import { getSessionUser } from "@/utils";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 /**
  * ログインしていない場合はログインページにリダイレクトする

@@ -10,7 +10,7 @@ import {
 /**
  * ユーザーマイページ
  */
-export default async function Page() {
+export default function Page() {
   return (
     <div className="w-full">
       <div className="m-auto px-4 sm:px-8">

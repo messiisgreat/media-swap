@@ -1,6 +1,8 @@
-import { Transaction } from "@prisma/client";
-import { Session } from "next-auth";
-import { IconType } from "react-icons";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { type Transaction } from "@prisma/client";
+import { type Session } from "next-auth";
+import { type IconType } from "react-icons";
 import {
   FaBriefcase,
   FaClock,
@@ -160,39 +162,54 @@ export function TransactionStatus({
   const isSeller = transaction.listing.sellerId === sessionUser.id;
   const isBuyer = transaction.buyerId === sessionUser.id;
 
-  if (transaction.transactionStatus === TRANSACTION_STATUS.BEFORE_PAYMENT) {
+  switch (transaction.transactionStatus) {
+  case TRANSACTION_STATUS.BEFORE_PAYMENT: {
     if (isSeller) {
       return <BeforePaymentSellerStatus />;
     } else if (isBuyer) {
       return <BeforePaymentBuyerStatus />;
     }
-  } else if (
-    transaction.transactionStatus === TRANSACTION_STATUS.COMPLETE_PAYMENT
-  ) {
+  
+  break;
+  }
+  case TRANSACTION_STATUS.COMPLETE_PAYMENT: {
     if (isSeller) {
       return <CompletePaymentSellerStatus />;
     } else if (isBuyer) {
       return <CompletePaymentBuyerStatus />;
     }
-  } else if (transaction.transactionStatus === TRANSACTION_STATUS.SENT) {
+  
+  break;
+  }
+  case TRANSACTION_STATUS.SENT: {
     if (isSeller) {
       return <SentSellerStatus />;
     } else if (isBuyer) {
       return <SentBuyerStatus />;
     }
-  } else if (transaction.transactionStatus === TRANSACTION_STATUS.RECEIVED) {
+  
+  break;
+  }
+  case TRANSACTION_STATUS.RECEIVED: {
     if (isSeller) {
       return <ReceivedSellerStatus />;
     } else if (isBuyer) {
       return <ReceivedBuyerStatus />;
     }
-  } else if (transaction.transactionStatus === TRANSACTION_STATUS.CANCELLED) {
+  
+  break;
+  }
+  case TRANSACTION_STATUS.CANCELLED: {
     if (isSeller) {
       return <CancelSellerStatus />;
     } else if (isBuyer) {
       return <CancelBuyerStatus />;
     }
-  } else {
+  
+  break;
+  }
+  default: {
     return null;
+  }
   }
 }

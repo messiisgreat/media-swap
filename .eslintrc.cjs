@@ -5,14 +5,22 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint/eslint-plugin", "tailwindcss", "jsdoc"],
+  plugins: [
+    "@typescript-eslint/eslint-plugin",
+    "tailwindcss",
+    "jsdoc",
+    "unicorn",
+    "import",
+  ],
   extends: [
+    "eslint:recommended",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "prettier",
     "plugin:jsdoc/recommended-typescript-error",
     "plugin:storybook/recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
   ],
   root: true,
   env: {
@@ -43,18 +51,21 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "warn",
     "jsdoc/tag-lines": "off",
     "jsdoc/no-types": "off",
+    /** 引数の`@params`での解説を強制 */
     "jsdoc/require-param": [
       "error",
       {
         checkDestructuredRoots: false,
       },
     ],
+    /** `@paramas`の値が引数と一致していることを確認 */
     "jsdoc/check-param-names": [
       "error",
       {
         checkDestructured: false,
       },
     ],
+    /** JSDocコメントを強制 */
     "jsdoc/require-jsdoc": [
       "error",
       {
@@ -70,19 +81,70 @@ module.exports = {
     ],
     "jsdoc/require-returns": "off",
     "jsdoc/require-returns-description": "off",
+    /** コメントの詳細がない関数をerrorに */
     "jsdoc/require-description": [
       "error",
       {
         descriptionStyle: "body",
       },
     ],
+    /** 見出しレベルのハードコードを禁止 */
     "react/forbid-elements": [
       "error",
       { forbid: ["h1", "h2", "h3", "h4", "h5", "h6"] },
     ],
+    /** 相対パスでのインポートを禁止 */
     "no-restricted-imports": ["error", { patterns: ["./", "../"] }],
+    /** 冗長なReact.Fragmentを禁止 */
     "react/jsx-no-useless-fragment": ["error"],
+    /** 中身のない要素を禁止し、自己終了タグでの指定を強制 */
     "react/self-closing-comp": ["error"],
+    /** awaitのないasyncを禁止 */
+    "@typescript-eslint/require-await": "error",
+    "require-await": "error",
+    /** voidを期待される箇所でのPromise<void> form action用に無効化 */
+    "@typescript-eslint/no-misused-promises": "off",
+    /** 異なる型動詞の加算や、文字列の + による連結を禁止 */
+    "no-implicit-coercion": "error",
+    "@typescript-eslint/restrict-plus-operands": "error",
+    "prefer-template": "error",
+    /** switch文の分岐網羅を強制 */
+    "@typescript-eslint/switch-exhaustiveness-check": "error",
+    /** switch文が適している箇所でのif文を修正 */
+    "unicorn/prefer-switch": "error",
+    "import/no-cycle": "error",
+    /** インポート直後の空白行を強制 */
+    "import/newline-after-import": "error",
+    /** 型定義のtype only importを強制 */
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+        disallowTypeAnnotations: true,
+      },
+    ],
+    "import/consistent-type-specifier-style": ["error", "prefer-inline"],
+    "@typescript-eslint/consistent-type-exports": "error",
+
+    /** イベントハンドラの命名規則 propsにon,関数にhandleを強制 */
+    "react/jsx-handler-names": [
+      "error",
+      {
+        eventHandlerPrefix: "handle",
+        eventHandlerPropPrefix: "on",
+        checkLocalVariables: true,
+        checkInlineFunction: true,
+      },
+    ],
+
+    "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-argument": "warn",
+    "@typescript-eslint/no-redundant-type-constituents": "warn",
+
     // "import/order": [
     //   "error",
     //   {

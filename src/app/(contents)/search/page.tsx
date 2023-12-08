@@ -1,5 +1,5 @@
-import { Listing } from "@prisma/client";
-import { Metadata } from "next";
+import { type Listing } from "@prisma/client";
+import { type Metadata } from "next";
 
 import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { TitleUnderbar } from "@/ui/structure/TitleUnderbar";

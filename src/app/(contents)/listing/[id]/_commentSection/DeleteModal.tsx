@@ -1,14 +1,14 @@
 import { useCallback } from "react";
 
 import { useSetAtom } from "jotai";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import toast from "react-hot-toast";
 import { FaFlag } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
 
 import { commentsAtom } from "@/app/(contents)/listing/[id]/_commentSection/state";
 import { removeComment } from "@/app/(contents)/listing/[id]/actions";
-import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
+import { useFormActionModal } from "@/features/modal";
 import { H } from "@/ui/structure/H";
 
 type Props = {
@@ -54,7 +54,10 @@ export const useDeleteModal = ({
     }
   }, [commentId, sessionUser, isListingOwner, setComments]);
 
-  const { open, FormActionModal } = useFormActionModal(deleteComment, "削除");
+  const { handleOpen: open, FormActionModal } = useFormActionModal(
+    deleteComment,
+    "削除",
+  );
 
   const DeleteModal = useCallback(
     () => (

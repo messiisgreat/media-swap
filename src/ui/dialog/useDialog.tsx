@@ -9,9 +9,9 @@ type Props = Omit<
 
 type useDialogResult = {
   /** dialogを開く関数 */
-  open: () => void;
+  handleOpen: () => void;
   /** dialogを閉じる関数 */
-  close: () => void;
+  handleClose: () => void;
   /** dialogを表示するコンポーネント */
   Dialog: React.FC<Props>;
 };
@@ -23,20 +23,20 @@ type useDialogResult = {
 export const useDialog = (): useDialogResult => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  const open = useCallback((): void => {
+  const handleOpen = useCallback((): void => {
     setOpen(true);
   }, []);
 
-  const close = useCallback((): void => {
+  const handleClose = useCallback((): void => {
     setOpen(false);
   }, []);
 
   const Dialog: React.FC<Props> = useCallback(
     (props: Props): React.ReactElement => {
-      return <Component isOpen={isOpen} onClose={close} {...props} />;
+      return <Component isOpen={isOpen} onClose={handleClose} {...props} />;
     },
-    [close, isOpen],
+    [handleClose, isOpen],
   );
 
-  return { open, close, Dialog };
+  return { handleOpen, handleClose, Dialog };
 };

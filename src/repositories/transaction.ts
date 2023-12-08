@@ -2,7 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 
-import { Transaction } from "@prisma/client";
+import { type Transaction } from "@prisma/client";
 
 import { TRANSACTION_STATUS } from "@/constants/listing";
 import prisma from "@/lib/prisma";
@@ -13,7 +13,7 @@ import prisma from "@/lib/prisma";
  * @returns 取得した取引、もしない場合はnull
  */
 export const findTransaction = cache(async (id: string) => {
-  return prisma.transaction.findUnique({
+  return await prisma.transaction.findUnique({
     where: { id },
     include: {
       transactionComments: true,
@@ -49,7 +49,7 @@ export const createTransaction = async (
     buyerId,
     userCouponId,
   };
-  return prisma.transaction.create({
+  return await prisma.transaction.create({
     data: {
       transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
       ...transaction,
@@ -70,7 +70,7 @@ export const updateTransaction = async (
   transaction: { id: string } & Partial<Transaction>,
 ) => {
   const { id, ...updateData } = transaction;
-  return prisma.transaction.update({
+  return await prisma.transaction.update({
     where: { id: id },
     data: updateData,
   });
@@ -84,7 +84,7 @@ export const updateTransaction = async (
 export const updateTransactionStatus = async (
   transaction: { id: string } & Partial<Transaction>,
 ) => {
-  return prisma.transaction.update({
+  return await prisma.transaction.update({
     where: { id: transaction.id },
     data: {
       transactionStatus: transaction.transactionStatus,

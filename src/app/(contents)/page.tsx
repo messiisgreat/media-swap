@@ -1,4 +1,4 @@
-import { Listing } from "@prisma/client";
+import { type Listing } from "@prisma/client";
 
 import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 

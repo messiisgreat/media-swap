@@ -1,5 +1,5 @@
 "use client";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
 
 import { useDeleteModal } from "@/app/(contents)/listing/[id]/_listingModal/DeleteModal";
@@ -19,11 +19,11 @@ export default function Toolbar({
   sessionUser: Session["user"] | null;
   isListingOwner: boolean;
 }) {
-  const { openReportModal, ReportModal } = useReportModal({
+  const { handleReportModalOpen, ReportModal } = useReportModal({
     listingId,
     sessionUser,
   });
-  const { openDeleteModal, DeleteModal } = useDeleteModal({
+  const { handleDeleteModalOpen, DeleteModal } = useDeleteModal({
     listingId,
     sessionUser,
     isListingOwner,
@@ -39,21 +39,13 @@ export default function Toolbar({
           tabIndex={0}
           className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 text-red-500 shadow"
         >
-          <li
-            onClick={() => {
-              openReportModal();
-            }}
-          >
+          <li onClick={handleReportModalOpen}>
             <div className="flex items-center whitespace-nowrap">
               <FaFlag />
               通報
             </div>
           </li>
-          <li
-            onClick={() => {
-              openDeleteModal();
-            }}
-          >
+          <li onClick={handleDeleteModalOpen}>
             <div className="flex items-center whitespace-nowrap">
               <FaTrash />
               削除

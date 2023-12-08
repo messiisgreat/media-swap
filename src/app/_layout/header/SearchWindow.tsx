@@ -1,24 +1,32 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { type FormEventHandler, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 
-const formValue = "searchQuery";
-
-async function searchListings(formData: FormData) {
-  "use server";
-  const searchQuery = formData.get(formValue)?.toString();
-  if (searchQuery) {
-    redirect(`/search?query=${encodeURIComponent(searchQuery)}`);
-  }
-}
+const formValue = "query";
 
 /**
  * ヘッダーに固定する検索窓
  * @returns
  */
 export const SearchWindow = () => {
+  const router = useRouter();
+
+  const handleSearch: FormEventHandler<HTMLFormElement> = useCallback(
+    (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const searchQuery = formData.get(formValue)?.toString();
+      if (searchQuery) {
+        router.push(`/search?query=${searchQuery}`);
+      }
+    },
+    [router],
+  );
   return (
     <form
-      action={searchListings}
+      onSubmit={handleSearch}
       className="input input-bordered flex w-full items-center justify-center py-0 pr-1"
     >
       <input

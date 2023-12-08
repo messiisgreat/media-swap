@@ -2,7 +2,7 @@
 
 import { addAgeCheckedCookie } from "@/app/(contents)/_layout/ageCheck/actions";
 import { ageCheckCookieKey } from "@/app/(contents)/_layout/ageCheck/constants";
-import { useCheckModal } from "@/ui/dialog/useCheckModal";
+import { useCheckModal } from "@/features/modal/useCheckModal";
 import { H } from "@/ui/structure/H";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";

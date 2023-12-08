@@ -2,7 +2,7 @@
 
 import {
   ProfileFormSchema,
-  ProfileFormState,
+  type ProfileFormState,
 } from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
 import { updateEmail } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";

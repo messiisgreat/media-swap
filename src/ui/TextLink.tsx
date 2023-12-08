@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import { type ComponentProps } from "react";
 
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
@@ -19,7 +19,8 @@ export const TextLink = ({
   className,
   ...props
 }: TextLinkProps) => {
-  const target = href.toString().startsWith("http") ? "_blank" : undefined;
+  const hrefString = href as string;
+  const target = hrefString.startsWith("http") ? "_blank" : undefined;
   return (
     <Link
       href={href}

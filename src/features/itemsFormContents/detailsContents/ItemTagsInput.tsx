@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { Tag } from "@prisma/client";
+import { type Tag } from "@prisma/client";
 import { IoClose, IoPricetagOutline } from "react-icons/io5";
 
 import { Button } from "@/ui";
@@ -34,7 +34,7 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
   const [newTags, setNewTags] = useState<Array<NewTag>>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const onKeyDownEnter = useCallback(
+  const handleKeyDownEnter = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       // ブラウザでIME確定時のEnterキー入力をハンドリングしないようにするためにkeyCodeを確認する
       if (e.keyCode !== 13 || e.currentTarget.value === "") {
@@ -56,14 +56,14 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
     [newTags, setNewTags],
   );
 
-  const onClickDelete = useCallback(
+  const handleDelete = useCallback(
     (tagName: string) => {
       setNewTags(newTags.filter((tag) => tag.text !== tagName));
     },
     [newTags, setNewTags],
   );
 
-  const onClickAdd = useCallback(() => {
+  const handleAdd = useCallback(() => {
     if (!inputValue) {
       return;
     }
@@ -81,9 +81,17 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
     setInputValue("");
   }, [setNewTags, newTags, inputValue, setInputValue]);
 
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    },
+    [setInputValue],
+  );
+
   useEffect(() => {
     setNewTags(selectedTagNames);
   }, [selectedTagNames, setNewTags]);
+
   return (
     <div className="flex flex-col gap-3">
       {newTags.length > 0 && (
@@ -101,7 +109,7 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
                 </span>
                 <span
                   data-testid="delete"
-                  onClick={() => onClickDelete(tag.text)}
+                  onClick={() => handleDelete(tag.text)}
                   className="cursor-pointer"
                 >
                   <IoClose />
@@ -117,12 +125,8 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
         type="text"
         value={inputValue}
         placeholder="タグ名を入力してください"
-        onKeyDown={(e) => {
-          onKeyDownEnter(e);
-        }}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
+        onKeyDown={handleKeyDownEnter}
+        onChange={handleInputChange}
       />
       <datalist id="tags">
         {suggestedTags.map((tag) => (
@@ -133,7 +137,7 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
           />
         ))}
       </datalist>
-      <Button onClick={() => onClickAdd()}>タグを追加</Button>
+      <Button onClick={() => handleAdd()}>タグを追加</Button>
       {/* Server Action用のinput */}
       <Input
         type="hidden"

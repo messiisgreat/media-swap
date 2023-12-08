@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
-import { findListings } from "@/repositories/listing";
+import { type findListings } from "@/repositories/listing";
 import { formatPrice } from "@/utils/format";
 
 const PriceBadge = ({
@@ -34,7 +34,7 @@ type Props = {
 export function ListingCard({ listing }: Props) {
   const formattedPrice = listing.price ? formatPrice(listing.price) : "N/A";
 
-  const isSoldOut = !!listing.transactionId;
+  const isSoldOut = Boolean(listing.transactionId);
 
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">

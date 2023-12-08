@@ -1,8 +1,9 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import Link from "next/link";
 
 import { CORPORATE_NAME } from "@/constants/site";
+import { TextLink } from "@/ui";
 import { Section } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 
@@ -96,7 +97,7 @@ const externalTransmissions = [
             <li>他の第三者サービスとの連動のため</li>
             <li>その他、プライバシーポリシーで定める目的</li>
           </ol>
-          <p>※　クロスデバイス</p>
+          <p>※クロスデバイス</p>
           <p>
             弊社は、ユーザーが多様なブラウザや端末で本サービスを使用する際、ユーザーに最適な広告を表示する目的で、ユーザーやそのデバイス関連の識別情報
             (Cookie ID、ADID / IDFA、IP アドレスなど)
@@ -132,12 +133,9 @@ export default function CookiePage() {
           <p className="py-6">
             この外部送信ポリシー (以下「本ポリシー」といいます) は、
             {CORPORATE_NAME}のうち、
-            <Link
-              href={"/static/privacy-policy/"}
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-            >
+            <TextLink href="/static/privacy-policy/">
               プライバシーポリシー
-            </Link>
+            </TextLink>
             を適用する事業体
             により提供される様々なサービス（以下、「本サービス」と称します）
             をご活用の際、ユーザーの端末より弊社または弊社が許可した第三者へ転送されるデータや、その目的、転送先等に関する内容を示しています。本ガイドラインでの用語の解釈は、特に明記されているケースや文の流れから異なる意味が取れる場合を除き、

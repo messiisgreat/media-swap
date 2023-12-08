@@ -3,7 +3,7 @@
 import { subject, text } from "@/app/(support)/inquiry/mailConfig";
 import {
   InquiryFormSchema,
-  InquiryFormState,
+  type InquiryFormState,
   initialInquiryFormValues,
 } from "@/app/(support)/inquiry/types";
 import { sendMailToAdmin, sendMailToUser } from "@/lib/mail";
@@ -35,7 +35,7 @@ export const sendInquiry = async (
   ${body}`;
   const result = await sendMailToAdmin(name, email, inquiryBody);
   if (result) {
-    sendMailToUser(email, subject, text);
+    await sendMailToUser(email, subject, text);
     return {
       ...initialInquiryFormValues,
       message: "お問い合わせを受け付けました。",

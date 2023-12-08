@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import Image from "next/image";
 
-import { useDialog } from "@/ui/dialog";
+import { useDialog } from "@/ui/dialog/useDialog";
 
 /**
  * 画像を拡大してモーダル表示するためのフック
@@ -10,7 +10,7 @@ import { useDialog } from "@/ui/dialog";
  * @param imageUrl - 表示する画像のURL
  */
 export const useImageModal = (imageUrl: string) => {
-  const { open, close, Dialog } = useDialog();
+  const { handleOpen, handleClose, Dialog } = useDialog();
 
   const ImageModal = useCallback(
     () => (
@@ -21,5 +21,5 @@ export const useImageModal = (imageUrl: string) => {
     [Dialog, imageUrl],
   );
 
-  return { open, close, ImageModal };
+  return { handleOpen, handleClose, ImageModal };
 };

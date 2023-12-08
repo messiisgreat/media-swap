@@ -1,11 +1,11 @@
-import { ReactNode, useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { useDialog } from "@/ui/dialog";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 
 type useFormActionModalResult = {
   /** モーダルを開く関数 */
-  open: () => void;
+  handleOpen: () => void;
   /** モーダルを表示するコンポーネント */
   FormActionModal: ({ children }: { children: ReactNode }) => JSX.Element;
 };
@@ -13,14 +13,14 @@ type useFormActionModalResult = {
 /**
  * 何らかの動作をするかどうかの確認用モーダルを表示するためのフック
  * @param action 実行ボタンを押した時に実行する関数
- * @param actionText　実行ボタンのテキスト
- * @returns open,  FormActionModal
+ * @param actionText 実行ボタンのテキスト
+ * @returns handleOpen,  FormActionModal
  */
 export const useFormActionModal = (
   action: (formData: FormData) => void | Promise<void>,
   actionText: string = "実行する",
 ): useFormActionModalResult => {
-  const { open, close, Dialog } = useDialog();
+  const { handleOpen, handleClose, Dialog } = useDialog();
 
   const FormActionModal = useCallback(
     ({ children }: { children: ReactNode }) => (
@@ -28,7 +28,7 @@ export const useFormActionModal = (
         <div className="modal-box mx-auto">
           <button
             className="btn btn-circle btn-ghost btn-md absolute right-2 top-2"
-            onClick={close}
+            onClick={handleClose}
           >
             ✕
           </button>
@@ -36,7 +36,7 @@ export const useFormActionModal = (
             className="flex flex-col gap-4"
             action={async (f) => {
               await action(f);
-              close();
+              handleClose();
             }}
           >
             {children}
@@ -45,8 +45,8 @@ export const useFormActionModal = (
         </div>
       </Dialog>
     ),
-    [Dialog, action, actionText, close],
+    [Dialog, action, actionText, handleClose],
   );
 
-  return { open, FormActionModal };
+  return { handleOpen, FormActionModal };
 };

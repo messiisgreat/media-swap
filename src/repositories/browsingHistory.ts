@@ -1,5 +1,5 @@
-import "server-only";
 import { cache } from "react";
+import "server-only";
 
 import prisma from "@/lib/prisma";
 
@@ -9,7 +9,7 @@ import prisma from "@/lib/prisma";
  * @returns 閲覧履歴
  */
 export const findBrowsingHistory = async (userId: string) => {
-  return prisma.browsingHistory.findMany({
+  return await prisma.browsingHistory.findMany({
     where: { userId },
     orderBy: { browsedAt: "desc" },
   });
@@ -21,14 +21,13 @@ export const findBrowsingHistory = async (userId: string) => {
  * @param listingId 商品ID
  * @returns 作成された閲覧履歴
  */
-export const createBrowsingHistory = cache(async (
-  userId: string,
-  listingId: string,
-) => {
-  return prisma.browsingHistory.create({
-    data: {
-      userId,
-      listingId,
-    },
-  });
-});
+export const createBrowsingHistory = cache(
+  async (userId: string, listingId: string) => {
+    return await prisma.browsingHistory.create({
+      data: {
+        userId,
+        listingId,
+      },
+    });
+  },
+);

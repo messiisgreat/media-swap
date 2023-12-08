@@ -1,10 +1,12 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
 
 import Carousel from "@/app/(contents)/listing/[id]/Carousel";
 import { CommentSection } from "@/app/(contents)/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/(contents)/listing/[id]/ItemDescription";
 import { ItemInformation } from "@/app/(contents)/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/(contents)/listing/[id]/PurchaseButton";
+import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
+import { browsing } from "@/app/(contents)/listing/[id]/actions";
 import { findListingById } from "@/repositories/listing";
 import { Badge } from "@/ui/Badge";
 import { ButtonAsLink } from "@/ui/Button";
@@ -12,8 +14,6 @@ import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
-import { browsing } from "@/app/(contents)/listing/[id]/actions";
-import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
 
 type ListingPageProps = {
   params: {
@@ -55,18 +55,20 @@ export default async function ListingPage({
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
-  browsing(listing.id, userId as string);
+  await browsing(listing.id, userId as string);
 
   return (
     <VerifyProvider>
       <Carousel images={images} />
       {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
       <div className="flex w-full justify-between">
-        <H className="text-lg font-bold lg:text-2xl">
-          {listing.productName!}
-        </H>
+        <H className="text-lg font-bold lg:text-2xl">{listing.productName!}</H>
         <div>
-          <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+          <Toolbar
+            listingId={listing.id}
+            sessionUser={user}
+            isListingOwner={isOwner}
+          />
         </div>
       </div>
       <div className="w-full">

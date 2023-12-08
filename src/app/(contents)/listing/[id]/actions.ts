@@ -1,6 +1,6 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
+import { type Prisma } from "@prisma/client";
 
 import {
   createBuyerMailContent,
@@ -23,7 +23,7 @@ import { createTransaction } from "@/repositories/transaction";
 import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
-import { Result, failure, success } from "@/utils/result";
+import { type Result, failure, success } from "@/utils/result";
 
 type PurchasingResult = Result<string, string>;
 

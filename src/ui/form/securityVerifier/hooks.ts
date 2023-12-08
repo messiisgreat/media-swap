@@ -9,6 +9,6 @@ export const useVerify = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   return useCallback(async () => {
     if (!executeRecaptcha) return;
-    return executeRecaptcha();
+    return await executeRecaptcha();
   }, [executeRecaptcha]);
 };

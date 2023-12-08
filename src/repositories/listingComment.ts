@@ -1,6 +1,6 @@
 import "server-only";
 
-import { ListingComment, User } from "@prisma/client";
+import { type ListingComment, type User } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
 
@@ -34,7 +34,7 @@ export async function createComment(
   userId: string,
   listingId: string,
 ) {
-  return prisma.listingComment.create({
+  return await prisma.listingComment.create({
     data: {
       listingId,
       userId,
@@ -68,7 +68,7 @@ export async function createCommentReport(
     throw new Error("This comment has already been reported by the user.");
   }
 
-  return prisma.listingCommentReport.create({
+  return await prisma.listingCommentReport.create({
     data: {
       listingCommentId: commentId,
       userId,
@@ -98,7 +98,7 @@ export async function deleteListingComment(commentId: string, userId: string) {
     throw new Error("You are not the seller of this listing");
   }
 
-  return prisma.listingComment.update({
+  return await prisma.listingComment.update({
     where: { id: commentId },
     data: {
       deletedAt: new Date(),

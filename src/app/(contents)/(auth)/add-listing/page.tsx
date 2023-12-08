@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
 
 import { ListingForm } from "@/app/(contents)/(auth)/add-listing/ListingForm";
 import { findTags } from "@/repositories/tag";

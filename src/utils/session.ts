@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
  * @returns セッション情報またはnull
  */
 export async function getSession() {
-  return getServerSession(authOptions);
+  return await getServerSession(authOptions);
 }
 
 /**

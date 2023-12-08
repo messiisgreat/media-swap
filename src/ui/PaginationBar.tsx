@@ -20,7 +20,7 @@ export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
     (_, i) => minPage + i,
   ).map((page) => (
     <Link
-      href={"?page=" + page}
+      href={`?page=${page}`}
       key={page}
       className={`btn join-item ${
         currentPage === page ? "btn-active pointer-events-none" : ""
@@ -35,7 +35,7 @@ export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
       <div className="join hidden sm:block">{numberedPageItems}</div>
       <div className="join block sm:hidden">
         {currentPage > 1 && (
-          <Link href={"?page=" + (currentPage - 1)} className="btn join-item">
+          <Link href={`?page=${currentPage - 1}`} className="btn join-item">
             «
           </Link>
         )}
@@ -43,7 +43,7 @@ export function PaginationBar({ currentPage, totalPages }: PaginationBarProps) {
           Page {currentPage}
         </button>
         {currentPage < totalPages && (
-          <Link href={"?page=" + (currentPage + 1)} className="btn join-item">
+          <Link href={`?page=${currentPage + 1}`} className="btn join-item">
             »
           </Link>
         )}

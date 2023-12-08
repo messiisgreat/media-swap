@@ -1,14 +1,12 @@
-import { useCallback } from "react";
-
+import { removeListing } from "@/app/(contents)/listing/[id]/actions";
+import { useFormActionModal } from "@/features/modal";
+import { H } from "@/ui/structure/H";
+import { type Session } from "next-auth";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { FaFlag } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
-
-import { removeListing } from "@/app/(contents)/listing/[id]/actions";
-import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
-import { H } from "@/ui/structure/H";
 
 type Props = {
   listingId: string;
@@ -45,7 +43,10 @@ export const useDeleteModal = ({
     }
   }, [listingId, sessionUser, isListingOwner, router]);
 
-  const { open, FormActionModal } = useFormActionModal(deleteListing, "削除");
+  const { handleOpen, FormActionModal } = useFormActionModal(
+    deleteListing,
+    "削除",
+  );
 
   const DeleteModal = useCallback(
     () => (
@@ -66,5 +67,5 @@ export const useDeleteModal = ({
     ),
     [FormActionModal],
   );
-  return { openDeleteModal: open, DeleteModal };
+  return { handleDeleteModalOpen: handleOpen, DeleteModal };
 };

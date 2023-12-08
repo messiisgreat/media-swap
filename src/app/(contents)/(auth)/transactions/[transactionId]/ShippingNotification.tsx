@@ -5,13 +5,13 @@ import { useFormState } from "react-dom";
 import { insertTrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
 import { initialTrackingNumberFormValues } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
 import { SHIPPING_METHOD_DELIVERY_SERVICE_PROVIDER_URLS } from "@/constants/listing";
+import { useFormActionModal } from "@/features/modal";
 import { Button } from "@/ui/Button";
-import { useFormActionModal } from "@/ui/dialog/useFormActionModal";
 import { Input } from "@/ui/form";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { H } from "@/ui/structure/H";
-import { Transaction } from "@prisma/client";
+import { type Transaction } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
@@ -44,13 +44,16 @@ export const ShippingNotification = ({
     f.append("verificationCode", verificationCode || "");
     f.append("transactionId", transactionId);
     f.append("trackingNumber", inputRef.current?.value || "");
-    await dispatch(f);
+    dispatch(f);
 
     if (inputRef.current) inputRef.current.value = ""; //ページ更新時にフォームをクリアする
     router.push(`/transactions/${transactionId}`);
   };
 
-  const { open, FormActionModal } = useFormActionModal(action, "送信する");
+  const { handleOpen, FormActionModal } = useFormActionModal(
+    action,
+    "送信する",
+  );
   return (
     <>
       <FormActionModal>
@@ -86,7 +89,7 @@ export const ShippingNotification = ({
           </a>
         </div>
       )}
-      <Button onClick={open}>送り状番号を送信</Button>
+      <Button onClick={handleOpen}>送り状番号を送信</Button>
     </>
   );
 };

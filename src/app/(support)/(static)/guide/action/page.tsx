@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { SITE_NAME } from "@/constants/site";
 import { Section } from "@/ui/structure";

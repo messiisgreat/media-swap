@@ -9,7 +9,7 @@ import { PageTitle, Section } from "@/ui/structure";
 /**
  *住所編集ページ
  */
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.ADDRESS]} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { Tag } from "@prisma/client";
+import { type Tag } from "@prisma/client";
 import { useFormState } from "react-dom";
 
 import {
@@ -32,11 +32,6 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
     <form
       action={action}
       className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1"
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-        }
-      }}
     >
       <ItemsFormContents
         detailsContentsProps={{

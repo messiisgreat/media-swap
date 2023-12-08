@@ -1,16 +1,5 @@
 "use client";
 
-import {
-  ComponentPropsWithoutRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useDropzone } from "react-dropzone";
-import { BiSolidCamera } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
-
 import { TestDataButton } from "@/app/(contents)/(auth)/add-listing/_listingForm";
 import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
 import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
@@ -18,6 +7,15 @@ import {
   addFileWithPreview,
   processDroppedFiles,
 } from "@/ui/form/imageInput/utils";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithoutRef,
+} from "react";
+import { useDropzone } from "react-dropzone";
+import { BiSolidCamera } from "react-icons/bi";
 
 export type FileWithPreview = File & { preview: string };
 
@@ -86,8 +84,12 @@ export function ImageInput({ id, labelText, ...props }: Props) {
     };
   }, [files, isDev]);
 
-  const removeFile = (name: string) => {
-    setFiles(files.filter((file) => file.name !== name));
+  const handleRemove = (index: number) => {
+    setFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
   };
 
   const labelClass = `flex items-center justify-center rounded-md border bg-white
@@ -100,18 +102,9 @@ ${
     <div className="grid gap-2">
       {labelText && <label>{labelText}</label>}
       <ul className="grid grid-cols-3 gap-2">
-        {files.map((file) => (
+        {files.map((file, i) => (
           <li key={file.name} className="relative">
-            <div className="relative w-fit">
-              <button
-                type="button"
-                className="absolute -right-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
-                onClick={() => removeFile(file.name)}
-              >
-                <FaTimes color="white" />
-              </button>
-              <ImagePreview file={file} />
-            </div>
+            <ImagePreview index={i} file={file} onRemove={handleRemove} />
           </li>
         ))}
       </ul>

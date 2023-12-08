@@ -1,6 +1,6 @@
-import { ZodType, z } from "zod";
+import { type ZodType, z } from "zod";
 
-import { FormState } from "@/ui/form";
+import { type FormState } from "@/ui/form";
 
 export type TrackingNumberFormValues = {
   /** transactionId */

@@ -1,4 +1,4 @@
-import { Listing } from "@prisma/client";
+import { type Listing } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";

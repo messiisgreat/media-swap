@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentProps, useCallback, useState } from "react";
+import { type ChangeEvent, type ComponentProps, useCallback, useState } from "react";
 
 import { z } from "zod";
 

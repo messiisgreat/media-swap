@@ -22,7 +22,7 @@ export const ItemDescription = ({ description, charLimit = 128 }: Props) => {
   const shouldCollapseDescription = (description?.length || 0) > charLimit;
   const collapseClass = shouldCollapseDescription ? "truncate" : "";
   const [isCollapsed, setIsCollapsed] = useState(shouldCollapseDescription);
-  const toggleDescription = () => setIsCollapsed((prev) => !prev);
+  const handleToggleDescription = () => setIsCollapsed((prev) => !prev);
   return (
     <div className={baseClass}>
       <p className={twMerge(textClass, collapseClass)}>
@@ -31,7 +31,7 @@ export const ItemDescription = ({ description, charLimit = 128 }: Props) => {
       {shouldCollapseDescription && (
         <button
           className="cursor-pointer bg-blue-600 underline hover:bg-blue-700"
-          onClick={toggleDescription}
+          onClick={handleToggleDescription}
         >
           {isCollapsed ? "もっと見る" : "折りたたむ"}
         </button>

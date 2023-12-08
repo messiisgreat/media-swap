@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Transaction, TransactionComment } from "@prisma/client";
-import { Session } from "next-auth";
+import { type Transaction, type TransactionComment } from "@prisma/client";
+import { type Session } from "next-auth";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { BiSend } from "react-icons/bi";
@@ -41,7 +41,7 @@ export function MessageSection({
   const chatareaRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const reloadMessage = useCallback(async () => {
+  const handleReloadMessage = useCallback(async () => {
     setIsReloading(true);
     try {
       const res = await fetchMessages(transaction.id);
@@ -56,10 +56,10 @@ export function MessageSection({
   }, [transaction.id]);
 
   useEffect(() => {
-    reloadMessage();
-    const interval = setInterval(reloadMessage, 10000);
+    void handleReloadMessage();
+    const interval = setInterval(handleReloadMessage, 10000);
     return () => clearInterval(interval);
-  }, [reloadMessage]);
+  }, [handleReloadMessage]);
 
   const postComment = async (f: FormData) => {
     const message = f.get("message") as string;
@@ -95,9 +95,7 @@ export function MessageSection({
         <Button
           outline
           className="btn-info"
-          onClick={() => {
-            reloadMessage();
-          }}
+          onClick={handleReloadMessage}
           disabled={isReloading}
         >
           <div className={`${isReloading ? "animate-spin" : ""}`}>
@@ -169,10 +167,7 @@ export function MessageSection({
             maxLength={300}
             hideLimit
           />
-          <SubmitButton
-            className="btn-square btn-accent shrink-0 rounded-l-none"
-            hideChildrenInPending
-          >
+          <SubmitButton className="btn-square btn-accent shrink-0 rounded-l-none">
             <BiSend size="2rem" />
           </SubmitButton>
         </form>

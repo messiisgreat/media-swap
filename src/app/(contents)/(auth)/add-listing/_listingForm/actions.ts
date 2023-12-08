@@ -4,12 +4,12 @@ import { redirect } from "next/navigation";
 
 import {
   ProductFormSchema,
-  ProductFormState,
-  ProductFormValues,
+  type ProductFormState,
+  type ProductFormValues,
 } from "@/features/itemsFormContents/types";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
-  UnregisteredListing,
+  type UnregisteredListing,
   createListingWithTagsAndImages,
 } from "@/repositories/listing";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
