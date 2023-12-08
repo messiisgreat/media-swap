@@ -39,6 +39,7 @@ export function MessageSection({
   >(null);
   const [isReloading, setIsReloading] = useState(false);
   const chatareaRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const reloadMessage = useCallback(async () => {
     setIsReloading(true);
@@ -75,6 +76,7 @@ export function MessageSection({
     try {
       await sendMessage(message, transaction.id);
       setMessages(await fetchMessages(transaction.id));
+      formRef.current?.reset();
       toast.success("メッセージを送信しました。");
       setTimeout(
         () =>
@@ -157,6 +159,7 @@ export function MessageSection({
         <form
           className="flex w-full items-center"
           action={(f) => postComment(f)}
+          ref={formRef}
         >
           <LimitInput
             type="text"
