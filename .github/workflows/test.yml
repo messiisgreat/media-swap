@@ -21,7 +21,7 @@ jobs:
         run: bun install
 
       - name: Run prisma generate 🏭
-        run: bun run prisma generate && echo "$DISABLE_ERD"
+        run:  echo "$DISABLE_ERD" && bun run prisma generate
         env:
           DISABLE_ERD: false
 
