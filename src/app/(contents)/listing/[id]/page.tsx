@@ -12,6 +12,7 @@ import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
+import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
 
 type ListingPageProps = {
   params: {
@@ -58,10 +59,13 @@ export default async function ListingPage({
     <VerifyProvider>
       <Carousel images={images} />
       {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
-      <div className="w-full">
-        <H className="text-left text-lg font-bold lg:text-2xl">
+      <div className="flex w-full justify-between">
+        <H className="text-lg font-bold lg:text-2xl">
           {listing.productName!}
         </H>
+        <div>
+          <Toolbar listingId={listing.id} sessionUser={user} isListingOwner={isOwner} />
+        </div>
       </div>
       <div className="w-full">
         <Badge className="badge-lg">¥{listing.price}</Badge>
