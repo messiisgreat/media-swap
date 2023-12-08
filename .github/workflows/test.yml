@@ -21,7 +21,7 @@ jobs:
         run: bun install
 
       - name: Run prisma generate 🏭
-        run:  RUN sed -i '10,12d' db/schema.prisma && bun run prisma generate
+        run:  sed -i '10,12d' db/schema.prisma && bun run prisma generate
         env:
           DISABLE_ERD: false
 
