@@ -3,7 +3,7 @@ name: Bun🥟 Test CI
 on: pull_request
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,8 +22,6 @@ jobs:
 
       - name: Run prisma generate 🏭
         run:  sed -i '10,12d' db/schema.prisma && bun run prisma generate
-        env:
-          DISABLE_ERD: false
 
       - name: Run lint 🧹
         run: bun run lint
