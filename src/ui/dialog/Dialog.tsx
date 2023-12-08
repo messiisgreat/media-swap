@@ -9,8 +9,8 @@ type DialogProps = {
   children: React.ReactNode;
   /** dialogを閉じる関数 */
   onClose: VoidFunction;
-  /** 外側をクリックした時にdialogを閉じるかどうか */
-  hasClosableOverlay?: boolean;
+  /** 外側をクリックした時にdialogを閉じられないようにする場合に付与 */
+  hasNotClosableOverlay?: boolean;
 };
 
 /**
@@ -21,7 +21,7 @@ export const Dialog: React.FC<DialogProps> = ({
   isOpen,
   children,
   onClose,
-  hasClosableOverlay = true,
+  hasNotClosableOverlay = false,
 }): React.ReactElement | null => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -44,11 +44,11 @@ export const Dialog: React.FC<DialogProps> = ({
   }, [isOpen]);
 
   const handleClickDialog = useCallback((): void => {
-    if (!hasClosableOverlay) {
+    if (hasNotClosableOverlay) {
       return;
     }
     onClose();
-  }, [onClose, hasClosableOverlay]);
+  }, [onClose, hasNotClosableOverlay]);
 
   const handleClickContent = useCallback(
     (event: React.MouseEvent<HTMLDivElement>): void => {

@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/app/(contents)/mypage/personal-info/profile/ProfileForm";
+import { ProfileForm } from "@/app/(contents)/(auth)/mypage/personal-info/profile/ProfileForm";
 import {
   PAGE_CONTENT,
   PAGE_CONTENT_ENUM_JA,

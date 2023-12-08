@@ -3,7 +3,7 @@
 import {
   ProfileFormSchema,
   ProfileFormState,
-} from "@/app/(contents)/mypage/personal-info/profile/type";
+} from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
 import { updateEmail } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";

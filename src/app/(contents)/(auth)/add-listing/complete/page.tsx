@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { CompletedListing } from "@/app/(contents)/add-listing/complete/CompletedListing";
+import { CompletedListing } from "@/app/(contents)/(auth)/add-listing/complete/CompletedListing";
 
 /** キャッシュしない */
 export const dynamic = "force-dynamic";

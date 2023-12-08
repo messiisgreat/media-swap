@@ -6,7 +6,7 @@ import { useFormState } from "react-dom";
 import {
   initialProductFormValues,
   listingItem,
-} from "@/app/(contents)/add-listing/_listingForm";
+} from "@/app/(contents)/(auth)/add-listing/_listingForm";
 import { ItemsFormContents } from "@/features/itemsFormContents";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";

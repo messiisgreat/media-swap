@@ -11,7 +11,7 @@ import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
 
-import { TestDataButton } from "@/app/(contents)/add-listing/_listingForm";
+import { TestDataButton } from "@/app/(contents)/(auth)/add-listing/_listingForm";
 import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
 import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
 import {

@@ -6,7 +6,7 @@ import { Transaction } from "@prisma/client";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
-import { updateTransactionStateByTransactionId } from "@/app/(contents)/transactions/[transactionId]/actions";
+import { updateTransactionStateByTransactionId } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
 import { TRANSACTION_STATUS } from "@/constants/listing";
 import { Button } from "@/ui";
 

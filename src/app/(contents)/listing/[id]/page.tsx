@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Carousel from "@/app/(contents)/listing/[id]/Carousel";
 import { CommentSection } from "@/app/(contents)/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/(contents)/listing/[id]/ItemDescription";
-import { ItemInfomation } from "@/app/(contents)/listing/[id]/ItemInformation";
+import { ItemInformation } from "@/app/(contents)/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/(contents)/listing/[id]/PurchaseButton";
 import { findListingById } from "@/repositories/listing";
 import { Badge } from "@/ui/Badge";
@@ -74,7 +74,7 @@ export default async function ListingPage({
         <TitleUnderbar title="説明" />
         <ItemDescription description={listing.description} />
         <TitleUnderbar title="商品情報" />
-        <ItemInfomation listing={listing} />
+        <ItemInformation listing={listing} />
         {listing.transactionId ? (
           <ButtonAsLink
             href={`/transactions/${listing.transactionId}`}

@@ -3,7 +3,7 @@
 import {
   TrackingNumberFormScheme,
   TrackingNumberFormState,
-} from "@/app/(contents)/transactions/[transactionId]/type";
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
 import {
   createTransactionComment,
   getTransactionComments,

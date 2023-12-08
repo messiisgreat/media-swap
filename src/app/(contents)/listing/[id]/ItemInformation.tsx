@@ -14,27 +14,9 @@ type Props = {
 };
 
 /**
- * 商品説明
- */
-export const ItemDescription = ({ listing }: Props) => {
-  const shouldCollapseDescription = listing.description!.length > 100;
-  return (
-    <div className={baseClass}>
-      <p
-        className={`my-4 ${textClass} ${
-          shouldCollapseDescription ? "truncate" : ""
-        }`}
-      >
-        {listing.description}
-      </p>
-    </div>
-  );
-};
-
-/**
  * 商品情報
  */
-export const ItemInfomation = ({ listing }: Props) => {
+export const ItemInformation = ({ listing }: Props) => {
   return (
       <dl className={baseClass}>
         <dt className={labelClass}>商品の状態</dt>

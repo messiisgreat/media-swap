@@ -1,11 +1,9 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
-import { ListingForm } from "@/app/(contents)/add-listing/ListingForm";
+import { ListingForm } from "@/app/(contents)/(auth)/add-listing/ListingForm";
 import { findTags } from "@/repositories/tag";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";
-import { getSession } from "@/utils/session";
 
 const title = "商品を出品する";
 
@@ -18,12 +16,6 @@ export const metadata: Metadata = {
  * 商品追加ページ
  */
 export default async function Page() {
-  // 仮対応
-  const session = await getSession();
-  if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/add-listing");
-  }
-
   const tags = await findTags();
 
   return (

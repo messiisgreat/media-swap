@@ -112,7 +112,7 @@ export const CommentSection = ({
               placeholder="はじめまして。購入を検討しています！"
               onKeyDown={handleCtrlEnterSubmit}
             />
-            <SubmitButton className="btn-secondary self-end">
+            <SubmitButton secondary className="self-end">
               コメントを書き込む
             </SubmitButton>
           </form>

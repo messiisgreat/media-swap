@@ -26,14 +26,14 @@ export const useAgeCheckCookie = () => {
 export const useAgeCheckModal = () => {
   const router = useRouter();
   const { open, CheckModal } = useCheckModal(
-    () => addAgeCheckedCookie(), // 'はい' を選択した場合に実行されるべき処理
+    addAgeCheckedCookie, // 'はい' を選択した場合に実行されるべき処理
     () => router.push("/no-available-service"), // 'いいえ' を選択した場合に実行されるべき処理
   );
 
   const AgeCheckModal = useCallback(
     () => (
       <div className="grid justify-center gap-8 bg-black md:grid-cols-2">
-        <CheckModal hasClosableOverlay={false}>
+        <CheckModal hasNotClosableOverlay>
           <H className="text-2xl">年齢確認</H>
           <H className="my-4 text-lg font-bold">あなたは18歳以上ですか？</H>
           <p className="text-xs">

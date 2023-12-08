@@ -2,8 +2,8 @@
 
 import { useFormState } from "react-dom";
 
-import { addressFormAction } from "@/app/(contents)/mypage/personal-info/address/actions";
-import { initialAddressFormValues } from "@/app/(contents)/mypage/personal-info/address/type";
+import { addressFormAction } from "@/app/(contents)/(auth)/mypage/personal-info/address/actions";
+import { initialAddressFormValues } from "@/app/(contents)/(auth)/mypage/personal-info/address/type";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { Input, Select } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";

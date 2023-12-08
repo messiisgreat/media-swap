@@ -1,4 +1,4 @@
-import { AddressForm } from "@/app/(contents)/mypage/personal-info/address/AddressForm";
+import { AddressForm } from "@/app/(contents)/(auth)/mypage/personal-info/address/AddressForm";
 import {
   PAGE_CONTENT,
   PAGE_CONTENT_ENUM_JA,

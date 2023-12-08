@@ -2,8 +2,8 @@
 
 import { useFormState } from "react-dom";
 
-import { profileFormAction } from "@/app/(contents)/mypage/personal-info/profile/actions";
-import { initialProfileFormValues } from "@/app/(contents)/mypage/personal-info/profile/type";
+import { profileFormAction } from "@/app/(contents)/(auth)/mypage/personal-info/profile/actions";
+import { initialProfileFormValues } from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
 import { Input } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
