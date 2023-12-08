@@ -32,7 +32,7 @@ model User {
     addresses               Address[]
     transferRequests        TransferRequest[]
     pointChanges            PointChange[]
-    userViewHistories       UserViewHistory[]
+    browsingHistories       BrowsingHistory[]
     listingComments         ListingComment[]
     likes                   Like[]
     userNotificationReads   UserNotificationRead[]
@@ -159,7 +159,7 @@ model Listing {
 
     transaction  Transaction?
     images       ListingImage[]
-    viewHistorys UserViewHistory[]
+    historys     BrowsingHistory[]
     comments     ListingComment[]
     likes        Like[]
     categories   ListingCategory[]
@@ -391,17 +391,16 @@ model TransactionRatingOption {
 }
 
 // ユーザー出品閲覧履歴テーブル
-model UserViewHistory {
+model BrowsingHistory {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    userId    String   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    userId    String?   @map("user_id") @db.ObjectId // ユーザーID外部キー
     listingId String   @map("listing_id") @db.ObjectId // 出品情報ID外部キー
-    viewedAt  DateTime @default(now()) @map("viewed_at") // 閲覧日時
+    browsedAt  DateTime @default(now()) @map("last_browsed_at") // 閲覧日時
 
-    user    User    @relation(fields: [userId], references: [id])
+    user    User?    @relation(fields: [userId], references: [id])
     listing Listing @relation(fields: [listingId], references: [id])
 
-    @@unique([userId, listingId])
-    @@map("user_view_history")
+    @@map("browsing_history")
 }
 
 // お知らせテーブル

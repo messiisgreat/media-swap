@@ -12,6 +12,7 @@ import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
+import { browsing } from "@/app/(contents)/listing/[id]/actions";
 import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
 
 type ListingPageProps = {
@@ -54,6 +55,7 @@ export default async function ListingPage({
   const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
+  browsing(listing.id, userId as string);
 
   return (
     <VerifyProvider>

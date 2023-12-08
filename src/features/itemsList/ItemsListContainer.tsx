@@ -6,10 +6,12 @@ import {
   countListingsByProductName,
   countListingsBySellerId,
   findListings,
+  findListingById,
   findListingsByBuyerId,
   findListingsByProductName,
   findListingsBySellerId,
 } from "@/repositories/listing";
+import { findBrowsingHistory } from "@/repositories/browsingHistory";
 import { PaginationBar } from "@/ui";
 
 type CommonProps = {
@@ -21,6 +23,7 @@ type CommonProps = {
   buyerId?: string;
   sellerId?: string;
   isPublic?: boolean;
+  userId?: string;
 };
 
 type AllProps = CommonProps & {
@@ -49,16 +52,35 @@ type SellerProps = CommonProps & {
   isPublic?: boolean;
 };
 
-export type Props = SearchProps | BuyerProps | SellerProps | AllProps;
+type BrowsingProps = CommonProps & {
+  userId: string;
+};
+
+export type Props =
+  | AllProps
+  | SearchProps
+  | BuyerProps
+  | SellerProps
+  | BrowsingProps;
 
 /**
  * 渡されたパラメータに応じて取得するデータを選択する
- * @param props page, size, sort, order, query, buyerId, sellerId
+ * @param props page, size, sort, order, query, buyerId, sellerId, isPublic, userId
  */
 const findlistingsAndCount = async (
   props: Props,
 ): Promise<[Awaited<ReturnType<typeof findListings>>, number]> => {
-  const { page, size, sort, order, query, buyerId, sellerId, isPublic } = props;
+  const {
+    page,
+    size,
+    sort,
+    order,
+    query,
+    buyerId,
+    sellerId,
+    isPublic,
+    userId,
+  } = props;
   const orderBy: ListingOrderBy = {
     [sort]: order,
   };
@@ -89,7 +111,16 @@ const findlistingsAndCount = async (
     );
     const count = await countListingsBySellerId(sellerId, isPublic);
     return [listings, count];
-    // 検索結果一覧
+    // 閲覧履歴を取得
+  } else if (userId) {
+    const browsingHistorys = await findBrowsingHistory(userId);
+    const listingIds = [...new Set(browsingHistorys.map(h => h.listingId))]; 
+    const listings = await Promise.all(
+      listingIds.map(async (id) => {
+        return await findListingById(id);
+      })
+    );
+    return [listings, listings.length];
   } else if (query) {
     const listings = await findListingsByProductName(
       query,

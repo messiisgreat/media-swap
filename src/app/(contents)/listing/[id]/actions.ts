@@ -20,6 +20,7 @@ import {
   getComments,
 } from "@/repositories/listingComment";
 import { createTransaction } from "@/repositories/transaction";
+import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
 import { Result, failure, success } from "@/utils/result";
@@ -217,4 +218,14 @@ export const sendMailToBuyerAndSeller = async (
     sendMailToUser(buyerEmail, buyerSubject, buyerText),
   ]);
   return { sellerResult, buyerResult };
+};
+
+/**
+ * 商品ページを開けたときに商品閲覧履歴を追加する
+ * @param listingId 商品ID
+ * @param sessionUserId ユーザーID
+ * @returns 追加された閲覧履歴
+ */
+export const browsing = async (listingId: string, sessionUserId: string) => {
+  return await createBrowsingHistory(sessionUserId, listingId);
 };
