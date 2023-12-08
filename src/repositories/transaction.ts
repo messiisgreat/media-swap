@@ -117,13 +117,21 @@ export const createTransactionComment = async (
   userId: string,
   transactionId: string,
 ) => {
-  await prisma.transactionComment.create({
+  return await prisma.transactionComment.create({
     data: {
       comment: text,
       userId,
       transactionId,
     },
-    include: { user: true },
+    include: {
+      user: true,
+      transaction: {
+        include: {
+          listing: { include: { seller: true } },
+          buyer: true,
+        },
+      },
+    },
   });
 };
 

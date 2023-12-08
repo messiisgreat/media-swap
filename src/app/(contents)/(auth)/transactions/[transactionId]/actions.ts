@@ -14,6 +14,12 @@ import {
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
+import { Result, failure, success } from "@/utils/result";
+
+import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTemplate";
+import { sendMailToUser } from "@/lib/mail";
+
+type SendMessageResult = Result<string, string>;
 
 /**
  * 取引メッセージを取得
@@ -52,12 +58,57 @@ export const updateTransactionStateByTransactionId = async (
  * @param transactionId 取引ID
  * @returns
  */
-export const sendMessage = async (message: string, transactionId: string) => {
+export const sendMessage = async (
+  message: string,
+  transactionId: string,
+): Promise<SendMessageResult> => {
   const sessionUser = await getSessionUser();
-  if (!sessionUser) throw new Error("ログインしてください");
+  if (!sessionUser) return failure("ログインしてください");
   if (message.length > 300)
-    throw new Error("メッセージは300文字以内で入力してください");
-  await createTransactionComment(message, sessionUser.id, transactionId);
+    return failure("メッセージは300文字以内で入力してください");
+  const transactionComment = await createTransactionComment(
+    message,
+    sessionUser.id,
+    transactionId,
+  );
+  await sendMailToRecipient(transactionComment);
+  return success("メッセージを送信しました");
+};
+
+/**
+ * 取引メッセージが送信された際に、相手にメールを送信する
+ * @param transactionComment 取引コメント
+ */
+const sendMailToRecipient = async (
+  transactionComment: Awaited<ReturnType<typeof createTransactionComment>>,
+) => {
+  const transaction = transactionComment.transaction;
+  if (!transaction) throw new Error("取引が見つかりません");
+  const transactionId = transactionComment.transactionId;
+  const listingName = transaction.listing.productName;
+  const sellerId = transaction.listing.sellerId;
+  const sellerName = transaction.listing.seller.name;
+  const buyerName = transaction.buyer.name;
+  const sellerEmail = transaction.listing.seller.email;
+  const buyerEmail = transaction.buyer.email;
+  const transactionCommentUserId = transactionComment.userId;
+  const transactionCommentCreateComment = transactionComment.comment;
+
+  // メッセージを受け取ったユーザーを定義する
+  const recipientEmail =
+    sellerId === transactionCommentUserId ? buyerEmail : sellerEmail;
+  const recipientName =
+    sellerId === transactionCommentUserId ? buyerName : sellerName;
+
+  const mailSubject = `取引中の商品:${listingName} にてメッセージが届きました`;
+
+  const mailContent = createRecipientMailContent(
+    recipientName,
+    listingName,
+    transactionId,
+    transactionCommentCreateComment,
+  );
+  await sendMailToUser(recipientEmail, mailSubject, mailContent);
 };
 
 /**
