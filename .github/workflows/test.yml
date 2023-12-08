@@ -20,11 +20,10 @@ jobs:
       - name: Install dependencies 📦
         run: bun install
 
-      - name: Set environment variable 🌳
-        run: echo "DISABLE_ERD=false" >> $GITHUB_ENV
-
       - name: Run prisma generate 🏭
-        run: bun run prisma generate
+        run: bun run prisma generate && echo "$DISABLE_ERD"
+        env:
+          DISABLE_ERD: false
 
       - name: Run lint 🧹
         run: bun run lint
