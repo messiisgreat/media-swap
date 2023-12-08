@@ -5,6 +5,8 @@ on: pull_request
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      DISABLE_ERD: false
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
