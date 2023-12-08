@@ -409,6 +409,7 @@ model Notification {
     date               DateTime @default(now()) // お知らせ日時
     content            String // 内容
     notificationTypeId String   @map("notification_type_id") @db.ObjectId // お知らせ種別ID外部キー
+    userId             String   @map("user_id") @db.ObjectId // ユーザーID外部キー
 
     notificationType NotificationType @relation(fields: [notificationTypeId], references: [id])
 
