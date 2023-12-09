@@ -3,19 +3,29 @@ import {
   PAGE_CONTENT,
   PAGE_CONTENT_ENUM_JA,
 } from "@/constants/personalInfoPage";
+import { getAddress } from "@/repositories/address";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";
+import { getSessionUser } from "@/utils";
+import { redirect } from "next/navigation";
 
 /**
- *住所編集ページ
+ * 住所編集ページ
+ * /mypage/personal-info/address
  */
-export default function Page() {
+export default async function Page() {
+  const user = await getSessionUser();
+  if (!user) {
+    redirect("/api/auth/login?callbackUrl=/mypage/personal-info/address");
+  }
+  const address = await getAddress(user.id);
+
   return (
     <>
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.ADDRESS]} />
       <Section>
         <VerifyProvider>
-          <AddressForm />
+          <AddressForm address={address} />
         </VerifyProvider>
       </Section>
     </>

@@ -10,15 +10,28 @@ import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { objToAssociative } from "@/utils/converter";
+import { type Address } from "@prisma/client";
+
+type Props = {
+  /** 初期値の住所 */
+  address: Address | null;
+};
 
 /**
- * 住所フォーム
+ * ユーザーの住所を変更するフォーム
+ * @returns form > Input, Select, SubmitButton
  */
-export const AddressForm = () => {
-  const [state, dispatch] = useFormState(
-    addressFormAction,
-    initialAddressFormValues,
-  );
+export const AddressForm = ({ address }: Props) => {
+  const values = {
+    values: address
+      ? {
+          ...address,
+          addressLine2: address.addressLine2 ?? "",
+          verificationCode: "",
+        }
+      : initialAddressFormValues.values,
+  };
+  const [state, dispatch] = useFormState(addressFormAction, values);
   const getVerificationCode = useVerify();
   useFormMessageToaster(state);
 

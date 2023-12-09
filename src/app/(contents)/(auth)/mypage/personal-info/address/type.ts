@@ -1,4 +1,4 @@
-import { type ZodType, z } from "zod";
+import { z, type ZodType } from "zod";
 
 import { type FormState } from "@/ui/form";
 

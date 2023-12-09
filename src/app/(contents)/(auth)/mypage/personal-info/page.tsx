@@ -14,6 +14,7 @@ import { PageTitle } from "@/ui/structure";
 
 /**
  * 個人情報設定
+ * /mypage/personal-info
  */
 export default function Page() {
   return (

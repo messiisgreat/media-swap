@@ -8,6 +8,7 @@ import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSession } from "@/utils";
+import { redirect } from "next/navigation";
 
 /**
  * フォームに入力された住所情報を登録する
@@ -46,23 +47,15 @@ export const addressFormAction = async (
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  const address = await upsertAddress(
+  const address = await upsertAddress({
+    ...rest,
     userId,
-    rest.postalCode,
-    rest.prefecture,
-    rest.city,
-    rest.addressLine1,
-    rest.addressLine2,
-    rest.phoneNumber,
-  );
+  });
   if (!address) {
     return {
       ...prevState,
       message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
     };
   }
-  return {
-    ...prevState,
-    message: "住所設定を更新しました。",
-  };
+  redirect("/mypage");
 };
