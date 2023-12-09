@@ -8,21 +8,30 @@ import { Input } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { type User } from "@prisma/client";
+
+type Props = {
+  user: User;
+};
 
 /**
  * プロフィールフォーム
+ * @param param0.user ユーザー
+ * @returns form
  */
-export const ProfileForm = () => {
-  const [state, dispatch] = useFormState(
-    profileFormAction,
-    initialProfileFormValues,
-  );
+export const ProfileForm = ({ user }: Props) => {
+  const currentValues = {
+    values: user
+      ? { ...user, verificationCode: "" }
+      : initialProfileFormValues.values,
+  };
+  const [state, dispatch] = useFormState(profileFormAction, currentValues);
   const getVerificationCode = useVerify();
   useFormMessageToaster(state);
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode || "");
+    f.append("verificationCode", verificationCode);
     dispatch(f);
   };
 

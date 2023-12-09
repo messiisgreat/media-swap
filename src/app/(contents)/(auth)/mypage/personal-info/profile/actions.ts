@@ -7,7 +7,8 @@ import {
 import { updateEmail } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
-import { getSession } from "@/utils";
+import { getSessionUser } from "@/utils";
+import { redirect } from "next/navigation";
 
 /**
  * フォームに入力されたプロフィール情報を登録する
@@ -20,15 +21,11 @@ export const profileFormAction = async (
   formData: FormData,
 ): Promise<ProfileFormState> => {
   const values = getFormValues(formData, prevState.values);
-  const session = await getSession();
-  const userId = session?.user.id;
   const { verificationCode, ...rest } = values;
-  console.log("reset", rest);
+  const sessionUser = await getSessionUser();
+  const userId = sessionUser?.id;
   if (!userId) {
-    return {
-      ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
-    };
+    redirect("api/auth/login?callbackUrl=/mypage/personal-info/profile");
   }
 
   const result = await verifyForm(verificationCode);
@@ -50,8 +47,5 @@ export const profileFormAction = async (
     await updateEmail(userId, rest.email);
   }
 
-  return {
-    ...prevState,
-    message: "プロフィールを更新しました。",
-  };
+  redirect("/mypage/");
 };

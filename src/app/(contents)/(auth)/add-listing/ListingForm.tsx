@@ -24,7 +24,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode || "");
+    f.append("verificationCode", verificationCode);
     dispatch(f);
   };
 

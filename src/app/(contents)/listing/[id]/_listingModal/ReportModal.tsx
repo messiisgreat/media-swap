@@ -54,11 +54,7 @@ export const useReportModal = ({ listingId, sessionUser }: Props) => {
       }
 
       try {
-        const res = await addListingReport(
-          listingId,
-          reason,
-          verificationCode || "",
-        );
+        const res = await addListingReport(listingId, reason, verificationCode);
         if ("error" in res) {
           toast.error(res.message);
           return;

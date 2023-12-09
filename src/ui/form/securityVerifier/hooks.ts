@@ -8,7 +8,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 export const useVerify = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   return useCallback(async () => {
-    if (!executeRecaptcha) return;
+    if (!executeRecaptcha) return "";
     return await executeRecaptcha();
   }, [executeRecaptcha]);
 };

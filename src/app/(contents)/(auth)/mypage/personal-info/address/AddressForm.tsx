@@ -14,7 +14,7 @@ import { type Address } from "@prisma/client";
 
 type Props = {
   /** 初期値の住所 */
-  address: Address | null;
+  address: Address;
 };
 
 /**
@@ -22,7 +22,7 @@ type Props = {
  * @returns form > Input, Select, SubmitButton
  */
 export const AddressForm = ({ address }: Props) => {
-  const values = {
+  const currentValues = {
     values: address
       ? {
           ...address,
@@ -31,13 +31,13 @@ export const AddressForm = ({ address }: Props) => {
         }
       : initialAddressFormValues.values,
   };
-  const [state, dispatch] = useFormState(addressFormAction, values);
+  const [state, dispatch] = useFormState(addressFormAction, currentValues);
   const getVerificationCode = useVerify();
   useFormMessageToaster(state);
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode || "");
+    f.append("verificationCode", verificationCode);
     dispatch(f);
   };
 

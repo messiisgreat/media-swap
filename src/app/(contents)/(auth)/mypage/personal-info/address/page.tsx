@@ -9,6 +9,8 @@ import { PageTitle, Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
+const redirectURL = "/api/auth/login?callbackUrl=/mypage/personal-info/address";
+
 /**
  * 住所編集ページ
  * /mypage/personal-info/address
@@ -16,9 +18,12 @@ import { redirect } from "next/navigation";
 export default async function Page() {
   const user = await getSessionUser();
   if (!user) {
-    redirect("/api/auth/login?callbackUrl=/mypage/personal-info/address");
+    redirect(redirectURL);
   }
   const address = await getAddress(user.id);
+  if (!address) {
+    redirect(redirectURL);
+  }
 
   return (
     <>

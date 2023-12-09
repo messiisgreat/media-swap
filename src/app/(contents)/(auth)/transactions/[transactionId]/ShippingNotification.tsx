@@ -41,7 +41,7 @@ export const ShippingNotification = ({
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode || "");
+    f.append("verificationCode", verificationCode);
     f.append("transactionId", transactionId);
     f.append("trackingNumber", inputRef.current?.value || "");
     dispatch(f);

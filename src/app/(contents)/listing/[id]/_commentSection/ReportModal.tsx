@@ -58,11 +58,7 @@ export const useReportModal = ({ commentId, sessionUser }: Props) => {
       }
 
       try {
-        const res = await addCommentReport(
-          commentId,
-          reason,
-          verificationCode || "",
-        );
+        const res = await addCommentReport(commentId, reason, verificationCode);
         if ("error" in res) {
           toast.error(res.message);
           return;
