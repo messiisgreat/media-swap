@@ -31,11 +31,11 @@ export const profileFormAction = async (
     };
   }
 
-  const [isVerify, message] = await verifyForm(verificationCode);
-  if (!isVerify) {
+  const result = await verifyForm(verificationCode);
+  if (result.isFailure) {
     return {
       ...prevState,
-      message: message,
+      message: result.error,
     };
   }
 

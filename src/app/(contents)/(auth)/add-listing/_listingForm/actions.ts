@@ -9,8 +9,8 @@ import {
 } from "@/features/itemsFormContents/types";
 import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
 import {
-  type UnregisteredListing,
   createListingWithTagsAndImages,
+  type UnregisteredListing,
 } from "@/repositories/listing";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
@@ -61,11 +61,11 @@ export const listingItem = async (
     };
   }
 
-  const [isVerify, message] = await verifyForm(verificationCode);
-  if (!isVerify) {
+  const result = await verifyForm(verificationCode);
+  if (result.isFailure) {
     return {
       ...prevState,
-      message: message,
+      message: result.error,
     };
   }
 

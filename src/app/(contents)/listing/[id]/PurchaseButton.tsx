@@ -41,7 +41,7 @@ export const PurchaseButton = ({
       if (result.isSuccess) {
         router.push(`/transactions/${result.value}`);
       } else {
-        toast.error(result.error);
+        result.error && toast.error(result.error);
       }
     }
   }, [buyerId, listing, userCouponId, router]);

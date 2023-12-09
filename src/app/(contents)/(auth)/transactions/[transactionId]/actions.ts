@@ -4,6 +4,7 @@ import {
   TrackingNumberFormScheme,
   type TrackingNumberFormState,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
+import { failure, success, type Result } from "@/lib/result/result";
 import {
   createTransactionComment,
   getTransactionComments,
@@ -14,7 +15,6 @@ import {
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
-import { type Result, failure, success } from "@/utils/result";
 
 import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTemplate";
 import { sendMailToUser } from "@/lib/mail";
@@ -123,12 +123,12 @@ export const insertTrackingNumber = async (
   const values = getFormValues(formData, prevState.values);
   const { verificationCode, trackingNumber, transactionId } = values;
 
-  const [isVerify, message] = await verifyForm(verificationCode);
+  const result = await verifyForm(verificationCode);
 
-  if (!isVerify) {
+  if (result.isFailure) {
     return {
       ...prevState,
-      message: message,
+      message: result.error,
     };
   } else {
     const validated = TrackingNumberFormScheme.safeParse(values);

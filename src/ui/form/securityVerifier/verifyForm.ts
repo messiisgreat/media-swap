@@ -1,3 +1,4 @@
+import { failure, success, type Result } from "@/lib/result/result";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 
 const errNotSendVerificationCode = "認証コードが送信されていません";
@@ -7,17 +8,15 @@ const errFailedAtVerification =
 /**
  * 認証コードを検証する
  * @param verificationCode 認証コード
- * @returns 認証に成功した場合はtrueを返す、失敗した場合はfalseとエラーメッセージを返す
+ * @returns result型の認証結果 成功時はsuccess() 失敗時はfailure(エラーメッセージ)
  */
-export const verifyForm = async (
-  verificationCode: string,
-): Promise<[boolean, string]> => {
+export const verifyForm = async (verificationCode: string): Promise<Result> => {
   if (!verificationCode) {
-    return [false, errNotSendVerificationCode];
+    return failure(errNotSendVerificationCode);
   }
   const isVerify = await fetchVerifyResult(verificationCode);
   if (!isVerify) {
-    return [false, errFailedAtVerification];
+    return failure(errFailedAtVerification);
   }
-  return [true, ""];
+  return success();
 };

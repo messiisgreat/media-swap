@@ -23,7 +23,7 @@ import { createTransaction } from "@/repositories/transaction";
 import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
-import { type Result, failure, success } from "@/utils/result";
+import { type Result, failure, success } from "@/lib/result/result";
 
 type PurchasingResult = Result<string, string>;
 

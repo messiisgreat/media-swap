@@ -157,14 +157,14 @@ model Listing {
     shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
     productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
 
-    transaction  Transaction?
-    images       ListingImage[]
-    historys     BrowsingHistory[]
-    comments     ListingComment[]
-    likes        Like[]
-    categories   ListingCategory[]
-    tags         ListingTag[]
-    reports      ListingReport[]
+    transaction Transaction?
+    images      ListingImage[]
+    historys    BrowsingHistory[]
+    comments    ListingComment[]
+    likes       Like[]
+    categories  ListingCategory[]
+    tags        ListingTag[]
+    reports     ListingReport[]
 
     @@map("listings")
 }
@@ -393,11 +393,11 @@ model TransactionRatingOption {
 // ユーザー出品閲覧履歴テーブル
 model BrowsingHistory {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    userId    String?   @map("user_id") @db.ObjectId // ユーザーID外部キー
+    userId    String?  @map("user_id") @db.ObjectId // ユーザーID外部キー
     listingId String   @map("listing_id") @db.ObjectId // 出品情報ID外部キー
-    browsedAt  DateTime @default(now()) @map("last_browsed_at") // 閲覧日時
+    browsedAt DateTime @default(now()) @map("last_browsed_at") // 閲覧日時
 
-    user    User?    @relation(fields: [userId], references: [id])
+    user    User?   @relation(fields: [userId], references: [id])
     listing Listing @relation(fields: [listingId], references: [id])
 
     @@map("browsing_history")
@@ -409,7 +409,6 @@ model Notification {
     date               DateTime @default(now()) // お知らせ日時
     content            String // 内容
     notificationTypeId String   @map("notification_type_id") @db.ObjectId // お知らせ種別ID外部キー
-    userId             String   @map("user_id") @db.ObjectId // ユーザーID外部キー
 
     notificationType NotificationType @relation(fields: [notificationTypeId], references: [id])
 

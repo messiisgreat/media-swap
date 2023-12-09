@@ -14,7 +14,7 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:show": "prisma studio",
-    "test": "jest",
+    "test": "jest --verbose",
     "test:watch": "jest --watch",
     "depcheck": "pnpx depcheck",
     "prepare": "husky install",

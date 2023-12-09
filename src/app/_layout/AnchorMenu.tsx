@@ -27,19 +27,19 @@ const naviMenu: NaviMenu[] = [
     id: "bell",
     icon: AiFillBell,
     text: "お知らせ",
-    path: "/notification", //TBD
+    path: "/notifications",
   },
   {
     id: "camera",
     icon: AiFillCamera,
     text: "出品",
-    path: "/add-listing", //TBD
+    path: "/add-listing",
   },
   {
     id: "user",
     icon: FaUser,
     text: "マイページ",
-    path: "/mypage", //TBD
+    path: "/mypage",
   },
 ];
 
