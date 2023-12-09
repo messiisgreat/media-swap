@@ -19,7 +19,9 @@
     "depcheck": "pnpx depcheck",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "init": "pnpm i && pnpm run db:generate && pnpm run db:push",
+    "rundev": "pnpm i && pnpm run db:generate && pnpm run db:push && pnpm run dev"
   },
   "husky": {
     "hooks": {
