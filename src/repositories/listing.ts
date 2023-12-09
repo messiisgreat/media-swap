@@ -11,6 +11,9 @@ export type UnregisteredListing = Omit<
   "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId" | "pageView"
 >;
 
+/** 画像とタグを含んだListingの配列 */
+export type ListingsReadResult = Awaited<ReturnType<typeof findListings>>;
+
 /**
  * 商品を追加する
  * @param listing 追加する商品
@@ -64,8 +67,7 @@ export const createListingWithTagsAndImages = async (
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListingById = cache(async (id: string, isDeleted = false) => {
-  return await prisma.listing.findUniqueOrThrow({
+export const findListingById = cache(async (id: string, isDeleted = false) => await prisma.listing.findUniqueOrThrow({
     where: { id, isPublic: true, isDeleted },
     include: {
       images: { select: { imageURL: true }, orderBy: { order: "asc" } },
@@ -78,8 +80,7 @@ export const findListingById = cache(async (id: string, isDeleted = false) => {
       shippingDays: true,
       shippingMethod: true,
     },
-  });
-});
+  }));
 
 /** findListing用の並び順型 */
 export type ListingOrderBy =
@@ -95,8 +96,7 @@ export type ListingOrderBy =
  * @param order ソート順 例: { price: "asc" }
  */
 export const findListings = cache(
-  async (page: number, size: number, orderBy: ListingOrderBy) => {
-    return await prisma.listing.findMany({
+  async (page: number, size: number, orderBy: ListingOrderBy) => await prisma.listing.findMany({
       where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -109,8 +109,7 @@ export const findListings = cache(
         },
       },
       orderBy,
-    });
-  },
+    }),
 );
 
 /**
@@ -127,8 +126,7 @@ export const findListingsByProductName = cache(
     page: number,
     size: number,
     orderBy: ListingOrderBy,
-  ) => {
-    return await prisma.listing.findMany({
+  ) => await prisma.listing.findMany({
       where: {
         productName: { contains: query },
         isPublic: true,
@@ -145,8 +143,7 @@ export const findListingsByProductName = cache(
         },
       },
       orderBy,
-    });
-  },
+    }),
 );
 
 /**
@@ -159,8 +156,7 @@ export const findListingsBySellerId = cache(
     size: number,
     orderBy: ListingOrderBy,
     isPublic?: boolean,
-  ) => {
-    return await prisma.listing.findMany({
+  ) => await prisma.listing.findMany({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -173,53 +169,44 @@ export const findListingsBySellerId = cache(
         },
       },
       orderBy,
-    });
-  },
+    }),
 );
 
 /**
  * 商品総数を取得する
  */
-export const countListings = cache(async () => {
-  return await prisma.listing.count({
+export const countListings = cache(async () => await prisma.listing.count({
     where: { isPublic: true, isDeleted: false },
-  });
-});
+  }));
 
 /**
  * 検索結果の商品総数を取得する
  * @param query 検索クエリ
  */
-export const countListingsByProductName = cache(async (query: string) => {
-  return await prisma.listing.count({
+export const countListingsByProductName = cache(async (query: string) => await prisma.listing.count({
     where: { productName: { contains: query }, isDeleted: false },
-  });
-});
+  }));
 
 /**
  * 指定したユーザーが出品した商品総数を取得する
  */
 export const countListingsBySellerId = cache(
-  async (sellerId: string, isPublic?: boolean) => {
-    return await prisma.listing.count({
+  async (sellerId: string, isPublic?: boolean) => await prisma.listing.count({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
-    });
-  },
+    }),
 );
 
 /**
  * 指定したユーザーが購入した商品総数を取得する
  */
-export const countListingsByBuyerId = cache(async (buyerId: string) => {
-  return await prisma.listing.count({
+export const countListingsByBuyerId = cache(async (buyerId: string) => await prisma.listing.count({
     where: {
       transaction: {
         buyerId,
       },
       isDeleted: false,
     },
-  });
-});
+  }));
 
 /**
  * 指定したユーザーが購入した商品を取得する
@@ -230,8 +217,7 @@ export const findListingsByBuyerId = cache(
     page: number,
     size: number,
     orderBy: ListingOrderBy,
-  ) => {
-    return await prisma.listing.findMany({
+  ) => await prisma.listing.findMany({
       where: {
         transaction: {
           buyerId,
@@ -250,8 +236,7 @@ export const findListingsByBuyerId = cache(
         },
       },
       orderBy,
-    });
-  },
+    }),
 );
 
 /**
@@ -259,12 +244,10 @@ export const findListingsByBuyerId = cache(
  *
  * @param id - 削除対象の商品のID
  */
-export const deleteListing = async (id: string) => {
-  return await prisma.listing.update({
+export const deleteListing = async (id: string) => await prisma.listing.update({
     where: { id },
     data: { isDeleted: true },
   });
-};
 
 /**
  * 商品を更新する
@@ -273,12 +256,10 @@ export const deleteListing = async (id: string) => {
  */
 export const updateListing = async (
   listing: { id: string } & Partial<Listing>,
-) => {
-  return await prisma.listing.update({
+) => await prisma.listing.update({
     where: { id: listing.id },
     data: listing,
   });
-};
 
 /**
  * 商品のtransactionIdを更新する
@@ -289,14 +270,12 @@ export const updateListing = async (
 export const updateListingTransactionId = async (
   listing: { id: string } & Partial<Listing>,
   transactionId: string,
-) => {
-  return await prisma.listing.update({
+) => await prisma.listing.update({
     where: { id: listing.id },
     data: {
       transactionId: transactionId,
     },
   });
-};
 
 /**
  * 商品を通報

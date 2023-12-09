@@ -137,6 +137,12 @@ module.exports = {
         checkInlineFunction: true,
       },
     ],
+    /** jsxでのbooleanの`={true}`を省略 */
+    "react/jsx-boolean-value": "error",
+    /** 文字列の冗長な`{}`を削除 */
+    "react/jsx-curly-brace-presence": "error",
+    /** コンポーネントにPascalCaseの命名を強制 */
+    "react/jsx-pascal-case": "error",
 
     // "import/order": [
     //   "error",

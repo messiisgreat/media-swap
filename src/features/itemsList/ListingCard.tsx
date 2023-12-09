@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
-import { type findListings } from "@/repositories/listing";
+import { type ListingsReadResult } from "@/repositories/listing";
 import { formatPrice } from "@/utils/format";
 
 const PriceBadge = ({
@@ -23,7 +23,8 @@ const PriceBadge = ({
 );
 
 type Props = {
-  listing: Awaited<ReturnType<typeof findListings>>[number];
+  /** findListings の配列1個分 */
+  listing: ListingsReadResult[number];
 };
 
 /**

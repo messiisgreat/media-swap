@@ -36,7 +36,7 @@ export default async function Page({
         sort={sort}
         order={order}
         sellerId={user.id}
-        isPublic={true}
+        isPublic
       />
     </>
   );

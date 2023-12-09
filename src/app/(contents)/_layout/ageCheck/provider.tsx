@@ -29,7 +29,7 @@ export const AgeCheckProvider = () => {
     <>
       <div
         className="fixed left-0 top-0 z-50 h-full w-full backdrop-blur-xl"
-        aria-hidden={true}
+        aria-hidden
       />
       <AgeCheckModal />
     </>

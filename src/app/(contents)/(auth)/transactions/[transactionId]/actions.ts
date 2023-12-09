@@ -6,9 +6,6 @@ import {
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
 import { failure, success, type Result } from "@/lib/result/result";
 import {
-  createTransactionComment,
-  getTransactionComments,
-  markAsReadTransactionComments,
   updateTransaction,
   updateTransactionStatus,
 } from "@/repositories/transaction";
@@ -18,6 +15,11 @@ import { getSessionUser } from "@/utils";
 
 import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTemplate";
 import { sendMailToUser } from "@/lib/mail";
+import {
+  createTransactionComment,
+  getTransactionComments,
+  markAsReadTransactionComments,
+} from "@/repositories/transactionComment";
 
 type SendMessageResult = Result<string, string>;
 

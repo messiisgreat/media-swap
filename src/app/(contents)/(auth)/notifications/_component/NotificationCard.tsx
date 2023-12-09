@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { SITE_NAME } from "@/constants/site";
 import logo from "@/images/logo.png";
-import { type findNotificationsByUserId } from "@/repositories/notification";
+import { type NotificationsQueryResult } from "@/repositories/notification";
 import { parseRelativeTime } from "@/utils";
 
 /**
@@ -12,7 +12,7 @@ import { parseRelativeTime } from "@/utils";
 export const NotificationCard = ({
   notification,
 }: {
-  notification: Awaited<ReturnType<typeof findNotificationsByUserId>>[number];
+  notification: NotificationsQueryResult[number];
 }) => {
   const { content, date, userNotificationRead } = notification;
   const isRead = userNotificationRead.length > 0;

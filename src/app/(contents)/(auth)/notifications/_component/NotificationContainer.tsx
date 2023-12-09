@@ -4,6 +4,7 @@ import {
   countNotificationsByUserIdAndUnread,
   findNotificationsByUserId,
   findNotificationsByUserIdAndUnread,
+  type NotificationsQueryResult,
 } from "@/repositories/notification";
 import { PaginationBar } from "@/ui";
 import { getSessionUser } from "@/utils";
@@ -23,7 +24,7 @@ type Props = {
 const findNotificationsAndCount = async (
   userId: string,
   props: Props,
-): Promise<[Awaited<ReturnType<typeof findNotificationsByUserId>>, number]> => {
+): Promise<[NotificationsQueryResult, number]> => {
   const { page, size, filter } = props;
   if (filter === "unread") {
     const [notifications, count] = await Promise.all([

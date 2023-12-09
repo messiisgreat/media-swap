@@ -1,11 +1,5 @@
 import { ListingCard } from "@/features/itemsList/ListingCard";
-import { type findListings } from "@/repositories/listing";
-
-// findListings 関数からの戻り値の型
-type ListingsQueryResult = Awaited<ReturnType<typeof findListings>>;
-
-// 配列の1個分の型
-type ListingQueryResult = ListingsQueryResult[number];
+import { type ListingsReadResult } from "@/repositories/listing";
 
 /**
  * 閲覧履歴一覧を表示する
@@ -15,7 +9,7 @@ type ListingQueryResult = ListingsQueryResult[number];
 export const BrowsingHistoryList = ({
   listings,
 }: {
-  listings: ListingQueryResult[];
+  listings: ListingsReadResult;
 }) => {
   if (listings.length) {
     return (

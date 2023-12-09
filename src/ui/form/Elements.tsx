@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { forwardRef, type ComponentPropsWithoutRef } from "react";
 
 import { twMerge } from "tailwind-merge";
 
@@ -45,6 +45,7 @@ export const Textarea = forwardRef<
   ComponentPropsWithoutRef<"textarea"> & CommonProps
 >(function Textarea({ className = "", labelText, ...props }, ref) {
   const textareaClass = twMerge("textarea textarea-bordered", className);
+
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}
@@ -97,7 +98,7 @@ export const RadioGroup = forwardRef<
 >(function RadioGroup({ className = "", labelText, options, ...props }, ref) {
   const radioClass = twMerge("radio radio-primary", className);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" role="radiogroup">
       {labelText && <label>{labelText}</label>}
       <div className="flex flex-row gap-2">
         {Object.keys(options).map((option, i) => (

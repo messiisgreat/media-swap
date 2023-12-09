@@ -61,7 +61,7 @@ export default async function Page({
           sessionUser={sessionUser}
         />
         {/* 取引キャンセル用ボタン */}
-        <TransactionChangeButton transaction={transaction} isCancel={true} />
+        <TransactionChangeButton transaction={transaction} isCancel />
         <div>
           <p>出品者情報</p>
           {/* TODO: 出品者情報へのリンクもしくはモーダルを追加 */}

@@ -36,7 +36,7 @@ const dataSecurities = [
         <p>{CORPORATE_ADDRESS}</p>
         <p>{CORPORATE_NAME} 個人情報担当者宛</p>
         <p>
-          <TextLink href={"/inquiry"}>お問い合わせフォーム</TextLink>
+          <TextLink href="/inquiry">お問い合わせフォーム</TextLink>
         </p>
       </>
     ),

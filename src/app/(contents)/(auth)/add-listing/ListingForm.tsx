@@ -47,7 +47,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
           price: state.values.price,
         }}
       />
-      <SubmitButton outline={true} name="isPublic" value="false">
+      <SubmitButton outline name="isPublic" value="false">
         下書きに保存する
       </SubmitButton>
       <SubmitButton name="isPublic" value="true">

@@ -19,5 +19,9 @@
     "ngClass",
     ".*Class*",
     ".*ClassName*"
-  ]
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    "twMerge[`]([\\s\\S][^`]*)[`]",
+    ["twMerge\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
 }

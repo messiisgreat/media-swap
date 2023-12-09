@@ -280,7 +280,7 @@ const exhibitRules = [
       <p>
         出品者は
         <Link
-          href={"/static/guide/product/"}
+          href="/static/guide/product/"
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           ガイドの禁止されている出品物
@@ -851,7 +851,7 @@ const tocList = [
       <p>
         弊社は、本サービスに接したユーザー及び第三者の、
         <Link
-          href={"/static/guide/action/"}
+          href="/static/guide/action/"
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           ガイドの禁止されている行為

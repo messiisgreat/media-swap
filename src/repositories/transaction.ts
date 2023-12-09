@@ -7,21 +7,27 @@ import { type Transaction } from "@prisma/client";
 import { TRANSACTION_STATUS } from "@/constants/listing";
 import prisma from "@/lib/prisma";
 
+/** 出品情報と購入者を含んだ取引作成結果 */
+export type TransactionCreateResult = Awaited<
+  ReturnType<typeof createTransaction>
+>;
+
 /**
  * 取引を取得する
  * @param id - 取得対象の取引のID
  * @returns 取得した取引、もしない場合はnull
  */
-export const findTransaction = cache(async (id: string) => {
-  return await prisma.transaction.findUnique({
-    where: { id },
-    include: {
-      transactionComments: true,
-      buyer: true,
-      listing: { include: { seller: true, shippingMethod: true } },
-    },
-  });
-});
+export const findTransaction = cache(
+  async (id: string) =>
+    await prisma.transaction.findUnique({
+      where: { id },
+      include: {
+        transactionComments: true,
+        buyer: true,
+        listing: { include: { seller: true, shippingMethod: true } },
+      },
+    }),
+);
 
 /**
  * 取引を追加する
@@ -83,75 +89,10 @@ export const updateTransaction = async (
  */
 export const updateTransactionStatus = async (
   transaction: { id: string } & Partial<Transaction>,
-) => {
-  return await prisma.transaction.update({
+) =>
+  await prisma.transaction.update({
     where: { id: transaction.id },
     data: {
       transactionStatus: transaction.transactionStatus,
     },
   });
-};
-
-/**
- * 取引コメントを取得
- * @param transactionId 取引ID
- * @returns コメントの配列
- */
-export const getTransactionComments = async (transactionId: string) => {
-  const comments = await prisma.transactionComment.findMany({
-    where: { transactionId },
-    include: { user: { select: { name: true, image: true, id: true } } },
-    orderBy: { createdAt: "asc" },
-  });
-  return comments;
-};
-
-/**
- * 取引メッセージを作成
- * @param text コメント
- * @param userId ユーザーID
- * @param transactionId 取引ID
- */
-export const createTransactionComment = async (
-  text: string,
-  userId: string,
-  transactionId: string,
-) => {
-  return await prisma.transactionComment.create({
-    data: {
-      comment: text,
-      userId,
-      transactionId,
-    },
-    include: {
-      user: true,
-      transaction: {
-        include: {
-          listing: { include: { seller: true } },
-          buyer: true,
-        },
-      },
-    },
-  });
-};
-
-/**
- * 既読にする
- * @param transactionId 取引ID
- * @param userId メッセージを見た側のユーザーID
- */
-export const markAsReadTransactionComments = async (
-  transactionId: string,
-  userId: string,
-) => {
-  await prisma.transactionComment.updateMany({
-    where: {
-      transactionId,
-      userId: { not: { equals: userId } },
-      isRead: false,
-    },
-    data: {
-      isRead: true,
-    },
-  });
-};
