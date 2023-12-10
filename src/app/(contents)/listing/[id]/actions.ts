@@ -19,7 +19,7 @@ import {
   createComment,
   createCommentReport,
   deleteListingComment,
-  getComments,
+  findComments,
 } from "@/repositories/listingComment";
 import { createTransaction } from "@/repositories/transaction";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
@@ -76,7 +76,7 @@ export const addComment = async (text: string, listingId: string) => {
  * @returns
  */
 export const fetchComments = async (listingId: string) => {
-  return await getComments(listingId);
+  return await findComments(listingId);
 };
 
 /**

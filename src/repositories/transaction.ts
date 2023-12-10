@@ -41,24 +41,14 @@ export const createTransaction = async (
   buyerId: string,
   userCouponId: string | null = null,
 ) => {
-  const transaction: Omit<
-    Transaction,
-    | "id"
-    | "externalPaymentId"
-    | "isCanceled"
-    | "purchaseDate"
-    | "transactionRatingId"
-    | "transactionStatus"
-    | "trackingNumber"
-  > = {
-    listingId,
-    buyerId,
-    userCouponId,
-  };
   return await prisma.transaction.create({
     data: {
       transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
-      ...transaction,
+      buyer: { connect: { id: buyerId } },
+      listing: { connect: { id: listingId } },
+      ...(userCouponId
+        ? { userCoupon: { connect: { id: userCouponId } } }
+        : {}),
     },
     include: {
       listing: { include: { seller: true } },
@@ -75,10 +65,10 @@ export const createTransaction = async (
 export const updateTransaction = async (
   transaction: { id: string } & Partial<Transaction>,
 ) => {
-  const { id, ...updateData } = transaction;
+  const { id, ...data } = transaction;
   return await prisma.transaction.update({
-    where: { id: id },
-    data: updateData,
+    where: { id },
+    data,
   });
 };
 

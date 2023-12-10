@@ -38,13 +38,15 @@ export const createListingWithTagsAndImages = async (
     data: {
       ...rest,
       seller: { connect: { id: sellerId } },
-      shippingDays: shippingDaysId ? { connect: { id: shippingDaysId } } : {},
-      shippingMethod: shippingMethodId
-        ? { connect: { id: shippingMethodId } }
-        : {},
-      productCondition: productConditionId
-        ? { connect: { id: productConditionId } }
-        : {},
+      ...(shippingDaysId
+        ? { shippingDays: { connect: { id: shippingDaysId } } }
+        : {}),
+      ...(shippingMethodId
+        ? { shippingMethod: { connect: { id: shippingMethodId } } }
+        : {}),
+      ...(productConditionId
+        ? { productCondition: { connect: { id: productConditionId } } }
+        : {}),
       images: {
         createMany: {
           data: imageURLs.map((imageURL, i) => ({ imageURL, order: i })),
@@ -67,20 +69,23 @@ export const createListingWithTagsAndImages = async (
  * @returns 取得した製品情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findListingById = cache(async (id: string, isDeleted = false) => await prisma.listing.findUniqueOrThrow({
-    where: { id, isPublic: true, isDeleted },
-    include: {
-      images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-      tags: {
-        include: {
-          tag: true,
+export const findListingById = cache(
+  async (id: string, isDeleted = false) =>
+    await prisma.listing.findUniqueOrThrow({
+      where: { id, isPublic: true, isDeleted },
+      include: {
+        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
+        tags: {
+          include: {
+            tag: true,
+          },
         },
+        productCondition: true,
+        shippingDays: true,
+        shippingMethod: true,
       },
-      productCondition: true,
-      shippingDays: true,
-      shippingMethod: true,
-    },
-  }));
+    }),
+);
 
 /** findListing用の並び順型 */
 export type ListingOrderBy =
@@ -96,7 +101,8 @@ export type ListingOrderBy =
  * @param order ソート順 例: { price: "asc" }
  */
 export const findListings = cache(
-  async (page: number, size: number, orderBy: ListingOrderBy) => await prisma.listing.findMany({
+  async (page: number, size: number, orderBy: ListingOrderBy) =>
+    await prisma.listing.findMany({
       where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -121,12 +127,8 @@ export const findListings = cache(
  * @returns 検索結果
  */
 export const findListingsByProductName = cache(
-  async (
-    query: string,
-    page: number,
-    size: number,
-    orderBy: ListingOrderBy,
-  ) => await prisma.listing.findMany({
+  async (query: string, page: number, size: number, orderBy: ListingOrderBy) =>
+    await prisma.listing.findMany({
       where: {
         productName: { contains: query },
         isPublic: true,
@@ -156,7 +158,8 @@ export const findListingsBySellerId = cache(
     size: number,
     orderBy: ListingOrderBy,
     isPublic?: boolean,
-  ) => await prisma.listing.findMany({
+  ) =>
+    await prisma.listing.findMany({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
@@ -175,23 +178,30 @@ export const findListingsBySellerId = cache(
 /**
  * 商品総数を取得する
  */
-export const countListings = cache(async () => await prisma.listing.count({
-    where: { isPublic: true, isDeleted: false },
-  }));
+export const countListings = cache(
+  async () =>
+    await prisma.listing.count({
+      where: { isPublic: true, isDeleted: false },
+    }),
+);
 
 /**
  * 検索結果の商品総数を取得する
  * @param query 検索クエリ
  */
-export const countListingsByProductName = cache(async (query: string) => await prisma.listing.count({
-    where: { productName: { contains: query }, isDeleted: false },
-  }));
+export const countListingsByProductName = cache(
+  async (query: string) =>
+    await prisma.listing.count({
+      where: { productName: { contains: query }, isDeleted: false },
+    }),
+);
 
 /**
  * 指定したユーザーが出品した商品総数を取得する
  */
 export const countListingsBySellerId = cache(
-  async (sellerId: string, isPublic?: boolean) => await prisma.listing.count({
+  async (sellerId: string, isPublic?: boolean) =>
+    await prisma.listing.count({
       where: { sellerId, isPublic: isPublic, isDeleted: false },
     }),
 );
@@ -199,14 +209,17 @@ export const countListingsBySellerId = cache(
 /**
  * 指定したユーザーが購入した商品総数を取得する
  */
-export const countListingsByBuyerId = cache(async (buyerId: string) => await prisma.listing.count({
-    where: {
-      transaction: {
-        buyerId,
+export const countListingsByBuyerId = cache(
+  async (buyerId: string) =>
+    await prisma.listing.count({
+      where: {
+        transaction: {
+          buyerId,
+        },
+        isDeleted: false,
       },
-      isDeleted: false,
-    },
-  }));
+    }),
+);
 
 /**
  * 指定したユーザーが購入した商品を取得する
@@ -217,7 +230,8 @@ export const findListingsByBuyerId = cache(
     page: number,
     size: number,
     orderBy: ListingOrderBy,
-  ) => await prisma.listing.findMany({
+  ) =>
+    await prisma.listing.findMany({
       where: {
         transaction: {
           buyerId,
@@ -244,7 +258,8 @@ export const findListingsByBuyerId = cache(
  *
  * @param id - 削除対象の商品のID
  */
-export const deleteListing = async (id: string) => await prisma.listing.update({
+export const deleteListing = async (id: string) =>
+  await prisma.listing.update({
     where: { id },
     data: { isDeleted: true },
   });
@@ -256,25 +271,10 @@ export const deleteListing = async (id: string) => await prisma.listing.update({
  */
 export const updateListing = async (
   listing: { id: string } & Partial<Listing>,
-) => await prisma.listing.update({
+) =>
+  await prisma.listing.update({
     where: { id: listing.id },
     data: listing,
-  });
-
-/**
- * 商品のtransactionIdを更新する
- *
- * @param listing - 更新対象の商品
- * @param transactionId - 更新後のtransactionId
- */
-export const updateListingTransactionId = async (
-  listing: { id: string } & Partial<Listing>,
-  transactionId: string,
-) => await prisma.listing.update({
-    where: { id: listing.id },
-    data: {
-      transactionId: transactionId,
-    },
   });
 
 /**

@@ -3,6 +3,7 @@ import "server-only";
 import { type ListingComment, type User } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
+import { cache } from "react";
 
 export type CommentWithPartialUser = ListingComment & {
   user: Partial<Pick<User, "name" | "image">>;
@@ -12,16 +13,15 @@ export type CommentWithPartialUser = ListingComment & {
  * @param listingId 取得対象の製品のID
  * @returns 取得したコメント
  */
-export const getComments = async (
-  listingId: string,
-): Promise<CommentWithPartialUser[]> => {
-  const comments = await prisma.listingComment.findMany({
-    where: { listingId },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    include: { user: { select: { name: true, image: true } } },
-  });
-  return comments.filter((comment) => !comment.deletedAt);
-};
+export const findComments = cache(
+  async (listingId: string): Promise<CommentWithPartialUser[]> => {
+    return await prisma.listingComment.findMany({
+      where: { listingId, deletedAt: null },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+      include: { user: { select: { name: true, image: true } } },
+    });
+  },
+);
 
 /**
  * コメントを追加する

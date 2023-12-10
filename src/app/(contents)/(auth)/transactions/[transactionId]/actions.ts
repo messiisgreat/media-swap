@@ -17,7 +17,7 @@ import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTe
 import { sendMailToUser } from "@/lib/mail";
 import {
   createTransactionComment,
-  getTransactionComments,
+  findTransactionComments,
   markAsReadTransactionComments,
 } from "@/repositories/transactionComment";
 
@@ -33,7 +33,7 @@ export const fetchMessages = async (transactionId: string) => {
   if (!user) throw new Error("ログインしてください");
   const userId = user.id;
   const [comments] = await Promise.all([
-    getTransactionComments(transactionId),
+    findTransactionComments(transactionId),
     markAsReadTransactionComments(transactionId, userId),
   ]);
   return comments;
