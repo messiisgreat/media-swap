@@ -45,7 +45,6 @@ export const Textarea = forwardRef<
   ComponentPropsWithoutRef<"textarea"> & CommonProps
 >(function Textarea({ className = "", labelText, ...props }, ref) {
   const textareaClass = twMerge("textarea textarea-bordered", className);
-
   return (
     <div className="flex w-full flex-col">
       {labelText && <label>{labelText}</label>}

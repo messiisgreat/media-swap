@@ -191,7 +191,7 @@ export const CommentSection = ({
                       ) : null}
                     </div>
                   </div>
-                  <p className="text-sm">{comment.comment}</p>
+                  <p className="whitespace-pre text-sm ">{comment.comment}</p>
                 </div>
               </li>
             );

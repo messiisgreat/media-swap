@@ -5,8 +5,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const baseClass = "my-2 w-full rounded-lg bg-white p-4 shadow-md grid gap-4";
-const textClass = "text-gray-600";
-
+const textClass = "text-gray-600 whitespace-pre";
 type Props = {
   /** 商品クエリの結果 */
   description: string | null;
@@ -23,6 +22,7 @@ export const ItemDescription = ({ description, charLimit = 128 }: Props) => {
   const collapseClass = shouldCollapseDescription ? "truncate" : "";
   const [isCollapsed, setIsCollapsed] = useState(shouldCollapseDescription);
   const handleToggleDescription = () => setIsCollapsed((prev) => !prev);
+
   return (
     <div className={baseClass}>
       <p className={twMerge(textClass, collapseClass)}>
