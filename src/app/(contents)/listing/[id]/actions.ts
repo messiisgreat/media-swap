@@ -8,6 +8,8 @@ import {
 } from "@/app/(contents)/listing/[id]/mailTemplate";
 import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
+import { failure, success, type Result } from "@/lib/result/result";
+import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import {
   createListingReport,
   deleteListing,
@@ -20,10 +22,8 @@ import {
   getComments,
 } from "@/repositories/listingComment";
 import { createTransaction } from "@/repositories/transaction";
-import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
-import { type Result, failure, success } from "@/lib/result/result";
 
 type PurchasingResult = Result<string, string>;
 

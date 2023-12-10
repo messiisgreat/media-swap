@@ -4,6 +4,7 @@ import { FaChevronRight } from "react-icons/fa";
 
 import { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/MessageSection";
 import { ShippingNotification } from "@/app/(contents)/(auth)/transactions/[transactionId]/ShippingNotification";
+import { TrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/TrackingNumber";
 import { TransactionChangeButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionChangeButton";
 import { TransactionStatus } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionStatus";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
@@ -49,12 +50,15 @@ export default async function Page({
         />
         {/* 送り状番号の送信用 */}
         <VerifyProvider>
-          <ShippingNotification
+          <ShippingNotification transactionId={transactionId} />
+        </VerifyProvider>
+        {/* 送り状番号の表示用 */}
+        {transaction.trackingNumber && (
+          <TrackingNumber
             trackingNumber={transaction.trackingNumber}
-            transactionId={transactionId}
             shippingMethodId={transaction.listing.shippingMethod?.id || ""}
           />
-        </VerifyProvider>
+        )}
         {/* 通常の取引更新用ボタン */}
         <TransactionChangeButton
           transaction={transaction}
