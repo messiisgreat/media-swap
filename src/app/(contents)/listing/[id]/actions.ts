@@ -8,7 +8,7 @@ import {
 } from "@/app/(contents)/listing/[id]/mailTemplate";
 import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
-import { failure, success, type Result } from "@/lib/result/result";
+import { failure, success, type Result } from "@/lib/result";
 import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import {
   createListingReport,

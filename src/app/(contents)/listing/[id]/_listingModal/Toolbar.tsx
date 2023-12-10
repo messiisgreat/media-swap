@@ -1,9 +1,18 @@
 "use client";
 import { type Session } from "next-auth";
-import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
+import { FaEllipsisVertical, FaFlag, FaTrash } from "react-icons/fa6";
 
 import { useDeleteModal } from "@/app/(contents)/listing/[id]/_listingModal/DeleteModal";
 import { useReportModal } from "@/app/(contents)/listing/[id]/_listingModal/ReportModal";
+
+type Props = {
+  /** 商品ID */
+  listingId: string;
+  /** ログインユーザー */
+  sessionUser: Session["user"] | null;
+  /** 出品者かどうか */
+  isListingOwner: boolean;
+};
 
 /**
  * 削除/通報用のツールバー
@@ -14,11 +23,7 @@ export default function Toolbar({
   listingId,
   sessionUser,
   isListingOwner,
-}: {
-  listingId: string;
-  sessionUser: Session["user"] | null;
-  isListingOwner: boolean;
-}) {
+}: Props) {
   const { handleReportModalOpen, ReportModal } = useReportModal({
     listingId,
     sessionUser,
@@ -30,31 +35,29 @@ export default function Toolbar({
   });
 
   return (
-    <>
-      <div className="dropdown dropdown-end dropdown-bottom">
-        <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
-          <FaEllipsis />
-        </label>
-        <ul
-          tabIndex={0}
-          className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 text-red-500 shadow"
-        >
-          <li onClick={handleReportModalOpen}>
-            <div className="flex items-center whitespace-nowrap">
-              <FaFlag />
-              通報
-            </div>
-          </li>
-          <li onClick={handleDeleteModalOpen}>
-            <div className="flex items-center whitespace-nowrap">
-              <FaTrash />
-              削除
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div className="dropdown dropdown-end dropdown-bottom">
+      <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
+        <FaEllipsisVertical size="1.5rem" />
+      </label>
       <ReportModal />
       <DeleteModal />
-    </>
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content z-[1] w-24 gap-2 rounded-box bg-base-100 p-2 shadow"
+      >
+        <li onClick={handleReportModalOpen}>
+          <div className="flex items-center whitespace-nowrap text-red-500">
+            <FaFlag />
+            通報
+          </div>
+        </li>
+        <li onClick={handleDeleteModalOpen}>
+          <div className="flex items-center whitespace-nowrap text-red-500">
+            <FaTrash />
+            削除
+          </div>
+        </li>
+      </ul>
+    </div>
   );
 }

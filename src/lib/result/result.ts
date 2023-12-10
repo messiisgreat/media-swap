@@ -2,14 +2,14 @@
 type Success<T> = {
   isSuccess: true;
   isFailure: false;
-  value: T | undefined;
+  value: T;
 };
 
 /** 失敗時の型 */
 type Failure<E> = {
   isSuccess: false;
   isFailure: true;
-  error: E | undefined;
+  error: E;
 };
 
 /**
@@ -24,26 +24,26 @@ type Failure<E> = {
  * 成功時にresult.valueでnumberが、
  * 失敗時にresult.errorでstringが取得できる
  */
-export type Result<T = string, E = string> = Success<T> | Failure<E>;
+export type Result<T = undefined, E = undefined> = Success<T> | Failure<E>;
 
 /**
  * 成功時の結果を格納する
  * @param value 成功時の値
  * @returns
  */
-export const success = <T>(value?: T): Success<T> => ({
+export const success = <T = undefined>(value?: T): Success<T> => ({
   isSuccess: true,
   isFailure: false,
-  value: value || undefined,
+  value: value as T,
 });
 
 /**
  * 失敗時の結果を格納する
  * @param error 失敗時のエラー
- * @returns `{ ok: false, error: E }`
+ * @returns
  */
-export const failure = <E>(error?: E): Failure<E> => ({
+export const failure = <E = undefined>(error?: E): Failure<E> => ({
   isSuccess: false,
   isFailure: true,
-  error: error || undefined,
+  error: error as E,
 });

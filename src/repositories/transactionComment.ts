@@ -3,6 +3,11 @@ import "server-only";
 import prisma from "@/lib/prisma";
 import { cache } from "react";
 
+/** 取引コメント作成結果 */
+export type TransactionCommentCreateResult = Awaited<
+  ReturnType<typeof createTransactionComment>
+>;
+
 /**
  * 取引コメントを取得
  * @param transactionId 取引ID

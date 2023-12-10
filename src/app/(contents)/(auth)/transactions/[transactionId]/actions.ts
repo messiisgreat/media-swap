@@ -4,7 +4,7 @@ import {
   TrackingNumberFormScheme,
   type TrackingNumberFormState,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
-import { failure, success, type Result } from "@/lib/result/result";
+import { failure, success, type Result } from "@/lib/result";
 import {
   updateTransaction,
   updateTransactionStatus,
@@ -19,6 +19,7 @@ import {
   createTransactionComment,
   findTransactionComments,
   markAsReadTransactionComments,
+  type TransactionCommentCreateResult,
 } from "@/repositories/transactionComment";
 
 type SendMessageResult = Result<string, string>;
@@ -82,7 +83,7 @@ export const sendMessage = async (
  * @param transactionComment 取引コメント
  */
 const sendMailToRecipient = async (
-  transactionComment: Awaited<ReturnType<typeof createTransactionComment>>,
+  transactionComment: TransactionCommentCreateResult,
 ) => {
   const transaction = transactionComment.transaction;
   if (!transaction) throw new Error("取引が見つかりません");

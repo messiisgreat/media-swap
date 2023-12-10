@@ -5,6 +5,7 @@ import { CommentSection } from "@/app/(contents)/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/(contents)/listing/[id]/ItemDescription";
 import { ItemInformation } from "@/app/(contents)/listing/[id]/ItemInformation";
 import { PurchaseButton } from "@/app/(contents)/listing/[id]/PurchaseButton";
+import { LikeButton } from "@/app/(contents)/listing/[id]/_components/likeButton";
 import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
 import { browsing } from "@/app/(contents)/listing/[id]/actions";
 import { findListingById } from "@/repositories/listing";
@@ -50,9 +51,11 @@ export async function generateMetadata({
 export default async function ListingPage({
   params: { id },
 }: ListingPageProps) {
-  const listing = await findListingById(id);
+  const [listing, user] = await Promise.all([
+    findListingById(id),
+    getSessionUser(),
+  ]);
   const images = listing.images;
-  const user = (await getSessionUser()) || null;
   const userId = user?.id;
   const isOwner = userId === listing.sellerId;
   await browsing(listing.id, userId as string);
@@ -60,21 +63,19 @@ export default async function ListingPage({
   return (
     <VerifyProvider>
       <Carousel images={images} />
-      {/* FIXME: 本来は、w-fullを全体にかけたいが影響範囲が大きいため一時的にラップしている  */}
-      <div className="flex w-full justify-between">
-        <H className="text-lg font-bold lg:text-2xl">{listing.productName!}</H>
-        <div>
+      <H className="w-full text-xl font-bold lg:text-2xl">
+        {listing.productName!}
+      </H>
+      <Section className="grid w-full items-start gap-4">
+        <Badge className="badge-lg">¥{listing.price}</Badge>
+        <div className="flex w-full items-center justify-between">
+          <LikeButton listingId={listing.id} sessionUser={user!} />
           <Toolbar
             listingId={listing.id}
-            sessionUser={user}
+            sessionUser={user!}
             isListingOwner={isOwner}
           />
         </div>
-      </div>
-      <div className="w-full">
-        <Badge className="badge-lg">¥{listing.price}</Badge>
-      </div>
-      <Section className="flex w-full flex-col items-start gap-4">
         <TitleUnderbar title="説明" />
         <ItemDescription description={listing.description} />
         <TitleUnderbar title="商品情報" />
@@ -98,7 +99,7 @@ export default async function ListingPage({
         <TitleUnderbar title="コメント" />
         <CommentSection
           listingId={listing.id}
-          sessionUser={user}
+          sessionUser={user ?? null}
           isListingOwner={isOwner}
         />
       </Section>
