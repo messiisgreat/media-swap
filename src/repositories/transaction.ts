@@ -43,9 +43,9 @@ export const createTransaction = async (
 ) => {
   return await prisma.transaction.create({
     data: {
-      transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
-      buyer: { connect: { id: buyerId } },
       listing: { connect: { id: listingId } },
+      buyer: { connect: { id: buyerId } },
+      transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
       ...(userCouponId
         ? { userCoupon: { connect: { id: userCouponId } } }
         : {}),

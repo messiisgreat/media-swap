@@ -7,12 +7,18 @@ type Props = {
   listingId: string;
   /** ログインユーザー */
   sessionUser: User | null;
+  /** className */
+  className?: string;
 };
 
 /**
  * 商品ページでのいいねボタン
  */
-export async function LikeButtonContainer({ listingId, sessionUser }: Props) {
+export async function LikeButtonContainer({
+  listingId,
+  sessionUser,
+  className = "",
+}: Props) {
   const count = await countLike(listingId);
   const isLoggedin = Boolean(sessionUser);
   // 左辺がfalseなら右辺を評価しない
@@ -24,6 +30,7 @@ export async function LikeButtonContainer({ listingId, sessionUser }: Props) {
       isLiked={isLiked}
       listingId={listingId}
       isLoggedin={isLoggedin}
+      className={className}
     />
   );
 }

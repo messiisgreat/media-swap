@@ -17,6 +17,8 @@ type Props = {
   listingId: string;
   /** ログイン済みかどうか */
   isLoggedin: boolean;
+  /** className */
+  className?: string;
 };
 
 /**
@@ -28,6 +30,7 @@ export function LikeButtonPresenter({
   isLiked: _isLiked,
   listingId,
   isLoggedin,
+  className = "",
 }: Props) {
   const [isLiked, setIsLiked] = useState(_isLiked);
   const [count, setCount] = useState(_count);
@@ -59,6 +62,7 @@ export function LikeButtonPresenter({
       isLiked={isLiked}
       loading={loading}
       onClick={handleLike}
+      className={className}
     />
   );
 }

@@ -4,13 +4,12 @@ import Carousel from "@/app/(contents)/listing/[id]/Carousel";
 import { CommentSection } from "@/app/(contents)/listing/[id]/CommentSection";
 import { ItemDescription } from "@/app/(contents)/listing/[id]/ItemDescription";
 import { ItemInformation } from "@/app/(contents)/listing/[id]/ItemInformation";
-import { PurchaseButton } from "@/app/(contents)/listing/[id]/PurchaseButton";
 import { LikeButton } from "@/app/(contents)/listing/[id]/_components/likeButton";
+import TransactionButton from "@/app/(contents)/listing/[id]/_components/transactionButton";
 import Toolbar from "@/app/(contents)/listing/[id]/_listingModal/Toolbar";
 import { browsing } from "@/app/(contents)/listing/[id]/actions";
 import { findListingById } from "@/repositories/listing";
 import { Badge } from "@/ui/Badge";
-import { ButtonAsLink } from "@/ui/Button";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
@@ -67,35 +66,28 @@ export default async function ListingPage({
         {listing.productName!}
       </H>
       <Section className="grid w-full items-start gap-4">
-        <Badge className="badge-lg">¥{listing.price}</Badge>
-        <div className="flex w-full items-center justify-between">
-          <LikeButton listingId={listing.id} sessionUser={user!} />
+        <div className="grid grid-cols-6 grid-rows-2 items-center justify-between">
+          <Badge className="badge-lg col-span-5 w-full p-6">
+            ¥{listing.price}
+          </Badge>
           <Toolbar
+            className="col-span-1"
             listingId={listing.id}
             sessionUser={user!}
             isListingOwner={isOwner}
           />
+          <LikeButton
+            className="col-span-3"
+            listingId={listing.id}
+            sessionUser={user!}
+          />
+          <TransactionButton listingId={id} className="col-span-3" />
         </div>
         <TitleUnderbar title="説明" />
         <ItemDescription description={listing.description} />
         <TitleUnderbar title="商品情報" />
         <ItemInformation listing={listing} />
-        {listing.transactionId ? (
-          <ButtonAsLink
-            href={`/transactions/${listing.transactionId}`}
-            secondary
-          >
-            取引へ進む
-          </ButtonAsLink>
-        ) : (
-          !isOwner && (
-            <PurchaseButton
-              listing={listing}
-              buyerId={userId}
-              userCouponId={null}
-            />
-          )
-        )}
+        <TransactionButton listingId={id} />
         <TitleUnderbar title="コメント" />
         <CommentSection
           listingId={listing.id}

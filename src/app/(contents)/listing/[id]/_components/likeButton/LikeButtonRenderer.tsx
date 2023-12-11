@@ -12,6 +12,8 @@ type Props = {
   onClick: () => void;
   /** いいねボタンを押したときの処理中かどうか */
   loading: boolean;
+  /** className */
+  className?: string;
 };
 
 /**
@@ -23,9 +25,10 @@ export function LikeButtonRenderer({
   isLiked,
   loading,
   onClick: handleClick,
+  className = "",
 }: Props) {
   return (
-    <div>
+    <div className={className}>
       <input
         type="checkbox"
         id="favbox"

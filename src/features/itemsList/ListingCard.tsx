@@ -35,7 +35,7 @@ type Props = {
 export function ListingCard({ listing }: Props) {
   const formattedPrice = listing.price ? formatPrice(listing.price) : "N/A";
 
-  const isSoldOut = Boolean(listing.transactionId);
+  const isSoldOut = Boolean(listing.transaction?.id);
 
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">

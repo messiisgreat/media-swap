@@ -148,7 +148,6 @@ model Listing {
     shippingDaysId     String?  @map("shipping_days_id") @db.ObjectId // 配送日数ID外部キー
     shippingMethodId   String?  @map("shipping_method_id") @db.ObjectId // 配送方法ID外部キー
     productConditionId String?  @map("product_condition_id") @db.ObjectId // 商品状態ID外部キー
-    transactionId      String?  @map("transaction_id") @db.ObjectId // 取引ID外部キー
     pageView           Int      @default(0) @map("page_view") // ページ閲覧数
     postageIsIncluded  Boolean  @default(false) @map("postage_is_included")
 
@@ -156,15 +155,15 @@ model Listing {
     shippingDays     ShippingDays?     @relation(fields: [shippingDaysId], references: [id])
     shippingMethod   ShippingMethod?   @relation(fields: [shippingMethodId], references: [id])
     productCondition ProductCondition? @relation(fields: [productConditionId], references: [id])
+    transaction      Transaction?
 
-    transaction Transaction?
-    images      ListingImage[]
-    historys    BrowsingHistory[]
-    comments    ListingComment[]
-    likes       Like[]
-    categories  ListingCategory[]
-    tags        ListingTag[]
-    reports     ListingReport[]
+    images     ListingImage[]
+    historys   BrowsingHistory[]
+    comments   ListingComment[]
+    likes      Like[]
+    categories ListingCategory[]
+    tags       ListingTag[]
+    reports    ListingReport[]
 
     @@map("listings")
 }
@@ -235,9 +234,9 @@ model ListingCategory {
 
 // いいねテーブル
 model Like {
-    id        String @id @default(auto()) @map("_id") @db.ObjectId
-    listingId String @map("listing_id") @db.ObjectId // 出品情報ID外部キー
-    userId    String @map("user_id") @db.ObjectId // ユーザーID外部キー
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    listingId String   @map("listing_id") @db.ObjectId // 出品情報ID外部キー
+    userId    String   @map("user_id") @db.ObjectId // ユーザーID外部キー
     createdAt DateTime @default(now()) @map("created_at") // 作成日時
 
     user    User    @relation(fields: [userId], references: [id])
@@ -334,12 +333,12 @@ model Transaction {
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
     transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
     trackingNumber      String?
+    transactionStatus   Int      @default(0) // 取引ステータス 0: 出品者が発送待ち, 1: 購入者が受取待ち, 2: 出品者が受取待ち, 3: 取引完了
 
-    buyer             User         @relation("buyer", fields: [buyerId], references: [id])
-    listing           Listing      @relation(fields: [listingId], references: [id])
-    transactionStatus Int
-    userCoupon        UserCoupon[]
+    buyer   User    @relation("buyer", fields: [buyerId], references: [id])
+    listing Listing @relation(fields: [listingId], references: [id])
 
+    userCoupon          UserCoupon[]
     transactionRating   TransactionRating[]
     transactionComments TransactionComment[]
 

@@ -13,7 +13,7 @@ import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
 
-import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/mailTemplate";
+import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/_components/transactionButton/purchaseButton/mailTemplate";
 import { sendMailToUser } from "@/lib/mail";
 import {
   createTransactionComment,

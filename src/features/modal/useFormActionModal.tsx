@@ -22,6 +22,14 @@ export const useFormActionModal = (
 ): useFormActionModalResult => {
   const { handleOpen, handleClose, Dialog } = useDialog();
 
+  const onAction = useCallback(
+    async (f: FormData) => {
+      await action(f);
+      handleClose();
+    },
+    [action, handleClose],
+  );
+
   const FormActionModal = useCallback(
     ({ children }: { children: ReactNode }) => (
       <Dialog>
@@ -32,20 +40,14 @@ export const useFormActionModal = (
           >
             ✕
           </button>
-          <form
-            className="flex flex-col gap-4"
-            action={async (f) => {
-              await action(f);
-              handleClose();
-            }}
-          >
+          <form className="flex flex-col gap-4" action={onAction}>
             {children}
             <SubmitButton className="btn-error">{actionText}</SubmitButton>
           </form>
         </div>
       </Dialog>
     ),
-    [Dialog, action, actionText, handleClose],
+    [Dialog, actionText, handleClose, onAction],
   );
 
   return { handleOpen, FormActionModal };

@@ -1,17 +1,18 @@
 import ItemsList from "@/features/itemsList";
+import { findBrowsingHistory } from "@/repositories/browsingHistory";
 import {
-  type ListingOrderBy,
   countListings,
   countListingsByBuyerId,
   countListingsByProductName,
   countListingsBySellerId,
-  findListings,
   findListingById,
+  findListings,
   findListingsByBuyerId,
   findListingsByProductName,
   findListingsBySellerId,
+  type ListingOrderBy,
+  type ListingsReadResult,
 } from "@/repositories/listing";
-import { findBrowsingHistory } from "@/repositories/browsingHistory";
 import { PaginationBar } from "@/ui";
 
 type CommonProps = {
@@ -69,7 +70,7 @@ export type Props =
  */
 const findlistingsAndCount = async (
   props: Props,
-): Promise<[Awaited<ReturnType<typeof findListings>>, number]> => {
+): Promise<[ListingsReadResult, number]> => {
   const {
     page,
     size,
@@ -114,11 +115,11 @@ const findlistingsAndCount = async (
     // 閲覧履歴を取得
   } else if (userId) {
     const browsingHistorys = await findBrowsingHistory(userId);
-    const listingIds = [...new Set(browsingHistorys.map(h => h.listingId))]; 
+    const listingIds = [...new Set(browsingHistorys.map((h) => h.listingId))];
     const listings = await Promise.all(
       listingIds.map(async (id) => {
         return await findListingById(id);
-      })
+      }),
     );
     return [listings, listings.length];
   } else if (query) {

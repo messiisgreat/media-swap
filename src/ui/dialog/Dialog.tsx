@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import { RemoveScroll } from "react-remove-scroll";
+import { twMerge } from "tailwind-merge";
 
 type DialogProps = {
   /** dialogの開閉状態 */
@@ -59,7 +60,11 @@ export const Dialog: React.FC<DialogProps> = ({
 
   return (
     <RemoveScroll removeScrollBar enabled={isOpen}>
-      <dialog className="modal" ref={dialogRef} onClick={handleClickDialog}>
+      <dialog
+        className={twMerge("modal", isOpen ? "" : "hidden")}
+        ref={dialogRef}
+        onClick={handleClickDialog}
+      >
         <div onClick={handleClickContent}>{children}</div>
       </dialog>
     </RemoveScroll>
