@@ -1,4 +1,4 @@
-import { type ZodType, z } from "zod";
+import { z, type ZodType } from "zod";
 
 import { type FormState } from "@/ui/form/type";
 
@@ -18,6 +18,8 @@ export type ProductFormValues = {
   shippingDaysId: string;
   /** 発送方法 */
   shippingMethodId: string;
+  /** 発送方法（ユーザ入力） */
+  shippingMethodCustom: string;
   /** 画像ファイル */
   imageFiles: File[];
   /** タグ */
@@ -41,6 +43,7 @@ export const initialProductFormValues: ProductFormState = {
     postageIsIncluded: "",
     shippingDaysId: "",
     shippingMethodId: "",
+    shippingMethodCustom: "",
     imageFiles: [],
     tags: "",
     verificationCode: "",
@@ -78,6 +81,7 @@ export const ProductFormSchema: ZodType<ProductFormValues> = z.object({
   shippingDaysId: z.string({
     invalid_type_error: "発送日数を選択してください",
   }),
+  shippingMethodCustom: z.string(),
   shippingMethodId: z
     .string({ invalid_type_error: "発送方法を選択してください" })
     .min(1, { message: "発送方法を選択してください" }),

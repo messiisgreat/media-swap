@@ -31,6 +31,7 @@ export const Empty: Story = {
     deliveryContentsProps: {
       postageIsIncluded: "",
       shippingMethodId: "",
+      shippingMethodCustom: "",
       shippingDaysId: "",
       price: "",
     },
@@ -62,6 +63,7 @@ export const Filled: Story = {
       postageIsIncluded: "1",
       shippingMethodId: "1",
       shippingDaysId: "1",
+      shippingMethodCustom: "",
       price: "300",
     },
   },

@@ -33,6 +33,7 @@ export const ItemsFormContents = ({
         postageIsIncluded={deliveryContentsProps.postageIsIncluded}
         shippingMethodId={deliveryContentsProps.shippingMethodId}
         shippingDaysId={deliveryContentsProps.shippingDaysId}
+        shippingMethodCustom={deliveryContentsProps.shippingMethodCustom}
         price={deliveryContentsProps.price}
       />
     </>

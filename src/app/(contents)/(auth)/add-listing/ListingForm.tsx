@@ -44,6 +44,7 @@ export const ListingForm = ({ tags }: { tags: Tag[] }) => {
           postageIsIncluded: state.values.postageIsIncluded,
           shippingMethodId: state.values.shippingMethodId,
           shippingDaysId: state.values.shippingDaysId,
+          shippingMethodCustom: state.values.shippingMethodCustom,
           price: state.values.price,
         }}
       />

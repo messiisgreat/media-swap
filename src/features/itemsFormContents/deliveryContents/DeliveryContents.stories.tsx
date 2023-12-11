@@ -24,6 +24,7 @@ export const Empty: Story = {
   args: {
     postageIsIncluded: "",
     shippingMethodId: "",
+    shippingMethodCustom: "",
     shippingDaysId: "",
     price: "",
   },
@@ -33,6 +34,7 @@ export const Filled: Story = {
   args: {
     postageIsIncluded: "1",
     shippingMethodId: "1",
+    shippingMethodCustom: "",
     shippingDaysId: "1",
     price: "300",
   },

@@ -74,6 +74,7 @@ export const listingItem = async (
     redirect(`/mypage/draft`);
   } else {
     const validated = ProductFormSchema.safeParse(values);
+    console.log("value", values);
     if (!validated.success) {
       return {
         ...prevState,

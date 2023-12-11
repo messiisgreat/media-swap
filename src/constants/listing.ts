@@ -32,7 +32,14 @@ export const SHIPPING_METHOD: ShippingMethod[] = [
   { id: "6".padStart(24, "0"), name: "ゆうパック", amount: 800 },
   { id: "7".padStart(24, "0"), name: "クリックポスト", amount: 200 },
   { id: "8".padStart(24, "0"), name: "ゆうパケット", amount: 200 },
+  { id: "99".padStart(24, "0"), name: "その他", amount: null },
 ];
+
+/** 配送方法（その他） */
+export const SHIPPING_ID = {
+  OTHER: "99".padStart(24, "0"),
+};
+
 /** 配送日の目安 */
 export const SHIPPING_DAYS: ShippingDays[] = [
   { id: "0".padStart(24, "0"), name: "1~2日で発送", maxDays: 2 },
