@@ -34,6 +34,8 @@ export default async function Page({
   const sellerId = transaction.listing.sellerId;
   const buyerId = transaction.buyerId;
 
+  const isSeller = sessionUser.id === sellerId;
+
   const isNotSellerOrBuyer =
     sessionUser.id !== sellerId && sessionUser.id !== buyerId;
 
@@ -49,9 +51,11 @@ export default async function Page({
           sessionUser={sessionUser}
         />
         {/* 送り状番号の送信用 */}
-        <VerifyProvider>
-          <ShippingNotification transactionId={transactionId} />
-        </VerifyProvider>
+        {isSeller && (
+          <VerifyProvider>
+            <ShippingNotification transactionId={transactionId} />
+          </VerifyProvider>
+        )}
         {/* 送り状番号の表示用 */}
         {transaction.trackingNumber && (
           <TrackingNumber
