@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 
+import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
 import { useImageModal } from "@/features/modal";
 import Image from "next/image";
 
@@ -11,8 +12,10 @@ import Image from "next/image";
  */
 export default function TempCarousel({
   images,
+  isSoldOut,
 }: {
   images: { imageURL: string }[];
+  isSoldOut: boolean;
 }) {
   const slides = images.map((image) => image.imageURL);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -57,7 +60,7 @@ export default function TempCarousel({
 
   return (
     <div className="grid w-full select-none gap-4">
-      <div className="overflow-hidden">
+      <div className="relative overflow-hidden">
         <div className="flex touch-pan-y" ref={imageRef}>
           {slides.map((imageURL, index) => (
             <Image
@@ -71,6 +74,12 @@ export default function TempCarousel({
             />
           ))}
         </div>
+        {isSoldOut && (
+          <SoldOutBadge
+            className="absolute top-0 h-28 w-28"
+            spanClassName="text-lg py-3"
+          />
+        )}
         <ImageModal />
       </div>
       <div

@@ -50,7 +50,12 @@ export function ListingCard({ listing }: Props) {
             sizes="500px"
             fill
           />
-          {isSoldOut && <SoldOutBadge />}
+          {isSoldOut && (
+            <SoldOutBadge
+              className="flex h-16 w-16"
+              spanClassName="p-2 text-xs"
+            />
+          )}
           <PriceBadge className="absolute bottom-2">
             {formattedPrice}
           </PriceBadge>

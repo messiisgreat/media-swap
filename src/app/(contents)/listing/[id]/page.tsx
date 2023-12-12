@@ -61,7 +61,7 @@ export default async function ListingPage({
 
   return (
     <VerifyProvider>
-      <Carousel images={images} />
+      <Carousel isSoldOut={Boolean(listing.transaction?.id)} images={images} />
       <H className="w-full text-xl font-bold lg:text-2xl">
         {listing.productName!}
       </H>
