@@ -11,7 +11,7 @@ const config = {
   moduleNameMapper: {
     "^@/(.)$": "<rootDir>/src/$1",
   },
-  setupFilesAfterEnv: ["./jest.setup.ts"],
+  setupFilesAfterEnv: ["./jest.setup.ts", "./src/lib/prismaMock.ts"],
 };
 
 module.exports = createJestConfig(config);
