@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
-import { OptionMenu } from "@/app/(contents)/(auth)/transactions/OptionMenu";
-import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/transactionOptionItems";
+import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/OptionMenu";
+import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionOptionItems";
 import { type StaticImageData } from "next/image";
 
 type SellerInfoProps = {
