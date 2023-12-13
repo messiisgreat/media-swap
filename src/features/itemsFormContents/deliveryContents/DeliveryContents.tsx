@@ -1,5 +1,6 @@
 import {
   POSTAGE_IS_INCLUDED,
+  PRICE_LIMIT,
   SHIPPING_DAYS,
   SHIPPING_ID,
   SHIPPING_METHOD,
@@ -73,7 +74,9 @@ export const DeliveryContents = ({
         defaultValue={shippingDaysId}
       />
       <PriceInput
-        labelText="販売価格(￥300〜10,000,000)"
+        labelText={`販売価格(￥${new Intl.NumberFormat().format(
+          PRICE_LIMIT.MIN,
+        )}〜${new Intl.NumberFormat().format(PRICE_LIMIT.MAX)})`}
         name="price"
         required
         prefix="¥"

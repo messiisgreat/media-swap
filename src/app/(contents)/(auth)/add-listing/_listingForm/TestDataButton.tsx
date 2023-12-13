@@ -1,6 +1,7 @@
 import { type ComponentProps } from "react";
 
 import {
+  PRICE_LIMIT,
   PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
@@ -43,7 +44,9 @@ export const TestDataButton = (props: Props) => {
     );
     setTestData(
       "[name=price]",
-      Math.floor(Math.random() * 999700 + 300).toString(),
+      Math.floor(
+        Math.random() * (PRICE_LIMIT.MAX - PRICE_LIMIT.MIN) + PRICE_LIMIT.MIN,
+      ).toString(),
     );
     setTestData("textarea[name=description]", "これは試験商品の説明です。");
     setTestData(
