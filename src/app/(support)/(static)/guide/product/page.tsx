@@ -5,7 +5,7 @@ import { H } from "@/ui/structure/H";
 /**
  * ガイドページ(出品)
  */
-export default function GuideListingPage() {
+export default function GuideItemPage() {
   return (
     <div>
       <div className="border-2">

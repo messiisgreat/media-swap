@@ -23,9 +23,8 @@ type Props = {
  */
 const findNotificationsAndCount = async (
   userId: string,
-  props: Props,
+  { page, size, filter }: Props,
 ): Promise<[NotificationsQueryResult, number]> => {
-  const { page, size, filter } = props;
   if (filter === "unread") {
     const [notifications, count] = await Promise.all([
       findNotificationsByUserIdAndUnread(userId, page, size),

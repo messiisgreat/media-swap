@@ -38,13 +38,14 @@ export const findNotificationsByUserId = async (
   userId: string,
   page: number,
   size: number,
-) => await prisma.notification.findMany({
+) =>
+  await prisma.notification.findMany({
     skip: (page - 1) * size,
     take: size,
-    where: { userNotificationRead: { some: { userId } } },
+    where: { userNotificationReads: { some: { userId } } },
     include: {
       notificationType: true,
-      userNotificationRead: { where: { userId }, take: 1 },
+      userNotificationReads: { where: { userId }, take: 1 },
     },
     orderBy: {
       date: "asc",
@@ -55,8 +56,9 @@ export const findNotificationsByUserId = async (
  * お知らせ数を取得する
  * @param userId ユーザID
  */
-export const countNotificationsByUserId = async (userId: string) => await prisma.notification.count({
-    where: { userNotificationRead: { some: { userId } } },
+export const countNotificationsByUserId = async (userId: string) =>
+  await prisma.notification.count({
+    where: { userNotificationReads: { some: { userId } } },
   });
 
 /**
@@ -69,13 +71,14 @@ export const findNotificationsByUserIdAndUnread = async (
   userId: string,
   page: number,
   size: number,
-) => await prisma.notification.findMany({
+) =>
+  await prisma.notification.findMany({
     skip: (page - 1) * size,
     take: size,
-    where: { userNotificationRead: { some: { userId } } },
+    where: { userNotificationReads: { some: { userId } } },
     include: {
       notificationType: true,
-      userNotificationRead: { where: { userId }, take: 1 },
+      userNotificationReads: { where: { userId }, take: 1 },
     },
     orderBy: {
       date: "asc",
@@ -86,6 +89,7 @@ export const findNotificationsByUserIdAndUnread = async (
  * 未読のお知らせ数を取得する
  * @param userId ユーザID
  */
-export const countNotificationsByUserIdAndUnread = async (userId: string) => await prisma.notification.count({
-    where: { userNotificationRead: { some: { userId } } },
+export const countNotificationsByUserIdAndUnread = async (userId: string) =>
+  await prisma.notification.count({
+    where: { userNotificationReads: { some: { userId } } },
   });

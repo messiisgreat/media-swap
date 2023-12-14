@@ -1,4 +1,4 @@
-import { type Listing } from "@prisma/client";
+import { type Item } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
@@ -11,14 +11,14 @@ type Props = {
     query: string;
     page: number;
     size: number;
-    sort: keyof Listing;
+    sort: keyof Item;
     order: "asc" | "desc";
   };
 };
 
 /**
  *  出品商品一覧を表示するページ
- * /mypage/listings
+ * /mypage/items
  */
 export default async function Page({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },

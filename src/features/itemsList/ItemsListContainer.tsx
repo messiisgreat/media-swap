@@ -1,18 +1,18 @@
 import ItemsList from "@/features/itemsList";
 import { findBrowsingHistory } from "@/repositories/browsingHistory";
 import {
-  countListings,
-  countListingsByBuyerId,
-  countListingsByProductName,
-  countListingsBySellerId,
-  findListingById,
-  findListings,
-  findListingsByBuyerId,
-  findListingsByProductName,
-  findListingsBySellerId,
-  type ListingOrderBy,
-  type ListingsReadResult,
-} from "@/repositories/listing";
+  countItems,
+  countItemsByBuyerId,
+  countItemsByProductName,
+  countItemsBySellerId,
+  findItemById,
+  findItems,
+  findItemsByBuyerId,
+  findItemsByProductName,
+  findItemsBySellerId,
+  type ItemOrderBy,
+  type ItemsReadResult,
+} from "@/repositories/item";
 import { PaginationBar } from "@/ui";
 
 type CommonProps = {
@@ -68,74 +68,66 @@ export type Props =
  * 渡されたパラメータに応じて取得するデータを選択する
  * @param props page, size, sort, order, query, buyerId, sellerId, isPublic, userId
  */
-const findlistingsAndCount = async (
-  props: Props,
-): Promise<[ListingsReadResult, number]> => {
-  const {
-    page,
-    size,
-    sort,
-    order,
-    query,
-    buyerId,
-    sellerId,
-    isPublic,
-    userId,
-  } = props;
-  const orderBy: ListingOrderBy = {
+const finditemsAndCount = async ({
+  page,
+  size,
+  sort,
+  order,
+  query,
+  buyerId,
+  sellerId,
+  isPublic,
+  userId,
+}: Props): Promise<[ItemsReadResult, number]> => {
+  const orderBy: ItemOrderBy = {
     [sort]: order,
   };
   // 購入商品一覧
   if (buyerId) {
-    const listings = await findListingsByBuyerId(buyerId, page, size, orderBy);
-    const count = await countListingsByBuyerId(buyerId);
-    return [listings, count];
+    const items = await findItemsByBuyerId(buyerId, page, size, orderBy);
+    const count = await countItemsByBuyerId(buyerId);
+    return [items, count];
     // 下書き商品一覧
   } else if (sellerId && !isPublic) {
-    const listings = await findListingsBySellerId(
+    const items = await findItemsBySellerId(
       sellerId,
       page,
       size,
       orderBy,
       isPublic,
     );
-    const count = await countListingsBySellerId(sellerId, isPublic);
-    return [listings, count];
+    const count = await countItemsBySellerId(sellerId, isPublic);
+    return [items, count];
     // 出品商品一覧
   } else if (sellerId && isPublic) {
-    const listings = await findListingsBySellerId(
+    const items = await findItemsBySellerId(
       sellerId,
       page,
       size,
       orderBy,
       isPublic,
     );
-    const count = await countListingsBySellerId(sellerId, isPublic);
-    return [listings, count];
+    const count = await countItemsBySellerId(sellerId, isPublic);
+    return [items, count];
     // 閲覧履歴を取得
   } else if (userId) {
     const browsingHistorys = await findBrowsingHistory(userId);
-    const listingIds = [...new Set(browsingHistorys.map((h) => h.listingId))];
-    const listings = await Promise.all(
-      listingIds.map(async (id) => {
-        return await findListingById(id);
+    const itemIds = [...new Set(browsingHistorys.map((h) => h.itemId))];
+    const items = await Promise.all(
+      itemIds.map(async (id) => {
+        return await findItemById(id);
       }),
     );
-    return [listings, listings.length];
+    return [items, items.length];
   } else if (query) {
-    const listings = await findListingsByProductName(
-      query,
-      page,
-      size,
-      orderBy,
-    );
-    const count = await countListingsByProductName(query);
-    return [listings, count];
+    const items = await findItemsByProductName(query, page, size, orderBy);
+    const count = await countItemsByProductName(query);
+    return [items, count];
     // 全商品一覧
   } else {
-    const listings = await findListings(page, size, orderBy);
-    const count = await countListings();
-    return [listings, count];
+    const items = await findItems(page, size, orderBy);
+    const count = await countItems();
+    return [items, count];
   }
 };
 
@@ -144,11 +136,11 @@ const findlistingsAndCount = async (
  * @param props page, size, sort, order, query
  */
 export const ItemsListContainer = async (props: Props) => {
-  const [listings, count] = await findlistingsAndCount(props);
+  const [items, count] = await finditemsAndCount(props);
   const total = Math.ceil(count / props.size);
   return (
     <>
-      <ItemsList listings={listings} />
+      <ItemsList items={items} />
       {total > 1 && (
         <PaginationBar currentPage={props.page} totalPages={total} />
       )}

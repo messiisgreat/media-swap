@@ -2,7 +2,7 @@ import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
-import { type Listing } from "@prisma/client";
+import { type Item } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
     query: string;
     page: number;
     size: number;
-    sort: keyof Listing;
+    sort: keyof Item;
     order: "asc" | "desc";
   };
 };

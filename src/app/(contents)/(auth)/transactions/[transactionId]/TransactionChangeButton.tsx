@@ -7,7 +7,7 @@ import { type Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 import { updateTransactionStateByTransactionId } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
-import { TRANSACTION_STATUS } from "@/constants/listing";
+import { TRANSACTION_STATUS } from "@/constants/item";
 import { Button } from "@/ui";
 
 /**

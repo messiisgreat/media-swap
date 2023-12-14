@@ -22,49 +22,41 @@ type Story = StoryObj<typeof ItemsFormContents>;
 
 export const Empty: Story = {
   args: {
-    detailsContentsProps: {
-      productName: "",
-      productConditionId: "",
-      description: "",
-      tags: [],
-    },
-    deliveryContentsProps: {
-      postageIsIncluded: "",
-      shippingMethodId: "",
-      shippingMethodCustom: "",
-      shippingDaysId: "",
-      price: "",
-    },
+    name: "",
+    conditionCode: "",
+    description: "",
+    tags: [],
+    isShippingIncluded: "",
+    shippingMethodCode: "",
+    shippingMethodCustom: "",
+    shippingDaysCode: "",
+    price: "",
   },
 };
 
 export const Filled: Story = {
   args: {
-    detailsContentsProps: {
-      productName: "商品名",
-      productConditionId: "1",
-      description: "商品説明",
-      tags: [
-        {
-          id: "1",
-          text: "タグ名",
-          createdAt: new Date(),
-        },
-      ],
-      selectedTags: [
-        {
-          id: "1",
-          text: "タグ名",
-          createdAt: new Date(),
-        },
-      ],
-    },
-    deliveryContentsProps: {
-      postageIsIncluded: "1",
-      shippingMethodId: "1",
-      shippingDaysId: "1",
-      shippingMethodCustom: "",
-      price: "300",
-    },
+    name: "商品名",
+    conditionCode: "1",
+    description: "商品説明",
+    tags: [
+      {
+        id: "1",
+        text: "タグ名",
+        createdAt: new Date(),
+      },
+    ],
+    selectedTags: [
+      {
+        id: "1",
+        text: "タグ名",
+        createdAt: new Date(),
+      },
+    ],
+    isShippingIncluded: "1",
+    shippingMethodCode: "1",
+    shippingDaysCode: "1",
+    shippingMethodCustom: "",
+    price: "300",
   },
 };

@@ -1,5 +1,5 @@
 import AgeCheckProvider from "@/app/(contents)/_layout/ageCheck";
-import ListingButtonProvider from "@/app/(contents)/_layout/listingButton";
+import ItemButtonProvider from "@/app/(contents)/_layout/listingButton";
 
 /**
  * (contents)のlayout
@@ -12,7 +12,7 @@ export default function ContentsLayout({
   return (
     <>
       {children}
-      <ListingButtonProvider />
+      <ItemButtonProvider />
       <AgeCheckProvider />
     </>
   );

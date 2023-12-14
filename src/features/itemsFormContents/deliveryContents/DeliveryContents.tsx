@@ -1,61 +1,61 @@
 import {
   POSTAGE_IS_INCLUDED,
+  PRICE_LIMIT,
   SHIPPING_DAYS,
   SHIPPING_ID,
   SHIPPING_METHOD,
-} from "@/constants/listing";
+} from "@/constants/item";
 import { PriceInput } from "@/features/itemsFormContents/deliveryContents/PriceInput";
 import { Input, Select } from "@/ui/form";
 import { TitleUnderbar } from "@/ui/structure";
-import { objToAssociative } from "@/utils/converter";
-import { useState } from "react";
+import { useCallback, useState, type ChangeEvent } from "react";
 
 type Props = {
-  postageIsIncluded: string;
-  shippingMethodId: string;
-  shippingDaysId: string;
-  shippingMethodCustom: string;
+  /** 配送料の負担情報 */
+  isShippingIncluded: string;
+  /** 配送方法ID */
+  shippingMethodCode: string;
+  /** 発送までの日数ID */
+  shippingDaysCode: string;
+  /** 配送方法（その他） */
+  shippingMethodCustom?: string;
+  /** 価格 */
   price: string;
 };
 
 /**
  * 配送情報を入力するフォームのコンポーネント
- *
- * @param {object} props - コンポーネントのプロパティ
- * @param {string} props.postageIsIncluded - 配送料の負担情報
- * @param {string} props.shippingMethodId - 配送方法ID
- * @param {string} props.shippingDaysId - 発送までの日数ID
- * @param {string} props.price - 価格
- * @returns {React.Element} 配送情報を入力するフォームのエレメント
+ * @returns 配送情報を入力するフォームのエレメント
  */
 export const DeliveryContents = ({
-  postageIsIncluded,
-  shippingMethodId,
-  shippingDaysId,
+  isShippingIncluded,
+  shippingMethodCode,
+  shippingDaysCode,
   shippingMethodCustom,
   price,
 }: Props) => {
   const [isOther, setIsOther] = useState(false);
-  const handleChange = (targetValue: string) => {
-    const isOther = targetValue === SHIPPING_ID.OTHER;
+  const handleChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const isOther = e.currentTarget.value === SHIPPING_ID.OTHER;
+    if (!isOther) return;
     setIsOther(isOther);
-  };
+  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1">
       <TitleUnderbar title="配送について" />
       <Select
-        name="postageIsIncluded"
+        name="isShippingIncluded"
         labelText="配送料の負担"
-        options={objToAssociative(POSTAGE_IS_INCLUDED)}
-        defaultValue={postageIsIncluded}
+        options={POSTAGE_IS_INCLUDED}
+        defaultValue={isShippingIncluded}
       />
       <Select
-        name="shippingMethodId"
+        name="shippingMethodCode"
         labelText="配送の方法"
-        options={objToAssociative(SHIPPING_METHOD)}
-        defaultValue={shippingMethodId}
-        onChange={(e) => handleChange(e.target.value)}
+        options={SHIPPING_METHOD}
+        defaultValue={shippingMethodCode}
+        onChange={handleChange}
       />
       {isOther && (
         <Input
@@ -63,17 +63,20 @@ export const DeliveryContents = ({
           labelText="配送の方法（その他）"
           type="text"
           placeholder="速達サービス"
+          required
           defaultValue={shippingMethodCustom}
         />
       )}
       <Select
-        name="shippingDaysId"
+        name="shippingDaysCode"
         labelText="発送までの日数"
-        options={objToAssociative(SHIPPING_DAYS)}
-        defaultValue={shippingDaysId}
+        options={SHIPPING_DAYS}
+        defaultValue={shippingDaysCode}
       />
       <PriceInput
-        labelText="販売価格(￥300〜10,000,000)"
+        labelText={`販売価格(￥${new Intl.NumberFormat().format(
+          PRICE_LIMIT.MIN,
+        )}〜${new Intl.NumberFormat().format(PRICE_LIMIT.MAX)})`}
         name="price"
         required
         prefix="¥"

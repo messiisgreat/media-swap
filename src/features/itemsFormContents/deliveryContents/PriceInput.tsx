@@ -1,13 +1,18 @@
-import { type ChangeEvent, type ComponentProps, useCallback, useState } from "react";
+import {
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type ComponentProps,
+} from "react";
 
 import { z } from "zod";
 
-import { HANDING_CHARGE_RATE } from "@/constants/listing";
+import { HANDING_CHARGE_RATE, PRICE_LIMIT } from "@/constants/item";
 import { Input } from "@/ui/form/Elements";
 
-const MIN = 300;
-const MAX = 10000000;
-const valueSchema = z.number().refine((val) => MIN <= val && val <= MAX);
+const valueSchema = z
+  .number()
+  .refine((val) => PRICE_LIMIT.MIN <= val && val <= PRICE_LIMIT.MAX);
 
 type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
 
@@ -17,7 +22,8 @@ type PriceInputProps = Omit<ComponentProps<typeof Input>, "onChange">;
  */
 export const PriceInput = ({ ...props }: PriceInputProps) => {
   const [amount, setAmount] = useState<number | "">("");
-  const isOutOfRange = amount !== "" && (amount > MAX || amount < MIN);
+  const isOutOfRange =
+    amount !== "" && (amount > PRICE_LIMIT.MAX || amount < PRICE_LIMIT.MIN);
   const handlingCharge =
     amount === "" ? "" : Math.round(amount * HANDING_CHARGE_RATE);
   const amountAfterCharge =
@@ -43,8 +49,8 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
       <Input
         type="number"
         placeholder="0"
-        min={MIN}
-        max={MAX}
+        min={PRICE_LIMIT.MIN}
+        max={PRICE_LIMIT.MAX}
         inputMode="numeric"
         className="w-full text-right font-bold [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         onChange={handleChange}
@@ -53,8 +59,10 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
       <label className="label-text-alt flex justify-between text-error">
         {isOutOfRange
           ? `¥${new Intl.NumberFormat().format(
-              MIN,
-            )}以上¥${new Intl.NumberFormat().format(MAX)}以下で入力してください`
+              PRICE_LIMIT.MIN,
+            )}以上¥${new Intl.NumberFormat().format(
+              PRICE_LIMIT.MAX,
+            )}以下で入力してください`
           : "　"}
       </label>
       <div className="flex justify-between">

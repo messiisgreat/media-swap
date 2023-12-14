@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { type Transaction } from "@prisma/client";
 import { type Session } from "next-auth";
 import { type IconType } from "react-icons";
 import {
@@ -11,7 +10,9 @@ import {
   FaTruck,
 } from "react-icons/fa";
 
-import { TRANSACTION_STATUS } from "@/constants/listing";
+import { TRANSACTION_STATUS } from "@/constants/item";
+import { type TransactionReadResult } from "@/repositories/transaction";
+import { notFound } from "next/navigation";
 
 function StatusAlert({
   icon,
@@ -146,70 +147,73 @@ function CancelBuyerStatus() {
   );
 }
 
+type Props = {
+  transaction: TransactionReadResult;
+  sessionUser: Session["user"];
+};
+
 /**
  * 取引のステータスを表示する
  * @param param0.transaction 取引
  * @param param0.sessionUser セッションユーザー
  * @returns
  */
-export function TransactionStatus({
-  transaction,
-  sessionUser,
-}: {
-  transaction: Transaction & { listing: { sellerId: string } };
-  sessionUser: Session["user"];
-}) {
-  const isSeller = transaction.listing.sellerId === sessionUser.id;
+export function TransactionStatus({ transaction, sessionUser }: Props) {
+  if (!transaction || !sessionUser) {
+    notFound();
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const isSeller = transaction.item.seller.id === sessionUser.id;
   const isBuyer = transaction.buyerId === sessionUser.id;
 
   switch (transaction.transactionStatus) {
-  case TRANSACTION_STATUS.BEFORE_PAYMENT: {
-    if (isSeller) {
-      return <BeforePaymentSellerStatus />;
-    } else if (isBuyer) {
-      return <BeforePaymentBuyerStatus />;
+    case TRANSACTION_STATUS.BEFORE_PAYMENT: {
+      if (isSeller) {
+        return <BeforePaymentSellerStatus />;
+      } else if (isBuyer) {
+        return <BeforePaymentBuyerStatus />;
+      }
+
+      break;
     }
-  
-  break;
-  }
-  case TRANSACTION_STATUS.COMPLETE_PAYMENT: {
-    if (isSeller) {
-      return <CompletePaymentSellerStatus />;
-    } else if (isBuyer) {
-      return <CompletePaymentBuyerStatus />;
+    case TRANSACTION_STATUS.COMPLETE_PAYMENT: {
+      if (isSeller) {
+        return <CompletePaymentSellerStatus />;
+      } else if (isBuyer) {
+        return <CompletePaymentBuyerStatus />;
+      }
+
+      break;
     }
-  
-  break;
-  }
-  case TRANSACTION_STATUS.SENT: {
-    if (isSeller) {
-      return <SentSellerStatus />;
-    } else if (isBuyer) {
-      return <SentBuyerStatus />;
+    case TRANSACTION_STATUS.SENT: {
+      if (isSeller) {
+        return <SentSellerStatus />;
+      } else if (isBuyer) {
+        return <SentBuyerStatus />;
+      }
+
+      break;
     }
-  
-  break;
-  }
-  case TRANSACTION_STATUS.RECEIVED: {
-    if (isSeller) {
-      return <ReceivedSellerStatus />;
-    } else if (isBuyer) {
-      return <ReceivedBuyerStatus />;
+    case TRANSACTION_STATUS.RECEIVED: {
+      if (isSeller) {
+        return <ReceivedSellerStatus />;
+      } else if (isBuyer) {
+        return <ReceivedBuyerStatus />;
+      }
+
+      break;
     }
-  
-  break;
-  }
-  case TRANSACTION_STATUS.CANCELLED: {
-    if (isSeller) {
-      return <CancelSellerStatus />;
-    } else if (isBuyer) {
-      return <CancelBuyerStatus />;
+    case TRANSACTION_STATUS.CANCELLED: {
+      if (isSeller) {
+        return <CancelSellerStatus />;
+      } else if (isBuyer) {
+        return <CancelBuyerStatus />;
+      }
+
+      break;
     }
-  
-  break;
-  }
-  default: {
-    return null;
-  }
+    default: {
+      return null;
+    }
   }
 }

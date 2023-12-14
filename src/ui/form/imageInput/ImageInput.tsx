@@ -1,7 +1,7 @@
 "use client";
 
-import { TestDataButton } from "@/app/(contents)/(auth)/add-listing/_listingForm";
 import { ImagePreview } from "@/ui/form/imageInput/ImagePreview";
+import { TestDataButton } from "@/ui/form/imageInput/TestDataButton";
 import { fetchImageAndConvertToFile } from "@/ui/form/imageInput/fetcher";
 import {
   addFileWithPreview,

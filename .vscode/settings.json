@@ -1,7 +1,7 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
   },
   // デフォルトのフォーマッターに prettier を指定
   "editor.defaultFormatter": "esbenp.prettier-vscode",

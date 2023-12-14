@@ -1,16 +1,16 @@
-import { ListingCard } from "@/features/itemsList/ListingCard";
-import { type ListingsReadResult } from "@/repositories/listing";
+import { ItemCard } from "@/features/itemsList/ItemCard";
+import { type ItemsReadResult } from "@/repositories/item";
 
 /**
  * 商品一覧を表示する
- * @param listings findListings関数で取得した商品一覧
+ * @param items findItems関数で取得した商品一覧
  * @returns div
  */
-export const ItemsList = ({ listings }: { listings: ListingsReadResult }) =>
-  listings.length ? (
+export const ItemsList = ({ items }: { items: ItemsReadResult }) =>
+  items.length ? (
     <div className="grid grid-cols-3 gap-1">
-      {listings.map((listing) => (
-        <ListingCard key={listing.id} listing={listing} />
+      {items.map((item) => (
+        <ItemCard key={item.id} item={item} />
       ))}
     </div>
   ) : (

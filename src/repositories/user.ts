@@ -1,18 +1,21 @@
 import "server-only";
 
+import prisma from "@/lib/prisma";
 import { cache } from "react";
 
-import prisma from "@/lib/prisma";
-import "server-only";
-
 /**
- * idからユーザーを取得する
- * @param id ユーザーID
- * @returns ユーザー
+ * 商品を取得する
+ *
+ * @param {string} id - ユーザーのID
+ * @returns 取得したユーザー情報
+ * @throws 製品が見つからない場合はエラーがスローされる
  */
 export const findUserById = cache(async (id: string) => {
-  return await prisma.user.findUnique({
+  return await prisma.user.findUniqueOrThrow({
     where: { id },
+    include: {
+      addresses: true,
+    },
   });
 });
 
