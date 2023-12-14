@@ -1,12 +1,12 @@
-import { type Metadata } from "next";
-
-import Carousel from "@/app/(contents)/item/[id]/Carousel";
-import { ItemDescription } from "@/app/(contents)/item/[id]/ItemDescription";
-import { ItemInformation } from "@/app/(contents)/item/[id]/ItemInformation";
-import { CommentSection } from "@/app/(contents)/item/[id]/_components/commentSection/CommentSection";
-import { LikeButton } from "@/app/(contents)/item/[id]/_components/likeButton";
-import { Toolbar } from "@/app/(contents)/item/[id]/_components/toolbar/Toolbar";
-import TransactionButton from "@/app/(contents)/item/[id]/_components/transactionButton";
+import {
+  Carousel,
+  CommentSection,
+  ItemDescription,
+  ItemInformation,
+  LikeButton,
+  Toolbar,
+  TransactionButton,
+} from "@/app/(contents)/item/[id]/_components";
 import { browsing } from "@/app/(contents)/item/[id]/actions";
 import { findItemById } from "@/repositories/item";
 import { Badge } from "@/ui/Badge";
@@ -14,6 +14,7 @@ import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section, TitleUnderbar } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
 import { getSessionUser } from "@/utils/session";
+import { type Metadata } from "next";
 
 type ItemPageProps = {
   params: {
