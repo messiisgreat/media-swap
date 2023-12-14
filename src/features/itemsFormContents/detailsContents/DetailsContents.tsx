@@ -2,36 +2,33 @@ import { useId } from "react";
 
 import { type Tag } from "@prisma/client";
 
-import { PRODUCT_CONDITION } from "@/constants/listing";
+import { PRODUCT_CONDITION } from "@/constants/item";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 import { Select } from "@/ui/form";
 import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
 import ImageInput from "@/ui/form/imageInput";
 import { TitleUnderbar } from "@/ui/structure";
-import { objToAssociative } from "@/utils/converter";
 
 type Props = {
-  productName: string;
-  productConditionId: string;
+  /** 商品名 */
+  name: string;
+  /** 商品の状態コード */
+  conditionCode: string;
+  /** 商品の説明 */
   description: string;
+  /** タグの配列 */
   tags: Tag[];
+  /** 選択されたタグの配列 */
   selectedTags?: Tag[];
 };
 
 /**
  * 商品の詳細情報を入力するフォームのコンポーネント
- *
- * @param {object} props - コンポーネントのプロパティ
- * @param {string} props.productName - 商品名
- * @param {string} props.productConditionId - 商品の状態ID
- * @param {string} props.description - 商品の説明
- * @param {Tag[]} props.tags - タグのリスト
- * @param {Tag[]} [props.selectedTags] - 選択されたタグのリスト
- * @returns {React.Element} 商品の詳細情報を入力するフォームのエレメント
+ * @returns 商品の詳細情報を入力するフォームのエレメント
  */
 export const DetailsContents = ({
-  productName,
-  productConditionId,
+  name,
+  conditionCode,
   description,
   tags,
   selectedTags,
@@ -48,18 +45,18 @@ export const DetailsContents = ({
       <LimitInput
         labelText="商品名"
         maxLength={32}
-        name="productName"
+        name="name"
         placeholder="商品名を入力してください"
         required
-        defaultValue={productName}
+        defaultValue={name}
       />
       <TitleUnderbar title="商品の説明" />
       <Select
         labelText="商品の状態"
-        options={objToAssociative(PRODUCT_CONDITION)}
-        name="productConditionId"
+        options={PRODUCT_CONDITION}
+        name="conditionCode"
         required
-        defaultValue={productConditionId}
+        defaultValue={conditionCode}
       />
       <LimitTextarea
         labelText="商品の説明"

@@ -18,40 +18,33 @@ async function main() {
   });
 
   // 商品情報をシードする
-  const listing = await prisma.listing.create({
+  const item = await prisma.item.create({
     data: {
-      productName: "Super Banana",
+      name: "Super Banana",
       price: 5000,
       description: "An excellent delicious banana.",
       isPublic: true,
+      conditionCode: "1",
+      shippingDaysCode: "2",
+      shippingMethodCode: "3",
       seller: {
         connect: { id: seller.id }, // 出品者として先に作成した User を接続
       },
-      // その他の必要な Listing フィールド
+      // その他の必要な Item フィールド
     },
   });
 
   // 画像情報をシードする
-  const listingImage = await prisma.listingImage.create({
+  const itemImage = await prisma.itemImage.create({
     data: {
-      listing: {
-        connect: { id: listing.id }, // Listing モデルと接続
+      item: {
+        connect: { id: item.id }, // Item モデルと接続
       },
       imageURL:
         "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
       caption: "Very delicious banana.",
       order: 1,
       // その他の必要な Image フィールド
-    },
-  });
-
-  // 商品状態を作成
-  const newCondition = await prisma.productCondition.create({
-    data: {
-      name: "New",
-      listings: {
-        connect: { id: listing.id },
-      },
     },
   });
 
@@ -79,51 +72,29 @@ async function main() {
   const like = await prisma.like.create({
     data: {
       userId: seller.id,
-      listingId: listing.id,
+      itemId: item.id,
     },
   });
 
-  const listingCategory = await prisma.listingCategory.create({
+  const itemCategory = await prisma.itemCategory.create({
     data: {
-      listingId: listing.id,
+      itemId: item.id,
       categoryId: childCategory.id,
     },
   });
 
-  const listingTag = await prisma.listingTag.create({
+  const itemTag = await prisma.itemTag.create({
     data: {
-      listingId: listing.id,
+      itemId: item.id,
       tagId: tag.id,
     },
   });
 
-  // 配送日数データの作成
-  const shippingDay = await prisma.shippingDays.create({
-    data: {
-      name: "1 to 3 days",
-      maxDays: 3,
-      listing: {
-        connect: { id: listing.id },
-      },
-    },
-  });
-
-  // 配送方法データの作成
-  const shippingMethod = await prisma.shippingMethod.create({
-    data: {
-      name: "Express",
-      amount: 500,
-      listings: {
-        connect: { id: listing.id },
-      },
-    },
-  });
-
   // 出品情報コメントの作成
-  const listingComment = await prisma.listingComment.create({
+  const itemComment = await prisma.itemComment.create({
     data: {
       userId: seller.id,
-      listingId: listing.id,
+      itemId: item.id,
       comment: "Great product!",
       createdAt: new Date("2023-01-01T00:00:00Z"),
     },
@@ -132,7 +103,7 @@ async function main() {
   // 取引データの作成
   const transaction = await prisma.transaction.create({
     data: {
-      listingId: listing.id,
+      itemId: item.id,
       buyerId: seller.id,
       transactionStatus: 2,
     },
@@ -162,14 +133,6 @@ async function main() {
     data: {
       name: "Excellent",
       rating: 5,
-    },
-  });
-
-  // UserViewHistoryのシードデータ
-  const userViewHistory = await prisma.userViewHistory.create({
-    data: {
-      userId: seller.id,
-      listingId: listing.id,
     },
   });
 
@@ -257,10 +220,10 @@ async function main() {
     },
   });
 
-  // ListingReportのシードデータ
-  const listingReport = await prisma.listingReport.create({
+  // ItemReportのシードデータ
+  const itemReport = await prisma.itemReport.create({
     data: {
-      listingId: listing.id, // 既存の出品情報ID
+      itemId: item.id, // 既存の出品情報ID
       userId: seller.id, // 既存のユーザーID
       comment: "不適切な内容があります。",
     },

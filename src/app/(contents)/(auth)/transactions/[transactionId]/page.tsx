@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/MessageSection";
+import { SellerInfo } from "@/app/(contents)/(auth)/transactions/[transactionId]/SellerInfo";
 import { ShippingNotification } from "@/app/(contents)/(auth)/transactions/[transactionId]/ShippingNotification";
 import { TrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/TrackingNumber";
 import { TransactionChangeButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionChangeButton";
@@ -8,7 +8,7 @@ import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { getSessionUser } from "@/utils/session";
-import { SellerInfo } from "@/app/(contents)/(auth)/transactions/[transactionId]/SellerInfo";
+import { notFound } from "next/navigation";
 
 /**
  * 取引画面
@@ -26,21 +26,19 @@ export default async function Page({
   ]);
 
   if (!transaction || !sessionUser) {
-    return notFound();
+    notFound();
   }
-
-  const sellerId = transaction.listing.sellerId;
+  const sellerId = transaction.item.seller.id;
   const buyerId = transaction.buyerId;
 
   const isSeller = sessionUser.id === sellerId;
+  const isBuyer = sessionUser.id === buyerId;
 
-  const isNotSellerOrBuyer =
-    sessionUser.id !== sellerId && sessionUser.id !== buyerId;
+  const isNotSellerOrBuyer = !isSeller && !isBuyer;
 
   if (isNotSellerOrBuyer) {
-    return notFound();
+    notFound();
   }
-
   return (
     <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
       <aside className="flex flex-1 flex-col gap-8">
@@ -59,7 +57,7 @@ export default async function Page({
         {transaction.trackingNumber && (
           <TrackingNumber
             trackingNumber={transaction.trackingNumber}
-            shippingMethodId={transaction.listing.shippingMethod?.id || ""}
+            shippingMethodCode={transaction.item.shippingMethodCode}
           />
         )}
         {/* 通常の取引更新用ボタン */}
@@ -70,7 +68,7 @@ export default async function Page({
         {/* 取引キャンセル用ボタン */}
         <TransactionChangeButton transaction={transaction} isCancel />
         <SellerInfo
-          seller={transaction.listing.seller}
+          seller={transaction.item.seller}
           defaultIcon={defaultIcon}
         />
       </aside>

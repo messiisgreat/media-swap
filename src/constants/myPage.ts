@@ -1,7 +1,7 @@
 /** マイページのコンテンツ */
 export const PAGE_CONTENT = {
   PRIVACY: "privacy",
-  LISTINGS: "listings",
+  LISTINGS: "items",
   PURCHASES: "purchases",
   DRAFT: "draft",
   BROWSING_HISTORY: "browsing-history",
@@ -14,7 +14,7 @@ type PageContentValue = (typeof PAGE_CONTENT)[PageContentKey];
 /** マイページのリンク先 */
 export const PAGE_LINK = {
   [PAGE_CONTENT.PRIVACY]: "/mypage/personal-info",
-  [PAGE_CONTENT.LISTINGS]: "/mypage/listings",
+  [PAGE_CONTENT.LISTINGS]: "/mypage/items",
   [PAGE_CONTENT.PURCHASES]: "/mypage/purchases",
   [PAGE_CONTENT.DRAFT]: "/mypage/draft",
   [PAGE_CONTENT.BROWSING_HISTORY]: "/mypage/browsing-history",

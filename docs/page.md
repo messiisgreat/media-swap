@@ -16,7 +16,7 @@
 
 </details>
 
-### 商品詳細ページ("/listing/[id]")
+### 商品詳細ページ("/item/[id]")
 
 <details><summary>画像</summary>
 
@@ -98,7 +98,7 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 
 </details>
 
-### 出品した商品ページ("mypage/listing")
+### 出品した商品ページ("mypage/item")
 
 <details><summary>画像</summary>
 
@@ -107,7 +107,7 @@ TODO: 購入した商品・出品した商品・ログアウト・売上金・�
 
 - 参考(メルカリ)
 
-![screencapture-jp-mercari-mypage-listings-2023-10-26-15_07_38](https://github.com/developerhost/media-swap/assets/50170789/ebbd3749-03a2-4b05-be39-61bf15fbcbd6)
+![screencapture-jp-mercari-mypage-items-2023-10-26-15_07_38](https://github.com/developerhost/media-swap/assets/50170789/ebbd3749-03a2-4b05-be39-61bf15fbcbd6)
 
 </details>
 
@@ -126,7 +126,7 @@ TODO: 住所登録のみ必須。他はとりあえずいらないかな。
 
 </details>
 
-### 商品購入後の取引ページ("/listingComment/[id]")
+### 商品購入後の取引ページ("/itemComment/[id]")
 
 <details><summary>画像</summary>
 

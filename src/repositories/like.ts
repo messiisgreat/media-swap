@@ -3,14 +3,14 @@ import { cache } from "react";
 
 /**
  * いいねを作成する
- * @param listingId 商品ID
+ * @param itemId 商品ID
  * @param userId ユーザーID
  * @returns
  */
-export const createLike = async (listingId: string, userId: string) => {
+export const createLike = async (itemId: string, userId: string) => {
   return await prisma.like.create({
     data: {
-      listingId,
+      itemId,
       userId,
     },
   });
@@ -18,15 +18,15 @@ export const createLike = async (listingId: string, userId: string) => {
 
 /**
  * いいねを削除する
- * @param listingId 商品ID
+ * @param itemId 商品ID
  * @param userId ユーザーID
  * @returns
  */
-export const deleteLike = async (listingId: string, userId: string) => {
+export const deleteLike = async (itemId: string, userId: string) => {
   return await prisma.like.delete({
     where: {
-      userId_listingId: {
-        listingId,
+      userId_itemId: {
+        itemId,
         userId,
       },
     },
@@ -35,13 +35,13 @@ export const deleteLike = async (listingId: string, userId: string) => {
 
 /**
  * いいねを取得する
- * @param listingId 商品ID
+ * @param itemId 商品ID
  * @param userId ユーザーID
  */
-export const findLike = cache(async (listingId: string, userId: string) => {
+export const findLike = cache(async (itemId: string, userId: string) => {
   return await prisma.like.findFirst({
     where: {
-      listingId,
+      itemId,
       userId,
     },
   });
@@ -49,12 +49,12 @@ export const findLike = cache(async (listingId: string, userId: string) => {
 
 /**
  * いいね数を取得する
- * @param listingId 商品ID
+ * @param itemId 商品ID
  */
-export const countLike = cache(async (listingId: string) => {
+export const countLike = cache(async (itemId: string) => {
   return await prisma.like.count({
     where: {
-      listingId,
+      itemId,
     },
   });
 });

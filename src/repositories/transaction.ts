@@ -4,13 +4,15 @@ import { cache } from "react";
 
 import { type Transaction } from "@prisma/client";
 
-import { TRANSACTION_STATUS } from "@/constants/listing";
+import { TRANSACTION_STATUS } from "@/constants/item";
 import prisma from "@/lib/prisma";
 
 /** 出品情報と購入者を含んだ取引作成結果 */
 export type TransactionCreateResult = Awaited<
   ReturnType<typeof createTransaction>
 >;
+
+export type TransactionReadResult = Awaited<ReturnType<typeof findTransaction>>;
 
 /**
  * 取引を取得する
@@ -24,26 +26,31 @@ export const findTransaction = cache(
       include: {
         transactionComments: true,
         buyer: true,
-        listing: { include: { seller: true, shippingMethod: true } },
+        item: {
+          select: {
+            seller: { select: { id: true, name: true, image: true } },
+            shippingMethodCode: true,
+          },
+        },
       },
     }),
 );
 
 /**
  * 取引を追加する
- * @param listingId - 取引対象の出品ID
+ * @param itemId - 取引対象の出品ID
  * @param buyerId - 取引対象のユーザーID
  * @param userCouponId - 取引対象のクーポンID (オプション)
  * @returns 追加された取引
  */
 export const createTransaction = async (
-  listingId: string,
+  itemId: string,
   buyerId: string,
   userCouponId: string | null = null,
 ) => {
   return await prisma.transaction.create({
     data: {
-      listing: { connect: { id: listingId } },
+      item: { connect: { id: itemId } },
       buyer: { connect: { id: buyerId } },
       transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
       ...(userCouponId
@@ -51,7 +58,7 @@ export const createTransaction = async (
         : {}),
     },
     include: {
-      listing: { include: { seller: true } },
+      item: { include: { seller: true } },
       buyer: true,
     },
   });

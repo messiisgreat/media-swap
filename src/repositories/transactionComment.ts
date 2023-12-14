@@ -43,7 +43,7 @@ export const createTransactionComment = async (
       user: true,
       transaction: {
         include: {
-          listing: { include: { seller: true } },
+          item: { include: { seller: true } },
           buyer: true,
         },
       },

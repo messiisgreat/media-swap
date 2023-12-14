@@ -5,7 +5,7 @@
   "scripts": {
     "package:install": "pnpm install",
     "dev": "next dev",
-    "build": "prisma generate && ts-node --project tsconfig.build.json -r tsconfig-paths/register src/constants/constantsSeed.ts && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",

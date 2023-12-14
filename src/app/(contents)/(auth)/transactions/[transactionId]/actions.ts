@@ -4,23 +4,22 @@ import {
   TrackingNumberFormScheme,
   type TrackingNumberFormState,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
+import { createRecipientMailContent } from "@/app/(contents)/item/[id]/_components/transactionButton/purchaseButton/mailTemplate";
+import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
 import {
   updateTransaction,
   updateTransactionStatus,
 } from "@/repositories/transaction";
-import { getFormValues } from "@/ui/form";
-import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
-import { getSessionUser } from "@/utils";
-
-import { createRecipientMailContent } from "@/app/(contents)/listing/[id]/_components/transactionButton/purchaseButton/mailTemplate";
-import { sendMailToUser } from "@/lib/mail";
 import {
   createTransactionComment,
   findTransactionComments,
   markAsReadTransactionComments,
   type TransactionCommentCreateResult,
 } from "@/repositories/transactionComment";
+import { getFormValues } from "@/ui/form";
+import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
+import { getSessionUser } from "@/utils";
 
 type SendMessageResult = Result<string, string>;
 
@@ -74,7 +73,8 @@ export const sendMessage = async (
     sessionUser.id,
     transactionId,
   );
-  await sendMailToRecipient(transactionComment);
+  const result = await sendMailToRecipient(transactionComment);
+  if (!result) return failure("メールの送信に失敗しました");
   return success("メッセージを送信しました");
 };
 
@@ -84,15 +84,15 @@ export const sendMessage = async (
  */
 const sendMailToRecipient = async (
   transactionComment: TransactionCommentCreateResult,
-) => {
+): Promise<boolean> => {
   const transaction = transactionComment.transaction;
-  if (!transaction) throw new Error("取引が見つかりません");
+  if (!transaction) return false;
   const transactionId = transactionComment.transactionId;
-  const listingName = transaction.listing.productName;
-  const sellerId = transaction.listing.sellerId;
-  const sellerName = transaction.listing.seller.name;
+  const itemName = transaction.item.name;
+  const sellerId = transaction.item.sellerId;
+  const sellerName = transaction.item.seller.name;
   const buyerName = transaction.buyer.name;
-  const sellerEmail = transaction.listing.seller.email;
+  const sellerEmail = transaction.item.seller.email;
   const buyerEmail = transaction.buyer.email;
   const transactionCommentUserId = transactionComment.userId;
   const transactionCommentCreateComment = transactionComment.comment;
@@ -103,15 +103,15 @@ const sendMailToRecipient = async (
   const recipientName =
     sellerId === transactionCommentUserId ? buyerName : sellerName;
 
-  const mailSubject = `取引中の商品:${listingName} にてメッセージが届きました`;
+  const mailSubject = `取引中の商品:${itemName} にてメッセージが届きました`;
 
   const mailContent = createRecipientMailContent(
     recipientName,
-    listingName,
+    itemName,
     transactionId,
     transactionCommentCreateComment,
   );
-  await sendMailToUser(recipientEmail, mailSubject, mailContent);
+  return await sendMailToUser(recipientEmail, mailSubject, mailContent);
 };
 
 /**

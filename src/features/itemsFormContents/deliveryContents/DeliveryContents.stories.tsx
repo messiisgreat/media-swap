@@ -22,20 +22,20 @@ type Story = StoryObj<typeof DeliveryContents>;
 
 export const Empty: Story = {
   args: {
-    postageIsIncluded: "",
-    shippingMethodId: "",
+    isShippingIncluded: "",
+    shippingMethodCode: "",
     shippingMethodCustom: "",
-    shippingDaysId: "",
+    shippingDaysCode: "",
     price: "",
   },
 };
 
 export const Filled: Story = {
   args: {
-    postageIsIncluded: "1",
-    shippingMethodId: "1",
+    isShippingIncluded: "1",
+    shippingMethodCode: "1",
     shippingMethodCustom: "",
-    shippingDaysId: "1",
+    shippingDaysCode: "1",
     price: "300",
   },
 };

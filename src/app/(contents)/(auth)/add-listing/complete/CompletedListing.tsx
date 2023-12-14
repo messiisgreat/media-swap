@@ -1,28 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { findListingById } from "@/repositories/listing";
+import { findItemById } from "@/repositories/item";
 import { Button } from "@/ui/Button";
 
 /**
  * 出品完了した商品の画像とリンク
- * @param listingId 商品ID
+ * @param itemId 商品ID
  * @returns
  */
-export const CompletedListing = async ({
-  listingId,
-}: {
-  listingId: string;
-}) => {
-  const listing = await findListingById(listingId);
+export const CompletedItem = async ({ itemId }: { itemId: string }) => {
+  const item = await findItemById(itemId);
   return (
     <Link
-      href={`/listing/${encodeURIComponent(listingId)}`}
+      href={`/item/${encodeURIComponent(itemId)}`}
       className="grid justify-center gap-4"
     >
       <Image
-        src={listing.images[0].imageURL}
-        alt={listing.productName!}
+        src={item.images[0].imageURL}
+        alt={item.name}
         width={400}
         height={400}
         className="w-40 rounded-full shadow-2xl"

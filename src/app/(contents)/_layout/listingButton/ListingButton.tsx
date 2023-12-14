@@ -9,7 +9,7 @@ import { ButtonAsLink } from "@/ui/Button";
 export const ListingButton = ({ className }: { className?: string }) => {
   return (
     <ButtonAsLink
-      href="/add-listing"
+      href="/add-item"
       title="出品する"
       className={`flex h-16 w-16 flex-col items-center justify-center 
       gap-1 rounded-full font-bold text-white ${className || ""}`}

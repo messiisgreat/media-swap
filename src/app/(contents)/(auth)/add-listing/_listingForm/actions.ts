@@ -7,11 +7,11 @@ import {
   type ProductFormState,
   type ProductFormValues,
 } from "@/features/itemsFormContents/types";
-import { uploadToCloudinary } from "@/lib/ImageUploadCloudinary";
+import { uploadToCloudinary } from "@/lib/cloudinary/upload";
 import {
-  createListingWithTagsAndImages,
-  type UnregisteredListing,
-} from "@/repositories/listing";
+  createItemWithTagsAndImages,
+  type UnregisteredItem,
+} from "@/repositories/item";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
 import { getSession, strToBool } from "@/utils";
@@ -21,19 +21,27 @@ const create = async (
   userId: string,
   previousPrice: number | null = null,
 ) => {
-  const { tags, imageFiles, isPublic, postageIsIncluded, price, ...rest } =
-    formData;
+  const {
+    tags,
+    imageFiles,
+    isPublic,
+    isShippingIncluded,
+    shippingMethodCustom,
+    price,
+    ...rest
+  } = formData;
   const tagTexts = tags.split(",");
   const images = await uploadToCloudinary(imageFiles);
-  const listing: UnregisteredListing = {
+  const item: UnregisteredItem = {
     previousPrice,
     sellerId: userId,
     isPublic: strToBool(isPublic),
-    postageIsIncluded: strToBool(postageIsIncluded),
+    isShippingIncluded: strToBool(isShippingIncluded),
+    shippingMethodCustom: shippingMethodCustom!,
     price: Number(price),
     ...rest,
   };
-  return createListingWithTagsAndImages(listing, tagTexts, images);
+  return createItemWithTagsAndImages(item, tagTexts, images);
 };
 
 /**
@@ -79,10 +87,9 @@ export const listingItem = async (
       return {
         ...prevState,
         errors: validated.error.flatten().fieldErrors,
-        message: "入力に不備があります",
       };
     }
-    const listing = await create(rest, userId, previousPrice);
-    redirect(`/add-listing/complete?listing_id=${listing.id}&is_public=true`);
+    const item = await create(rest, userId, previousPrice);
+    redirect(`/add-item/complete?item_id=${item.id}&is_public=true`);
   }
 };

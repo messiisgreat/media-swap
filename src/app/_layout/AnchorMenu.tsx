@@ -33,7 +33,7 @@ const naviMenu: NaviMenu[] = [
     id: "camera",
     icon: AiFillCamera,
     text: "出品",
-    path: "/add-listing",
+    path: "/add-item",
   },
   {
     id: "user",

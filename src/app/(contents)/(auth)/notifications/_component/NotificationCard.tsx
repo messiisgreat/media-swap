@@ -14,8 +14,8 @@ export const NotificationCard = ({
 }: {
   notification: NotificationsQueryResult[number];
 }) => {
-  const { content, date, userNotificationRead } = notification;
-  const isRead = userNotificationRead.length > 0;
+  const { content, date, userNotificationReads } = notification;
+  const isRead = userNotificationReads.length > 0;
   return (
     <li className={`flex gap-x-6 p-3 ${isRead && "bg-gray-100"}`}>
       <Image

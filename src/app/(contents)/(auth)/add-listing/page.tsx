@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 
-import { ListingForm } from "@/app/(contents)/(auth)/add-listing/ListingForm";
+import { ItemForm } from "@/app/(contents)/(auth)/add-listing/_listingForm/ListingForm";
 import { findTags } from "@/repositories/tag";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";
@@ -23,7 +23,7 @@ export default async function Page() {
       <PageTitle title={title} />
       <Section>
         <VerifyProvider>
-          <ListingForm tags={tags} />
+          <ItemForm tags={tags} />
         </VerifyProvider>
       </Section>
     </>

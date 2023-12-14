@@ -7,7 +7,7 @@ import {
 
 import { z } from "zod";
 
-import { HANDING_CHARGE_RATE, PRICE_LIMIT } from "@/constants/listing";
+import { HANDING_CHARGE_RATE, PRICE_LIMIT } from "@/constants/item";
 import { Input } from "@/ui/form/Elements";
 
 const valueSchema = z

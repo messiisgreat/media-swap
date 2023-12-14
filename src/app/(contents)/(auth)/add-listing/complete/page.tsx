@@ -1,6 +1,5 @@
+import { CompletedItem } from "@/app/(contents)/(auth)/add-listing/complete/CompletedListing";
 import { type Metadata } from "next";
-
-import { CompletedListing } from "@/app/(contents)/(auth)/add-listing/complete/CompletedListing";
 
 /** キャッシュしない */
 export const dynamic = "force-dynamic";
@@ -12,15 +11,15 @@ export const metadata: Metadata = {
 
 /**
  * 出品完了ページ
- * /add-listing/complete
+ * /add-item/complete
  * @returns page
  */
-const Page = ({ searchParams }: { searchParams: { listing_id: string } }) => {
-  const listingId = searchParams.listing_id;
+const Page = ({ searchParams }: { searchParams: { item_id: string } }) => {
+  const itemId = searchParams.item_id;
   return (
     <>
       <div>出品が完了しました！</div>
-      <CompletedListing listingId={listingId} />
+      <CompletedItem itemId={itemId} />
     </>
   );
 };

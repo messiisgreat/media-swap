@@ -1,6 +1,8 @@
 import { isArrayOfFiles } from "@/utils/typeGuard";
 
-type FormObject = { [key: string]: string | number | File | File[] };
+type FormObject = {
+  [key: string]: string | number | File | File[] | undefined;
+};
 
 /**
  * formDataから全ての値を取得する
