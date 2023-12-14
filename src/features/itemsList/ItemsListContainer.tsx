@@ -68,20 +68,17 @@ export type Props =
  * 渡されたパラメータに応じて取得するデータを選択する
  * @param props page, size, sort, order, query, buyerId, sellerId, isPublic, userId
  */
-const finditemsAndCount = async (
-  props: Props,
-): Promise<[ItemsReadResult, number]> => {
-  const {
-    page,
-    size,
-    sort,
-    order,
-    query,
-    buyerId,
-    sellerId,
-    isPublic,
-    userId,
-  } = props;
+const finditemsAndCount = async ({
+  page,
+  size,
+  sort,
+  order,
+  query,
+  buyerId,
+  sellerId,
+  isPublic,
+  userId,
+}: Props): Promise<[ItemsReadResult, number]> => {
   const orderBy: ItemOrderBy = {
     [sort]: order,
   };

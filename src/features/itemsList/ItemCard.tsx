@@ -1,26 +1,10 @@
-import { type ReactNode } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
 
+import { PriceBadge } from "@/features/itemsList/PriceBadge";
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
 import { type ItemsReadResult } from "@/repositories/item";
 import { formatPrice } from "@/utils/format";
-
-const PriceBadge = ({
-  className,
-  children,
-}: {
-  className: string;
-  children: ReactNode;
-}) => (
-  <div
-    className={`flex w-20 items-center justify-center overflow-hidden whitespace-nowrap
-    rounded-r-xl bg-black/40 p-1 text-xs text-white ${className}`}
-  >
-    {children}
-  </div>
-);
 
 type Props = {
   /** findItems の配列1個分 */
@@ -33,9 +17,9 @@ type Props = {
  * @returns div
  */
 export function ItemCard({ item }: Props) {
-  const formattedPrice = item.price ? formatPrice(item.price) : "N/A";
+  const formattedPrice = formatPrice(item.price);
 
-  const isSoldOut = Boolean(item.transaction?.id);
+  const isSoldOut = Boolean(item.transaction);
 
   return (
     <div className="relative flex items-center justify-center rounded-lg bg-gray-300">
@@ -46,7 +30,7 @@ export function ItemCard({ item }: Props) {
         <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:h-48 sm:w-48">
           <Image
             src={item.images[0].imageURL}
-            alt={item.name || "Product Image"}
+            alt={item.name}
             sizes="500px"
             fill
           />

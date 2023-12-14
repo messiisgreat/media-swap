@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 
-import { ItemForm } from "@/app/(contents)/(auth)/add-listing/_listingForm/ListingForm";
+import { ItemForm } from "@/app/(contents)/(auth)/listing/_listingForm/ListingForm";
 import { findTags } from "@/repositories/tag";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";

@@ -1,18 +1,20 @@
 import { LuBox } from "react-icons/lu";
 
 import { ButtonAsLink } from "@/ui/Button";
+import { twMerge } from "tailwind-merge";
 
 /**
  * 商品出品ボタン
  * @returns
  */
 export const ListingButton = ({ className }: { className?: string }) => {
+  const buttonClass =
+    "flex h-16 w-16 flex-col items-center justify-center gap-1 rounded-full font-bold text-white";
   return (
     <ButtonAsLink
-      href="/add-item"
+      href="/listing"
       title="出品する"
-      className={`flex h-16 w-16 flex-col items-center justify-center 
-      gap-1 rounded-full font-bold text-white ${className || ""}`}
+      className={twMerge(buttonClass, className)}
     >
       <LuBox size={28} />
       <span className="text-xs">出品</span>

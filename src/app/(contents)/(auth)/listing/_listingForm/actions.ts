@@ -37,7 +37,7 @@ const create = async (
     sellerId: userId,
     isPublic: strToBool(isPublic),
     isShippingIncluded: strToBool(isShippingIncluded),
-    shippingMethodCustom: shippingMethodCustom!,
+    shippingMethodCustom: shippingMethodCustom ?? null,
     price: Number(price),
     ...rest,
   };
@@ -90,6 +90,6 @@ export const listingItem = async (
       };
     }
     const item = await create(rest, userId, previousPrice);
-    redirect(`/add-item/complete?item_id=${item.id}&is_public=true`);
+    redirect(`/listing/complete?item_id=${item.id}&is_public=true`);
   }
 };

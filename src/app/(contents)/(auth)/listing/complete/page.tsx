@@ -1,4 +1,4 @@
-import { CompletedItem } from "@/app/(contents)/(auth)/add-listing/complete/CompletedListing";
+import { CompletedItem } from "@/app/(contents)/(auth)/listing/complete/CompletedListing";
 import { type Metadata } from "next";
 
 /** キャッシュしない */
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 /**
  * 出品完了ページ
- * /add-item/complete
+ * /listing/complete
  * @returns page
  */
 const Page = ({ searchParams }: { searchParams: { item_id: string } }) => {

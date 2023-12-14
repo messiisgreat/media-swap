@@ -30,7 +30,7 @@
 
 </details>
 
-### 商品出品ページ("/add-listing")
+### 商品出品ページ("/listing")
 
 <details><summary>画像</summary>
 

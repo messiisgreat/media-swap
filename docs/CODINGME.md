@@ -36,7 +36,7 @@ src
 
 こちらはルーティング目的のファイルのみ配置する
 そのページでしか使わない機能などは基本的にそのフォルダ内に置く
-例: add-listing/ListingForm.tsxなど
+例: app/(contents)/(auth)/listing/ListingForm.tsxなど
 
 参考
 <https://nextjs.org/docs/app/building-your-application/routing/colocation#store-project-files-outside-of-app>

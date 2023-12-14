@@ -3,7 +3,7 @@
 import { type Tag } from "@prisma/client";
 import { useFormState } from "react-dom";
 
-import { listingItem } from "@/app/(contents)/(auth)/add-listing/_listingForm/actions";
+import { listingItem } from "@/app/(contents)/(auth)/listing/_listingForm/actions";
 import { ItemsFormContents } from "@/features/itemsFormContents";
 import { initialProductFormValues } from "@/features/itemsFormContents/types";
 import { SubmitButton } from "@/ui/form/SubmitButton";

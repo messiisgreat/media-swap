@@ -7,7 +7,7 @@ import { type IconType } from "react-icons";
 import { AiFillBell, AiFillCamera, AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 
-import { useScrollingState } from "@/app/_layout/anchorMenuHooks";
+import { useScrollingState } from "@/app/_layout/hooks";
 
 type NaviMenu = {
   id: string;
@@ -33,7 +33,7 @@ const naviMenu: NaviMenu[] = [
     id: "camera",
     icon: AiFillCamera,
     text: "出品",
-    path: "/add-item",
+    path: "/listing",
   },
   {
     id: "user",
