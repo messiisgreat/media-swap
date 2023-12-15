@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { cache } from "react";
 
 /**
  * いいねを作成する
@@ -51,10 +50,10 @@ export const findLike = async (itemId: string, userId: string) => {
  * いいね数を取得する
  * @param itemId 商品ID
  */
-export const countLike = cache(async (itemId: string) => {
+export const countLike = async (itemId: string) => {
   return await prisma.like.count({
     where: {
       itemId,
     },
   });
-});
+};
