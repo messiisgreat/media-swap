@@ -36,7 +36,7 @@ const create = async (
     ...rest,
   };
   const images = await uploadToCloudinary(imageFiles);
-  const tagTexts = tags.split(",");
+  const tagTexts = tags.split(",").filter((tag) => tag.trim() !== "");
   return createItem(userId, item, images, tagTexts);
 };
 
