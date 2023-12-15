@@ -1,0 +1,38 @@
+name: Issue Labeler
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.issue.labels.*.name, '重要度') }}
+    steps:
+    - name: Label issue
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issueBody = context.payload.issue.body;
+          let label = '';
+
+          const HIGH = ['高 (すぐに修正したほうがいい)', '高 (すぐに取り掛かったほうがいい)'];
+          const MIDDLE = ['中 (修正したほうがいい)', '中 (取り掛かったほうがいい)'];
+          const LOW = ['低 (積極的に修正しなくてもいい)', '低 (積極的に取り掛からなくてもいい)'];
+
+          if (HIGH.some((v) => issueBody.includes(v))) {
+            label = '重要度: 高';
+          } else if (MIDDLE.some((v) => issueBody.includes(v))) {
+            label = '重要度: 中';
+          } else if (LOW.some((v) => issueBody.includes(v))) {
+            label = '重要度: 低';
+          }
+
+          if (label) {
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [label]
+            });
+          }
