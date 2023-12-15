@@ -7,6 +7,7 @@ import {
   Toolbar,
   TransactionButton,
 } from "@/app/(contents)/item/[id]/_components";
+import { FloatingNavigation } from "@/app/(contents)/item/[id]/_components/floatingNavigation";
 import { browsing } from "@/app/(contents)/item/[id]/actions";
 import { findItemById } from "@/repositories/item";
 import { Badge } from "@/ui/Badge";
@@ -81,7 +82,7 @@ export default async function Page({ params: { id } }: ItemPageProps) {
         <ItemDescription description={item.description} />
         <TitleUnderbar title="商品情報" />
         <ItemInformation item={item} />
-        <TransactionButton itemId={id} />
+        <TransactionButton itemId={id} className="max-md:hidden" />
         <TitleUnderbar title="コメント" />
         <CommentSection
           itemId={item.id}
@@ -89,6 +90,9 @@ export default async function Page({ params: { id } }: ItemPageProps) {
           isItemOwner={isOwner}
         />
       </Section>
+      <FloatingNavigation>
+        <TransactionButton itemId={item.id} className="w-full" />
+      </FloatingNavigation>
     </VerifyProvider>
   );
 }
