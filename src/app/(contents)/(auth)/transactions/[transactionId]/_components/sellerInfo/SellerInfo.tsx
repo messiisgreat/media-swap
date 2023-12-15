@@ -1,8 +1,7 @@
-import Image from "next/image";
+import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
+import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/transactionOptionItems";
+import Image, { type StaticImageData } from "next/image";
 import { FaChevronRight } from "react-icons/fa";
-import { OptionMenu } from "@/app/(contents)/(auth)/transactions/OptionMenu";
-import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/transactionOptionItems";
-import { type StaticImageData } from "next/image";
 
 type SellerInfoProps = {
   /** 出品者情報 */

@@ -12,7 +12,7 @@ import { FaSyncAlt } from "react-icons/fa";
 import {
   fetchMessages,
   sendMessage,
-} from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/actions";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { Button } from "@/ui";
 import { Skeleton } from "@/ui/Skeleton";
