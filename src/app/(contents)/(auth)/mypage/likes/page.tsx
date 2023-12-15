@@ -1,9 +1,10 @@
+import { type Item } from "@prisma/client";
+import { redirect } from "next/navigation";
+
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
-import { type Item } from "@prisma/client";
-import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: {
@@ -16,8 +17,8 @@ type Props = {
 };
 
 /**
- * 閲覧履歴一覧を表示するページ
- * /mypage/
+ *  出品商品一覧を表示するページ
+ * /mypage/listings
  */
 export default async function Page({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
@@ -28,15 +29,14 @@ export default async function Page({
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.BROWSING_HISTORY]} />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.LIKES]} />
       <ItemsListContainer
         page={page}
         size={size}
         sort={sort}
         order={order}
         userId={user.id}
-        isPublic
-        type="browsing"
+        type="likes"
       />
     </>
   );

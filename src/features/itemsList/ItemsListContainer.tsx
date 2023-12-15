@@ -1,15 +1,17 @@
 import ItemsList from "@/features/itemsList";
-import { findBrowsingHistory } from "@/repositories/browsingHistory";
 import {
   countItems,
   countItemsByBuyerId,
   countItemsByProductName,
   countItemsBySellerId,
-  findItemById,
+  countItemsByUserBrowsed,
+  countItemsByUserLiked,
   findItems,
   findItemsByBuyerId,
   findItemsByProductName,
   findItemsBySellerId,
+  findItemsByUserBrowsed,
+  findItemsByUserLiked,
   type ItemOrderBy,
   type ItemsReadResult,
 } from "@/repositories/item";
@@ -25,48 +27,41 @@ type CommonProps = {
   sellerId?: string;
   isPublic?: boolean;
   userId?: string;
+  type?: string;
 };
 
-type AllProps = CommonProps & {
-  query?: never;
-  buyerId?: never;
-  sellerId?: never;
-  isPublic?: never;
-};
-
-type SearchProps = CommonProps & {
-  query: string;
-  buyerId?: never;
-  sellerId?: never;
-  isPublic?: never;
-};
-
-type BuyerProps = CommonProps & {
-  buyerId: string;
-  sellerId?: never;
-  isPublic?: never;
-};
-
-type SellerProps = CommonProps & {
-  buyerId?: never;
-  sellerId: string;
-  isPublic?: boolean;
-};
-
-type BrowsingProps = CommonProps & {
-  userId: string;
-};
-
-export type Props =
-  | AllProps
-  | SearchProps
-  | BuyerProps
-  | SellerProps
-  | BrowsingProps;
+type Props =
+  | (CommonProps & {
+      query?: never;
+      buyerId?: never;
+      sellerId?: never;
+      isPublic?: never;
+    })
+  | (CommonProps & {
+      query: string;
+    })
+  | (CommonProps & {
+      buyerId: string;
+      sellerId?: never;
+    })
+  | (CommonProps & {
+      buyerId?: never;
+      sellerId: string;
+      isPublic?: boolean;
+    })
+  | (CommonProps & {
+      userId: string;
+      type: "browsing";
+    })
+  | (CommonProps & {
+      userId: string;
+      type: "likes";
+    });
 
 /**
  * 渡されたパラメータに応じて取得するデータを選択する
  * @param props page, size, sort, order, query, buyerId, sellerId, isPublic, userId
+ * @returns [商品の配列, 商品数]
  */
 const finditemsAndCount = async ({
   page,
@@ -78,56 +73,50 @@ const finditemsAndCount = async ({
   sellerId,
   isPublic,
   userId,
+  type,
 }: Props): Promise<[ItemsReadResult, number]> => {
   const orderBy: ItemOrderBy = {
     [sort]: order,
   };
   // 購入商品一覧
   if (buyerId) {
-    const items = await findItemsByBuyerId(buyerId, page, size, orderBy);
-    const count = await countItemsByBuyerId(buyerId);
-    return [items, count];
+    return await Promise.all([
+      findItemsByBuyerId(buyerId, page, size, orderBy),
+      countItemsByBuyerId(buyerId),
+    ]);
     // 下書き商品一覧
   } else if (sellerId && !isPublic) {
-    const items = await findItemsBySellerId(
-      sellerId,
-      page,
-      size,
-      orderBy,
-      isPublic,
-    );
-    const count = await countItemsBySellerId(sellerId, isPublic);
-    return [items, count];
+    return await Promise.all([
+      findItemsBySellerId(sellerId, page, size, orderBy, isPublic),
+      countItemsBySellerId(sellerId, isPublic),
+    ]);
     // 出品商品一覧
   } else if (sellerId && isPublic) {
-    const items = await findItemsBySellerId(
-      sellerId,
-      page,
-      size,
-      orderBy,
-      isPublic,
-    );
-    const count = await countItemsBySellerId(sellerId, isPublic);
-    return [items, count];
+    return await Promise.all([
+      findItemsBySellerId(sellerId, page, size, orderBy, isPublic),
+      countItemsBySellerId(sellerId, isPublic),
+    ]);
     // 閲覧履歴を取得
-  } else if (userId) {
-    const browsingHistorys = await findBrowsingHistory(userId);
-    const itemIds = [...new Set(browsingHistorys.map((h) => h.itemId))];
-    const items = await Promise.all(
-      itemIds.map(async (id) => {
-        return await findItemById(id);
-      }),
-    );
-    return [items, items.length];
+  } else if (userId && type === "browsing") {
+    return await Promise.all([
+      findItemsByUserBrowsed(userId, page, size, orderBy),
+      countItemsByUserBrowsed(userId),
+    ]);
+    // いいね一覧
+  } else if (userId && type === "likes") {
+    return await Promise.all([
+      findItemsByUserLiked(userId, page, size, orderBy),
+      countItemsByUserLiked(userId),
+    ]);
+    // 検索結果
   } else if (query) {
-    const items = await findItemsByProductName(query, page, size, orderBy);
-    const count = await countItemsByProductName(query);
-    return [items, count];
+    return await Promise.all([
+      findItemsByProductName(query, page, size, orderBy),
+      countItemsByProductName(query),
+    ]);
     // 全商品一覧
   } else {
-    const items = await findItems(page, size, orderBy);
-    const count = await countItems();
-    return [items, count];
+    return await Promise.all([findItems(page, size, orderBy), countItems()]);
   }
 };
 

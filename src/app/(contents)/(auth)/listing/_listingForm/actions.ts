@@ -8,10 +8,7 @@ import {
   type ProductFormValues,
 } from "@/features/itemsFormContents/types";
 import { uploadToCloudinary } from "@/lib/cloudinary/upload";
-import {
-  createItemWithTagsAndImages,
-  type UnregisteredItem,
-} from "@/repositories/item";
+import { createItem, type ItemCreateInput } from "@/repositories/item";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
 import { getSession, strToBool } from "@/utils";
@@ -30,18 +27,17 @@ const create = async (
     price,
     ...rest
   } = formData;
-  const tagTexts = tags.split(",");
-  const images = await uploadToCloudinary(imageFiles);
-  const item: UnregisteredItem = {
+  const item: ItemCreateInput = {
     previousPrice,
-    sellerId: userId,
     isPublic: strToBool(isPublic),
     isShippingIncluded: strToBool(isShippingIncluded),
     shippingMethodCustom: shippingMethodCustom ?? null,
     price: Number(price),
     ...rest,
   };
-  return createItemWithTagsAndImages(item, tagTexts, images);
+  const images = await uploadToCloudinary(imageFiles);
+  const tagTexts = tags.split(",");
+  return createItem(userId, item, images, tagTexts);
 };
 
 /**

@@ -1,34 +1,31 @@
 import prisma from "@/lib/prisma";
-import { type Item } from "@prisma/client";
+import { type Item, type Prisma } from "@prisma/client";
 import { cache } from "react";
 import "server-only";
 
 /** データベース未登録のItem型 */
-export type UnregisteredItem = Omit<
-  Item,
-  "id" | "createdAt" | "updatedAt" | "isDeleted" | "transactionId" | "pageView"
->;
+export type ItemCreateInput = Prisma.ItemCreateWithoutSellerInput;
 
 /** 画像とタグを含んだItemの配列 */
 export type ItemsReadResult = Awaited<ReturnType<typeof findItems>>;
 
 /**
  * 商品を追加する
- * @param item 追加する商品
- * @param tagTexts タグIDの配列
- * @param imageURLs 画像URLの配列
+ * @param sellerId 出品者ID
+ * @param item 商品情報
+ * @param imageURLs 画像URL
+ * @param tagTexts タグ
  * @returns 追加された商品
  */
-export const createItemWithTagsAndImages = async (
-  item: UnregisteredItem,
-  tagTexts: string[],
+export const createItem = async (
+  sellerId: string,
+  item: ItemCreateInput,
   imageURLs: string[],
+  tagTexts: string[],
 ) => {
-  const { sellerId, ...rest } = item;
-
   return await prisma.item.create({
     data: {
-      ...rest,
+      ...item,
       seller: { connect: { id: sellerId } },
       images: {
         createMany: {
@@ -69,11 +66,18 @@ export const findItemById = cache(
 );
 
 /** findItem用の並び順型 */
-export type ItemOrderBy =
-  | {
-      [P in keyof Item]?: "asc" | "desc" | undefined;
-    }
-  | undefined;
+export type ItemOrderBy = Prisma.ItemOrderByWithRelationInput;
+
+/** 商品取得系の共通include */
+const include: Prisma.ItemInclude = {
+  images: { select: { imageURL: true } },
+  tags: {
+    include: {
+      tag: true,
+    },
+  },
+  transaction: { select: { id: true } },
+};
 
 /**
  * 商品を取得する
@@ -87,15 +91,7 @@ export const findItems = cache(
       where: { isPublic: true, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
-      include: {
-        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        transaction: { select: { id: true } },
-      },
+      include,
       orderBy,
     }),
 );
@@ -118,15 +114,7 @@ export const findItemsByProductName = cache(
       },
       skip: (page - 1) * size,
       take: size,
-      include: {
-        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-        tags: {
-          include: {
-            tag: true,
-          },
-        },
-        transaction: { select: { id: true } },
-      },
+      include,
       orderBy,
     }),
 );
@@ -146,15 +134,71 @@ export const findItemsBySellerId = cache(
       where: { sellerId, isPublic: isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
-      include: {
-        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-        tags: {
-          include: {
-            tag: true,
+      include,
+      orderBy,
+    }),
+);
+
+/**
+ * 指定したユーザーが購入した商品を取得する
+ */
+export const findItemsByBuyerId = cache(
+  async (buyerId: string, page: number, size: number, orderBy: ItemOrderBy) =>
+    await prisma.item.findMany({
+      where: {
+        transaction: {
+          buyerId,
+        },
+        isPublic: true,
+        isDeleted: false,
+      },
+      skip: (page - 1) * size,
+      take: size,
+      include,
+      orderBy,
+    }),
+);
+
+/**
+ * 指定したユーザーがいいねした商品を取得する
+ */
+export const findItemsByUserLiked = cache(
+  async (userId: string, page: number, size: number, orderBy: ItemOrderBy) =>
+    await prisma.item.findMany({
+      where: {
+        likes: {
+          some: {
+            userId,
           },
         },
-        transaction: { select: { id: true } },
+        isPublic: true,
+        isDeleted: false,
       },
+      skip: (page - 1) * size,
+      take: size,
+      include,
+      orderBy,
+    }),
+);
+
+/**
+ * 指定したユーザーが閲覧した商品を取得する
+ */
+export const findItemsByUserBrowsed = cache(
+  async (userId: string, page: number, size: number, orderBy: ItemOrderBy) =>
+    await prisma.item.findMany({
+      where: {
+        historys: {
+          some: {
+            userId,
+          },
+        },
+        isPublic: true,
+        isDeleted: false,
+      },
+      skip: (page - 1) * size,
+      take: size,
+      include,
       orderBy,
     }),
 );
@@ -206,30 +250,38 @@ export const countItemsByBuyerId = cache(
 );
 
 /**
- * 指定したユーザーが購入した商品を取得する
+ * 指定したユーザーがいいねした商品総数を取得する
  */
-export const findItemsByBuyerId = cache(
-  async (buyerId: string, page: number, size: number, orderBy: ItemOrderBy) =>
-    await prisma.item.findMany({
+export const countItemsByUserLiked = cache(
+  async (userId: string) =>
+    await prisma.item.count({
       where: {
-        transaction: {
-          buyerId,
+        likes: {
+          some: {
+            userId,
+          },
         },
         isPublic: true,
         isDeleted: false,
       },
-      skip: (page - 1) * size,
-      take: size,
-      include: {
-        images: { select: { imageURL: true }, orderBy: { order: "asc" } },
-        tags: {
-          include: {
-            tag: true,
+    }),
+);
+
+/**
+ * 指定したユーザーが閲覧した商品総数を取得する
+ */
+export const countItemsByUserBrowsed = cache(
+  async (userId: string) =>
+    await prisma.item.count({
+      where: {
+        historys: {
+          some: {
+            userId,
           },
         },
-        transaction: { select: { id: true } },
+        isPublic: true,
+        isDeleted: false,
       },
-      orderBy,
     }),
 );
 
@@ -254,36 +306,3 @@ export const updateItem = async (item: { id: string } & Partial<Item>) =>
     where: { id: item.id },
     data: item,
   });
-
-/**
- * 商品を通報
- * @param itemId 商品ID
- * @param reporterId 通報ユーザーID
- * @param reason 通報理由
- * @returns
- */
-export const createItemReport = async (
-  itemId: string,
-  reporterId: string,
-  reason: string,
-) => {
-  // 既に同じユーザーによる通報があるか確認
-  const existingReport = await prisma.itemReport.findFirst({
-    where: {
-      itemId,
-      userId: reporterId,
-    },
-  });
-
-  if (existingReport) {
-    throw new Error("This comment has already been reported by the user.");
-  }
-
-  return await prisma.itemReport.create({
-    data: {
-      itemId,
-      userId: reporterId,
-      comment: reason,
-    },
-  });
-};
