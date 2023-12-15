@@ -2,8 +2,8 @@
 
 import { useFormState } from "react-dom";
 
-import { insertTrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
-import { initialTrackingNumberFormValues } from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
+import { insertTrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/actions";
+import { initialTrackingNumberFormValues } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/type";
 import { useFormActionModal } from "@/features/modal";
 import { Button } from "@/ui/Button";
 import { Input } from "@/ui/form";

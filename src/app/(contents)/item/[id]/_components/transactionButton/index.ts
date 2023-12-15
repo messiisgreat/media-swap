@@ -1,1 +1,1 @@
-export { TransactionButton as default } from "@/app/(contents)/item/[id]/_components/transactionButton/TransactionButton";
+export { TransactionButton } from "@/app/(contents)/item/[id]/_components/transactionButton/TransactionButton";

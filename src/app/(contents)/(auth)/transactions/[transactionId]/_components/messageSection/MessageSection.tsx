@@ -12,7 +12,7 @@ import { FaSyncAlt } from "react-icons/fa";
 import {
   fetchMessages,
   sendMessage,
-} from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/actions";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { Button } from "@/ui";
 import { Skeleton } from "@/ui/Skeleton";
@@ -139,7 +139,9 @@ export function MessageSection({
                         {parseFixedDateTime(message.createdAt)}
                       </time>
                     </div>
-                    <div className="chat-bubble">{message.comment}</div>
+                    <div className="chat-bubble break-words">
+                      {message.comment}
+                    </div>
                     <div className="chat-footer opacity-50">
                       {message.isRead && isMe ? "既読" : ""}
                     </div>
@@ -155,19 +157,19 @@ export function MessageSection({
           </div>
         )}
         <form
-          className="flex w-full items-center"
-          action={(f) => postComment(f)}
+          className="input flex w-full items-center p-0"
+          action={postComment}
           ref={formRef}
         >
           <LimitInput
             type="text"
             name="message"
             placeholder="メッセージを入力..."
-            className="input-accent grow rounded-r-none"
+            className="grow rounded-r-none"
             maxLength={300}
             hideLimit
           />
-          <SubmitButton className="btn-square btn-accent shrink-0 rounded-l-none">
+          <SubmitButton className="btn-square btn-primary shrink-0 rounded-l-none">
             <BiSend size="2rem" />
           </SubmitButton>
         </form>

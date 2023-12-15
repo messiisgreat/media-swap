@@ -10,7 +10,7 @@ import Image from "next/image";
  * 商品ページのカルーセル
  * @param images - 画像のURL一覧が含まれたオブジェクトの配列
  */
-export default function TempCarousel({
+export function Carousel({
   images,
   isSoldOut,
 }: {

@@ -78,18 +78,3 @@ export const updateTransaction = async (
     data,
   });
 };
-
-/**
- * 取引ステータスを更新する
- * @param transaction - 更新する取引
- * @returns 更新された取引
- */
-export const updateTransactionStatus = async (
-  transaction: { id: string } & Partial<Transaction>,
-) =>
-  await prisma.transaction.update({
-    where: { id: transaction.id },
-    data: {
-      transactionStatus: transaction.transactionStatus,
-    },
-  });

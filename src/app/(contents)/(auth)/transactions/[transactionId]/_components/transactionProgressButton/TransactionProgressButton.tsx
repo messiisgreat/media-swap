@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
+import { updateTransactionStatus } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/transactionProgressButton/actions";
+import { TRANSACTION_STATUS } from "@/constants/item";
+import { Button } from "@/ui";
 import { type Transaction } from "@prisma/client";
 import { type Session } from "next-auth";
 import { useRouter } from "next/navigation";
-
-import { updateTransactionStateByTransactionId } from "@/app/(contents)/(auth)/transactions/[transactionId]/actions";
-import { TRANSACTION_STATUS } from "@/constants/item";
-import { Button } from "@/ui";
 
 /**
  * 取引ステータス変更ボタンコンポーネント
@@ -18,7 +17,7 @@ import { Button } from "@/ui";
  * @param {boolean} [props.isCancel] - キャンセルフラグ
  * @returns
  */
-export const TransactionChangeButton = ({
+export const TransactionProgressButton = ({
   transaction,
   sessionUser,
   status,
@@ -39,10 +38,10 @@ export const TransactionChangeButton = ({
     setNextStatus(newStatus);
   }, [isCancel, status, transaction.transactionStatus]);
 
-  const handleClick = () => {
-    void updateTransactionStateByTransactionId(transaction.id, nextStatus);
+  const handleClick = useCallback(async () => {
+    await updateTransactionStatus(transaction.id, nextStatus);
     router.refresh();
-  };
+  }, [nextStatus, router, transaction.id]);
 
   const isVisibleButton = () => {
     const isBuyer = sessionUser?.id === transaction.buyerId;

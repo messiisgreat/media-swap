@@ -9,7 +9,7 @@ import { links } from "@/app/_layout/footer/LinkContents";
  */
 export const FooterMobileContent = () => {
   return (
-    <footer className="mb-16 bg-neutral p-10 text-neutral-content md:hidden">
+    <footer className="bg-neutral p-10 pb-36 text-neutral-content md:hidden">
       <ul className="menu px-0">
         <li>
           {links.map((section) => (

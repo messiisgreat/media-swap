@@ -1,17 +1,14 @@
 "use server";
 
 import { createBrowsingHistory } from "@/repositories/browsingHistory";
-import {
-  createItemReport,
-  deleteItem,
-  findItemById,
-} from "@/repositories/item";
+import { deleteItem, findItemById } from "@/repositories/item";
 import {
   createComment,
   createCommentReport,
   deleteItemComment,
   findComments,
 } from "@/repositories/itemComment";
+import { createItemReport } from "@/repositories/itemReport";
 import { createTransaction } from "@/repositories/transaction";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";

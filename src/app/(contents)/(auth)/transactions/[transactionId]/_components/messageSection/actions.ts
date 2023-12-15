@@ -1,27 +1,15 @@
 "use server";
 
-import {
-  TrackingNumberFormScheme,
-  type TrackingNumberFormState,
-} from "@/app/(contents)/(auth)/transactions/[transactionId]/type";
-import { createRecipientMailContent } from "@/app/(contents)/item/[id]/_components/transactionButton/purchaseButton/mailTemplate";
+import { createRecipientMailContent } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/mailTemplate";
 import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
-import {
-  updateTransaction,
-  updateTransactionStatus,
-} from "@/repositories/transaction";
 import {
   createTransactionComment,
   findTransactionComments,
   markAsReadTransactionComments,
   type TransactionCommentCreateResult,
 } from "@/repositories/transactionComment";
-import { getFormValues } from "@/ui/form";
-import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
-
-type SendMessageResult = Result<string, string>;
 
 /**
  * 取引メッセージを取得
@@ -40,21 +28,6 @@ export const fetchMessages = async (transactionId: string) => {
 };
 
 /**
- * トランザクションのステータスを更新する
- *
- * @param id - トランザクションの取引ID
- * @param stateId - 設定する新しい状態ID
- */
-export const updateTransactionStateByTransactionId = async (
-  id: string,
-  stateId: number,
-) => {
-  await updateTransactionStatus({
-    id,
-    transactionStatus: stateId,
-  });
-};
-/**
  * メッセージを送信
  * @param message メッセージ
  * @param transactionId 取引ID
@@ -63,7 +36,7 @@ export const updateTransactionStateByTransactionId = async (
 export const sendMessage = async (
   message: string,
   transactionId: string,
-): Promise<SendMessageResult> => {
+): Promise<Result<string, string>> => {
   const sessionUser = await getSessionUser();
   if (!sessionUser) return failure("ログインしてください");
   if (message.length > 300)
@@ -112,54 +85,4 @@ const sendMailToRecipient = async (
     transactionCommentCreateComment,
   );
   return await sendMailToUser(recipientEmail, mailSubject, mailContent);
-};
-
-/**
- * 追跡番号を登録
- * @param prevState 前の状態
- * @param formData FormData
- */
-export const insertTrackingNumber = async (
-  prevState: TrackingNumberFormState,
-  formData: FormData,
-): Promise<TrackingNumberFormState> => {
-  const values = getFormValues(formData, prevState.values);
-  const { verificationCode, trackingNumber, transactionId } = values;
-
-  const result = await verifyForm(verificationCode);
-
-  if (result.isFailure) {
-    return {
-      ...prevState,
-      message: result.error,
-    };
-  } else {
-    const validated = TrackingNumberFormScheme.safeParse(values);
-
-    if (!validated.success) {
-      return {
-        ...prevState,
-        errors: validated.error.flatten().fieldErrors,
-      };
-    }
-    try {
-      await updateTransaction({
-        id: transactionId,
-        trackingNumber: trackingNumber,
-      });
-      return {
-        ...prevState,
-        errors: {},
-        values: {
-          ...prevState.values,
-          trackingNumber: trackingNumber,
-        },
-      };
-    } catch {
-      return {
-        ...prevState,
-        message: "送り状番号の更新に失敗しました",
-      };
-    }
-  }
 };

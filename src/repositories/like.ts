@@ -38,14 +38,14 @@ export const deleteLike = async (itemId: string, userId: string) => {
  * @param itemId 商品ID
  * @param userId ユーザーID
  */
-export const findLike = cache(async (itemId: string, userId: string) => {
+export const findLike = async (itemId: string, userId: string) => {
   return await prisma.like.findFirst({
     where: {
       itemId,
       userId,
     },
   });
-});
+};
 
 /**
  * いいね数を取得する

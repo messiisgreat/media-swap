@@ -1,9 +1,11 @@
-import { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/MessageSection";
-import { SellerInfo } from "@/app/(contents)/(auth)/transactions/[transactionId]/SellerInfo";
-import { ShippingNotification } from "@/app/(contents)/(auth)/transactions/[transactionId]/ShippingNotification";
-import { TrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/TrackingNumber";
-import { TransactionChangeButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionChangeButton";
-import { TransactionStatus } from "@/app/(contents)/(auth)/transactions/[transactionId]/TransactionStatus";
+import {
+  MessageSection,
+  SellerInfo,
+  ShippingNotification,
+  TrackingNumber,
+  TransactionProgressButton,
+  TransactionStatus,
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
@@ -40,7 +42,7 @@ export default async function Page({
     notFound();
   }
   return (
-    <div className="flex w-full flex-col gap-4 py-4 lg:flex-row">
+    <div className="flex w-full flex-col gap-4 py-4">
       <aside className="flex flex-1 flex-col gap-8">
         <TransactionStatus
           transaction={transaction}
@@ -61,12 +63,12 @@ export default async function Page({
           />
         )}
         {/* 通常の取引更新用ボタン */}
-        <TransactionChangeButton
+        <TransactionProgressButton
           transaction={transaction}
           sessionUser={sessionUser}
         />
         {/* 取引キャンセル用ボタン */}
-        <TransactionChangeButton transaction={transaction} isCancel />
+        <TransactionProgressButton transaction={transaction} isCancel />
         <SellerInfo
           seller={transaction.item.seller}
           defaultIcon={defaultIcon}
