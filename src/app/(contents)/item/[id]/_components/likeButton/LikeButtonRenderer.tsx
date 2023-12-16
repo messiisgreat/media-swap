@@ -89,7 +89,6 @@ export function LikeButtonRenderer({
       >
         <input
           type="checkbox"
-          id="favbox"
           className="peer hidden"
           checked={isLiked}
           readOnly
