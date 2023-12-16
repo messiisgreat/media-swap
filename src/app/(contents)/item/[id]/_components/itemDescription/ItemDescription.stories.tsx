@@ -10,7 +10,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div className="my-16 flex flex-col items-center">
+      <div className="flex flex-col items-center  bg-gray-300 py-16 [&>*]:max-w-md">
         <Story />
       </div>
     ),
@@ -18,22 +18,10 @@ export default {
   tags: ["autodocs"],
 } satisfies Meta<typeof ItemDescription>;
 
-export const NomalText = {
+export const NormalText = {
   args: {
     description:
       "あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモーリオ市、郊外のぎらぎらひかる草の波。",
-  },
-};
-
-export const Empty = {
-  args: {
-    description: "",
-  },
-};
-
-export const IncludeLineSpace = {
-  args: {
-    description: "1行目\n2行目\n\n\n\n改行4つ",
   },
 };
 
@@ -53,5 +41,17 @@ export const LongText = {
 第一毛をもって装飾されべきはずの顔がつるつるしてまるで薬缶だ。
 その後猫にもだいぶ逢ったがこんな片輪には一度も出会わした事がない。
 のみならず顔の真中があまりに突起している。`,
+  },
+};
+
+export const Empty = {
+  args: {
+    description: "",
+  },
+};
+
+export const IncludeLineSpace = {
+  args: {
+    description: "1行目\n2行目\n\n\n\n改行4つ",
   },
 };
