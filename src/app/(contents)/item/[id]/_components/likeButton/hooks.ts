@@ -10,6 +10,8 @@ type LikeState = {
   count: number;
   /** いいね済みかどうかの初期値 */
   isLiked: boolean;
+  /** ユーザに押されたかどうかの初期値 */
+  isPressed: boolean;
 };
 
 type UseOptimisticResult = [
@@ -21,6 +23,7 @@ type UseOptimisticResult = [
 
 /**
  * 処理の終了を待たずにいいねの状態を更新するためのカスタムフック
+ * 更新に失敗した場合は、いいねの状態を元に戻し、エラーが起きたことをユーザーに通知する
  * @param currentState いいねの初期状態
  * @returns いいねの状態といいね数を更新する関数
  */
@@ -33,6 +36,7 @@ export const useOptimisticLike = (
     setOptimisticState((s) => ({
       count: s.count + (s.isLiked ? -1 : 1),
       isLiked: !s.isLiked,
+      isPressed: true,
     }));
 
     const action = optimisticState.isLiked ? unlike : like;
@@ -48,6 +52,7 @@ export const useOptimisticLike = (
       toast("エラーが発生しました");
       setOptimisticState(currentState);
     }
+    setOptimisticState((s) => ({ ...s, isPressed: false }));
   };
 
   return [optimisticState, updateLike] as const;

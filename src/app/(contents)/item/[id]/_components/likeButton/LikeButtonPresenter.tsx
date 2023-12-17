@@ -2,7 +2,7 @@
 
 import { LikeButtonRenderer } from "@/app/(contents)/item/[id]/_components/likeButton/LikeButtonRenderer";
 import { useOptimisticLike } from "@/app/(contents)/item/[id]/_components/likeButton/hooks";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -29,25 +29,25 @@ export function LikeButtonPresenter({
   isLoggedin,
   className = "",
 }: Props) {
-  const [loading, setLoading] = useState(false);
-  const [state, updateLike] = useOptimisticLike({ count, isLiked });
+  const [state, updateLike] = useOptimisticLike({
+    count,
+    isLiked,
+    isPressed: false,
+  });
 
   const handleLike = useCallback(async () => {
-    if (loading) return;
     if (!isLoggedin) {
       toast("ログインするといいねできます");
       return;
     }
-    setLoading(true);
     await updateLike(itemId);
-    setLoading(false);
-  }, [isLoggedin, loading, updateLike, itemId]);
+  }, [isLoggedin, updateLike, itemId]);
 
   return (
     <LikeButtonRenderer
       count={state.count}
       isLiked={state.isLiked}
-      loading={loading}
+      loading={state.isPressed}
       onClick={handleLike}
       className={className}
     />
