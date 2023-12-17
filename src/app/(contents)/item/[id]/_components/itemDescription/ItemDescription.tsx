@@ -1,6 +1,7 @@
 "use client";
 
 import { useDescriptionHeight } from "@/app/(contents)/item/[id]/_components/itemDescription/hooks";
+import { Card } from "@/ui/card/Card";
 import { useCallback, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -29,12 +30,9 @@ export const ItemDescription = ({ description }: Props) => {
   }, [isCollapsed]);
 
   return (
-    <div
+    <Card
       ref={ref}
-      className={twMerge(
-        "grid w-full gap-4 rounded-lg bg-white p-4 shadow-md",
-        isCollapsed && "max-h-56",
-      )}
+      className={twMerge("grid w-full gap-4", isCollapsed && "max-h-56")}
     >
       <p
         className={twMerge("text-gray-600 whitespace-pre-wrap", collapseClass)}
@@ -49,6 +47,6 @@ export const ItemDescription = ({ description }: Props) => {
           {isCollapsed ? "もっと見る" : "折りたたむ"}
         </button>
       )}
-    </div>
+    </Card>
   );
 };

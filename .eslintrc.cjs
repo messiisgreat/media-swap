@@ -11,16 +11,21 @@ module.exports = {
     "jsdoc",
     "unicorn",
     "import",
+    "jest",
+    "jest-dom",
+    "testing-library",
   ],
   extends: [
     "eslint:recommended",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
-    "prettier",
     "plugin:jsdoc/recommended-typescript-error",
     "plugin:storybook/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:jest/recommended",
+    "plugin:jest-dom/recommended",
+    "prettier",
   ],
   root: true,
   env: {
@@ -143,7 +148,8 @@ module.exports = {
     "react/jsx-curly-brace-presence": "error",
     /** コンポーネントにPascalCaseの命名を強制 */
     "react/jsx-pascal-case": "error",
-
+    /** testメソッドを"test"に統一 */
+    "jest/consistent-test-it": ["error", { fn: "test" }],
     // "import/order": [
     //   "error",
     //   {
@@ -168,4 +174,10 @@ module.exports = {
     //   },
     // ],
   },
+  overrides: [
+    {
+      files: ["*.test.{ts,tsx}"],
+      extends: ["plugin:testing-library/react"],
+    },
+  ],
 };
