@@ -1,6 +1,6 @@
 "use client";
 
-import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/hooks";
+import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/hooks";
 
 type Props = {
   /** className */

@@ -1,5 +1,5 @@
 import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
-import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/transactionOptionItems";
+import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/TransactionOptionItems";
 import Image, { type StaticImageData } from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
@@ -42,10 +42,10 @@ export function SellerInfo({ seller, defaultIcon }: SellerInfoProps) {
         </div>
         <FaChevronRight />
       </div>
-      <div className="ml-auto">
+      <div className="ml-auto flex flex-col">
         <VerifyProvider>
           <OptionMenu
-            className="absolute right-0 text-center"
+            className="absolute text-center"
             items={transactionOptionItems}
           />
         </VerifyProvider>

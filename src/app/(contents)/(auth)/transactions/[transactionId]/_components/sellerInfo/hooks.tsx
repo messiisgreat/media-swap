@@ -12,7 +12,7 @@ import { H } from "@/ui/structure/H";
 export const useCancelModal = () => {
 
   const action = async () => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+    // await new Promise<void>((resolve) => setTimeout(resolve, 1000));
   }
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
