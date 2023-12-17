@@ -14,11 +14,11 @@ type Props = {
 export const CancelFormButton = ({ className = "" }: Props) => {
   const [handleOpen, CancelModal] = useCancelModal();
   return (
-    <>
+    <div>
       <button onClick={handleOpen} className={className}>
         運営への問合わせ
       </button>
       <CancelModal />
-    </>
+    </div>
   );
 };
