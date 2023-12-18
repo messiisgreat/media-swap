@@ -34,9 +34,11 @@ module.exports = {
   },
   ignorePatterns: [
     "./next*",
+    ".swc",
     "**/*.js",
     "**/*.cjs",
     "pnpm-lock.yaml",
+    "bun.lockb",
     "__generated__",
   ],
   rules: {
