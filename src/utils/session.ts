@@ -11,6 +11,13 @@ export async function getSession() {
   return await getServerSession(authOptions);
 }
 
+export type SessionUser = {
+  id: string;
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+};
+
 /**
  * 現在の認証セッション情報からユーザー情報を取得します。
  * @returns ユーザー情報またはnull

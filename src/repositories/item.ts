@@ -6,8 +6,11 @@ import "server-only";
 /** データベース未登録のItem型 */
 export type ItemCreateInput = Prisma.ItemCreateWithoutSellerInput;
 
-/** 画像とタグを含んだItemの配列 */
+/** 画像とタグ,取引IDを含んだItemの配列 */
 export type ItemsReadResult = Awaited<ReturnType<typeof findItems>>;
+
+/** 画像とタグを含んだItem */
+export type ItemReadResult = Awaited<ReturnType<typeof findItemById>>;
 
 /**
  * 商品を追加する

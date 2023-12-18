@@ -1,7 +1,6 @@
-import { redirect } from "next/navigation";
-
-import { merchant } from "@/app/(contents)/item/[id]/actions";
+import { merchant } from "@/app/(contents)/item/[id]/_components/commentSection/actions";
 import { Button } from "@/ui";
+import { redirect } from "next/navigation";
 
 type Props = {
   /** 商品ID */

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
 import { useImageModal } from "@/features/modal";
@@ -22,37 +22,36 @@ export function Carousel({
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLElement>,
-    index: number,
-    lenOfSlides: number,
-  ) => {
-    setSelectedIndex(index);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLElement>, index: number, lenOfSlides: number) => {
+      setSelectedIndex(index);
 
-    const container = containerRef.current;
-    const element = e.target as HTMLElement;
-    const elementLeft = element.offsetLeft;
-    const elementWidth = element.offsetWidth;
-    const containerWidth = container?.offsetWidth;
-    const scrollWidth = container?.scrollWidth;
+      const container = containerRef.current;
+      const element = e.target as HTMLElement;
+      const elementLeft = element.offsetLeft;
+      const elementWidth = element.offsetWidth;
+      const containerWidth = container?.offsetWidth;
+      const scrollWidth = container?.scrollWidth;
 
-    const image = imageRef.current;
-    const imageWidth = image?.offsetWidth;
+      const image = imageRef.current;
+      const imageWidth = image?.offsetWidth;
 
-    if (imageWidth) {
-      const imageScrollLeft = index * imageWidth;
-      image.style.transform = `translateX(${-imageScrollLeft}px)`;
-    }
+      if (imageWidth) {
+        const imageScrollLeft = index * imageWidth;
+        image.style.transform = `translateX(${-imageScrollLeft}px)`;
+      }
 
-    if (containerWidth && elementWidth && elementLeft && scrollWidth) {
-      const gap =
-        (scrollWidth % (elementWidth * lenOfSlides)) / (lenOfSlides + 1);
-      const padding = elementLeft - index * (elementWidth + gap) - gap;
-      const scrollLeft =
-        elementLeft - padding - containerWidth / 2 + elementWidth / 2;
-      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-    }
-  };
+      if (containerWidth && elementWidth && elementLeft && scrollWidth) {
+        const gap =
+          (scrollWidth % (elementWidth * lenOfSlides)) / (lenOfSlides + 1);
+        const padding = elementLeft - index * (elementWidth + gap) - gap;
+        const scrollLeft =
+          elementLeft - padding - containerWidth / 2 + elementWidth / 2;
+        container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+      }
+    },
+    [],
+  );
 
   const { handleOpen, ImageModal } = useImageModal(
     images[selectedIndex].imageURL,
