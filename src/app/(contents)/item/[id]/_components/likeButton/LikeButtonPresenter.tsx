@@ -1,17 +1,14 @@
 "use client";
 
 import { LikeButtonRenderer } from "@/app/(contents)/item/[id]/_components/likeButton/LikeButtonRenderer";
-import {
-  like,
-  unlike,
-} from "@/app/(contents)/item/[id]/_components/likeButton/actions";
-import { useCallback, useState } from "react";
+import { useOptimisticLike } from "@/app/(contents)/item/[id]/_components/likeButton/hooks";
+import { useCallback } from "react";
 import toast from "react-hot-toast";
 
 type Props = {
-  /** いいね数 */
+  /** いいね数の初期値 */
   count: number;
-  /** いいね済みかどうか */
+  /** いいね済みかどうかの初期値 */
   isLiked: boolean;
   /** 商品ID */
   itemId: string;
@@ -26,41 +23,31 @@ type Props = {
  * @returns
  */
 export function LikeButtonPresenter({
-  count: _count,
-  isLiked: _isLiked,
+  count,
+  isLiked,
   itemId,
   isLoggedin,
   className = "",
 }: Props) {
-  const [isLiked, setIsLiked] = useState(_isLiked);
-  const [count, setCount] = useState(_count);
-  const [loading, setLoading] = useState(false);
+  const [state, updateLike] = useOptimisticLike({
+    count,
+    isLiked,
+    isPressed: false,
+  });
 
   const handleLike = useCallback(async () => {
-    if (loading) return;
     if (!isLoggedin) {
-      toast.error("ログインするといいねできます");
+      toast("ログインするといいねできます");
       return;
     }
-    setLoading(true);
-
-    const result = isLiked ? await unlike(itemId) : await like(itemId);
-
-    if (result.isFailure) {
-      toast.error(result.error);
-    } else {
-      setCount((c) => (isLiked ? c - 1 : c + 1));
-      setIsLiked((l) => !l);
-    }
-
-    setLoading(false);
-  }, [isLiked, itemId, loading, isLoggedin]);
+    await updateLike(itemId);
+  }, [isLoggedin, updateLike, itemId]);
 
   return (
     <LikeButtonRenderer
-      count={count}
-      isLiked={isLiked}
-      loading={loading}
+      count={state.count}
+      isLiked={state.isLiked}
+      loading={state.isPressed}
       onClick={handleLike}
       className={className}
     />
