@@ -4,11 +4,26 @@ import {
   ProfileFormSchema,
   type ProfileFormState,
 } from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
-import { updateEmail } from "@/repositories/user";
+import { uploadToCloudinary } from "@/lib/cloudinary/upload";
+import { updateUser } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
+
+/**
+ * 画像のアップロード
+ * 画像の変更していない場合はFileのsizeが0になるため、undefinedを返すようにしています
+ * @param image - 画像のURL一覧が含まれたオブジェクトの配列
+ * @returns アップロードした画像データ or undefined
+ */
+const uploadImage = async (image: File | null) => {
+  if (!image) return undefined;
+  if (image.size === 0) return undefined;
+
+  const [uploadImage] = await uploadToCloudinary([image]);
+  return uploadImage;
+};
 
 /**
  * フォームに入力されたプロフィール情報を登録する
@@ -21,7 +36,7 @@ export const profileFormAction = async (
   formData: FormData,
 ): Promise<ProfileFormState> => {
   const values = getFormValues(formData, prevState.values);
-  const { verificationCode, ...rest } = values;
+  const { verificationCode, image, ...rest } = values;
   const sessionUser = await getSessionUser();
   const userId = sessionUser?.id;
   if (!userId) {
@@ -35,8 +50,11 @@ export const profileFormAction = async (
       message: result.error,
     };
   }
-
-  const validated = ProfileFormSchema.safeParse(values);
+  const uploadedImage = await uploadImage(image);
+  const validated = ProfileFormSchema.safeParse({
+    ...values,
+    image: uploadedImage,
+  });
   if (!validated.success) {
     return {
       ...prevState,
@@ -44,7 +62,11 @@ export const profileFormAction = async (
     };
   }
   if (rest.email) {
-    await updateEmail(userId, rest.email);
+    await updateUser({
+      ...rest,
+      id: userId,
+      image: uploadedImage,
+    });
   }
 
   redirect("/mypage/");

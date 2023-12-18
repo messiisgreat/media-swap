@@ -1,6 +1,7 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
+import { type User } from "@prisma/client";
 import { cache } from "react";
 
 /**
@@ -20,13 +21,13 @@ export const findUserById = cache(async (id: string) => {
 });
 
 /**
- * メールアドレスを更新する
- * @param userId - 対象ユーザーのID
- * @param email  - 更新後のメールアドレス
+ * ユーザーを更新する
+ * @param user ユーザー情報
  */
-export const updateEmail = async (userId: string, email: string) => {
+export const updateUser = async (user: { id: User["id"] } & Partial<User>) => {
+  const { id, ...data } = user;
   return await prisma.user.update({
-    where: { id: userId },
-    data: { email },
+    where: { id },
+    data,
   });
 };
