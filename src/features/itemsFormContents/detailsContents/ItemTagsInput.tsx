@@ -83,6 +83,8 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.includes(",")) return;
+
       setInputValue(e.target.value);
     },
     [setInputValue],
