@@ -1,21 +1,24 @@
-import { getServerSession } from "next-auth";
+"server only";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { getServerSession } from "next-auth";
 
 /**
- * 現在の認証セッション情報を取得します。
- * Serverとありますが、Clientでも動作します。
- * @returns セッション情報またはnull
+ * Auth.jsのSessionUserの型を定義
  */
-export async function getSession() {
-  return await getServerSession(authOptions);
-}
+export type SessionUser = {
+  id: string;
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+};
 
 /**
  * 現在の認証セッション情報からユーザー情報を取得します。
  * @returns ユーザー情報またはnull
  */
-export const getSessionUser = async () => {
-  const session = await getSession();
-  return session?.user;
+export const getSessionUser = async (): Promise<SessionUser | undefined> => {
+  const session = await getServerSession(authOptions);
+  if (!session) return undefined;
+  return session.user;
 };

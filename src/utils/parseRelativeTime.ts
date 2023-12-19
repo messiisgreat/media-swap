@@ -1,5 +1,5 @@
-// https://panda-program.com/posts/ts-diff-time
 import { isToday, isYesterday } from "date-fns";
+import { utcToZonedTime } from "date-fns-tz";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
@@ -8,15 +8,17 @@ import differenceInSeconds from "date-fns/differenceInSeconds";
 import differenceInWeeks from "date-fns/differenceInWeeks";
 import differenceInYears from "date-fns/differenceInYears";
 import format from "date-fns/format";
-import { utcToZonedTime } from "date-fns-tz";
 
 /**
- * 相対時間を計算する
+ * 現在時刻からの相対時間を計算する
+ * 60秒未満なら「○秒前」、60分未満なら「○分前」、24時間未満なら「○時間前」、7日未満なら「○日前」、4週間未満なら「○週間前」、12ヶ月未満なら「○ヶ月前」、12ヶ月以上なら「○年前」を返す
  * @param target 時間
  * @returns 相対時間の文字列
+ * @see https://panda-program.com/posts/ts-diff-time
  */
 export const parseRelativeTime = (target: Date): string => {
   const base = new Date();
+  // 早期リターンで上の条件を優先する
   const diffInSecs = differenceInSeconds(base, target);
   if (diffInSecs < 60) {
     return `${diffInSecs}秒前`;

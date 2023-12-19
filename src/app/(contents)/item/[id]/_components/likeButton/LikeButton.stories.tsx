@@ -3,18 +3,6 @@ import { type Meta, type StoryObj } from "@storybook/react";
 
 export default {
   component: LikeButtonRenderer,
-  parameters: {
-    nextjs: {
-      appDirectory: true,
-    },
-  },
-  decorators: [
-    (Story) => (
-      <div className="my-16 flex flex-col items-center">
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof LikeButtonRenderer>;
 
 type Story = StoryObj<typeof LikeButtonRenderer>;

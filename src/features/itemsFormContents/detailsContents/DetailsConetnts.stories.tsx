@@ -4,18 +4,6 @@ import { DetailsContents } from "@/features/itemsFormContents/detailsContents/De
 
 export default {
   component: DetailsContents,
-  parameters: {
-    nextjs: {
-      appDirectory: true,
-    },
-  },
-  decorators: [
-    (Story) => (
-      <div className="my-16 flex flex-col items-center">
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof DetailsContents>;
 
 type Story = StoryObj<typeof DetailsContents>;

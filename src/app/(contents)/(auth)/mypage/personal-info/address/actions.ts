@@ -7,7 +7,7 @@ import {
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
-import { getSession } from "@/utils";
+import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
 /**
@@ -21,8 +21,8 @@ export const addressFormAction = async (
   formData: FormData,
 ): Promise<AddressFormState> => {
   const values = getFormValues(formData, prevState.values);
-  const session = await getSession();
-  const userId = session?.user.id;
+  const sessionUser = await getSessionUser();
+  const userId = sessionUser?.id;
   const { verificationCode, ...rest } = values;
 
   if (!userId) {

@@ -1,7 +1,9 @@
 "use client";
-import { useDeleteModal } from "@/app/(contents)/item/[id]/_components/toolbar/DeleteModal";
-import { useReportModal } from "@/app/(contents)/item/[id]/_components/toolbar/ReportModal";
-import { type Session } from "next-auth";
+import {
+  useDeleteModal,
+  useReportModal,
+} from "@/app/(contents)/item/[id]/_components/toolbar/hooks";
+import { type SessionUser } from "@/utils";
 import { FaEllipsisVertical, FaFlag, FaTrash } from "react-icons/fa6";
 
 import { twMerge } from "tailwind-merge";
@@ -10,7 +12,7 @@ type Props = {
   /** 商品ID */
   itemId: string;
   /** ログインユーザー */
-  sessionUser: Session["user"] | null;
+  sessionUser: SessionUser | undefined;
   /** 出品者かどうか */
   isItemOwner: boolean;
   /** className */
@@ -19,8 +21,7 @@ type Props = {
 
 /**
  * 削除/通報用のツールバー
- * @todo 編集もここかも
- * @returns
+ * @returns div > reportModal, deleteModal
  */
 export function Toolbar({
   itemId,
@@ -28,15 +29,15 @@ export function Toolbar({
   isItemOwner,
   className = "",
 }: Props) {
-  const { handleReportModalOpen, ReportModal } = useReportModal({
+  const { handleReportModalOpen, ReportModal } = useReportModal(
     itemId,
     sessionUser,
-  });
-  const { handleDeleteModalOpen, DeleteModal } = useDeleteModal({
+  );
+  const { handleDeleteModalOpen, DeleteModal } = useDeleteModal(
     itemId,
     sessionUser,
     isItemOwner,
-  });
+  );
 
   return (
     <div

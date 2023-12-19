@@ -2,24 +2,23 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { type Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
 import { ThreeDotsIcon } from "@/app/_layout/header/ThreeDotsIcon";
+import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
+import { type SessionUser } from "@/utils";
 
-type UserMenuButtonProps = {
-  session: Session | null;
-};
 /**
  * ヘッダーに表示するユーザーボタン (サインイン/サインアウト)
  * @returns
  */
-export default function UserMenuButton({ session }: UserMenuButtonProps) {
-  const user = session?.user;
-
+export default function UserMenuButton({
+  sessionUser,
+}: {
+  sessionUser: SessionUser | undefined;
+}) {
   const dropdownRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -55,9 +54,9 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
   return (
     <details ref={dropdownRef} className="dropdown">
       <summary className="btn btn-circle btn-ghost">
-        {user ? (
+        {sessionUser ? (
           <Image
-            src={user?.image || profilePicPlaceholder}
+            src={sessionUser?.image || profilePicPlaceholder}
             alt="Profile picture"
             width={40}
             height={40}
@@ -68,7 +67,7 @@ export default function UserMenuButton({ session }: UserMenuButtonProps) {
         )}
       </summary>
       <ul className="menu dropdown-content menu-sm absolute right-0 z-30 mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
-        {user ? (
+        {sessionUser ? (
           <>
             <li>
               <button onClick={handleSignOut}>Sign Out</button>

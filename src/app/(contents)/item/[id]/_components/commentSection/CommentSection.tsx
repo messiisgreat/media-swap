@@ -2,26 +2,31 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { useDeleteModal } from "@/app/(contents)/item/[id]/_components/commentSection/DeleteModal";
-import { useReportModal } from "@/app/(contents)/item/[id]/_components/commentSection/ReportModal";
 import { TestTransactionButton } from "@/app/(contents)/item/[id]/_components/commentSection/TestTransactionButton";
+import {
+  addComment,
+  fetchComments,
+} from "@/app/(contents)/item/[id]/_components/commentSection/actions";
+import {
+  useDeleteModal,
+  useReportModal,
+} from "@/app/(contents)/item/[id]/_components/commentSection/hooks";
 import { commentsAtom } from "@/app/(contents)/item/[id]/_components/commentSection/state";
-import { addComment, fetchComments } from "@/app/(contents)/item/[id]/actions";
 import { Skeleton } from "@/ui/Skeleton";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { Section } from "@/ui/structure";
+import { type SessionUser } from "@/utils";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";
 import { useAtom } from "jotai";
-import { type Session } from "next-auth";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { FaEllipsis, FaFlag, FaTrash } from "react-icons/fa6";
 
 type Props = {
   itemId: string;
-  sessionUser: Session["user"] | null;
+  sessionUser: SessionUser | undefined;
   isItemOwner: boolean;
 };
 
@@ -36,15 +41,15 @@ export const CommentSection = ({ itemId, sessionUser, isItemOwner }: Props) => {
     null,
   ); // 通報するコメントのIDを格納する
   const formRef = useRef<HTMLFormElement>(null);
-  const { openReportModal, ReportModal } = useReportModal({
-    commentId: selectedCommentId,
+  const { openReportModal, ReportModal } = useReportModal(
+    selectedCommentId,
     sessionUser,
-  });
-  const { openDeleteModal, DeleteModal } = useDeleteModal({
-    commentId: selectedCommentId,
+  );
+  const { openDeleteModal, DeleteModal } = useDeleteModal(
+    selectedCommentId,
     sessionUser,
     isItemOwner,
-  });
+  );
 
   useEffect(() => {
     fetchComments(itemId)
@@ -70,7 +75,8 @@ export const CommentSection = ({ itemId, sessionUser, isItemOwner }: Props) => {
       await addComment(text, productId);
       toast.success("コメントを書き込みました。");
       formRef.current?.reset();
-      setComments(await fetchComments(productId));
+      const comments = await fetchComments(itemId);
+      setComments(comments);
     } catch (e) {
       console.error(e);
       toast.error("コメントの書き込みに失敗しました。");

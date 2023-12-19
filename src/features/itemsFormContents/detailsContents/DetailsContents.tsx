@@ -2,7 +2,7 @@ import { useId } from "react";
 
 import { type Tag } from "@prisma/client";
 
-import { PRODUCT_CONDITION } from "@/constants/item";
+import { CONDITION } from "@/constants/item";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
 import { Select } from "@/ui/form";
 import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
@@ -53,7 +53,7 @@ export const DetailsContents = ({
       <TitleUnderbar title="商品の説明" />
       <Select
         labelText="商品の状態"
-        options={PRODUCT_CONDITION}
+        options={CONDITION}
         name="conditionCode"
         required
         defaultValue={conditionCode}

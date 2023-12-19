@@ -1,7 +1,7 @@
 import { isArrayOfFiles } from "@/utils/typeGuard";
 
 type FormObject = {
-  [key: string]: string | number | File | File[] | undefined;
+  [key: string]: string | number | File | File[] | undefined | null;
 };
 
 /**

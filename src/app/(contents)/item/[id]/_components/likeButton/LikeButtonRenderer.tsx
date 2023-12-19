@@ -81,10 +81,7 @@ export function LikeButtonRenderer({
   return (
     <div className={twMerge("flex flex-col items-center", className)}>
       <label
-        className={twMerge(
-          "w-12 cursor-pointer overflow-visible",
-          loading ? "opacity-30" : "",
-        )}
+        className={twMerge("w-12 cursor-pointer overflow-visible")}
         onClick={handleClick}
       >
         <input
