@@ -3,18 +3,6 @@ import { type Meta, type StoryObj } from "@storybook/react";
 
 export default {
   component: Card,
-  parameters: {
-    nextjs: {
-      appDirectory: true,
-    },
-  },
-  decorators: [
-    (Story) => (
-      <div className="flex h-full flex-col items-center bg-gray-300 py-16">
-        <Story />
-      </div>
-    ),
-  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof Card>;
 
