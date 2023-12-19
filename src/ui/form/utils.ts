@@ -1,4 +1,5 @@
 import { isArrayOfFiles } from "@/utils/typeGuard";
+import { type KeyboardEventHandler } from "react";
 
 type FormObject = {
   [key: string]: string | number | File | File[] | undefined | null;
@@ -27,14 +28,12 @@ export const getFormValues = <T extends FormObject>(
  * Ctrl + Enterでフォームを送信する
  * @param event キーボードイベント
  */
-export const handleCtrlEnterSubmit = (event: React.KeyboardEvent) => {
+export const handleCtrlEnterSubmit: KeyboardEventHandler<
+  HTMLTextAreaElement
+> = (event) => {
   const isCtrlEnter = event.ctrlKey && event.key === "Enter";
   if (!isCtrlEnter) return;
-
-  const textArea = event.currentTarget as HTMLTextAreaElement | null;
-  if (!textArea) return;
-
-  const form = textArea.form;
+  const form = event.currentTarget.form;
   if (form) {
     form.requestSubmit();
   }
