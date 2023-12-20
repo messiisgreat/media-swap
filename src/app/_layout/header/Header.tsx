@@ -1,21 +1,21 @@
 import { SearchWindow } from "@/app/_layout/header/SearchWindow";
 import { TitleLogo } from "@/app/_layout/header/TitleLogo";
 import UserMenuButton from "@/app/_layout/header/UserMenuButton";
-import { getSessionUser } from "@/utils/session";
+import { getSession } from "@/utils/session";
 
 /**
  * サイトのヘッダー
  * @returns header
  */
 export async function Header() {
-  const sessionUser = await getSessionUser();
+  const session = await getSession();
 
   return (
     <header className="navbar justify-around bg-base-100 p-1 md:p-4">
       <TitleLogo />
       <div className="flex gap-2">
         <SearchWindow />
-        <UserMenuButton sessionUser={sessionUser} />
+        <UserMenuButton session={session} />
       </div>
     </header>
   );

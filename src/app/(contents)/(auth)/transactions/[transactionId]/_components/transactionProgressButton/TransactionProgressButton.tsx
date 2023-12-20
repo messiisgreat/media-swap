@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { updateTransactionStatus } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/transactionProgressButton/actions";
 import { TRANSACTION_STATUS } from "@/constants/item";
 import { Button } from "@/ui";
-import { type SessionUser } from "@/utils";
 import { type Transaction } from "@prisma/client";
+import { type Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 /**
@@ -24,7 +24,7 @@ export const TransactionProgressButton = ({
   isCancel = false,
 }: {
   transaction: Transaction;
-  sessionUser?: SessionUser;
+  sessionUser?: Session["user"];
   status?: number;
   isCancel?: boolean;
 }) => {
