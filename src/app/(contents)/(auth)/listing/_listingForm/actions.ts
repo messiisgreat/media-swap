@@ -11,7 +11,7 @@ import { uploadToCloudinary } from "@/lib/cloudinary/upload";
 import { createItem, type ItemCreateInput } from "@/repositories/item";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
-import { getSessionUser, strToBool } from "@/utils";
+import { getSession, strToBool } from "@/utils";
 
 const create = async (
   formData: Omit<ProductFormValues, "verificationCode">,
@@ -52,8 +52,8 @@ export const listingItem = async (
 ): Promise<ProductFormState> => {
   const values = getFormValues(formData, prevState.values);
   const previousPrice = null;
-  const sessionUser = await getSessionUser();
-  const userId = sessionUser?.id;
+  const session = await getSession();
+  const userId = session?.user.id;
   const { verificationCode, ...rest } = values;
   // 文字列の'isPublic'をブール値に変換
   const isPublicBool = strToBool(values.isPublic);

@@ -1,34 +1,28 @@
-// 出品商品に関する定数
-// フォームで取り扱う値は、数字やbooleanであっても文字列型で扱うため、keyも文字列型で定義している
-
-import { generateKeyGuard } from "@/utils";
-
 /** 商品の状態 */
-export const CONDITION = {
-  "0": "新品または未使用",
-  "1": "目立った傷や汚れなし",
-  "2": "やや傷や汚れあり",
-  "3": "傷や汚れあり",
-  "4": "全体的に状態が悪い",
+export const PRODUCT_CONDITION = {
+  0: "新品または未使用",
+  1: "目立った傷や汚れなし",
+  2: "やや傷や汚れあり",
+  3: "傷や汚れあり",
+  4: "全体的に状態が悪い",
 } as const;
 
 /** 配送料の負担 */
-export const IS_SHIPPING_INCLUDED = {
-  "0": "着払い(購入者負担)",
-  "1": "送料込み(出品者負担)",
+export const POSTAGE_IS_INCLUDED = {
+  0: "着払い(購入者負担)",
+  1: "送料込み(出品者負担)",
 } as const;
 
-/** 配送方法 */
 export const SHIPPING_METHOD = {
-  "0": "未定",
-  "1": "ゆうメール",
-  "2": "レターパック",
-  "3": "普通郵便(定形、定形外)",
-  "4": "クロネコヤマト",
-  "5": "ゆうパック",
-  "6": "クリックポスト",
-  "7": "ゆうパケット",
-  "99": "その他",
+  0: "未定",
+  1: "ゆうメール",
+  2: "レターパック",
+  3: "普通郵便(定形、定形外)",
+  4: "クロネコヤマト",
+  5: "ゆうパック",
+  6: "クリックポスト",
+  7: "ゆうパケット",
+  99: "その他",
 } as const;
 
 /** 配送方法（その他） */
@@ -55,9 +49,9 @@ export const SHIPPING_METHOD_DELIVERY_SERVICE_PROVIDER_URL = {
 
 /** 配送日の目安 */
 export const SHIPPING_DAYS = {
-  "0": "1~2日で発送",
-  "1": "2~3日で発送",
-  "2": "4~7日で発送",
+  0: "1~2日で発送",
+  1: "2~3日で発送",
+  2: "4~7日で発送",
 } as const;
 
 /** 取引ステータス */
@@ -69,10 +63,7 @@ export const TRANSACTION_STATUS = {
   CANCELLED: 4, // 取引キャンセル
 } as const;
 
-/**
- * 取引ステータスIDから見るボタンの表示ステータス
- * ステップの進行状況を表すため、number型のkeyで定義
- */
+/** 取引ステータスIDから見るボタンの表示ステータス */
 export const TRANSACTION_BUTTON_STATUS = {
   0: "支払完了",
   1: "発送完了",
@@ -99,7 +90,3 @@ export const PRICE_LIMIT = {
   MAX: 500000,
   MIN: 300,
 };
-
-export const isConditionKey = generateKeyGuard(CONDITION);
-export const isShippingMethodKey = generateKeyGuard(SHIPPING_METHOD);
-export const isShippingDaysKey = generateKeyGuard(SHIPPING_DAYS);

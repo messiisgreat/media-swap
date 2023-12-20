@@ -1,8 +1,8 @@
 import { type ComponentProps } from "react";
 
 import {
-  CONDITION,
   PRICE_LIMIT,
+  PRODUCT_CONDITION,
   SHIPPING_DAYS,
   SHIPPING_METHOD,
 } from "@/constants/item";
@@ -39,7 +39,7 @@ type Props = ComponentProps<typeof Button>;
 export const TestDataButton = (props: Props) => {
   const handleClick = () => {
     setTestData("[name=name]", "テストデータ");
-    setTestData("[name=conditionCode]", generateRandomCode(CONDITION));
+    setTestData("[name=conditionCode]", generateRandomCode(PRODUCT_CONDITION));
     setTestData(
       "[name=price]",
       Math.floor(

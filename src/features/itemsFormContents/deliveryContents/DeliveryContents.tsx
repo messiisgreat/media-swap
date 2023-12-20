@@ -1,7 +1,5 @@
-"use client";
-
 import {
-  IS_SHIPPING_INCLUDED,
+  POSTAGE_IS_INCLUDED,
   PRICE_LIMIT,
   SHIPPING_DAYS,
   SHIPPING_ID,
@@ -49,7 +47,7 @@ export const DeliveryContents = ({
       <Select
         name="isShippingIncluded"
         labelText="配送料の負担"
-        options={IS_SHIPPING_INCLUDED}
+        options={POSTAGE_IS_INCLUDED}
         defaultValue={isShippingIncluded}
       />
       <Select
