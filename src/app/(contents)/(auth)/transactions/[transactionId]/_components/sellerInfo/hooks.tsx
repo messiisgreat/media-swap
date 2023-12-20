@@ -1,21 +1,32 @@
 "use client";
 
 import { useCallback } from "react";
-
 import { useFormActionModal } from "@/features/modal";
 import { H } from "@/ui/structure/H";
 import { Select, Textarea } from "@/ui/form";
 import {
-  cancellationBuyerReasons,
+  cancellationBuyerReasons, initialCancellationFormValues,
   // cancellationSellerReasons,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
+import { useFormState } from "react-dom";
+import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useFormMessageToaster } from "@/ui/form/hooks";
+import { sendCancelInquiry } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/actions";
+
 /**
  * 取引キャンセル用のモーダル
  * @returns
  */
 export const useCancelModal = () => {
-  const action = async () => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+  const [state, dispatch] = useFormState(sendCancelInquiry, initialCancellationFormValues);
+  const getVerificationCode = useVerify();
+  useFormMessageToaster(state);
+  console.log(state);
+
+  const action = async (f: FormData) => {
+    const verificationCode = await getVerificationCode();
+    f.append("verificationCode", verificationCode);
+    dispatch(f);
   };
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
