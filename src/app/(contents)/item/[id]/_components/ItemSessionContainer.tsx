@@ -33,9 +33,10 @@ export const ItemSessionContainer = async ({ id }: { id: string }) => {
   const images = item.images;
   const userId = sessionUser?.id;
   const isItemOwner = userId === item.sellerId;
+  const isSoldOut = Boolean(item.transaction?.id);
   return (
     <VerifyProvider>
-      <Carousel isSoldOut={Boolean(item.transaction?.id)} images={images} />
+      <Carousel {...{ isSoldOut, images }} />
       <H className="w-full text-xl font-bold lg:text-2xl">{item.name}</H>
       <Section className="grid w-full items-start gap-4">
         <div className="grid grid-cols-6 grid-rows-2 items-center justify-between">
@@ -49,13 +50,13 @@ export const ItemSessionContainer = async ({ id }: { id: string }) => {
           <Suspense fallback={<LikeButtonLoading className="col-span-3" />}>
             <LikeButton className="col-span-3" {...{ itemId, sessionUser }} />
           </Suspense>
-          <TransactionButton itemId={id} className="col-span-3" />
+          <TransactionButton itemId={itemId} className="col-span-3" />
         </div>
         <TitleUnderbar title="説明" />
         <ItemDescription description={item.description} />
         <TitleUnderbar title="商品情報" />
         <ItemInformation item={item} />
-        <TransactionButton itemId={id} className="max-md:hidden" />
+        <TransactionButton itemId={itemId} className="max-md:hidden" />
         <TitleUnderbar title="コメント" />
         <CommentForm {...{ itemId, sessionUser }} />
         <Suspense fallback={<CommentLoading />}>
