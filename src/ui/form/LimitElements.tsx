@@ -21,6 +21,7 @@ type LimitInputProps = CommonProps &
 
 /**
  * 文字数制限付きのinputタグ
+ * 文字数の入力を超過しても入力自体は制限したくないため、maxLengthをオーバーライドしている
  * @returns input,label
  */
 export const LimitInput = ({
@@ -38,7 +39,7 @@ export const LimitInput = ({
       <Input onChange={handleChange} {...props} />
       {!hideLimit && (
         <label
-          className={`label-text-alt flex justify-between ${
+          className={`label-text-alt flex w-full justify-between ${
             isOverLimit ? "text-error" : "text-black"
           }`}
         >
@@ -57,6 +58,7 @@ type LimitTextareaProps = CommonProps &
 
 /**
  * 文字数制限付きのtextareaタグ
+ * 文字数の入力を超過しても入力自体は制限したくないため、maxLengthをオーバーライドしている
  * @returns textarea,label
  */
 export const LimitTextarea = ({
@@ -74,7 +76,7 @@ export const LimitTextarea = ({
       <Textarea onChange={handleChange} {...props} />
       {!hideLimit && (
         <label
-          className={`label-text-alt flex justify-between ${
+          className={`label-text-alt flex w-full justify-between ${
             isOverLimit ? "text-error" : "text-black"
           }`}
         >

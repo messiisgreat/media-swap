@@ -2,11 +2,11 @@ import { twMerge } from "tailwind-merge";
 
 type Props = {
   /** いいね数 */
-  count: number;
+  count?: number;
   /** いいね済みかどうか */
   isLiked: boolean;
   /** いいねボタンを押したときの処理 */
-  onClick: () => void;
+  onClick?: () => void;
   /** いいねボタンを押したときの処理中かどうか */
   loading: boolean;
   /** className */
@@ -81,10 +81,7 @@ export function LikeButtonRenderer({
   return (
     <div className={twMerge("flex flex-col items-center", className)}>
       <label
-        className={twMerge(
-          "w-12 cursor-pointer overflow-visible",
-          loading ? "opacity-30" : "",
-        )}
+        className={twMerge("w-12 cursor-pointer overflow-visible")}
         onClick={handleClick}
       >
         <input

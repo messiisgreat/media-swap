@@ -1,28 +1,92 @@
 "use client";
-import { useCallback } from "react";
 
-import { type Session } from "next-auth";
-import toast from "react-hot-toast";
-
-import { addItemReport } from "@/app/(contents)/item/[id]/actions";
+import {
+  addItemReport,
+  removeItem,
+} from "@/app/(contents)/item/[id]/_components/toolbar/actions";
 import { useFormActionModal } from "@/features/modal";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { H } from "@/ui/structure/H";
 
-type Props = {
-  itemId: string;
-  sessionUser: Session["user"] | null;
+import { type SessionUser } from "@/utils";
+
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
+import toast from "react-hot-toast";
+import { FaFlag } from "react-icons/fa";
+import { FaTriangleExclamation } from "react-icons/fa6";
+
+/**
+ * 出品の削除モーダル
+ * @param itemId 商品ID
+ * @param sessionUser ログインユーザー
+ * @param isItemOwner 出品者かどうか
+ */
+export const useDeleteModal = (
+  itemId: string,
+  sessionUser: SessionUser | undefined,
+  isItemOwner: boolean,
+) => {
+  const router = useRouter();
+  const deleteItem = useCallback(async () => {
+    if (!sessionUser) {
+      toast.error("ログインしてください");
+      return;
+    }
+
+    if (!isItemOwner) {
+      toast.error("商品の出品者のみが商品を削除できます");
+      return;
+    }
+
+    try {
+      await removeItem(itemId);
+      toast.success("商品を削除しました。");
+      router.push("/");
+    } catch (e: unknown) {
+      toast.error("商品の削除に失敗しました。");
+    }
+  }, [itemId, sessionUser, isItemOwner, router]);
+
+  const { handleOpen, FormActionModal } = useFormActionModal(
+    deleteItem,
+    "削除",
+  );
+
+  const DeleteModal = useCallback(
+    () => (
+      <FormActionModal>
+        <H className="text-center text-lg font-bold">商品の削除</H>
+        <p className="py-2">商品を削除してもよろしいですか？</p>
+        <div className="alert alert-warning mb-4" role="alert">
+          <FaTriangleExclamation className="text-2xl" />
+          <p>この操作は取り消せません。</p>
+        </div>
+        <div className="alert mb-4" role="alert">
+          <FaFlag className="text-2xl" />
+          <p>
+            一時的に出品を停止したい場合は、商品の編集画面から「出品を停止する」を選択してください。
+          </p>
+        </div>
+      </FormActionModal>
+    ),
+    [FormActionModal],
+  );
+  return { handleDeleteModalOpen: handleOpen, DeleteModal };
 };
 
 /**
  * 出品の通報モーダル
- * @param param0.selectedComment 通報するコメントのID
- * @param param0.sessionUser ログインユーザー
+ * @param itemId 商品ID
+ * @param sessionUser ログインユーザー
  * @returns open, close, ReportModal
  */
-export const useReportModal = ({ itemId, sessionUser }: Props) => {
+export const useReportModal = (
+  itemId: string,
+  sessionUser: SessionUser | undefined,
+) => {
   const getVerificationCode = useVerify();
 
   const reportItem = useCallback(

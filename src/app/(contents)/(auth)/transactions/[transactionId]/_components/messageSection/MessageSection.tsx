@@ -13,9 +13,9 @@ import {
   fetchMessages,
   sendMessage,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/actions";
+import { CommentLoading } from "@/app/(contents)/item/[id]/_components/commentContainer/CommentLoading";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { Button } from "@/ui";
-import { Skeleton } from "@/ui/Skeleton";
 import { LimitInput } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
@@ -152,8 +152,8 @@ export function MessageSection({
           )
         ) : (
           <div className="flex flex-col gap-4">
-            <Skeleton />
-            <Skeleton />
+            <CommentLoading />
+            <CommentLoading />
           </div>
         )}
         <form

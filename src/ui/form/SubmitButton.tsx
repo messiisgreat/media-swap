@@ -5,10 +5,7 @@ import { type ComponentProps } from "react";
 import { useFormStatus } from "react-dom";
 import { Button } from "..";
 
-type SubmitButtonProps = Omit<
-  ComponentProps<typeof Button>,
-  "type" | "disabled"
->;
+type SubmitButtonProps = Omit<ComponentProps<typeof Button>, "type">;
 
 /**
  * フォームに設置する送信ボタン
@@ -17,22 +14,15 @@ type SubmitButtonProps = Omit<
  */
 export const SubmitButton = ({
   children,
-  className,
   outline = false,
   secondary = false,
   ...props
 }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
+  const disabled = props.disabled || pending;
 
   return (
-    <Button
-      {...props}
-      className={className}
-      outline={outline}
-      secondary={secondary}
-      type="submit"
-      disabled={pending}
-    >
+    <Button {...props} type="submit" {...{ outline, secondary, disabled }}>
       {pending ? (
         <span className="loading loading-spinner" aria-hidden="true" />
       ) : (

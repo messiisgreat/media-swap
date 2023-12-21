@@ -17,22 +17,24 @@ jobs:
         with:
           path: |
             **/node_modules
-            **.next/cache/eslint
-          key: ${{ runner.os }}-build-${{ hashFiles('**/bun.lockb') }}
+            ${{ github.workspace }}/.next/cache/eslint
+          key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-
-
-      - name: Setup Bun 🥟
+            ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
+        # cacheがヒットしなかった場合のみ、bun installとprisma generateを実行する
+      - if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        name: Setup Bun 🥟
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest   
-      
       - if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         name: Install dependencies 📦
         run: bun install
       - if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         name: Run prisma generate 🏭
         run:  sed -i '10,12d' db/schema.prisma && bun run prisma generate
+  
+  # lintとtestを並列で実行する
   lint:
     runs-on: ubuntu-latest
     needs: setup
@@ -49,10 +51,10 @@ jobs:
         with:
           path: |
             **/node_modules
-            **.next/cache/eslint
-          key: ${{ runner.os }}-build-${{ hashFiles('**/bun.lockb') }}
+            ${{ github.workspace }}/.next/cache/eslint
+          key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-
+            ${{ runner.os }}-build--${{ hashFiles('bun.lockb','package.json') }}
 
       - name: Setup Bun 🥟
         uses: oven-sh/setup-bun@v1
@@ -78,10 +80,10 @@ jobs:
         with:
           path: |
             **/node_modules
-            **.next/cache/eslint
-          key: ${{ runner.os }}-build-${{ hashFiles('**/bun.lockb') }}
+            ${{ github.workspace }}/.next/cache/eslint
+          key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-
+            ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
 
       - name: Setup Bun 🥟
         uses: oven-sh/setup-bun@v1
