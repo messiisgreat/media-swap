@@ -13,12 +13,19 @@ import { useFormState } from "react-dom";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { sendCancelInquiry } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/actions";
+import { type Session } from "next-auth";
+
+type Props = {
+  /** className */
+  sessionUser?: Session["user"];
+};
 
 /**
  * 取引キャンセル用のモーダル
+ * @param props - モーダルのプロパティ
  * @returns
  */
-export const useCancelModal = () => {
+export const useCancelModal = (props: Props) => {
   const [state, dispatch] = useFormState(
     sendCancelInquiry,
     initialCancellationFormValues,
@@ -29,8 +36,8 @@ export const useCancelModal = () => {
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("name", "my name");
-    f.append("email", "y.maeda@valour-tec.com");
+    f.append("name", props.sessionUser?.name as string);
+    f.append("email", props.sessionUser?.email as string);
     f.append("verificationCode", verificationCode);
     dispatch(f);
   };

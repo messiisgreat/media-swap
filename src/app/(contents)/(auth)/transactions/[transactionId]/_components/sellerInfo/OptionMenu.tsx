@@ -27,7 +27,7 @@ export const OptionMenu = (props: OptionMenuProps) => {
       </summary>
       <ul className={className}>
         <li key="cancelFormButton">
-          <CancelFormButton />
+          <CancelFormButton sessionUser={props.sessionUser} />
         </li>
       </ul>
     </details>
