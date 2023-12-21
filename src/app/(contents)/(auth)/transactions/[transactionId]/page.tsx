@@ -78,6 +78,7 @@ export default async function Page({
           <OptionMenu
             className="absolute text-center"
             sessionUser={sessionUser}
+            isBuyer={isBuyer}
           />
         </VerifyProvider>
       </aside>

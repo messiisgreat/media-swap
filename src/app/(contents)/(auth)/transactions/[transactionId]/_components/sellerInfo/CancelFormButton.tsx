@@ -5,8 +5,11 @@ import { type Session } from "next-auth";
 
 type Props = {
   /** className */
-  sessionUser?: Session["user"] ;
   className?: string;
+  /** ユーザー情報 */
+  sessionUser?: Session["user"] ;
+  /** 購入者判定 */
+  isBuyer?: boolean;
 };
 
 /**

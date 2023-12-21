@@ -6,8 +6,12 @@ import { type Session } from "next-auth";
 import { CancelFormButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/CancelFormButton";
 
 type OptionMenuProps = {
+  /** className */
   className?: string;
+  /** ユーザー情報 */
   sessionUser?: Session["user"];
+  /** 購入者判定 */
+  isBuyer?: boolean;
 };
 /**
  * オプションメニュー
@@ -27,7 +31,10 @@ export const OptionMenu = (props: OptionMenuProps) => {
       </summary>
       <ul className={className}>
         <li key="cancelFormButton">
-          <CancelFormButton sessionUser={props.sessionUser} />
+          <CancelFormButton
+            sessionUser={props.sessionUser}
+            isBuyer={props.isBuyer}
+          />
         </li>
       </ul>
     </details>
