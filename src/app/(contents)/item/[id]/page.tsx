@@ -1,6 +1,7 @@
 import { ItemSessionContainer } from "@/app/(contents)/item/[id]/_components/ItemSessionContainer";
-import { findItemWithHandling } from "@/app/(contents)/item/[id]/actions";
+import { findItemWithHandling } from "@/app/(contents)/item/[id]/_components/actions";
 import { type Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: {
@@ -32,9 +33,15 @@ export async function generateMetadata({
 
 /**
  * 商品ページ
+ * /item/[id]
+ * @returns loading > 出品のプレースホルダ > 出品情報 > [いいね状況,コメント一覧] > 読込完了
  */
 const Page = ({ params: { id } }: Props) => {
-  return <ItemSessionContainer id={id} />;
+  return (
+    <Suspense fallback={null}>
+      <ItemSessionContainer id={id} />
+    </Suspense>
+  );
 };
 
 export default Page;

@@ -1,12 +1,12 @@
 import { LikeButtonPresenter } from "@/app/(contents)/item/[id]/_components/likeButton/LikeButtonPresenter";
 import { countLike, findLike } from "@/repositories/like";
-import { type User } from "next-auth";
+import { type SessionUser } from "@/utils";
 
 type Props = {
   /** 商品ID */
   itemId: string;
   /** ログインユーザー */
-  sessionUser: User | null;
+  sessionUser: SessionUser | undefined;
   /** className */
   className?: string;
 };
@@ -19,11 +19,12 @@ export async function LikeButtonContainer({
   sessionUser,
   className = "",
 }: Props) {
-  const count = await countLike(itemId);
   const isLoggedin = Boolean(sessionUser);
-  // 左辺がfalseなら右辺を評価しない
-  const isLiked =
-    isLoggedin && Boolean(await findLike(itemId, sessionUser!.id));
+  const isLikedPromise = isLoggedin && findLike(itemId, sessionUser!.id);
+  const [count, isLiked] = await Promise.all([
+    countLike(itemId),
+    isLikedPromise && Boolean(await isLikedPromise),
+  ]);
   return (
     <LikeButtonPresenter
       count={count}
