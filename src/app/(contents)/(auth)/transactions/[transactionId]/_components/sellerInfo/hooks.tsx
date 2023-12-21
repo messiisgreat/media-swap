@@ -5,7 +5,8 @@ import { useFormActionModal } from "@/features/modal";
 import { H } from "@/ui/structure/H";
 import { Select, Textarea } from "@/ui/form";
 import {
-  cancellationBuyerReasons, initialCancellationFormValues,
+  cancellationBuyerReasons,
+  initialCancellationFormValues,
   // cancellationSellerReasons,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
 import { useFormState } from "react-dom";
@@ -18,15 +19,18 @@ import { sendCancelInquiry } from "@/app/(contents)/(auth)/transactions/[transac
  * @returns
  */
 export const useCancelModal = () => {
-  const [state, dispatch] = useFormState(sendCancelInquiry, initialCancellationFormValues);
+  const [state, dispatch] = useFormState(
+    sendCancelInquiry,
+    initialCancellationFormValues,
+  );
   const getVerificationCode = useVerify();
   useFormMessageToaster(state);
   console.log(state);
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
-    f.append("name", 'my name');
-    f.append("email", 'y.maeda@valour-tec.com');
+    f.append("name", "my name");
+    f.append("email", "y.maeda@valour-tec.com");
     f.append("verificationCode", verificationCode);
     dispatch(f);
   };

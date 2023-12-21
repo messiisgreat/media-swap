@@ -1,8 +1,5 @@
-import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
-import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/TransactionOptionItems";
 import Image, { type StaticImageData } from "next/image";
 import { FaChevronRight } from "react-icons/fa";
-import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 
 type SellerInfoProps = {
   /** 出品者情報 */
@@ -41,14 +38,6 @@ export function SellerInfo({ seller, defaultIcon }: SellerInfoProps) {
           <span className="text-xl">{seller.name}</span>
         </div>
         <FaChevronRight />
-      </div>
-      <div className="ml-auto flex flex-col">
-        <VerifyProvider>
-          <OptionMenu
-            className="absolute text-center"
-            items={transactionOptionItems}
-          />
-        </VerifyProvider>
       </div>
     </div>
   );

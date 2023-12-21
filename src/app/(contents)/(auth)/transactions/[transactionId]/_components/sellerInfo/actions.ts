@@ -22,8 +22,6 @@ export const sendCancelInquiry = async (
   formData: FormData,
 ): Promise<CancellationInquiryFormState> => {
   const values = getFormValues(formData, prevState.values);
-  console.log('------------------------------------');
-  console.log(values);
   const validated = cancellationInquiryFormSchema.safeParse(values);
   if (!validated.success) {
     return {
@@ -32,6 +30,8 @@ export const sendCancelInquiry = async (
     };
   }
   const { name, email, category, body } = values;
+  console.log('------------------------------------');
+  console.log(name, email, category, body);
   const inquiryBody = `${category} お問い合わせフォームからの連絡
 
   ${body}`;

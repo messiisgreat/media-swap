@@ -6,6 +6,8 @@ import {
   TransactionProgressButton,
   TransactionStatus,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
+import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
+import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/TransactionOptionItems";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
@@ -73,6 +75,12 @@ export default async function Page({
           seller={transaction.item.seller}
           defaultIcon={defaultIcon}
         />
+        <VerifyProvider>
+          <OptionMenu
+            className="absolute text-center"
+            items={transactionOptionItems}
+          />
+        </VerifyProvider>
       </aside>
       <MessageSection transaction={transaction} sessionUser={sessionUser} />
     </div>
