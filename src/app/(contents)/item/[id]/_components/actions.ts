@@ -2,17 +2,21 @@
 
 import { createBrowsingHistory } from "@/repositories/browsingHistory";
 import { findItemById, type ItemReadResult } from "@/repositories/item";
+import { findComments } from "@/repositories/itemComment";
+import { getSessionUser } from "@/utils";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { notFound } from "next/navigation";
 
 /**
- * 商品ページを開けたときに商品閲覧履歴を追加する
+ * 商品閲覧履歴を追加する
+ * Sessionが切れているなどでログインしていない場合はユーザーなしで追加する
  * @param itemId 商品ID
- * @param sessionUserId ユーザーID
  * @returns 追加された閲覧履歴
  */
-export const browsing = async (itemId: string, sessionUserId: string) => {
-  return await createBrowsingHistory(sessionUserId, itemId);
+export const browsing = async (itemId: string) => {
+  const sessionUser = await getSessionUser();
+  const sessionUserId = sessionUser?.id;
+  return await createBrowsingHistory(sessionUserId!, itemId);
 };
 
 /**
@@ -41,4 +45,13 @@ export const findItemWithHandling = async (
     }
     throw error;
   }
+};
+
+/**
+ * コメントを取得
+ * @param itemId 商品ID
+ * @returns
+ */
+export const fetchComments = async (itemId: string) => {
+  return await findComments(itemId);
 };

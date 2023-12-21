@@ -17,7 +17,7 @@ export async function like(itemId: string): Promise<LikeResult> {
   try {
     const like = await createLike(itemId, user.id);
     if (!like) return failure("いいねできませんでした");
-    revalidatePath(`/items/${itemId}`);
+    revalidatePath(`/item/${itemId}`);
     return success();
   } catch {
     return failure("いいねできませんでした");
@@ -34,7 +34,7 @@ export async function unlike(itemId: string): Promise<LikeResult> {
   try {
     const like = await deleteLike(itemId, user.id);
     if (!like) return failure("いいねを解除できませんでした");
-    revalidatePath(`/items/${itemId}`);
+    revalidatePath(`/item/${itemId}`);
     return success();
   } catch {
     return failure("いいねを解除できませんでした");

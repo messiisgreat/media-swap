@@ -2,11 +2,11 @@ import { twMerge } from "tailwind-merge";
 
 type Props = {
   /** いいね数 */
-  count: number;
+  count?: number;
   /** いいね済みかどうか */
   isLiked: boolean;
   /** いいねボタンを押したときの処理 */
-  onClick: () => void;
+  onClick?: () => void;
   /** いいねボタンを押したときの処理中かどうか */
   loading: boolean;
   /** className */

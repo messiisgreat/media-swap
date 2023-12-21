@@ -4,15 +4,13 @@ import { useCallback } from "react";
 import {
   addCommentReport,
   removeComment,
-} from "@/app/(contents)/item/[id]/_components/commentSection/actions";
-import { commentsAtom } from "@/app/(contents)/item/[id]/_components/commentSection/state";
+} from "@/app/(contents)/item/[id]/_components/commentContainer/commentList/actions";
 
 import { useFormActionModal } from "@/features/modal";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { H } from "@/ui/structure/H";
 import { type SessionUser } from "@/utils";
-import { useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { FaFlag } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
@@ -22,7 +20,7 @@ import { FaTriangleExclamation } from "react-icons/fa6";
  * @param commentId 通報するコメントのID
  * @param sessionUser ログインユーザー
  */
-export const useReportModal = (
+export const useCommentReportModal = (
   commentId: string | null,
   sessionUser: SessionUser | undefined,
 ) => {
@@ -112,39 +110,32 @@ export const useReportModal = (
  * @param sessionUser ログインユーザー
  * @param isItemOwner 商品の出品者かどうか
  */
-export const useDeleteModal = (
+export const useCommentDeleteModal = (
   commentId: string | null,
   sessionUser: SessionUser | undefined,
   isItemOwner: boolean,
 ) => {
-  const setComments = useSetAtom(commentsAtom);
-
   const deleteComment = useCallback(async () => {
     if (!commentId) {
       toast.error("削除するコメントが選択されていません");
       return;
     }
-
     if (!sessionUser) {
       toast.error("ログインしてください");
       return;
     }
-
     if (!isItemOwner) {
       toast.error("商品の出品者のみがコメントを削除できます");
       return;
     }
-
-    try {
-      await removeComment(commentId);
+    const result = await removeComment(commentId);
+    if (result.isFailure) {
+      toast.error(result.error);
+      return;
+    } else {
       toast.success("コメントを削除しました。");
-      setComments((prev) =>
-        prev!.filter((comment) => comment.id !== commentId),
-      );
-    } catch (e: unknown) {
-      toast.error("コメントの削除に失敗しました。");
     }
-  }, [commentId, sessionUser, isItemOwner, setComments]);
+  }, [commentId, sessionUser, isItemOwner]);
 
   const { handleOpen: open, FormActionModal } = useFormActionModal(
     deleteComment,

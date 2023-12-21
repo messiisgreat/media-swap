@@ -7,8 +7,6 @@ import { type IconType } from "react-icons";
 import { AiFillBell, AiFillCamera, AiFillHome } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 
-import { useScrollingState } from "@/app/_layout/hooks";
-
 type NaviMenu = {
   id: string;
   icon: IconType;
@@ -49,13 +47,9 @@ const naviMenu: NaviMenu[] = [
  */
 export const AnchorMenu = () => {
   const pathName = usePathname();
-  const isScroll = useScrollingState();
 
   return (
-    <div
-      className={`navbar fixed bottom-0 w-full flex-auto justify-center border-t border-gray-200 bg-gray-100 transition-transform 
-      md:hidden ${isScroll ? "translate-y-full" : "translate-y-0"}`}
-    >
+    <div className="fixed bottom-0 grid w-full flex-auto grid-cols-4 justify-center gap-4  border-gray-200 bg-gray-100 transition-transform md:hidden">
       {naviMenu.map((item) => {
         const Icon = item.icon;
         return (
