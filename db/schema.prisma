@@ -16,6 +16,7 @@ model User {
     id                 String   @id @default(auto()) @map("_id") @db.ObjectId
     name               String? // ユーザー名
     email              String   @unique // メールアドレス
+    introduction       String? // 自己紹介
     isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
     isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
     image              String? // アイコン画像URL
