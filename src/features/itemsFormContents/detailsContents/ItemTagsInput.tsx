@@ -53,14 +53,14 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
       setNewTags([...newTags, newTag]);
       setInputValue("");
     },
-    [newTags, setNewTags],
+    [newTags],
   );
 
   const handleDelete = useCallback(
     (tagName: string) => {
       setNewTags(newTags.filter((tag) => tag.text !== tagName));
     },
-    [newTags, setNewTags],
+    [newTags],
   );
 
   const handleAdd = useCallback(() => {
@@ -79,7 +79,7 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
     };
     setNewTags([...newTags, newTag]);
     setInputValue("");
-  }, [setNewTags, newTags, inputValue, setInputValue]);
+  }, [newTags, inputValue]);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,12 +87,12 @@ export function ItemTagsInput({ name, suggestedTags, selectedTags }: Props) {
 
       setInputValue(e.target.value);
     },
-    [setInputValue],
+    [],
   );
 
   useEffect(() => {
     setNewTags(selectedTagNames);
-  }, [selectedTagNames, setNewTags]);
+  }, [selectedTagNames]);
 
   return (
     <div className="flex flex-col gap-3">
