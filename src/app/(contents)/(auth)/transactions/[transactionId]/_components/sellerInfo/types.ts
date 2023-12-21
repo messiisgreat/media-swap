@@ -13,8 +13,8 @@ export type CancellationInquiryFormState = FormState<InCancellationFormValues>;
 
 export const initialCancellationFormValues = {
   values: {
-    name: "maeda yuki",
-    email: "y.maeda@valour-tec.com",
+    name: "",
+    email: "",
     category: "",
     body: "",
     verificationCode: "",
