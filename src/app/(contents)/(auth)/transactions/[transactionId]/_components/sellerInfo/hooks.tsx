@@ -25,6 +25,8 @@ export const useCancelModal = () => {
 
   const action = async (f: FormData) => {
     const verificationCode = await getVerificationCode();
+    f.append("name", 'my name');
+    f.append("email", 'y.maeda@valour-tec.com');
     f.append("verificationCode", verificationCode);
     dispatch(f);
   };
