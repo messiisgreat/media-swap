@@ -1,45 +1,52 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useState, type ChangeEvent } from "react";
+import {
+  useCallback,
+  useId,
+  useState,
+  type ChangeEvent,
+  type ComponentProps,
+} from "react";
 
 type Props = {
-  src: string;
-};
+  initialSrc: string;
+  labelText: string;
+} & Omit<ComponentProps<"input">, "type" | "className">;
 
 /**
  * プロフィール画像のinputコンポーネント
- * @param param0.src 画像のsrc
  * @returns inputとプレビュー画像を配置したコンポーネント
  */
-export const ProfileImageInput = ({ src }: Props) => {
+export const ImageInput = ({ initialSrc, labelText, ...props }: Props) => {
   const imageInputId = useId();
   const [profileImage, setProfileImage] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.currentTarget;
     if (!files) return;
-
     setProfileImage(window.URL.createObjectURL(files[0]));
-  };
+  }, []);
 
   return (
-    <label htmlFor={imageInputId}>
-      プロフィール画像
-      <Image
-        src={profileImage || src}
-        alt="Profile picture"
-        width={40}
-        height={40}
-        className="w-10 rounded-full"
-      />
+    <div className="flex flex-col">
+      <label>{labelText}</label>
+      <label htmlFor={imageInputId} className="w-16 cursor-pointer">
+        <Image
+          src={profileImage || initialSrc}
+          alt={labelText}
+          width={64}
+          height={64}
+          className="h-16 w-16 rounded-full"
+        />
+      </label>
       <input
         id={imageInputId}
         type="file"
-        name="image"
         className="hidden"
         onChange={handleChange}
+        {...props}
       />
-    </label>
+    </div>
   );
 };
