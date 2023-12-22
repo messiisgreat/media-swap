@@ -1,4 +1,4 @@
-import { type ZodType, z } from "zod";
+import { z, type ZodType } from "zod";
 
 import { type FormState } from "@/ui/form";
 
@@ -13,7 +13,7 @@ export type TrackingNumberFormValues = {
 
 export type TrackingNumberFormState = FormState<TrackingNumberFormValues>;
 
-export const initialTrackingNumberFormValues: TrackingNumberFormState = {
+export const initialTrackingNumberFormValues = {
   values: {
     transactionId: "",
     trackingNumber: "",
@@ -21,7 +21,7 @@ export const initialTrackingNumberFormValues: TrackingNumberFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies TrackingNumberFormState;
 
 export const TrackingNumberFormScheme: ZodType<TrackingNumberFormValues> =
   z.object({

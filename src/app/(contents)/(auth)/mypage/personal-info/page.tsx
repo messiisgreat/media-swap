@@ -19,7 +19,9 @@ import { PageTitle } from "@/ui/structure";
 export default function Page() {
   return (
     <>
-      <PageTitle title={MY_PAGE_CONTENT_ENUM_JA[MY_PAGE_CONTENT.PRIVACY]} />
+      <PageTitle
+        title={MY_PAGE_CONTENT_ENUM_JA[MY_PAGE_CONTENT.PERSONAL_INFO]}
+      />
       <div className="w-full">
         <div className="m-auto px-4 sm:px-8">
           <ul className="overflow-hidden rounded border border-gray-200 shadow-md">

@@ -1,10 +1,10 @@
 "use client";
+import { ThreeDotsIcon } from "@/app/_layout/header/menuButton/ThreeDotsIcon";
 import useCloseDetailsOnOutsideClick from "@/ui/button/menuButton/hooks";
-import { ThreeDotsIcon } from "@/app/_layout/header/ThreeDotsIcon";
 import { type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-type OptionMenuProps =  {
+type OptionMenuProps = {
   className?: string;
   items?: ReactNode[];
 };
@@ -25,9 +25,7 @@ export const OptionMenu = (props: OptionMenuProps) => {
         <ThreeDotsIcon />
       </summary>
       <ul className={className}>
-        {props.items?.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
+        {props.items?.map((item, index) => <li key={index}>{item}</li>)}
       </ul>
     </details>
   );

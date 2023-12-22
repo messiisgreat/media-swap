@@ -1,4 +1,4 @@
-import { type ZodType, z } from "zod";
+import { z, type ZodType } from "zod";
 
 import { type FormState } from "@/ui/form";
 
@@ -13,7 +13,7 @@ type InquiryFormValues = {
 export type InquiryFormState = FormState<InquiryFormValues>;
 
 /** お問い合わせフォームの初期値 */
-export const initialInquiryFormValues: InquiryFormState = {
+export const initialInquiryFormValues = {
   values: {
     name: "",
     email: "",
@@ -23,7 +23,7 @@ export const initialInquiryFormValues: InquiryFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies InquiryFormState;
 
 /** お問い合わせフォームのバリデーション */
 export const InquiryFormSchema: ZodType<InquiryFormValues> = z.object({

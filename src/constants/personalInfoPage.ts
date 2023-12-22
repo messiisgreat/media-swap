@@ -12,7 +12,10 @@ type PageContentValue = (typeof PAGE_CONTENT)[PageContentKey];
 export const PAGE_LINK = {
   [PAGE_CONTENT.ADDRESS]: "/mypage/personal-info/address",
   [PAGE_CONTENT.PROFILE]: "/mypage/personal-info/profile",
-} as const satisfies Record<PageContentValue, string>;
+} as const satisfies Record<
+  PageContentValue,
+  `/mypage/personal-info/${PageContentValue}`
+>;
 
 /** 個人情報設定ページのタイトル */
 export const PAGE_CONTENT_ENUM_JA = {
