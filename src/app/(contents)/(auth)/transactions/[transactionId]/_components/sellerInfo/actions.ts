@@ -30,8 +30,6 @@ export const sendCancelInquiry = async (
     };
   }
   const { name, email, category, body } = values;
-  console.log('------------------------------------');
-  console.log(name, email, category, body);
   const inquiryBody = `${category} お問い合わせフォームからの連絡
 
   ${body}`;
