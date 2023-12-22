@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useFormActionModal } from "@/features/modal";
 import { H } from "@/ui/structure/H";
 import { Select, Textarea } from "@/ui/form";
@@ -28,7 +28,6 @@ type Props = {
  * @returns
  */
 export const useCancelModal = (props: Props) => {
-  const [isBuyer, setIsBuyer] = useState(props.isBuyer);
   const [state, dispatch] = useFormState(
     sendCancelInquiry,
     initialCancellationFormValues,
@@ -45,10 +44,7 @@ export const useCancelModal = (props: Props) => {
   };
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
-  useEffect(() => {
-    setIsBuyer(props.isBuyer);
-  }, [props.isBuyer]);
-  const options = isBuyer ? cancellationBuyerReasons : cancellationSellerReasons;
+  const options = props.isBuyer ? cancellationBuyerReasons : cancellationSellerReasons;
 
   const CancelModal = useCallback(
     () => (
