@@ -1,12 +1,17 @@
 "use client";
 import { ThreeDotsIcon } from "@/app/_layout/header/menuButton/ThreeDotsIcon";
 import useCloseDetailsOnOutsideClick from "@/ui/button/menuButton/hooks";
-import { type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { type Session } from "next-auth";
+import { CancelFormButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/CancelFormButton";
 
 type OptionMenuProps = {
+  /** className */
   className?: string;
-  items?: ReactNode[];
+  /** ユーザー情報 */
+  sessionUser?: Session["user"];
+  /** 購入者判定 */
+  isBuyer?: boolean;
 };
 /**
  * オプションメニュー
@@ -25,7 +30,12 @@ export const OptionMenu = (props: OptionMenuProps) => {
         <ThreeDotsIcon />
       </summary>
       <ul className={className}>
-        {props.items?.map((item, index) => <li key={index}>{item}</li>)}
+        <li key="cancelFormButton">
+          <CancelFormButton
+            sessionUser={props.sessionUser}
+            isBuyer={props.isBuyer}
+          />
+        </li>
       </ul>
     </details>
   );

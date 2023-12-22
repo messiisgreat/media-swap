@@ -1,5 +1,3 @@
-import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
-import { transactionOptionItems } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/transactionOptionItems";
 import Image, { type StaticImageData } from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 
@@ -40,12 +38,6 @@ export function SellerInfo({ seller, defaultIcon }: SellerInfoProps) {
           <span className="text-xl">{seller.name}</span>
         </div>
         <FaChevronRight />
-      </div>
-      <div className="ml-auto">
-        <OptionMenu
-          className="absolute right-0 text-center"
-          items={transactionOptionItems}
-        />
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export function CommentLoading() {
       className="grid grid-cols-[auto_1fr_auto_auto] grid-rows-[1fr-auto] items-start gap-1 [&>:not(a)]:my-auto"
     >
       <a className="row-span-2 mr-2 mt-1 h-12 w-12 rounded-full bg-gray-400" />
-      <p className="max-w-32 my-2 h-6 rounded-full bg-gray-400" />
+      <p className="my-2 h-6 max-w-32 rounded-full bg-gray-400" />
       <p className="my-2 h-4 w-12 rounded-full bg-gray-400" />
       <label
         tabIndex={0}

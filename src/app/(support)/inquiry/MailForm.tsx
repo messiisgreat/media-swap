@@ -31,7 +31,6 @@ export const MailForm = () => {
     <form action={action} className="grid gap-3">
       <Input
         labelText="お名前"
-        id="name"
         name="name"
         type="text"
         className="w-full"
@@ -40,7 +39,6 @@ export const MailForm = () => {
       />
       <Input
         labelText="メールアドレス"
-        id="email"
         name="email"
         type="email"
         className="w-full"
@@ -49,14 +47,12 @@ export const MailForm = () => {
       />
       <Select
         labelText="お問い合わせ種別"
-        id="category"
         name="category"
         options={categoryOptions}
         required
       />
       <Textarea
         labelText="お問い合わせ内容"
-        id="body"
         placeholder="お問い合わせ内容を入力してください。"
         name="body"
         required

@@ -1,11 +1,11 @@
 "use server";
 
-import { subject, text } from "@/app/(support)/inquiry/mailConfig";
 import {
-  InquiryFormSchema,
-  type InquiryFormState,
-  initialInquiryFormValues,
-} from "@/app/(support)/inquiry/types";
+  cancellationInquiryFormSchema,
+  type CancellationInquiryFormState,
+  initialCancellationFormValues,
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
+import { subject, text } from "@/app/(support)/inquiry/mailConfig";
 import { sendMailToAdmin, sendMailToUser } from "@/lib/mail";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
@@ -18,20 +18,20 @@ import { getFormValues } from "@/ui/form/utils";
  * @param prevState 前の状態
  * @param formData FormData
  */
-export const sendInquiry = async (
-  prevState: InquiryFormState,
+export const sendCancelInquiry = async (
+  prevState: CancellationInquiryFormState,
   formData: FormData,
-): Promise<InquiryFormState> => {
+): Promise<CancellationInquiryFormState> => {
   const values = getFormValues(formData, prevState.values);
   const result = await verifyForm(values.verificationCode);
-
+  
   if (result.isFailure) {
     return {
       ...prevState,
       message: result.error,
     };
   } else {
-    const validated = InquiryFormSchema.safeParse(values);
+    const validated = cancellationInquiryFormSchema.safeParse(values);
     if (!validated.success) {
       return {
         ...prevState,
@@ -41,19 +41,31 @@ export const sendInquiry = async (
     const { name, email, category, body } = values;
     const inquiryBody = `${category} お問い合わせフォームからの連絡
   
-  ${body}`;
+    ${body}`;
+    if (typeof name === "undefined" || typeof email === "undefined") {
+      return {
+        ...prevState,
+        message: "名前とメールアドレスは必須です。",
+      };
+    }
     const result = await sendMailToAdmin(name, email, inquiryBody);
     if (result) {
+      if (typeof email === "undefined") {
+        return {
+          ...prevState,
+          message: "メールアドレスは必須です。",
+        };
+      }
       await sendMailToUser(email, subject, text);
       return {
-        ...initialInquiryFormValues,
+        ...initialCancellationFormValues,
         message: "お問い合わせを受け付けました。",
       };
     } else {
       return {
         ...prevState,
         message: `お問い合わせの送信に失敗しました。
-        時間をおいて再度お試しください。`,
+          時間をおいて再度お試しください。`,
       };
     }
   }
