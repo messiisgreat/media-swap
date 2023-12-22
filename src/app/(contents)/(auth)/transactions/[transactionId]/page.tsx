@@ -45,36 +45,32 @@ export default async function Page({
   return (
     <div className="flex w-full flex-col gap-4 py-4">
       <aside className="flex flex-1 flex-col gap-8">
-        <TransactionStatus
-          transaction={transaction}
-          sessionUser={sessionUser}
-        />
-
-        {/* 送り状番号の送信用 */}
-        {isSeller && (
-          <VerifyProvider>
-            <ShippingNotification transactionId={transactionId} />
-          </VerifyProvider>
-        )}
-        {/* 送り状番号の表示用 */}
-        {transaction.trackingNumber && (
-          <TrackingNumber
-            trackingNumber={transaction.trackingNumber}
-            shippingMethodCode={transaction.item.shippingMethodCode}
-          />
-        )}
-        {/* 通常の取引更新用ボタン */}
-        <TransactionProgressButton
-          transaction={transaction}
-          sessionUser={sessionUser}
-        />
-        {/* 取引キャンセル用ボタン */}
-        <TransactionProgressButton transaction={transaction} isCancel />
-        <SellerInfo
-          seller={transaction.item.seller}
-          defaultIcon={defaultIcon}
-        />
         <VerifyProvider>
+          <TransactionStatus
+            transaction={transaction}
+            sessionUser={sessionUser}
+          />
+
+          {/* 送り状番号の送信用 */}
+          {isSeller && <ShippingNotification transactionId={transactionId} />}
+          {/* 送り状番号の表示用 */}
+          {transaction.trackingNumber && (
+            <TrackingNumber
+              trackingNumber={transaction.trackingNumber}
+              shippingMethodCode={transaction.item.shippingMethodCode}
+            />
+          )}
+          {/* 通常の取引更新用ボタン */}
+          <TransactionProgressButton
+            transaction={transaction}
+            sessionUser={sessionUser}
+          />
+          {/* 取引キャンセル用ボタン */}
+          <TransactionProgressButton transaction={transaction} isCancel />
+          <SellerInfo
+            seller={transaction.item.seller}
+            defaultIcon={defaultIcon}
+          />
           <OptionMenu
             className="absolute text-center"
             sessionUser={sessionUser}
