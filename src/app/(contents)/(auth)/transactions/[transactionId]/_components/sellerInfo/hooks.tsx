@@ -45,7 +45,6 @@ export const useCancelModal = (props: Props) => {
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
   const options = props.isBuyer ? cancellationBuyerReasons : cancellationSellerReasons;
-
   const CancelModal = useCallback(
     () => (
       <FormActionModal>
@@ -55,14 +54,12 @@ export const useCancelModal = (props: Props) => {
         </p>
         <Select
           labelText="お問い合わせ種別"
-          id="category"
           name="category"
           options={options}
           required
         />
         <Textarea
           labelText="お問い合わせ内容"
-          id="body"
           placeholder="お問い合わせ内容を入力してください。"
           name="body"
           required
