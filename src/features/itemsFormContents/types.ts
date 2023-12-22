@@ -35,7 +35,7 @@ export type ProductFormValues = {
 export type ProductFormState = FormState<ProductFormValues>;
 
 /** 出品情報登録フォームの初期値 */
-export const initialProductFormValues: ProductFormState = {
+export const initialProductFormValues = {
   values: {
     name: "",
     conditionCode: "",
@@ -51,7 +51,7 @@ export const initialProductFormValues: ProductFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies ProductFormState;
 
 /** 出品情報登録フォームのバリデーション */
 export const ProductFormSchema: ZodType<ProductFormValues> = z

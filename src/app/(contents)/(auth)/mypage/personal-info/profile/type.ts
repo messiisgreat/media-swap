@@ -17,7 +17,7 @@ export type ProfileFormValues = {
 export type ProfileFormState = FormState<ProfileFormValues>;
 
 /** プロフィールフォームの初期値 */
-export const initialProfileFormValues: ProfileFormState = {
+export const initialProfileFormValues = {
   values: {
     name: "",
     image: null,
@@ -27,7 +27,7 @@ export const initialProfileFormValues: ProfileFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies ProfileFormState;
 
 /** プロフィールフォームのバリデーション */
 export const ProfileFormSchema: ZodType<ProfileFormValues> = z.object({

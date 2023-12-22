@@ -23,7 +23,7 @@ export type AddressFormValues = {
 export type AddressFormState = FormState<AddressFormValues>;
 
 /** 住所フォームの初期値 */
-export const initialAddressFormValues: AddressFormState = {
+export const initialAddressFormValues = {
   values: {
     // name: "",
     postalCode: "",
@@ -36,7 +36,7 @@ export const initialAddressFormValues: AddressFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies AddressFormState;
 
 /** 住所フォームのバリデーション */
 export const AddressFormSchema: ZodType<AddressFormValues> = z.object({

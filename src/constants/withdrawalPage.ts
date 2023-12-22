@@ -12,7 +12,10 @@ type PageContentValue = (typeof PAGE_CONTENT)[PageContentKey];
 export const PAGE_LINK = {
   [PAGE_CONTENT.REQUEST]: "/mypage/withdrawal/request",
   [PAGE_CONTENT.HISTORY]: "/mypage/withdrawal/history",
-} as const satisfies Record<PageContentValue, string>;
+} as const satisfies Record<
+  PageContentValue,
+  `/mypage/withdrawal/${PageContentValue}`
+>;
 
 /** 出金ページのコンテンツタイトル */
 export const PAGE_CONTENT_ENUM_JA = {

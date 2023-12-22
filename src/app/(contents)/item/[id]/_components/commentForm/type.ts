@@ -12,7 +12,7 @@ export type ItemCommentFormValues = {
 
 export type ItemCommentFormState = FormState<ItemCommentFormValues>;
 
-export const initialItemCommentState: ItemCommentFormState = {
+export const initialItemCommentState = {
   values: {
     comment: "",
     itemId: "",
@@ -20,7 +20,7 @@ export const initialItemCommentState: ItemCommentFormState = {
   },
   errors: {},
   message: "",
-};
+} as const satisfies ItemCommentFormState;
 
 export const ItemCommentSchema: ZodType<ItemCommentFormValues> = z.object({
   comment: z

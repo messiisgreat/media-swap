@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 
-import { ProfileImageInput } from "@/app/(contents)/(auth)/mypage/personal-info/profile/ProfileImageInput";
+import { ImageInput } from "@/app/(contents)/(auth)/mypage/personal-info/profile/ProfileImageInput";
 import { profileFormAction } from "@/app/(contents)/(auth)/mypage/personal-info/profile/actions";
 import { initialProfileFormValues } from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
 import { Input } from "@/ui/form";
@@ -45,19 +45,23 @@ export const ProfileForm = ({ user }: Props) => {
 
   return (
     <form action={action} className="grid gap-3">
-      <ProfileImageInput src={user.image ?? ""} />
+      <ImageInput
+        initialSrc={user.image ?? ""}
+        name="image"
+        labelText="プロフィール画像"
+      />
       <Input
         name="name"
-        labelText="お名前"
+        labelText="ニックネーム"
         autoComplete="username"
-        placeholder="swappy taro"
+        placeholder="例: スワッピー"
         defaultValue={state.values.name}
       />
       <Input
         name="email"
         labelText="メールアドレス"
         autoComplete="email address"
-        placeholder="例: swappy@email.com"
+        placeholder="例: swappy@example.com"
         defaultValue={state.values.email}
       />
       <LimitTextarea

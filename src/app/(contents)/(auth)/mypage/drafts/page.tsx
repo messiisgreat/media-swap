@@ -29,7 +29,7 @@ export default async function Page({
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.DRAFT]} />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.DRAFTS]} />
       <ItemsListContainer
         page={page}
         size={size}

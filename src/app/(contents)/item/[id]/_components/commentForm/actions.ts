@@ -53,8 +53,8 @@ export const commentFormAction = async (
     await createComment(comment, userId, itemId);
     revalidatePath(`/item/${itemId}`);
     return {
-      message: "コメントを投稿しました",
       ...initialItemCommentState,
+      message: "コメントを投稿しました",
     };
   } catch (error) {
     return {
