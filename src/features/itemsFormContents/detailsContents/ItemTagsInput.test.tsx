@@ -16,7 +16,7 @@ describe("ItemTagsInput", () => {
       expect(screen.getByText("newTag")).toBeInTheDocument();
     });
 
-    test("タグ追加後、タグの入力欄は空になる", async () => {
+    test("タグ追加後、タグの入力欄は空になること", async () => {
       render(<ItemTagsInput name="tag" suggestedTags={[]} />);
       const input = screen.getByPlaceholderText("タグ名を入力してください");
       await userEvent.type(input, "newTag");
@@ -35,6 +35,16 @@ describe("ItemTagsInput", () => {
       fireEvent.keyDown(input, { keyCode: 13, target: input });
 
       expect(screen.getAllByText("newTag")).toHaveLength(1);
+    });
+
+    test("カンマは入力できないこと", async () => {
+      render(<ItemTagsInput name="tag" suggestedTags={[]} />);
+      const input = screen.getByPlaceholderText("タグ名を入力してください");
+      await userEvent.type(input, "new,Tag");
+
+      fireEvent.keyDown(input, { keyCode: 13, target: input });
+
+      expect(screen.getByText("newTag")).toBeInTheDocument();
     });
   });
 
