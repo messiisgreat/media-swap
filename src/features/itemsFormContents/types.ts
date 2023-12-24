@@ -51,7 +51,7 @@ export const initialProductFormValues = {
   },
   errors: {},
   message: "",
-} as const satisfies ProductFormState;
+}  satisfies ProductFormState;
 
 /** 出品情報登録フォームのバリデーション */
 export const ProductFormSchema: ZodType<ProductFormValues> = z
