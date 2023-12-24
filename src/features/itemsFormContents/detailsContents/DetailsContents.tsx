@@ -3,7 +3,7 @@ import { useId } from "react";
 import { type Tag } from "@prisma/client";
 
 import { CONDITION } from "@/constants/item";
-import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
+import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/itemTags/ItemTagsInput";
 import { Select } from "@/ui/form";
 import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
 import ImageInput from "@/ui/form/imageInput";

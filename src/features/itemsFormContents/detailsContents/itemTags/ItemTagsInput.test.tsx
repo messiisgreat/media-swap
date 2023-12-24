@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
-import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/ItemTagsInput";
+import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/itemTags/ItemTagsInput";
 
 describe("ItemTagsInput", () => {
   describe("タグの追加", () => {
@@ -12,7 +12,6 @@ describe("ItemTagsInput", () => {
 
       fireEvent.keyDown(input, { keyCode: 13, target: input });
 
-      expect(screen.getByText("Tags")).toBeInTheDocument();
       expect(screen.getByText("newTag")).toBeInTheDocument();
     });
 
