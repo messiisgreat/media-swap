@@ -21,9 +21,6 @@ export default async function Page() {
     redirect(redirectURL);
   }
   const address = await getAddress(user.id);
-  if (!address) {
-    redirect(redirectURL);
-  }
 
   return (
     <>
