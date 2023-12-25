@@ -180,6 +180,8 @@ module.exports = {
         singleReturnOnly: false,
       },
     ],
+    /** jsxへのコールバック関数の記載を禁止 */
+    "react/jsx-no-bind": ["warn", { ignoreDOMComponents: true }],
     // "import/order": [
     //   "error",
     //   {

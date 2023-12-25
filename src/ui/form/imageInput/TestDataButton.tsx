@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+// ランダムな値を返す関数を使用しているため無効化
 import { type ComponentProps } from "react";
 
 import {

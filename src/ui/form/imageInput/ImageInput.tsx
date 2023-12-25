@@ -82,13 +82,13 @@ export const ImageInput = ({ id, labelText, ...props }: Props) => {
     };
   }, [files, isDev]);
 
-  const handleRemove = (index: number) => {
+  const handleRemove = useCallback((index: number) => {
     setFiles((prevFiles) => {
       const newFiles = [...prevFiles];
       newFiles.splice(index, 1);
       return newFiles;
     });
-  };
+  }, []);
 
   const labelClass = `flex items-center justify-center rounded-md border bg-white
 ${

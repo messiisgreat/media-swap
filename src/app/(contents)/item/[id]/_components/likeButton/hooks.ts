@@ -49,7 +49,7 @@ export const useOptimisticLike = (
       }
     } catch (error) {
       console.error(error);
-      toast("エラーが発生しました");
+      toast.error("エラーが発生しました");
       setOptimisticState(currentState);
     }
     setOptimisticState((s) => ({ ...s, isPressed: false }));

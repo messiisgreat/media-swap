@@ -91,7 +91,7 @@ export const ItemTagsInput = ({
             <TagCard
               key={tag.text}
               tagText={tag.text}
-              onDelete={() => handleDelete(tag.text)}
+              onDelete={handleDelete}
             />
           ))}
         </div>
@@ -114,7 +114,7 @@ export const ItemTagsInput = ({
           />
         ))}
       </datalist>
-      <Button onClick={() => handleAdd()} disabled={hasReachedMaxTags}>
+      <Button onClick={handleAdd} disabled={hasReachedMaxTags}>
         タグを追加
       </Button>
       {/* Server Action用のinput */}
