@@ -1,11 +1,7 @@
 import { type CloudinaryUploadResponse } from "@/lib/cloudinary/type";
 import { env } from "@/utils/serverEnv";
 
-async function uploadSingleFile(
-  file: File,
-  uploadUrl: string,
-  upload_preset: string,
-): Promise<string> {
+const uploadSingleFile = async (file: File, uploadUrl: string, upload_preset: string): Promise<string> => {
   const formData = new FormData();
 
   formData.append("file", file);
@@ -32,14 +28,14 @@ async function uploadSingleFile(
   } catch {
     throw new Error("Failed to upload file");
   }
-}
+};
 
 /**
  * 画像をCloudinaryにアップロードする
  * @param files ユーザーがドロップしたファイル
  * @returns アップロードされた画像のURL配列
  */
-export async function uploadToCloudinary(files: File[]) {
+export const uploadToCloudinary = async (files: File[]) => {
   const uploadPromises = files.map((file) =>
     uploadSingleFile(
       file,
@@ -50,4 +46,4 @@ export async function uploadToCloudinary(files: File[]) {
 
   const uploadResults = await Promise.all(uploadPromises);
   return uploadResults.filter((url) => typeof url == "string");
-}
+};

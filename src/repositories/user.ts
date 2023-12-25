@@ -11,14 +11,12 @@ import { cache } from "react";
  * @returns 取得したユーザー情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
-export const findUserById = cache(async (id: string) => {
-  return await prisma.user.findUniqueOrThrow({
+export const findUserById = cache(async (id: string) => await prisma.user.findUniqueOrThrow({
     where: { id },
     include: {
       addresses: true,
     },
-  });
-});
+  }));
 
 /**
  * ユーザーを更新する

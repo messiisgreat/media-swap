@@ -36,26 +36,26 @@ const digitals = [
 /**
  * 電磁交付規約ページ
  */
-export default function DigitalPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">電磁交付規約</H>
-        <Section>
-          <p className="py-6">
-            本規約は、我々が提供するサービスを利用しているユーザーに向け、貸金業法に基づく書面の電磁的な交付を可能とするサービス（以下、本サービスと称します。）の利用条件を明記したものです。なお、本文中での用語の定義は、特段の注釈がない場合、利用規約での解釈に従います。
-          </p>
-          {digitals.map((digital) => (
-            <div key={digital.title} className="py-6">
-              <H className="text-lg font-bold">{digital.title}</H>
-              <div className="py-2">
-                <p>{digital.content}</p>
-              </div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">電磁交付規約</H>
+      <Section>
+        <p className="py-6">
+          本規約は、我々が提供するサービスを利用しているユーザーに向け、貸金業法に基づく書面の電磁的な交付を可能とするサービス（以下、本サービスと称します。）の利用条件を明記したものです。なお、本文中での用語の定義は、特段の注釈がない場合、利用規約での解釈に従います。
+        </p>
+        {digitals.map((digital) => (
+          <div key={digital.title} className="py-6">
+            <H className="text-lg font-bold">{digital.title}</H>
+            <div className="py-2">
+              <p>{digital.content}</p>
             </div>
-          ))}
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

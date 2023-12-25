@@ -12,11 +12,11 @@ type Props = ComponentProps<"div">;
  * 汎用カードコンポーネント
  */
 export const Card = memo(
-  forwardRef<HTMLDivElement, Props>(function Card(
-    { children, className = "", ...props }: Props,
-    ref: ForwardedRef<HTMLDivElement>,
-  ) {
-    return (
+  forwardRef<HTMLDivElement, Props>(
+    (
+      { children, className = "", ...props }: Props,
+      ref: ForwardedRef<HTMLDivElement>,
+    ) => (
       <div
         ref={ref}
         className={twMerge(
@@ -27,6 +27,6 @@ export const Card = memo(
       >
         {children}
       </div>
-    );
-  }),
+    ),
+  ),
 );

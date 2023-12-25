@@ -25,12 +25,12 @@ const ENTER_KEY_CODE = 13;
  * タグを入力するコンポーネント
  * 入力されたタグは確定された時点でカンマ区切りで結合されてhidden inputに設定される
  */
-export function ItemTagsInput({
+export const ItemTagsInput = ({
   name,
   suggestedTags,
   selectedTags,
   maxTags = 16,
-}: Props) {
+}: Props) => {
   const initialTagNames = useMemo(
     () => selectedTags?.map((tag) => ({ text: tag.text })) ?? [],
     [selectedTags],
@@ -125,4 +125,4 @@ export function ItemTagsInput({
       />
     </div>
   );
-}
+};

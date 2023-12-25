@@ -2,8 +2,7 @@
  * 画像に灰色の背景を追加して, 短い辺を長い辺と同じ長さにする
  * @param file ドロップされたファイル
  */
-export async function addGrayBackground(file: File): Promise<File> {
-  return await new Promise((resolve, reject) => {
+export const addGrayBackground = async (file: File): Promise<File> => await new Promise((resolve, reject) => {
     const img = new window.Image();
     const objectUrl = URL.createObjectURL(file);
     img.src = objectUrl;
@@ -52,4 +51,3 @@ export async function addGrayBackground(file: File): Promise<File> {
       reject(new Error("Image loading error."));
     };
   });
-}

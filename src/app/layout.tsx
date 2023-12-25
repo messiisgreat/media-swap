@@ -12,7 +12,7 @@ import { AnchorMenu } from "@/app/_layout/AnchorMenu";
 import "@/app/globals.css";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 
-import  { type Metadata } from "next";
+import { type Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,25 +38,21 @@ export const metadata: Metadata = {
 /**
  * 基本レイアウト
  */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="ja">
-      <body className={inter.className}>
-        <GoogleTagManager />
-        <CookiesProvider>
-          <ClientProvider>
-            <Header />
-            <Container>{children}</Container>
-            <Footer />
-            <Toaster />
-            <AnchorMenu />
-          </ClientProvider>
-        </CookiesProvider>
-      </body>
-    </html>
-  );
-}
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
+  <html lang="ja">
+    <body className={inter.className}>
+      <GoogleTagManager />
+      <CookiesProvider>
+        <ClientProvider>
+          <Header />
+          <Container>{children}</Container>
+          <Footer />
+          <Toaster />
+          <AnchorMenu />
+        </ClientProvider>
+      </CookiesProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;

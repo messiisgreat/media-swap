@@ -192,47 +192,47 @@ const aboutSwappyStoreList = [
 /**
  * 特定商取引に関する表記ページ
  */
-export default function TokuteiPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">特定商取引に関する表記</H>
-        <Section>
-          {companies.map((company) => (
-            <div key={company.title} className="py-6">
-              <H className="text-lg font-bold">{company.title}</H>
-              <div className="py-2">{company.content}</div>
-            </div>
-          ))}
-          <div className="py-6">
-            <H className="text-lg font-bold">{SITE_NAME}について</H>
-            <Section>
-              {aboutSwappyList.map((aboutSwappyItem) => (
-                <div key={aboutSwappyItem.title} className="py-2">
-                  <H className="text-lg font-bold">{aboutSwappyItem.title}</H>
-                  {aboutSwappyItem.content}
-                </div>
-              ))}
-            </Section>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">特定商取引に関する表記</H>
+      <Section>
+        {companies.map((company) => (
+          <div key={company.title} className="py-6">
+            <H className="text-lg font-bold">{company.title}</H>
+            <div className="py-2">{company.content}</div>
           </div>
-          <div className="py-6">
-            <H className="text-lg font-bold">Swappy Storeについて</H>
-            <Section>
-              {aboutSwappyStoreList.map((aboutSwappyStoreItem) => (
-                <div key={aboutSwappyStoreItem.title} className="py-2">
-                  <H className="text-lg font-bold">
-                    {aboutSwappyStoreItem.title}
-                  </H>
-                  {aboutSwappyStoreItem.content}
-                </div>
-              ))}
-              <div className="py-2">
-                本名・住所・電話番号については求めに応じて遅延なく提供します。
+        ))}
+        <div className="py-6">
+          <H className="text-lg font-bold">{SITE_NAME}について</H>
+          <Section>
+            {aboutSwappyList.map((aboutSwappyItem) => (
+              <div key={aboutSwappyItem.title} className="py-2">
+                <H className="text-lg font-bold">{aboutSwappyItem.title}</H>
+                {aboutSwappyItem.content}
               </div>
-            </Section>
-          </div>
-        </Section>
-      </div>
+            ))}
+          </Section>
+        </div>
+        <div className="py-6">
+          <H className="text-lg font-bold">Swappy Storeについて</H>
+          <Section>
+            {aboutSwappyStoreList.map((aboutSwappyStoreItem) => (
+              <div key={aboutSwappyStoreItem.title} className="py-2">
+                <H className="text-lg font-bold">
+                  {aboutSwappyStoreItem.title}
+                </H>
+                {aboutSwappyStoreItem.content}
+              </div>
+            ))}
+            <div className="py-2">
+              本名・住所・電話番号については求めに応じて遅延なく提供します。
+            </div>
+          </Section>
+        </div>
+      </Section>
     </div>
-  );
-}
+  </div>
+);
+
+export default Page;

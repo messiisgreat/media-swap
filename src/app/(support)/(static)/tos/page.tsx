@@ -1103,27 +1103,27 @@ const tocList = [
 /**
  * 利用規約
  */
-export default function TOSPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">{SITE_NAME}利用規約</H>
-        <Section>
-          <p className="py-6">
-            この規約（以下「本利用規約」といいます。）は、{CORPORATE_NAME}
-            （以下「弊社」といいます。）が運営するインターネットサービス「
-            {SITE_NAME}
-            」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。
-          </p>
-          {tocList.map((tocItem) => (
-            <div key={tocItem.title} className="py-6">
-              <H className="text-lg font-bold">{tocItem.title}</H>
-              {tocItem.content}
-            </div>
-          ))}
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">{SITE_NAME}利用規約</H>
+      <Section>
+        <p className="py-6">
+          この規約（以下「本利用規約」といいます。）は、{CORPORATE_NAME}
+          （以下「弊社」といいます。）が運営するインターネットサービス「
+          {SITE_NAME}
+          」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。
+        </p>
+        {tocList.map((tocItem) => (
+          <div key={tocItem.title} className="py-6">
+            <H className="text-lg font-bold">{tocItem.title}</H>
+            {tocItem.content}
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

@@ -17,19 +17,17 @@ type SearchPageProps = {
 /**
  * 検索結果ページのメタデータ生成
  */
-export function generateMetadata({
+export const generateMetadata = ({
   searchParams: { query },
-}: SearchPageProps): Metadata {
-  return {
-    title: `${decodeURIComponent(query)}の検索結果`,
-  };
-}
+}: SearchPageProps): Metadata => ({
+  title: `${decodeURIComponent(query)}の検索結果`,
+});
 
 /**
  * 検索ページ
  * @param param0.searchParams.query 検索クエリ
  */
-export default function SearchPage({
+const Page = ({
   searchParams: {
     query,
     page = 1,
@@ -37,17 +35,17 @@ export default function SearchPage({
     sort = "createdAt",
     order = "desc",
   },
-}: SearchPageProps) {
-  return (
-    <>
-      <TitleUnderbar title={`${query}の検索結果`} />
-      <ItemsListContainer
-        page={page}
-        size={size}
-        sort={sort}
-        order={order}
-        query={decodeURIComponent(query)}
-      />
-    </>
-  );
-}
+}: SearchPageProps) => (
+  <>
+    <TitleUnderbar title={`${query}の検索結果`} />
+    <ItemsListContainer
+      page={page}
+      size={size}
+      sort={sort}
+      order={order}
+      query={decodeURIComponent(query)}
+    />
+  </>
+);
+
+export default Page;

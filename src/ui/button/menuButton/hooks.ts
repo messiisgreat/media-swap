@@ -4,13 +4,13 @@ import { useCallback, useEffect, useRef } from "react";
  * 外側クリックを検知するカスタムフック
  * @returns
  */
-export default function useCloseDetailsOnOutsideClick() {
+export const useCloseDetailsOnOutsideClick = () => {
   const dropdownRef = useRef<HTMLDetailsElement>(null);
 
   const isOutsideClick = (event: MouseEvent): boolean => {
     const target = event.target as HTMLElement;
     return !dropdownRef.current?.contains(target);
-  }
+  };
 
   const handleOutsideClick = useCallback((event: MouseEvent) => {
     if (isOutsideClick(event)) {
@@ -25,5 +25,5 @@ export default function useCloseDetailsOnOutsideClick() {
     };
   }, [handleOutsideClick]);
 
-  return {dropdownRef, handleOutsideClick};
-}
+  return { dropdownRef, handleOutsideClick };
+};

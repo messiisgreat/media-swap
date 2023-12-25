@@ -8,8 +8,7 @@ import { SITE_NAME } from "@/constants/site";
  * フッター下部のソーシャルアイコン及びコピーライト
  * @returns footer
  */
-export const FooterIcons = () => {
-  return (
+export const FooterIcons = () => (
     <div className="m-auto max-w-7xl md:flex md:grow md:justify-between">
       <div className="my-2 flex gap-2">
         {/* todo: twitterのリンクを追加する */}
@@ -24,4 +23,3 @@ export const FooterIcons = () => {
       <span className="text-sm">{`©${SITE_NAME}`}</span>
     </div>
   );
-};

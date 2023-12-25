@@ -47,8 +47,7 @@ export const createTransaction = async (
   itemId: string,
   buyerId: string,
   userCouponId: string | null = null,
-) => {
-  return await prisma.transaction.create({
+) => await prisma.transaction.create({
     data: {
       item: { connect: { id: itemId } },
       buyer: { connect: { id: buyerId } },
@@ -62,7 +61,6 @@ export const createTransaction = async (
       buyer: true,
     },
   });
-};
 
 /**
  * 取引を更新する

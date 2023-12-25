@@ -12,11 +12,9 @@ export const createRecipientMailContent = (
   itemName: string | null,
   transactionId: string,
   transactionCommentCreateComment: string,
-) => {
-  return `
+) => `
     ${recipientName}様から取引メッセージが届きました。
     商品名: ${itemName}
     取引ページ: ${SITE_URL}/transaction/${transactionId}
     メッセージ: ${transactionCommentCreateComment}
     `;
-};

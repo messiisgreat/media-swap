@@ -9,6 +9,4 @@ type Props = {
  * 必ず直後にSectionコンポーネントを配置すること
  * @param title タイトル文字列
  */
-export const PageTitle = ({ title }: Props) => {
-  return <H className="text-2xl font-extrabold">{title}</H>;
-};
+export const PageTitle = ({ title }: Props) => <H className="text-2xl font-extrabold">{title}</H>;

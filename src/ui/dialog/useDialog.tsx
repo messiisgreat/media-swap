@@ -32,9 +32,7 @@ export const useDialog = (): useDialogResult => {
   }, []);
 
   const Dialog: React.FC<Props> = useCallback(
-    (props: Props): React.ReactElement => {
-      return <Component isOpen={isOpen} onClose={handleClose} {...props} />;
-    },
+    (props: Props): React.ReactElement => <Component isOpen={isOpen} onClose={handleClose} {...props} />,
     [handleClose, isOpen],
   );
 

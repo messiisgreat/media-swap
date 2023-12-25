@@ -8,11 +8,9 @@ import Link from "next/link";
  * ヘッダーに表示するタイトルロゴ
  * @returns
  */
-export const TitleLogo = () => {
-  return (
+export const TitleLogo = () => (
     <Link href="/" className="btn btn-ghost">
       <Image src={logo} height={36} width={36} alt={SITE_NAME} />
       <H className="hidden text-xl normal-case md:inline">{SITE_NAME}</H>
     </Link>
   );
-};

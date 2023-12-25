@@ -17,13 +17,13 @@ type Props = {
  * いいねボタン
  * @returns
  */
-export function LikeButtonRenderer({
+export const LikeButtonRenderer = ({
   count,
   isLiked,
   loading,
   onClick: handleClick,
   className = "",
-}: Props) {
+}: Props) => {
   const heartClass =
     "peer-checked:[&>g>path]:scale-[0.2] peer-checked:[&>g>path]:[fill:#e2264d] peer-checked:[&>g>path]:animate-heart";
   const maincircClass =
@@ -151,4 +151,4 @@ export function LikeButtonRenderer({
       <span>{count}</span>
     </div>
   );
-}
+};

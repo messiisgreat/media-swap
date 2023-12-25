@@ -6,8 +6,7 @@ import { PageTitle, Section } from "@/ui/structure";
  * お問い合わせページ
  * /inquiry
  */
-const Page = () => {
-  return (
+const Page = () => (
     <>
       <PageTitle title="お問い合わせ" />
       <div className="text-left">
@@ -26,6 +25,5 @@ const Page = () => {
       </Section>
     </>
   );
-};
 
 export default Page;

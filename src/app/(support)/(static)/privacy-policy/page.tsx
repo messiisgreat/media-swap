@@ -607,50 +607,50 @@ const financialServicesPrivacies = [
 /**
  * プライバシーポリシー
  */
-export default function PrivacyPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">プライバシーポリシー</H>
-        <Section>
-          <p className="py-6">
-            {CORPORATE_NAME}
-            は、以下の「プライバシーポリシー」を基準に、お客様並びにお取引のパートナーの皆様（以下、「お客様」と称します）の個人情報を管理いたします。
-            当社は、「プライバシーポリシー」に加え、特定のサービス領域（例、「金融サービス」）に関しては、特定のプライバシーポリシー（以下「サービス別プライバシーポリシー」と称します）を設けることがあります。該当する場合、「プライバシーポリシー」とサービス別プライバシーポリシーを併せて施行し、もし相違が生じた場合は、サービス別プライバシーポリシーが優先されます。
-            <br />
-            お客様各位におかれましては、弊社が提供する各種サービス（以下まとめて「本サービス」と称します）をご利用いただく際に、以下の「プライバシーポリシー」をよくお読みいただきますようお願い申し上げます。
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">プライバシーポリシー</H>
+      <Section>
+        <p className="py-6">
+          {CORPORATE_NAME}
+          は、以下の「プライバシーポリシー」を基準に、お客様並びにお取引のパートナーの皆様（以下、「お客様」と称します）の個人情報を管理いたします。
+          当社は、「プライバシーポリシー」に加え、特定のサービス領域（例、「金融サービス」）に関しては、特定のプライバシーポリシー（以下「サービス別プライバシーポリシー」と称します）を設けることがあります。該当する場合、「プライバシーポリシー」とサービス別プライバシーポリシーを併せて施行し、もし相違が生じた場合は、サービス別プライバシーポリシーが優先されます。
+          <br />
+          お客様各位におかれましては、弊社が提供する各種サービス（以下まとめて「本サービス」と称します）をご利用いただく際に、以下の「プライバシーポリシー」をよくお読みいただきますようお願い申し上げます。
+        </p>
+        {privacies.map((privacy) => (
+          <Fragment key={privacy.title}>
+            <H className="text-lg font-bold">{privacy.title}</H>
+            <div className="py-6">{privacy.content}</div>
+          </Fragment>
+        ))}
+      </Section>
+    </div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">
+        金融サービス プライバシーポリシー
+      </H>
+      <Section>
+        <div className="py-6">
+          <p>
+            弊社は、弊社が提供する前払式支払手段の発行の業務及び資金移動業等の決済サービスその他金融関連事業（以下「本件金融サービス」といいます）におけるお客様の情報について以下のとおり取り扱います。
+            なお、本ポリシーは、弊社が別途定める「プライバシーポリシー」（以下「共通ポリシー」といいます）と併せて適用されるものとし、両者に矛盾がある場合は、本ポリシーが優先するものとします。
           </p>
-          {privacies.map((privacy) => (
-            <Fragment key={privacy.title}>
-              <H className="text-lg font-bold">{privacy.title}</H>
-              <div className="py-6">{privacy.content}</div>
+
+          {financialServicesPrivacies.map((financialServicesPrivacy) => (
+            <Fragment key={financialServicesPrivacy.title}>
+              <H className="text-lg font-bold">
+                {financialServicesPrivacy.title}
+              </H>
+              <div className="py-6">{financialServicesPrivacy.content}</div>
             </Fragment>
           ))}
-        </Section>
-      </div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">
-          金融サービス プライバシーポリシー
-        </H>
-        <Section>
-          <div className="py-6">
-            <p>
-              弊社は、弊社が提供する前払式支払手段の発行の業務及び資金移動業等の決済サービスその他金融関連事業（以下「本件金融サービス」といいます）におけるお客様の情報について以下のとおり取り扱います。
-              なお、本ポリシーは、弊社が別途定める「プライバシーポリシー」（以下「共通ポリシー」といいます）と併せて適用されるものとし、両者に矛盾がある場合は、本ポリシーが優先するものとします。
-            </p>
-
-            {financialServicesPrivacies.map((financialServicesPrivacy) => (
-              <Fragment key={financialServicesPrivacy.title}>
-                <H className="text-lg font-bold">
-                  {financialServicesPrivacy.title}
-                </H>
-                <div className="py-6">{financialServicesPrivacy.content}</div>
-              </Fragment>
-            ))}
-          </div>
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+        </div>
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

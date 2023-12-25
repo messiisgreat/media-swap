@@ -16,10 +16,10 @@ type Props = {
  * TOPページ
  * @param param0.searchParams.page ページ番号
  */
-export default function Home({
+const Page = ({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
-}: Props) {
-  return (
-    <ItemsListContainer page={page} size={size} sort={sort} order={order} />
-  );
-}
+}: Props) => (
+  <ItemsListContainer page={page} size={size} sort={sort} order={order} />
+);
+
+export default Page;

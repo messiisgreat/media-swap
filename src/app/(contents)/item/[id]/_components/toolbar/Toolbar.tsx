@@ -23,12 +23,12 @@ type Props = {
  * 削除/通報用のツールバー
  * @returns div > reportModal, deleteModal
  */
-export function Toolbar({
+export const Toolbar = ({
   itemId,
   sessionUser,
   isItemOwner,
   className = "",
-}: Props) {
+}: Props) => {
   const { handleReportModalOpen, ReportModal } = useReportModal(
     itemId,
     sessionUser,
@@ -70,4 +70,4 @@ export function Toolbar({
       <DeleteModal />
     </div>
   );
-}
+};

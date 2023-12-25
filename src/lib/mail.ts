@@ -14,9 +14,7 @@ const sendMail = async (options: SendMailOptions): Promise<boolean> => {
 
   return await transporter
     .sendMail(options)
-    .then(() => {
-      return true;
-    })
+    .then(() => true)
     .catch((error) => {
       console.log(error);
       return false;

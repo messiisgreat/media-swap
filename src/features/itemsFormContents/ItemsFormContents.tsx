@@ -12,8 +12,7 @@ type Props = React.ComponentProps<typeof DetailsContents> &
  * @param props コンポーネントのプロパティ
  * @returns 商品の詳細情報と配送情報を入力するフォームのエレメント
  */
-export const ItemsFormContents = (props: Props) => {
-  return (
+export const ItemsFormContents = (props: Props) => (
     <>
       <DetailsContents
         name={props.name}
@@ -31,4 +30,3 @@ export const ItemsFormContents = (props: Props) => {
       />
     </>
   );
-};

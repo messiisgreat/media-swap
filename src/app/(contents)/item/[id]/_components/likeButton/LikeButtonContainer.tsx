@@ -14,11 +14,11 @@ type Props = {
 /**
  * 商品ページでのいいねボタン
  */
-export async function LikeButtonContainer({
+export const LikeButtonContainer = async ({
   itemId,
   sessionUser,
   className = "",
-}: Props) {
+}: Props) => {
   const isLoggedin = Boolean(sessionUser);
   const isLikedPromise = isLoggedin && findLike(itemId, sessionUser!.id);
   const [count, isLiked] = await Promise.all([
@@ -34,4 +34,4 @@ export async function LikeButtonContainer({
       className={className}
     />
   );
-}
+};

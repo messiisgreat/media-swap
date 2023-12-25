@@ -11,32 +11,24 @@ export type ItemCommentsReadResult = Awaited<ReturnType<typeof findComments>>;
  * @param userId ユーザーID
  * @param itemId 商品ID
  */
-export async function createComment(
-  comment: string,
-  userId: string,
-  itemId: string,
-) {
-  return await prisma.itemComment.create({
+export const createComment = async (comment: string, userId: string, itemId: string) => await prisma.itemComment.create({
     data: {
       itemId,
       userId,
       comment,
     },
   });
-}
 
 /**
  * コメントを取得する
  * @param itemId 取得対象の製品のID
  * @returns 取得したコメント
  */
-export const findComments = cache(async (itemId: string) => {
-  return await prisma.itemComment.findMany({
+export const findComments = cache(async (itemId: string) => await prisma.itemComment.findMany({
     where: { itemId },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     include: { user: { select: { id: true, name: true, image: true } } },
-  });
-});
+  }));
 
 /**
  * コメントを削除する
@@ -44,12 +36,10 @@ export const findComments = cache(async (itemId: string) => {
  * @param id コメントID
  * @param userId ユーザーID
  */
-export const deleteItemComment = async (id: string, userId: string) => {
-  return await prisma.itemComment.update({
+export const deleteItemComment = async (id: string, userId: string) => await prisma.itemComment.update({
     where: { id, OR: [{ userId }, { item: { sellerId: userId } }] },
     data: {
       deletedAt: new Date(),
     },
     select: { itemId: true },
   });
-};

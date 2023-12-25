@@ -57,25 +57,23 @@ const compliances = [
 /**
  * コンプライアンスポリシー
  */
-export default function CompliancePage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">
-          コンプライアンスポリシー
-        </H>
-        <Section>
-          {compliances.map((compliance) => (
-            <div key={compliance.title} className="py-6">
-              <H className="text-lg font-bold">{compliance.title}</H>
-              <div className="py-2">
-                <p>{compliance.content}</p>
-              </div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">コンプライアンスポリシー</H>
+      <Section>
+        {compliances.map((compliance) => (
+          <div key={compliance.title} className="py-6">
+            <H className="text-lg font-bold">{compliance.title}</H>
+            <div className="py-2">
+              <p>{compliance.content}</p>
             </div>
-          ))}
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

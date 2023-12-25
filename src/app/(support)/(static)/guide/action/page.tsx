@@ -98,20 +98,20 @@ const guideActions = [
 /**
  * ガイドページ(取引)
  */
-export default function GuideActionPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
-        <Section>
-          {guideActions.map((guideAction) => (
-            <div key={guideAction.title} className="py-6">
-              <H className="text-lg font-bold">{guideAction.title}</H>
-              {guideAction.content}
-            </div>
-          ))}
-        </Section>
-      </div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">{SITE_NAME}ガイド</H>
+      <Section>
+        {guideActions.map((guideAction) => (
+          <div key={guideAction.title} className="py-6">
+            <H className="text-lg font-bold">{guideAction.title}</H>
+            {guideAction.content}
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+  </div>
+);
+
+export default Page;

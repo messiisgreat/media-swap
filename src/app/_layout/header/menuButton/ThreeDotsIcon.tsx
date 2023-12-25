@@ -1,8 +1,7 @@
 /**
  * 非ログイン時のアイコン
  */
-export const ThreeDotsIcon = () => {
-  return (
+export const ThreeDotsIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -17,4 +16,3 @@ export const ThreeDotsIcon = () => {
       />
     </svg>
   );
-};

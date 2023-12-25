@@ -16,16 +16,14 @@ export const links: LinkObject[] = [
 /**
  * 利用規約に関するリンク一覧
  */
-export function LegalLinksList() {
-  return (
-    <ul>
-      {links.map((item) => (
-        <li key={item.url}>
-          <TextLink href={item.url} className="text-sm">
-            {item.text}
-          </TextLink>
-        </li>
-      ))}
-    </ul>
-  );
-}
+export const LegalLinksList = () => (
+  <ul>
+    {links.map((item) => (
+      <li key={item.url}>
+        <TextLink href={item.url} className="text-sm">
+          {item.text}
+        </TextLink>
+      </li>
+    ))}
+  </ul>
+);

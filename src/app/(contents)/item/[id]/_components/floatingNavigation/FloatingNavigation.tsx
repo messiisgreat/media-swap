@@ -11,7 +11,7 @@ type Props = {
  * 下部ナビゲーションメニューの上部に表示するフローティングメニュー
  * Compositionで内部にServer Componentを表示可能
  */
-export function FloatingNavigation({ children }: Props) {
+export const FloatingNavigation = ({ children }: Props) => {
   const isScroll = useScrollingState();
   return (
     <div
@@ -22,4 +22,4 @@ export function FloatingNavigation({ children }: Props) {
       {children}
     </div>
   );
-}
+};

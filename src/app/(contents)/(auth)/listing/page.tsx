@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 /**
  * 商品追加ページ
  */
-export default async function Page() {
+const Page = async () => {
   const tags = await findTags();
 
   return (
@@ -28,4 +28,6 @@ export default async function Page() {
       </Section>
     </>
   );
-}
+};
+
+export default Page;

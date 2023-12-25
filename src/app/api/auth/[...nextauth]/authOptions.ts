@@ -7,8 +7,7 @@ import GoogleProvider from "next-auth/providers/google";
 const prismaAdapter = PrismaAdapter(prisma);
 
 // @ts-expect-error 一部のプロパティの名前を変更する
-prismaAdapter.createUser = (data) => {
-  return prisma.user.create({
+prismaAdapter.createUser = (data) => prisma.user.create({
     data: {
       email: data.email,
       image: data.image,
@@ -19,7 +18,6 @@ prismaAdapter.createUser = (data) => {
           : Boolean(data.emailVerified),
     },
   });
-};
 
 export const authOptions: NextAuthOptions = {
   adapter: prismaAdapter,
@@ -33,7 +31,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signin",
   },
   callbacks: {
-    session({ session, user }) {
+    session: ({ session, user }) => {
       session.user.id = user.id;
       return session;
     },

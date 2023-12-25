@@ -34,29 +34,39 @@ type Props = {
 /**
  * ドロップダウンメニュー
  */
-export const DropdownMenu = memo(function DropdownMenu({
-  menuList,
-  className,
-  ...props
-}: Props) {
-  return (
-    <div
-      className={twMerge("dropdown dropdown-end dropdown-bottom", className)}
-      {...props}
+export const DropdownMenu = memo(({ menuList, className, ...props }: Props) => (
+  <div
+    className={twMerge("dropdown dropdown-end dropdown-bottom", className)}
+    {...props}
+  >
+    <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
+      <FaEllipsis />
+    </label>
+    <ul
+      tabIndex={0}
+      className="menu dropdown-content z-[1] gap-2 rounded-box bg-base-100 p-2 shadow"
     >
-      <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
-        <FaEllipsis />
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu dropdown-content z-[1] gap-2 rounded-box bg-base-100 p-2 shadow"
-      >
-        {menuList.map((item) => {
-          const Icon = item.icon;
-          if (item.onAction) {
-            const handleAction = item.onAction;
-            return (
-              <li key={item.text} onClick={handleAction}>
+      {menuList.map((item) => {
+        const Icon = item.icon;
+        if (item.onAction) {
+          const handleAction = item.onAction;
+          return (
+            <li key={item.text} onClick={handleAction}>
+              <div
+                className={twMerge(
+                  "flex items-center whitespace-nowrap",
+                  item.className,
+                )}
+              >
+                <Icon />
+                {item.text}
+              </div>
+            </li>
+          );
+        } else {
+          return (
+            <li key={item.text}>
+              <Link href={item.url}>
                 <div
                   className={twMerge(
                     "flex items-center whitespace-nowrap",
@@ -66,27 +76,13 @@ export const DropdownMenu = memo(function DropdownMenu({
                   <Icon />
                   {item.text}
                 </div>
-              </li>
-            );
-          } else {
-            return (
-              <li key={item.text}>
-                <Link href={item.url}>
-                  <div
-                    className={twMerge(
-                      "flex items-center whitespace-nowrap",
-                      item.className,
-                    )}
-                  >
-                    <Icon />
-                    {item.text}
-                  </div>
-                </Link>
-              </li>
-            );
-          }
-        })}
-      </ul>
-    </div>
-  );
-});
+              </Link>
+            </li>
+          );
+        }
+      })}
+    </ul>
+  </div>
+));
+
+DropdownMenu.displayName = "DropdownMenu";

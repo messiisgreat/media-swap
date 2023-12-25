@@ -10,12 +10,10 @@ import prisma from "@/lib/prisma";
  * @returns 作成された閲覧履歴
  */
 export const createBrowsingHistory = cache(
-  async (userId: string | null, itemId: string) => {
-    return await prisma.browsingHistory.create({
+  async (userId: string | null, itemId: string) => await prisma.browsingHistory.create({
       data: {
         userId,
         itemId,
       },
-    });
-  },
+    }),
 );

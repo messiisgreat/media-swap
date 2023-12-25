@@ -17,11 +17,7 @@ import { notFound } from "next/navigation";
  * 取引画面
  * @param param0.transactionId 取引ID
  */
-export default async function Page({
-  params,
-}: {
-  params: { transactionId: string };
-}) {
+const Page = async ({ params }: { params: { transactionId: string } }) => {
   const transactionId = params.transactionId;
   const [transaction, sessionUser] = await Promise.all([
     findTransaction(transactionId),
@@ -81,4 +77,6 @@ export default async function Page({
       <MessageSection transaction={transaction} sessionUser={sessionUser} />
     </div>
   );
-}
+};
+
+export default Page;

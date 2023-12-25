@@ -11,8 +11,8 @@ type Props = {
 /**
  * お知らせページ
  */
-export default function Page({
+const Page = ({
   searchParams: { filter = "all", page = 1, size = 27 },
-}: Props) {
-  return <NotificationContainer filter={filter} page={page} size={size} />;
-}
+}: Props) => <NotificationContainer filter={filter} page={page} size={size} />;
+
+export default Page;

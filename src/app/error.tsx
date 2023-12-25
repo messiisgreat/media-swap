@@ -9,13 +9,13 @@ import { Section, TitleUnderbar } from "@/ui/structure";
  * 何らかのエラーが発生した場合に表示するコンポーネント
  * @todo URLを先を作成する
  */
-export default function Error({
+const Error = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       // sendMail(error); // エラー内容を何らかの手段で送信し、分析に使う
@@ -38,4 +38,6 @@ export default function Error({
       </Section>
     </>
   );
-}
+};
+
+export default Error;

@@ -16,7 +16,7 @@ type Props = {
  * @param  item 表示に必要なリレーション先をインクルード済みのItem
  * @returns div
  */
-export function ItemCard({ item }: Props) {
+export const ItemCard = ({ item }: Props) => {
   const formattedPrice = formatPrice(item.price);
 
   const isSoldOut = Boolean(item.transaction);
@@ -47,4 +47,4 @@ export function ItemCard({ item }: Props) {
       </Link>
     </div>
   );
-}
+};

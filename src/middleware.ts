@@ -6,11 +6,9 @@ import { type NextRequest, NextResponse } from "next/server";
  * @param req NextRequest
  * @returns NextResponse.redirect | void
  */
-export async function middleware(req: NextRequest) {
-  return await composeMiddleware(req, NextResponse.next(), {
+export const middleware = async (req: NextRequest) => await composeMiddleware(req, NextResponse.next(), {
     scripts: [],
   });
-}
 
 export const config = {
   matcher: [

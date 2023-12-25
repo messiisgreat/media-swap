@@ -7,8 +7,7 @@ import { links } from "@/app/_layout/footer/LinkContents";
  * モバイル用のフッター
  * @returns footer
  */
-export const FooterMobileContent = () => {
-  return (
+export const FooterMobileContent = () => (
     <footer className="bg-neutral p-10 pb-36 text-neutral-content md:hidden">
       <ul className="menu px-0">
         <li>
@@ -36,14 +35,12 @@ export const FooterMobileContent = () => {
       <FooterIcons />
     </footer>
   );
-};
 
 /**
  * PC用のフッター
  * @returns footer
  */
-export const FooterContent = () => {
-  return (
+export const FooterContent = () => (
     <footer className="hidden bg-neutral p-10 text-neutral-content md:block">
       <div className="footer m-auto max-w-7xl">
         {links.map((section) => (
@@ -64,4 +61,3 @@ export const FooterContent = () => {
       <FooterIcons />
     </footer>
   );
-};

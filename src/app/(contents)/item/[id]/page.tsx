@@ -12,9 +12,9 @@ type Props = {
 /**
  * OGP生成
  */
-export async function generateMetadata({
+export const generateMetadata = async ({
   params: { id },
-}: Props): Promise<Metadata> {
+}: Props): Promise<Metadata> => {
   const item = await findItemWithHandling(id);
   return {
     title: item.name,
@@ -29,19 +29,17 @@ export async function generateMetadata({
       },
     },
   };
-}
+};
 
 /**
  * 商品ページ
  * /item/[id]
  * @returns loading > 出品のプレースホルダ > 出品情報 > [いいね状況,コメント一覧] > 読込完了
  */
-const Page = ({ params: { id } }: Props) => {
-  return (
+const Page = ({ params: { id } }: Props) => (
     <Suspense fallback={null}>
       <ItemSessionContainer id={id} />
     </Suspense>
   );
-};
 
 export default Page;

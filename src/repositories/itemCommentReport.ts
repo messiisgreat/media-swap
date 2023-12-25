@@ -9,11 +9,7 @@ import "server-only";
  * @returns
  * @throws 通報済みの場合
  */
-export async function createCommentReport(
-  commentId: string,
-  userId: string,
-  reason: string,
-) {
+export const createCommentReport = async (commentId: string, userId: string, reason: string) => {
   // 既に同じユーザーによる通報があるか確認
   const existingReport = await prisma.itemCommentReport.findFirst({
     where: {
@@ -33,4 +29,4 @@ export async function createCommentReport(
       reason,
     },
   });
-}
+};

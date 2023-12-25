@@ -11,7 +11,7 @@ export type LikeResult = Result<undefined, string>;
  * いいねをする
  * @param itemId 商品ID
  */
-export async function like(itemId: string): Promise<LikeResult> {
+export const like = async (itemId: string): Promise<LikeResult> => {
   const user = await getSessionUser();
   if (!user) return failure("セッションが切れました。再度ログインしてください");
   try {
@@ -22,13 +22,13 @@ export async function like(itemId: string): Promise<LikeResult> {
   } catch {
     return failure("いいねできませんでした");
   }
-}
+};
 
 /**
  * いいねを解除する
  * @param itemId 商品ID
  */
-export async function unlike(itemId: string): Promise<LikeResult> {
+export const unlike = async (itemId: string): Promise<LikeResult> => {
   const user = await getSessionUser();
   if (!user) return failure("セッションが切れました。再度ログインしてください");
   try {
@@ -39,4 +39,4 @@ export async function unlike(itemId: string): Promise<LikeResult> {
   } catch {
     return failure("いいねを解除できませんでした");
   }
-}
+};

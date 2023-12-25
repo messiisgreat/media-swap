@@ -15,7 +15,7 @@ import { FiChevronRight } from "react-icons/fi";
  * 出金ページ
  * /mypage/withdrawal
  */
-export default async function Page() {
+const Page = async () => {
   const user = await getSessionUser();
   if (!user) {
     redirect("/api/auth/login");
@@ -44,4 +44,6 @@ export default async function Page() {
       </div>
     </>
   );
-}
+};
+
+export default Page;

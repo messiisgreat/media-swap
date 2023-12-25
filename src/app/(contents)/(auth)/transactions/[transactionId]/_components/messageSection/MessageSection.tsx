@@ -24,13 +24,13 @@ import { parseFixedDateTime } from "@/utils/parseRelativeTime";
  * 取引画面のメッセージ
  * @returns
  */
-export function MessageSection({
+export const MessageSection = ({
   transaction,
   sessionUser,
 }: {
   transaction: Transaction;
   sessionUser: Session["user"];
-}) {
+}) => {
   const [messages, setMessages] = useState<
     | (TransactionComment & {
         user: { name: string | null; image: string | null; id: string | null };
@@ -176,4 +176,4 @@ export function MessageSection({
       </div>
     </div>
   );
-}
+};

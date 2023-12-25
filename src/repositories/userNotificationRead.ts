@@ -9,11 +9,9 @@ import "server-only";
 export const createUserNotificationRead = async (
   notificationId: string,
   userId: string,
-) => {
-  return await prisma.userNotificationRead.create({
+) => await prisma.userNotificationRead.create({
     data: {
       notification: { connect: { id: notificationId } },
       user: { connect: { id: userId } },
     },
   });
-};

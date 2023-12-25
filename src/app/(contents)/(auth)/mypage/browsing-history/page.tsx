@@ -19,9 +19,9 @@ type Props = {
  * 閲覧履歴一覧を表示するページ
  * /mypage/
  */
-export default async function Page({
+const Page = async ({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
-}: Props) {
+}: Props) => {
   const user = await getSessionUser();
   if (!user) {
     redirect("/api/auth/login");
@@ -40,4 +40,6 @@ export default async function Page({
       />
     </>
   );
-}
+};
+
+export default Page;

@@ -10,13 +10,13 @@ import Image from "next/image";
  * 商品ページのカルーセル
  * @param images - 画像のURL一覧が含まれたオブジェクトの配列
  */
-export function Carousel({
+export const Carousel = ({
   images,
   isSoldOut,
 }: {
   images: { imageURL: string }[];
   isSoldOut: boolean;
-}) {
+}) => {
   const slides = images.map((image) => image.imageURL);
   const imageRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -107,4 +107,4 @@ export function Carousel({
       </div>
     </div>
   );
-}
+};

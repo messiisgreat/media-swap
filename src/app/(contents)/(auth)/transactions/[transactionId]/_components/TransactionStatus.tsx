@@ -14,7 +14,7 @@ import { TRANSACTION_STATUS } from "@/constants/item";
 import { type TransactionReadResult } from "@/repositories/transaction";
 import { notFound } from "next/navigation";
 
-function StatusAlert({
+const StatusAlert = ({
   icon,
   alertClass,
   boldText,
@@ -24,7 +24,7 @@ function StatusAlert({
   alertClass: string;
   boldText: string;
   text: string;
-}) {
+}) => {
   const IconComponent = icon;
   return (
     <div className={`alert ${alertClass} flex w-full`}>
@@ -35,117 +35,77 @@ function StatusAlert({
       </div>
     </div>
   );
-}
+};
 
-function BeforePaymentSellerStatus() {
-  return (
-    <StatusAlert
+const BeforePaymentSellerStatus = () => <StatusAlert
       icon={FaMoneyCheckAlt}
       alertClass="alert-success"
       boldText="支払いをお待ち下さい"
       text="購入者からの支払い完了通知をお待ち下さい"
-    />
-  );
-}
+    />;
 
-function BeforePaymentBuyerStatus() {
-  return (
-    <StatusAlert
+const BeforePaymentBuyerStatus = () => <StatusAlert
       icon={FaMoneyCheckAlt}
       alertClass="alert-warning"
       boldText="支払いを完了してください"
       text="注文処理を進めるために、支払いを完了してください"
-    />
-  );
-}
+    />;
 
-function CompletePaymentSellerStatus() {
-  return (
-    <StatusAlert
+const CompletePaymentSellerStatus = () => <StatusAlert
       icon={FaTruck}
       alertClass="alert-warning"
       boldText="支払いが確認されました"
       text="発送を行ってください"
-    />
-  );
-}
+    />;
 
-function CompletePaymentBuyerStatus() {
-  return (
-    <StatusAlert
+const CompletePaymentBuyerStatus = () => <StatusAlert
       icon={FaClock}
       alertClass="alert-success"
       boldText="発送をお待ち下さい"
       text="出品者からの発送通知をお待ち下さい"
-    />
-  );
-}
+    />;
 
-function SentSellerStatus() {
-  return (
-    <StatusAlert
+const SentSellerStatus = () => <StatusAlert
       icon={FaTruck}
       alertClass="alert-success"
       boldText="商品が発送されました"
       text="購入者への到着をお待ち下さい"
-    />
-  );
-}
+    />;
 
-function SentBuyerStatus() {
-  return (
-    <StatusAlert
+const SentBuyerStatus = () => <StatusAlert
       icon={FaTruck}
       alertClass="alert-warning"
       boldText="商品が発送されました"
       text="到着したら受け取り評価をしてください"
-    />
-  );
-}
+    />;
 
-function ReceivedSellerStatus() {
-  return (
-    <StatusAlert
+const ReceivedSellerStatus = () => <StatusAlert
       icon={FaBriefcase}
       alertClass="alert-success"
       boldText="商品が購入者に到着しました"
       text="購入者が評価をし次第取引完了となります"
-    />
-  );
-}
+    />;
 
-function ReceivedBuyerStatus() {
-  return (
-    <StatusAlert
+const ReceivedBuyerStatus = () => <StatusAlert
       icon={FaBriefcase}
       alertClass="alert-warning"
       boldText="商品が到着しました"
       text="取引評価をしてください"
-    />
-  );
-}
+    />;
 
-function CancelSellerStatus() {
-  return (
-    <StatusAlert
+const CancelSellerStatus = () => <StatusAlert
       icon={FaTimes}
       alertClass="alert-error"
       boldText="取引がキャンセルされました"
       text=""
-    />
-  );
-}
+    />;
 
-function CancelBuyerStatus() {
-  return (
-    <StatusAlert
+const CancelBuyerStatus = () => <StatusAlert
       icon={FaTimes}
       alertClass="alert-error"
       boldText="取引がキャンセルされました"
       text=""
-    />
-  );
-}
+    />;
 
 type Props = {
   transaction: TransactionReadResult;
@@ -158,7 +118,7 @@ type Props = {
  * @param param0.sessionUser セッションユーザー
  * @returns
  */
-export function TransactionStatus({ transaction, sessionUser }: Props) {
+export const TransactionStatus = ({ transaction, sessionUser }: Props) => {
   if (!transaction || !sessionUser) {
     notFound();
   }
@@ -216,4 +176,4 @@ export function TransactionStatus({ transaction, sessionUser }: Props) {
       return null;
     }
   }
-}
+};

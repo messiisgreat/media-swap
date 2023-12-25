@@ -28,7 +28,7 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @param props inputタグのその他の属性
  * @returns label
  */
-export function ImageInput({ id, labelText, ...props }: Props) {
+export const ImageInput = ({ id, labelText, ...props }: Props) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const inputRef = useRef<HTMLInputElement>(null!);
   const isDev = process.env.NODE_ENV !== "production";
@@ -49,9 +49,7 @@ export function ImageInput({ id, labelText, ...props }: Props) {
   });
 
   // アンマウント時に画像のプレビューを削除してメモリリークを防ぐ
-  useEffect(() => {
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  });
+  useEffect(() => () => files.forEach((file) => URL.revokeObjectURL(file.preview)));
 
   // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
@@ -134,4 +132,4 @@ ${
       )}
     </div>
   );
-}
+};

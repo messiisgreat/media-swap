@@ -22,13 +22,13 @@ type Props = {
  * いいねボタンの状態管理
  * @returns
  */
-export function LikeButtonPresenter({
+export const LikeButtonPresenter = ({
   count,
   isLiked,
   itemId,
   isLoggedin,
   className = "",
-}: Props) {
+}: Props) => {
   const [state, updateLike] = useOptimisticLike({
     count,
     isLiked,
@@ -52,4 +52,4 @@ export function LikeButtonPresenter({
       className={className}
     />
   );
-}
+};

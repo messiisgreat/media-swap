@@ -15,7 +15,7 @@ const redirectURL = "/api/auth/login?callbackUrl=/mypage/personal-info/profile";
  * プロフィール編集ページ
  * /mypage/personal-info/profile
  */
-export default async function Page() {
+const Page = async () => {
   const sessionUser = await getSessionUser();
   if (!sessionUser) {
     redirect(redirectURL);
@@ -35,4 +35,6 @@ export default async function Page() {
       </Section>
     </>
   );
-}
+};
+
+export default Page;

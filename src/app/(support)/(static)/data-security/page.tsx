@@ -46,28 +46,28 @@ const dataSecurities = [
 /**
  * 個人データの安全管理に係る基本方針
  */
-export default function DataSecurityPage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">
-          個人データの安全管理に係る基本方針
-        </H>
-        <Section>
-          <p className="py-6">
-            弊社は、お客様の信頼を最も大切にし、下記の基本方針を基に個人データの厳重な管理を行います。また、個人情報保護法をはじめとする関連する法令や規範を順守し、個人データの安全な管理を約束します。
-          </p>
-          {dataSecurities.map((dataSecurity) => (
-            <div key={dataSecurity.title} className="py-6">
-              <H className="text-lg font-bold">{dataSecurity.title}</H>
-              <div className="whitespace-pre-wrap py-2">
-                {dataSecurity.content}
-              </div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">
+        個人データの安全管理に係る基本方針
+      </H>
+      <Section>
+        <p className="py-6">
+          弊社は、お客様の信頼を最も大切にし、下記の基本方針を基に個人データの厳重な管理を行います。また、個人情報保護法をはじめとする関連する法令や規範を順守し、個人データの安全な管理を約束します。
+        </p>
+        {dataSecurities.map((dataSecurity) => (
+          <div key={dataSecurity.title} className="py-6">
+            <H className="text-lg font-bold">{dataSecurity.title}</H>
+            <div className="whitespace-pre-wrap py-2">
+              {dataSecurity.content}
             </div>
-          ))}
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

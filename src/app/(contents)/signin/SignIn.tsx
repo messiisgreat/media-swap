@@ -8,7 +8,7 @@ import { useCallback } from "react";
 /**
  * ログインページ
  */
-export function SignIn({ callbackUrl }: { callbackUrl: string }) {
+export const SignIn = ({ callbackUrl }: { callbackUrl: string }) => {
   const handleSignIn = useCallback(
     () => signIn("google", { callbackUrl }),
     [callbackUrl],
@@ -35,4 +35,4 @@ export function SignIn({ callbackUrl }: { callbackUrl: string }) {
       </div>
     </div>
   );
-}
+};

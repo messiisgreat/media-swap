@@ -8,7 +8,7 @@ import { getSessionUser } from "@/utils/session";
  * サイトのヘッダー
  * @returns header
  */
-export async function Header() {
+export const Header = async () => {
   const sessionUser = await getSessionUser();
 
   return (
@@ -24,4 +24,4 @@ export async function Header() {
       </div>
     </header>
   );
-}
+};

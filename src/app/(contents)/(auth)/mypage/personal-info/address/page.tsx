@@ -15,7 +15,7 @@ const redirectURL = "/api/auth/login?callbackUrl=/mypage/personal-info/address";
  * 住所編集ページ
  * /mypage/personal-info/address
  */
-export default async function Page() {
+const Page = async () => {
   const user = await getSessionUser();
   if (!user) {
     redirect(redirectURL);
@@ -32,4 +32,6 @@ export default async function Page() {
       </Section>
     </>
   );
-}
+};
+
+export default Page;

@@ -14,6 +14,7 @@ module.exports = {
     "jest",
     "jest-dom",
     "testing-library",
+    "prefer-arrow-functions",
   ],
   extends: [
     "eslint:recommended",
@@ -152,6 +153,19 @@ module.exports = {
     "react/jsx-pascal-case": "error",
     /** testメソッドを"test"に統一 */
     "jest/consistent-test-it": ["error", { fn: "test" }],
+    /** 関数のスタイルをアロー関数に統一 */
+    "import/no-anonymous-default-export": "off",
+    "arrow-body-style": ["error", "as-needed"],
+    "func-style": "error",
+    "prefer-arrow-functions/prefer-arrow-functions": [
+      "error",
+      {
+        classPropertiesAllowed: false,
+        disallowPrototype: false,
+        returnStyle: "unchanged",
+        singleReturnOnly: false,
+      },
+    ],
     // "import/order": [
     //   "error",
     //   {

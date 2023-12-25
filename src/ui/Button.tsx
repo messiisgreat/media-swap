@@ -1,4 +1,4 @@
-import { type ComponentProps, memo } from "react";
+import { memo, type ComponentProps } from "react";
 
 import Link from "next/link";
 
@@ -21,37 +21,45 @@ type LinkProps = ComponentProps<typeof Link> & CommonProps;
  * @param {*} [props.type="button"] - ボタンのタイプ属性(省略可能)
  * @returns
  */
-export const Button = memo(function Button({
-  outline = false,
-  secondary = false,
-  children,
-  className,
-  type = "button",
-  ...props
-}: ButtonProps) {
-  const variant = `${outline ? "btn-outline" : ""} ${
-    secondary ? "btn-secondary" : "btn-primary"
-  }`;
-  return (
-    <button className={`btn ${variant} ${className}`} type={type} {...props}>
-      {children}
-    </button>
-  );
-});
+export const Button = memo(
+  ({
+    outline = false,
+    secondary = false,
+    children,
+    className,
+    type = "button",
+    ...props
+  }: ButtonProps) => {
+    const variant = `${outline ? "btn-outline" : ""} ${
+      secondary ? "btn-secondary" : "btn-primary"
+    }`;
+    return (
+      <button className={`btn ${variant} ${className}`} type={type} {...props}>
+        {children}
+      </button>
+    );
+  },
+);
 
-export const ButtonAsLink = memo(function ButtonAsLink({
-  outline = false,
-  secondary = false,
-  children,
-  className,
-  ...props
-}: LinkProps) {
-  const variant = `${outline ? "btn-outline" : ""} ${
-    secondary ? "btn-secondary" : "btn-primary"
-  }`;
-  return (
-    <Link className={`btn ${variant} ${className}`} {...props}>
-      {children}
-    </Link>
-  );
-});
+Button.displayName = "Button";
+
+export const ButtonAsLink = memo(
+  ({
+    outline = false,
+    secondary = false,
+    children,
+    className,
+    ...props
+  }: LinkProps) => {
+    const variant = `${outline ? "btn-outline" : ""} ${
+      secondary ? "btn-secondary" : "btn-primary"
+    }`;
+    return (
+      <Link className={`btn ${variant} ${className}`} {...props}>
+        {children}
+      </Link>
+    );
+  },
+);
+
+ButtonAsLink.displayName = "ButtonAsLink";

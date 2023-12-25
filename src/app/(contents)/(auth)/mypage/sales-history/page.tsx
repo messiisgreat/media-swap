@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
  * 売上履歴ページ
  * /mypage/sales-history
  */
-export default async function Page() {
+const Page = async () => {
   const user = await getSessionUser();
   if (!user) {
     redirect("/api/auth/login");
@@ -17,4 +17,6 @@ export default async function Page() {
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.SALES_HISTORY]} />
     </div>
   );
-}
+};
+
+export default Page;

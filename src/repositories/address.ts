@@ -11,8 +11,7 @@ import prisma from "@/lib/prisma";
  */
 export const upsertAddress = async (
   address: Omit<Address, "id">,
-): Promise<Address> => {
-  return await prisma.address.upsert({
+): Promise<Address> => await prisma.address.upsert({
     where: {
       userId: address.userId,
     },
@@ -24,14 +23,11 @@ export const upsertAddress = async (
       ...address,
     },
   });
-};
 
 /**
  * 住所を取得する関数
  * @param userId  ユーザーID
  */
-export const getAddress = async (userId: string) => {
-  return await prisma.address.findFirst({
+export const getAddress = async (userId: string) => await prisma.address.findFirst({
     where: { userId },
   });
-};

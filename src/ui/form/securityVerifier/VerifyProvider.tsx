@@ -14,8 +14,7 @@ import { ReCAPTCHASignature } from "@/ui/form/securityVerifier/reCAPTCHASignatur
  * const token = await getVerificationCode();
  * ```
  */
-export const VerifyProvider = ({ children }: { children: ReactNode }) => {
-  return (
+export const VerifyProvider = ({ children }: { children: ReactNode }) => (
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY ?? ""}
       language="ja"
@@ -24,4 +23,3 @@ export const VerifyProvider = ({ children }: { children: ReactNode }) => {
       <ReCAPTCHASignature />
     </GoogleReCaptchaProvider>
   );
-};

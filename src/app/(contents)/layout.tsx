@@ -4,16 +4,12 @@ import ItemButtonProvider from "@/app/(contents)/_layout/listingButton";
 /**
  * (contents)のlayout
  */
-export default function ContentsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      {children}
-      <ItemButtonProvider />
-      <AgeCheckProvider />
-    </>
-  );
-}
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    {children}
+    <ItemButtonProvider />
+    <AgeCheckProvider />
+  </>
+);
+
+export default Layout;

@@ -124,47 +124,47 @@ const externalTransmissions = [
 /**
  * 外部送信ポリシーページ
  */
-export default function CookiePage() {
-  return (
-    <div>
-      <div className="border-2">
-        <H className="text-center text-xl font-bold">外部送信ポリシー</H>
-        <Section>
-          <p className="py-6">
-            この外部送信ポリシー (以下「本ポリシー」といいます) は、
-            {CORPORATE_NAME}のうち、
-            <TextLink href="/static/privacy-policy/">
-              プライバシーポリシー
-            </TextLink>
-            を適用する事業体
-            により提供される様々なサービス（以下、「本サービス」と称します）
-            をご活用の際、ユーザーの端末より弊社または弊社が許可した第三者へ転送されるデータや、その目的、転送先等に関する内容を示しています。本ガイドラインでの用語の解釈は、特に明記されているケースや文の流れから異なる意味が取れる場合を除き、
-            <Link
-              href="/static/tos/"
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-            >
-              利用規約
-            </Link>
-            、その他弊社の定める利用規約および
-            <Link
-              href="/static/privacy-policy/"
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-            >
-              プライバシーポリシー
-            </Link>
-            に規定するとおりとします。
-          </p>
-          {externalTransmissions.map((externalTransmission) => (
-            <div key={externalTransmission.title} className="py-6">
-              <H className="text-lg font-bold">{externalTransmission.title}</H>
-              <Section className="whitespace-pre-wrap">
-                {externalTransmission.content}
-              </Section>
-            </div>
-          ))}
-        </Section>
-      </div>
-      <div className="text-right">2023年10月1日制定</div>
+const Page = () => (
+  <div>
+    <div className="border-2">
+      <H className="text-center text-xl font-bold">外部送信ポリシー</H>
+      <Section>
+        <p className="py-6">
+          この外部送信ポリシー (以下「本ポリシー」といいます) は、
+          {CORPORATE_NAME}のうち、
+          <TextLink href="/static/privacy-policy/">
+            プライバシーポリシー
+          </TextLink>
+          を適用する事業体
+          により提供される様々なサービス（以下、「本サービス」と称します）
+          をご活用の際、ユーザーの端末より弊社または弊社が許可した第三者へ転送されるデータや、その目的、転送先等に関する内容を示しています。本ガイドラインでの用語の解釈は、特に明記されているケースや文の流れから異なる意味が取れる場合を除き、
+          <Link
+            href="/static/tos/"
+            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+          >
+            利用規約
+          </Link>
+          、その他弊社の定める利用規約および
+          <Link
+            href="/static/privacy-policy/"
+            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+          >
+            プライバシーポリシー
+          </Link>
+          に規定するとおりとします。
+        </p>
+        {externalTransmissions.map((externalTransmission) => (
+          <div key={externalTransmission.title} className="py-6">
+            <H className="text-lg font-bold">{externalTransmission.title}</H>
+            <Section className="whitespace-pre-wrap">
+              {externalTransmission.content}
+            </Section>
+          </div>
+        ))}
+      </Section>
     </div>
-  );
-}
+    <div className="text-right">2023年10月1日制定</div>
+  </div>
+);
+
+export default Page;

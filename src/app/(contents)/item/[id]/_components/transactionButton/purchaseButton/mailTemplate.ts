@@ -10,8 +10,7 @@ export const createSellerMailContent = (
   sellerName: string,
   itemName: string,
   siteName: string,
-) => {
-  return `${sellerName}様
+) => `${sellerName}様
   この度は${siteName}をご利用いただき、誠にありがとうございます。
   あなたの出品した商品 ${itemName} が購入されました。
 
@@ -24,7 +23,6 @@ export const createSellerMailContent = (
 
   ${SITE_URL}
   `;
-};
 
 /**
  * 購入者にメールを送信
@@ -40,8 +38,7 @@ export const createBuyerMailContent = (
   itemPrice: number,
   sellerName: string,
   siteName: string,
-) => {
-  return `${buyerName}様
+) => `${buyerName}様
   この度は${siteName}をご利用いただき、誠にありがとうございます。
   以下の商品を購入しました。
 
@@ -55,4 +52,3 @@ export const createBuyerMailContent = (
 
   ${SITE_URL}
   `;
-};

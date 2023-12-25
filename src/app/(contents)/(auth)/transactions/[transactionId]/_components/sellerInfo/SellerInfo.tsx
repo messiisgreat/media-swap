@@ -19,9 +19,7 @@ type SellerInfoProps = {
  * 出品者情報
  * @returns
  */
-export function SellerInfo({ seller, defaultIcon }: SellerInfoProps) {
-  return (
-    <div className="flex flex-col">
+export const SellerInfo = ({ seller, defaultIcon }: SellerInfoProps) => <div className="flex flex-col">
       <p>出品者情報</p>
       <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">
         <div className="flex items-center gap-4">
@@ -39,6 +37,4 @@ export function SellerInfo({ seller, defaultIcon }: SellerInfoProps) {
         </div>
         <FaChevronRight />
       </div>
-    </div>
-  );
-}
+    </div>;

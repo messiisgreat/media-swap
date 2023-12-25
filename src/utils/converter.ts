@@ -5,15 +5,14 @@
  */
 export const objToAssociative = (
   obj: { id: string | number; name: string }[],
-) => {
-  return obj.reduce(
+) =>
+  obj.reduce(
     (acc, cur) => {
       acc[cur.id] = cur.name;
       return acc;
     },
     {} as { [key: string | number]: string },
   );
-};
 
 /**
  * 文字列をbooleanに変換する

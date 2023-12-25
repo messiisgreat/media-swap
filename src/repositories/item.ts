@@ -25,8 +25,7 @@ export const createItem = async (
   item: ItemCreateInput,
   imageURLs: string[],
   tagTexts: string[],
-) => {
-  return await prisma.item.create({
+) => await prisma.item.create({
     data: {
       ...item,
       seller: { connect: { id: sellerId } },
@@ -42,7 +41,6 @@ export const createItem = async (
       },
     },
   });
-};
 
 /**
  * 商品を取得する

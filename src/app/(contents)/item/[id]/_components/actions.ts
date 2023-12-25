@@ -52,6 +52,4 @@ export const findItemWithHandling = async (
  * @param itemId 商品ID
  * @returns
  */
-export const fetchComments = async (itemId: string) => {
-  return await findComments(itemId);
-};
+export const fetchComments = async (itemId: string) => await findComments(itemId);

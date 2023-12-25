@@ -8,11 +8,9 @@ import {
  *
  * @returns footer
  */
-export function Footer() {
-  return (
-    <>
-      <FooterMobileContent />
-      <FooterContent />
-    </>
-  );
-}
+export const Footer = () => (
+  <>
+    <FooterMobileContent />
+    <FooterContent />
+  </>
+);
