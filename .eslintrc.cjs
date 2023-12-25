@@ -14,6 +14,7 @@ module.exports = {
     "jest",
     "jest-dom",
     "testing-library",
+    "functional",
     "prefer-arrow-functions",
   ],
   extends: [
@@ -153,6 +154,19 @@ module.exports = {
     "react/jsx-pascal-case": "error",
     /** testメソッドを"test"に統一 */
     "jest/consistent-test-it": ["error", { fn: "test" }],
+    /** イミュータブルな操作を禁止 */
+    /** TODO 全て解消後にerrorに変更 */
+    "functional/immutable-data": [
+      "warn",
+      {
+        ignoreAccessorPattern: [
+          "**.current.**", // allow React Ref object
+          "**.displayName", // allow React component displayName
+          "**.scrollTop", // allow modifying scrollTop
+        ],
+      },
+    ],
+
     /** 関数のスタイルをアロー関数に統一 */
     "import/no-anonymous-default-export": "off",
     "arrow-body-style": ["error", "as-needed"],
