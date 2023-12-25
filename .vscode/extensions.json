@@ -5,6 +5,7 @@
     "dbaeumer.vscode-eslint",
     "github.vscode-pull-request-github",
     "vscode-icons-team.vscode-icons",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "bierner.markdown-mermaid"
   ]
 }
