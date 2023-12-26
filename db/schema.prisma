@@ -13,20 +13,21 @@ generator erd {
 
 // ユーザーテーブル
 model User {
-    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-    name               String? // ユーザー名
-    email              String   @unique // メールアドレス
-    introduction       String? // 自己紹介
-    isEmailVerified    Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
-    isIdentityVerified Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
-    image              String? // アイコン画像URL
-    balance            Int      @default(0) // 残高
-    points             Int      @default(0) // ポイント
-    createdAt          DateTime @default(now()) @map("created_at") // アカウント作成日時
-    updatedAt          DateTime @default(now()) @map("updated_at") // アカウント更新日時
-    lastLoginDate      DateTime @default(now()) @map("last_login_date") // 最終ログイン日時
-    isDeleted          Boolean  @default(false) @map("is_deleted") // 削除フラグ
-    isBanned           Boolean  @default(false) @map("is_banned") // 凍結フラグ
+    id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+    name                 String? // ユーザー名
+    email                String   @unique // メールアドレス
+    introduction         String? // 自己紹介
+    isEmailVerified      Boolean  @default(false) @map("is_email_verified") // メールアドレス認証済みフラグ
+    isIdentityVerified   Boolean  @default(false) @map("is_identity_verified") // 本人確認済みフラグ
+    image                String? // アイコン画像URL
+    balance              Int      @default(0) // 残高
+    points               Int      @default(0) // ポイント
+    createdAt            DateTime @default(now()) @map("created_at") // アカウント作成日時
+    updatedAt            DateTime @default(now()) @map("updated_at") // アカウント更新日時
+    lastLoginDate        DateTime @default(now()) @map("last_login_date") // 最終ログイン日時
+    isDeleted            Boolean  @default(false) @map("is_deleted") // 削除フラグ
+    isBanned             Boolean  @default(false) @map("is_banned") // 凍結フラグ
+    noticePermissionCode Int      @default(0) // 通知設定のビットフラグ
 
     accounts                Account[]
     sessions                Session[]

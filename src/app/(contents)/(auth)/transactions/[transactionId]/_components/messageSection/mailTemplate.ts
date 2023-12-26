@@ -1,4 +1,5 @@
-import { SITE_URL } from "@/constants/site";
+import { PAGE_LINK } from "@/constants/myPage";
+import { CORPORATE_MAIL, SITE_URL } from "@/constants/site";
 
 /**
  * 取引メッセージが送信された際に、相手にメールを送信する
@@ -17,4 +18,10 @@ export const createRecipientMailContent = (
     商品名: ${itemName}
     取引ページ: ${SITE_URL}/transaction/${transactionId}
     メッセージ: ${transactionCommentCreateComment}
+
+    ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
+    ${SITE_URL}
+
+    メールの配信設定
+    ${SITE_URL}${PAGE_LINK["notification-settings"]}
     `;

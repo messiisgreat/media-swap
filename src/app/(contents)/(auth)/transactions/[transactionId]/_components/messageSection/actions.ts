@@ -1,6 +1,10 @@
 "use server";
 
 import { createRecipientMailContent } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/mailTemplate";
+import {
+  NOTIFICATION_KEYS,
+  NOTIFICATION_TYPES,
+} from "@/constants/emailNotification";
 import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
 import {
@@ -10,6 +14,7 @@ import {
   type TransactionCommentCreateResult,
 } from "@/repositories/transactionComment";
 import { getSessionUser } from "@/utils";
+import { decimalToBinary } from "@/utils/converter";
 
 /**
  * 取引メッセージを取得
@@ -46,6 +51,7 @@ export const sendMessage = async (
     sessionUser.id,
     transactionId,
   );
+
   const result = await sendMailToRecipient(transactionComment);
   if (!result) return failure("メールの送信に失敗しました");
   return success("メッセージを送信しました");
@@ -69,12 +75,36 @@ const sendMailToRecipient = async (
   const buyerEmail = transaction.buyer.email;
   const transactionCommentUserId = transactionComment.userId;
   const transactionCommentCreateComment = transactionComment.comment;
+  const buyerNotificationSettings = transaction.buyer.noticePermissionCode;
+  const sellerNotificationSettings =
+    transaction.item.seller.noticePermissionCode;
 
   // メッセージを受け取ったユーザーを定義する
   const recipientEmail =
     sellerId === transactionCommentUserId ? buyerEmail : sellerEmail;
   const recipientName =
     sellerId === transactionCommentUserId ? buyerName : sellerName;
+
+  // メッセージを受け取ったユーザーの通知設定を定義する
+  const recipientNotificationSettings =
+    sellerId === transactionCommentUserId
+      ? buyerNotificationSettings
+      : sellerNotificationSettings;
+
+  const numberOfKeys = Object.keys(NOTIFICATION_TYPES).length;
+
+  const recipientNoticePermissionCode = decimalToBinary(
+    recipientNotificationSettings,
+    numberOfKeys,
+  );
+
+  const transactionMessageNotificationIndex = NOTIFICATION_KEYS.indexOf(
+    "transactionMessageNotification",
+  );
+
+  // transactionMessage の boolean 値を取得
+  const recipientWantsTransactionMessage =
+    recipientNoticePermissionCode[transactionMessageNotificationIndex];
 
   const mailSubject = `取引中の商品:${itemName} にてメッセージが届きました`;
 
@@ -84,5 +114,9 @@ const sendMailToRecipient = async (
     transactionId,
     transactionCommentCreateComment,
   );
-  return await sendMailToUser(recipientEmail, mailSubject, mailContent);
+
+  if (recipientWantsTransactionMessage) {
+    return await sendMailToUser(recipientEmail, mailSubject, mailContent);
+  }
+  return true;
 };

@@ -3,7 +3,7 @@ import { createTransport, type SendMailOptions } from "nodemailer";
 import { SITE_NAME } from "@/constants/site";
 import { env } from "@/utils/serverEnv";
 
-const sendMail = async (options: SendMailOptions): Promise<boolean> => {
+const sendMail = (options: SendMailOptions): Promise<boolean> => {
   const transporter = createTransport({
     service: "gmail",
     auth: {
@@ -12,13 +12,10 @@ const sendMail = async (options: SendMailOptions): Promise<boolean> => {
     },
   });
 
-  return await transporter
+  return transporter
     .sendMail(options)
     .then(() => true)
-    .catch((error) => {
-      console.log(error);
-      return false;
-    });
+    .catch(() => false);
 };
 
 /**

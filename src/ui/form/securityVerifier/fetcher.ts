@@ -20,7 +20,6 @@ export const fetchVerifyResult = async (verificationCode: string) => {
       }).toString(),
     });
     const json = (await response.json()) as ReCaptchaResult;
-    console.log(json);
     if (!json.success) {
       return false;
     }

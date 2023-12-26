@@ -4,6 +4,10 @@ import {
   createBuyerMailContent,
   createSellerMailContent,
 } from "@/app/(contents)/item/[id]/_components/transactionButton/purchaseButton/mailTemplate";
+import {
+  NOTIFICATION_KEYS,
+  NOTIFICATION_TYPES,
+} from "@/constants/emailNotification";
 import { SITE_NAME } from "@/constants/site";
 import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
@@ -12,6 +16,7 @@ import {
   type TransactionCreateResult,
 } from "@/repositories/transaction";
 import { getSessionUser } from "@/utils";
+import { decimalToBinary } from "@/utils/converter";
 import { revalidatePath } from "next/cache";
 
 type PurchasingResult = Result<string, string>;
@@ -58,6 +63,8 @@ const sendMailToBuyerAndSeller = async (
   const buyerName = transaction.buyer.name;
   const sellerEmail = item.seller.email;
   const buyerEmail = transaction.buyer.email;
+  const sellerEmailNotificationSetting = item.seller.noticePermissionCode;
+  const buyerEmailNotificationSetting = transaction.buyer.noticePermissionCode;
 
   if (sellerName === null || buyerName === null) {
     return { sellerResult: false, buyerResult: false };
@@ -74,9 +81,36 @@ const sendMailToBuyerAndSeller = async (
     SITE_NAME,
   );
 
-  const [sellerResult, buyerResult] = await Promise.all([
-    sendMailToUser(sellerEmail, sellerSubject, sellerText),
-    sendMailToUser(buyerEmail, buyerSubject, buyerText),
-  ]);
-  return { sellerResult, buyerResult };
+  const numberOfKeys = Object.keys(NOTIFICATION_TYPES).length;
+
+  const sellerNoticePermissionCode = decimalToBinary(
+    sellerEmailNotificationSetting,
+    numberOfKeys,
+  );
+  const buyerNoticePermissionCode = decimalToBinary(
+    buyerEmailNotificationSetting,
+    numberOfKeys,
+  );
+
+  const purchaseNotificationIndex = NOTIFICATION_KEYS.indexOf(
+    "purchaseNotification",
+  );
+
+  // purchaseNotification の boolean 値を取得
+  const sellerWantsPurchaseNotification =
+    sellerNoticePermissionCode[purchaseNotificationIndex];
+  const buyerWantsPurchaseNotification =
+    buyerNoticePermissionCode[purchaseNotificationIndex];
+
+  try {
+    if (sellerWantsPurchaseNotification) {
+      await sendMailToUser(sellerEmail, sellerSubject, sellerText);
+    }
+    if (buyerWantsPurchaseNotification) {
+      await sendMailToUser(buyerEmail, buyerSubject, buyerText);
+    }
+    return { sellerResult: true, buyerResult: true };
+  } catch (e) {
+    return { sellerResult: false, buyerResult: false };
+  }
 };

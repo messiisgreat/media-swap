@@ -2,7 +2,7 @@ import { isArrayOfFiles } from "@/utils/typeGuard";
 import { type KeyboardEventHandler } from "react";
 
 type FormObject = {
-  [key: string]: string | number | File | File[] | undefined | null;
+  [key: string]: string | number | boolean | File | File[] | undefined | null;
 };
 
 /**

@@ -1,3 +1,4 @@
+import { PAGE_LINK } from "@/constants/myPage";
 import { CORPORATE_MAIL, SITE_URL } from "@/constants/site";
 
 /**
@@ -22,6 +23,9 @@ export const createSellerMailContent = (
   ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
 
   ${SITE_URL}
+
+  メールの配信設定
+  ${SITE_URL}${PAGE_LINK["notification-settings"]}
   `;
 
 /**
@@ -51,4 +55,7 @@ export const createBuyerMailContent = (
   ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
 
   ${SITE_URL}
+
+  メールの配信設定
+  ${SITE_URL}${PAGE_LINK["notification-settings"]}
   `;
