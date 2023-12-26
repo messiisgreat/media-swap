@@ -1,13 +1,13 @@
 "use client";
 
 import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/hooks";
-import { type Session } from "next-auth";
+import { type SessionUser } from "@/utils";
 
 type Props = {
   /** className */
   className?: string;
   /** ユーザー情報 */
-  sessionUser?: Session["user"] ;
+  sessionUser?: SessionUser;
   /** 購入者判定 */
   isBuyer?: boolean;
 };

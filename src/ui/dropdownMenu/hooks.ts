@@ -1,8 +1,8 @@
 import { useEffect, type RefObject } from "react";
 
 /**
- * メニューボタンの外側をクリックした時にメニューを閉じる機能
- * @param ref メニューボタンのref
+ * ドロップダウンの外側をクリックした時にメニューを閉じるイベントリスナーを登録する
+ * @param ref detailsのref
  */
 export const useMenuButtonClickHandler = (
   ref: RefObject<HTMLDetailsElement>,

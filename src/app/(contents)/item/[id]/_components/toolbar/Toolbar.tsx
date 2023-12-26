@@ -3,8 +3,10 @@ import {
   useDeleteModal,
   useReportModal,
 } from "@/app/(contents)/item/[id]/_components/toolbar/hooks";
+import { KebabButton } from "@/ui/button/Icon";
+import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
 import { type SessionUser } from "@/utils";
-import { FaEllipsisVertical, FaFlag, FaTrash } from "react-icons/fa6";
+import { FaFlag, FaTrash } from "react-icons/fa6";
 
 import { twMerge } from "tailwind-merge";
 
@@ -29,45 +31,48 @@ export const Toolbar = ({
   isItemOwner,
   className = "",
 }: Props) => {
-  const { handleReportModalOpen, ReportModal } = useReportModal(
-    itemId,
-    sessionUser,
-  );
   const { handleDeleteModalOpen, DeleteModal } = useDeleteModal(
     itemId,
     sessionUser,
     isItemOwner,
   );
 
-  return (
+  const { handleReportModalOpen, ReportModal } = useReportModal(
+    itemId,
+    sessionUser,
+  );
+
+  const deleteMenu = (
     <div
-      className={twMerge(
-        "flex items-center justify-center dropdown dropdown-bottom",
-        className,
-      )}
+      role="button"
+      className="flex items-center whitespace-nowrap text-red-500"
+      onClick={handleDeleteModalOpen}
     >
-      <label tabIndex={0} className="btn btn-ghost h-[initial] min-h-0 p-2">
-        <FaEllipsisVertical size="1.5rem" />
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu dropdown-content z-[1] mt-2 w-24 gap-2 rounded-box bg-base-100 p-2 shadow"
-      >
-        <li onClick={handleReportModalOpen}>
-          <div className="flex items-center whitespace-nowrap text-red-500">
-            <FaFlag />
-            通報
-          </div>
-        </li>
-        <li onClick={handleDeleteModalOpen}>
-          <div className="flex items-center whitespace-nowrap text-red-500">
-            <FaTrash />
-            削除
-          </div>
-        </li>
-      </ul>
-      <ReportModal />
-      <DeleteModal />
+      <FaTrash />
+      削除
     </div>
+  );
+
+  const reportMenu = (
+    <div
+      role="button"
+      className="flex items-center whitespace-nowrap text-red-500"
+      onClick={handleReportModalOpen}
+    >
+      <FaFlag />
+      通報
+    </div>
+  );
+
+  const menuItems = [deleteMenu, reportMenu];
+
+  return (
+    <DropdownContainer className={twMerge("dropdown-bottom", className)}>
+      <DropdownItem menuItems={menuItems}>
+        <KebabButton aria-label="商品メニュー" />
+        <ReportModal />
+        <DeleteModal />
+      </DropdownItem>
+    </DropdownContainer>
   );
 };

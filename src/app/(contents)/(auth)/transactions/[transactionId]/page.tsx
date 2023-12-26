@@ -67,11 +67,7 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
             seller={transaction.item.seller}
             defaultIcon={defaultIcon}
           />
-          <OptionMenu
-            className="absolute text-center"
-            sessionUser={sessionUser}
-            isBuyer={isBuyer}
-          />
+          <OptionMenu sessionUser={sessionUser} isBuyer={isBuyer} />
         </VerifyProvider>
       </aside>
       <MessageSection transaction={transaction} sessionUser={sessionUser} />

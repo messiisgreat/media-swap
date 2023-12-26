@@ -1,15 +1,11 @@
-"use client";
 import { CancelFormButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/CancelFormButton";
-import { ThreeDotsIcon } from "@/app/_layout/header/menuButton/ThreeDotsIcon";
-import { useCloseDetailsOnOutsideClick } from "@/ui/button/menuButton/hooks";
-import { type Session } from "next-auth";
-import { twMerge } from "tailwind-merge";
+import { MeetballsButton } from "@/ui/button/Icon";
+import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
+import { type SessionUser } from "@/utils";
 
 type OptionMenuProps = {
-  /** className */
-  className?: string;
   /** ユーザー情報 */
-  sessionUser?: Session["user"];
+  sessionUser?: SessionUser;
   /** 購入者判定 */
   isBuyer?: boolean;
 };
@@ -18,25 +14,12 @@ type OptionMenuProps = {
  * @param {OptionMenuProps} props - オプションメニューのプロパティ
  * @returns
  */
-export const OptionMenu = (props: OptionMenuProps) => {
-  const { dropdownRef } = useCloseDetailsOnOutsideClick();
-  const className = twMerge(
-    "menu dropdown-content menu-sm z-30 w-52 rounded-box bg-base-100 shadow",
-    props.className,
-  );
-  return (
-    <details ref={dropdownRef} className="dropdown">
-      <summary className="btn btn-circle btn-ghost ">
-        <ThreeDotsIcon />
-      </summary>
-      <ul className={className}>
-        <li key="cancelFormButton">
-          <CancelFormButton
-            sessionUser={props.sessionUser}
-            isBuyer={props.isBuyer}
-          />
-        </li>
-      </ul>
-    </details>
-  );
-};
+export const OptionMenu = ({ sessionUser, isBuyer }: OptionMenuProps) => (
+  <DropdownContainer>
+    <DropdownItem
+      menuItems={[<CancelFormButton key={0} {...{ sessionUser, isBuyer }} />]}
+    >
+      <MeetballsButton aria-label="取引メニュー" />
+    </DropdownItem>
+  </DropdownContainer>
+);

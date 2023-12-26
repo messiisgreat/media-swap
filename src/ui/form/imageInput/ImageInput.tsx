@@ -10,6 +10,7 @@ import {
 import {
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
   type ComponentPropsWithoutRef,
@@ -28,8 +29,9 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @param props inputタグのその他の属性
  * @returns label
  */
-export const ImageInput = ({ id, labelText, ...props }: Props) => {
+export const ImageInput = ({ labelText, ...props }: Props) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const id = useId();
   const inputRef = useRef<HTMLInputElement>(null!);
   const isDev = process.env.NODE_ENV !== "production";
   const onDrop = useCallback(async (droppedFiles: File[]) => {
@@ -49,14 +51,16 @@ export const ImageInput = ({ id, labelText, ...props }: Props) => {
   });
 
   // アンマウント時に画像のプレビューを削除してメモリリークを防ぐ
-  useEffect(() => () => files.forEach((file) => URL.revokeObjectURL(file.preview)));
+  useEffect(
+    () => () => files.forEach((file) => URL.revokeObjectURL(file.preview)),
+  );
 
   // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       if (files.length < 10) {
         const target = event.target as HTMLElement;
-        if (target.id === "test-button") {
+        if (target.id === `${id}-test`) {
           const dataTransfer = new DataTransfer();
           fetchImageAndConvertToFile()
             .then((file) => {
@@ -126,8 +130,8 @@ ${
       </label>
       {isDev && (
         <TestDataButton
-          className="fixed left-3 max-sm:bottom-20 sm:bottom-3"
-          id="test-button"
+          className="fixed left-3 max-md:bottom-16 md:bottom-3"
+          id={`${id}-test`}
         />
       )}
     </div>
