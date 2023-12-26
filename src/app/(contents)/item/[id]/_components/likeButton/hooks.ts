@@ -55,5 +55,5 @@ export const useOptimisticLike = (
     setOptimisticState((s) => ({ ...s, isPressed: false }));
   };
 
-  return [optimisticState, updateLike];
+  return [optimisticState, updateLike] as const;
 };
