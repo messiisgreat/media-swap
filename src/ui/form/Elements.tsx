@@ -1,3 +1,7 @@
+import {
+  DEFAULT_INPUT_MAX_LENGTH,
+  DEFAULT_TEXTAREA_MAX_LENGTH,
+} from "@/constants/maxLength";
 import { forwardRef, memo, type ComponentPropsWithoutRef } from "react";
 
 import { twMerge } from "tailwind-merge";
@@ -16,7 +20,15 @@ type InputProps = CommonProps & {
  */
 export const Input = memo(
   forwardRef<HTMLInputElement, ComponentPropsWithoutRef<"input"> & InputProps>(
-    ({ className = "", labelText, ...props }, ref) => {
+    (
+      {
+        className = "",
+        maxLength = DEFAULT_INPUT_MAX_LENGTH,
+        labelText,
+        ...props
+      },
+      ref,
+    ) => {
       const inputClass = twMerge("input input-bordered", className);
       return (
         <div className="flex w-full flex-col">
@@ -26,13 +38,23 @@ export const Input = memo(
               {props.prefix && (
                 <div className="absolute ml-4">{props.prefix}</div>
               )}
-              <input className={inputClass} {...props} ref={ref} />
+              <input
+                className={inputClass}
+                maxLength={maxLength}
+                {...props}
+                ref={ref}
+              />
               {props.suffix && (
                 <div className="absolute end-0 mr-3">{props.suffix}</div>
               )}
             </div>
           ) : (
-            <input className={inputClass} {...props} ref={ref} />
+            <input
+              className={inputClass}
+              maxLength={maxLength}
+              {...props}
+              ref={ref}
+            />
           )}
         </div>
       );
@@ -47,15 +69,30 @@ export const Textarea = memo(
   forwardRef<
     HTMLTextAreaElement,
     ComponentPropsWithoutRef<"textarea"> & CommonProps
-  >(({ className = "", labelText, ...props }, ref) => {
-    const textareaClass = twMerge("textarea textarea-bordered", className);
-    return (
-      <div className="flex w-full flex-col">
-        {labelText && <label>{labelText}</label>}
-        <textarea className={textareaClass} {...props} ref={ref} />
-      </div>
-    );
-  }),
+  >(
+    (
+      {
+        className = "",
+        maxLength = DEFAULT_TEXTAREA_MAX_LENGTH,
+        labelText,
+        ...props
+      },
+      ref,
+    ) => {
+      const textareaClass = twMerge("textarea textarea-bordered", className);
+      return (
+        <div className="flex w-full flex-col">
+          {labelText && <label>{labelText}</label>}
+          <textarea
+            className={textareaClass}
+            maxLength={maxLength}
+            {...props}
+            ref={ref}
+          />
+        </div>
+      );
+    },
+  ),
 );
 
 type SelectProps = CommonProps & {

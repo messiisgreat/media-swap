@@ -1,19 +1,19 @@
 "use client";
 
-import { useCallback } from "react";
-import { useFormActionModal } from "@/features/modal";
-import { H } from "@/ui/structure/H";
-import { Select, Textarea } from "@/ui/form";
+import { sendCancelInquiry } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/actions";
 import {
-  initialCancellationFormValues,
   cancellationBuyerReasons,
   cancellationSellerReasons,
+  initialCancellationFormValues,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
-import { useFormState } from "react-dom";
-import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useFormActionModal } from "@/features/modal";
+import { Select, Textarea } from "@/ui/form";
 import { useFormMessageToaster } from "@/ui/form/hooks";
-import { sendCancelInquiry } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/actions";
+import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { H } from "@/ui/structure/H";
 import { type Session } from "next-auth";
+import { useCallback } from "react";
+import { useFormState } from "react-dom";
 
 type Props = {
   /** ユーザー情報 */
@@ -44,7 +44,9 @@ export const useCancelModal = (props: Props) => {
   };
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
-  const options = props.isBuyer ? cancellationBuyerReasons : cancellationSellerReasons;
+  const options = props.isBuyer
+    ? cancellationBuyerReasons
+    : cancellationSellerReasons;
   const CancelModal = useCallback(
     () => (
       <FormActionModal>
@@ -63,7 +65,6 @@ export const useCancelModal = (props: Props) => {
           placeholder="お問い合わせ内容を入力してください。"
           name="body"
           required
-          maxLength={4000}
         />
       </FormActionModal>
     ),

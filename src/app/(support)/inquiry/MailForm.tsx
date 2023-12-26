@@ -56,7 +56,6 @@ export const MailForm = () => {
         placeholder="お問い合わせ内容を入力してください。"
         name="body"
         required
-        maxLength={4000}
       />
       <SubmitButton>送信</SubmitButton>
     </form>
