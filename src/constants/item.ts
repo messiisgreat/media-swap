@@ -70,8 +70,9 @@ export const TRANSACTION_BUTTON_STATUS = {
   0: "支払完了",
   1: "発送完了",
   2: "受取完了",
-  3: "取引評価",
-  4: "取引キャンセル",
+  3: "取引完了",
+  4: "取引評価",
+  5: "取引キャンセル",
 } as const satisfies Record<number, string>;
 
 /** 取引ステータス */
@@ -80,7 +81,8 @@ export const TRANSACTION_STATUS = {
   COMPLETE_PAYMENT: 1, // 支払い完了
   SENT: 2, // 発送済み
   RECEIVED: 3, // 受け取り完了
-  CANCELLED: 4, // 取引キャンセル
+  COMPLETED: 4, // 取引完了
+  CANCELLED: 5, // 取引キャンセル
 } as const satisfies Record<string, keyof typeof TRANSACTION_BUTTON_STATUS>;
 
 /** 取引評価選択肢 */

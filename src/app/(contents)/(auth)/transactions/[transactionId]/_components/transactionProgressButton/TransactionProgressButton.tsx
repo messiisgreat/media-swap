@@ -43,6 +43,10 @@ export const TransactionProgressButton = ({
     router.refresh();
   }, [nextStatus, router, transaction.id]);
 
+  const handleClicktoHome = useCallback(() => {
+    router.push("/");
+  }, [router]);
+
   const isVisibleButton = () => {
     const isBuyer = sessionUser?.id === transaction.buyerId;
     switch (transaction.transactionStatus) {
@@ -54,6 +58,8 @@ export const TransactionProgressButton = ({
         return isBuyer;
       case TRANSACTION_STATUS.RECEIVED:
         return true;
+      case TRANSACTION_STATUS.COMPLETED:
+        return true;
       default:
         return false;
     }
@@ -63,16 +69,21 @@ export const TransactionProgressButton = ({
     "支払完了",
     "発送完了",
     "受取完了",
+    "取引完了",
+    "トップページへ戻る",
     "取引評価",
     "取引キャンセル",
   ];
 
   return !isCancel ? (
-    isVisibleButton() && (
-      <Button onClick={handleClick}>
-        {transactionButtonStatus[transaction.transactionStatus]}
-      </Button>
-    )
+    isVisibleButton() &&
+      (transaction.transactionStatus !== TRANSACTION_STATUS.COMPLETED ? (
+        <Button onClick={handleClick}>
+          {transactionButtonStatus[transaction.transactionStatus]}
+        </Button>
+      ) : (
+        <Button onClick={handleClicktoHome}>ホームへ戻る</Button>
+      ))
   ) : (
     <Button onClick={handleClick}>取引キャンセル</Button>
   );

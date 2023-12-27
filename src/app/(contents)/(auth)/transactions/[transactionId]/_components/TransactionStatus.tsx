@@ -23,7 +23,7 @@ const StatusAlert = ({
   icon: IconType;
   alertClass: string;
   boldText: string;
-  text: string;
+  text?: string;
 }) => {
   const IconComponent = icon;
   return (
@@ -76,23 +76,34 @@ const SentBuyerStatus = () => <StatusAlert
       icon={FaTruck}
       alertClass="alert-warning"
       boldText="商品が発送されました"
-      text="到着したら受け取り評価をしてください"
+      text="到着したら受取完了をしてください"
     />;
 
 const ReceivedSellerStatus = () => <StatusAlert
       icon={FaBriefcase}
       alertClass="alert-success"
       boldText="商品が購入者に到着しました"
-      text="購入者が評価をし次第取引完了となります"
+      text="購入者が取引完了ボタンを押して取引完了となります"
     />;
 
 const ReceivedBuyerStatus = () => <StatusAlert
       icon={FaBriefcase}
       alertClass="alert-warning"
       boldText="商品が到着しました"
-      text="取引評価をしてください"
+      text="取引完了をしてください"
     />;
 
+const CompletedSellerStatus = () => <StatusAlert
+    icon={FaBriefcase}
+    alertClass="alert-success"
+    boldText="取引が完了しました。"
+  />;
+
+const CompletedBuyerStatus = () => <StatusAlert
+    icon={FaBriefcase}
+    alertClass="alert-warning"
+    boldText="取引が完了しました"
+  />;
 const CancelSellerStatus = () => <StatusAlert
       icon={FaTimes}
       alertClass="alert-error"
@@ -159,6 +170,15 @@ export const TransactionStatus = ({ transaction, sessionUser }: Props) => {
         return <ReceivedSellerStatus />;
       } else if (isBuyer) {
         return <ReceivedBuyerStatus />;
+      }
+
+      break;
+    }
+    case TRANSACTION_STATUS.COMPLETED: {
+      if (isSeller) {
+        return <CompletedSellerStatus />;
+      } else if (isBuyer) {
+        return <CompletedBuyerStatus />;
       }
 
       break;
