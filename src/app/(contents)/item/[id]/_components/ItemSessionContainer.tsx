@@ -10,7 +10,7 @@ import {
   Toolbar,
   TransactionButton,
 } from "@/app/(contents)/item/[id]/_components";
-import { BrowsingHistory } from "@/app/(contents)/item/[id]/_components/BrowsingHistyory";
+import { BrowsingHistory } from "@/app/(contents)/item/[id]/_components/BrowsingHistory";
 import { findItemWithHandling } from "@/app/(contents)/item/[id]/_components/actions";
 import { CommentLoading } from "@/app/(contents)/item/[id]/_components/commentContainer/CommentLoading";
 import { Badge } from "@/ui/Badge";
