@@ -1,4 +1,5 @@
 "use client";
+
 import {
   useDeleteModal,
   useReportModal,
@@ -23,7 +24,7 @@ type Props = {
 
 /**
  * 削除/通報用のツールバー
- * @returns div > reportModal, deleteModal
+ * @returns div > deleteModal, reportModal
  */
 export const Toolbar = ({
   itemId,
@@ -67,12 +68,14 @@ export const Toolbar = ({
   const menuItems = [deleteMenu, reportMenu];
 
   return (
-    <DropdownContainer className={twMerge("dropdown-bottom", className)}>
-      <DropdownItem menuItems={menuItems}>
-        <KebabButton aria-label="商品メニュー" />
-        <ReportModal />
-        <DeleteModal />
-      </DropdownItem>
-    </DropdownContainer>
+    <>
+      <DropdownContainer className={twMerge("dropdown-bottom", className)}>
+        <DropdownItem menuItems={menuItems}>
+          <KebabButton aria-label="商品メニュー" />
+        </DropdownItem>
+      </DropdownContainer>
+      <DeleteModal />
+      <ReportModal />
+    </>
   );
 };
