@@ -30,11 +30,8 @@ export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
   const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
     null,
   );
-  const { openReportModal, ReportModal } = useCommentReportModal(
-    selectedCommentId,
-    sessionUser,
-  );
-  const { openDeleteModal, DeleteModal } = useCommentDeleteModal(
+  const openReportModal = useCommentReportModal(selectedCommentId, sessionUser);
+  const openDeleteModal = useCommentDeleteModal(
     selectedCommentId,
     sessionUser,
     isItemOwner,
@@ -70,8 +67,6 @@ export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
           </li>
         );
       })}
-      <ReportModal />
-      <DeleteModal />
     </ul>
   );
 };

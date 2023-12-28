@@ -1,6 +1,6 @@
 "use client";
 
-import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/hooks";
+import { CancelModalButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/CancelModalButton";
 import { MeetballsButton } from "@/ui/button/Icon";
 import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
 import { type SessionUser } from "@/utils";
@@ -17,21 +17,12 @@ type OptionMenuProps = {
  * @returns
  */
 export const OptionMenu = (props: OptionMenuProps) => {
-  const [handleOpen, CancelModal] = useCancelModal(props);
+  const menuItems = [<CancelModalButton key={0} {...props} />];
   return (
-    <>
-      <DropdownContainer>
-        <DropdownItem
-          menuItems={[
-            <button key={0} onClick={handleOpen}>
-              運営への問合わせ
-            </button>,
-          ]}
-        >
-          <MeetballsButton aria-label="取引メニュー" />
-        </DropdownItem>
-      </DropdownContainer>
-      <CancelModal />
-    </>
+    <DropdownContainer>
+      <DropdownItem menuItems={menuItems}>
+        <MeetballsButton aria-label="取引メニュー" />
+      </DropdownItem>
+    </DropdownContainer>
   );
 };

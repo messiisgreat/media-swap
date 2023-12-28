@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
-import { useImageModal } from "@/features/modal";
+import { useImageModal } from "@/ui/modal/useImageModal";
 import Image from "next/image";
 
 /**
@@ -53,9 +53,7 @@ export const Carousel = ({
     [],
   );
 
-  const { handleOpen, ImageModal } = useImageModal(
-    images[selectedIndex].imageURL,
-  );
+  const { handleOpen } = useImageModal(images[selectedIndex].imageURL);
 
   return (
     <div className="grid w-full select-none gap-4">
@@ -79,7 +77,6 @@ export const Carousel = ({
             spanClassName="text-lg py-3"
           />
         )}
-        <ImageModal />
       </div>
       <div
         className="flex flex-row gap-4 overflow-x-scroll bg-black/70 px-4 py-1"

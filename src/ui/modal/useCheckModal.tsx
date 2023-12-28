@@ -2,7 +2,7 @@ import { useCallback, type ComponentProps } from "react";
 
 import { twMerge } from "tailwind-merge";
 
-import { useDialog } from "@/ui/dialog";
+import { useDialog } from "@/ui/modal/dialog";
 
 /**
  * 「はい」か「いいえ」の確認用モーダルを表示するためのフック

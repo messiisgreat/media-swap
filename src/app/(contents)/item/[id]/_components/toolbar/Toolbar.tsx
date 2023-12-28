@@ -32,16 +32,13 @@ export const Toolbar = ({
   isItemOwner,
   className = "",
 }: Props) => {
-  const { handleDeleteModalOpen, DeleteModal } = useDeleteModal(
+  const handleDeleteModalOpen = useDeleteModal(
     itemId,
     sessionUser,
     isItemOwner,
   );
 
-  const { handleReportModalOpen, ReportModal } = useReportModal(
-    itemId,
-    sessionUser,
-  );
+  const handleReportModalOpen = useReportModal(itemId, sessionUser);
 
   const deleteMenu = (
     <div
@@ -68,14 +65,10 @@ export const Toolbar = ({
   const menuItems = [deleteMenu, reportMenu];
 
   return (
-    <>
-      <DropdownContainer className={twMerge("dropdown-bottom", className)}>
-        <DropdownItem menuItems={menuItems}>
-          <KebabButton aria-label="商品メニュー" />
-        </DropdownItem>
-      </DropdownContainer>
-      <DeleteModal />
-      <ReportModal />
-    </>
+    <DropdownContainer className={twMerge("dropdown-bottom", className)}>
+      <DropdownItem menuItems={menuItems}>
+        <KebabButton aria-label="商品メニュー" />
+      </DropdownItem>
+    </DropdownContainer>
   );
 };

@@ -6,9 +6,10 @@ import {
   removeComment,
 } from "@/app/(contents)/item/[id]/_components/commentContainer/commentList/actions";
 
-import { useFormActionModal } from "@/features/modal";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useFormActionModal } from "@/ui/modal";
+import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
 import { type SessionUser } from "@/utils";
 import toast from "react-hot-toast";
@@ -19,6 +20,7 @@ import { FaTriangleExclamation } from "react-icons/fa6";
  * コメントの通報モーダル
  * @param commentId 通報するコメントのID
  * @param sessionUser ログインユーザー
+ * @returns モーダルを開く関数
  */
 export const useCommentReportModal = (
   commentId: string | null,
@@ -101,7 +103,9 @@ export const useCommentReportModal = (
     [FormActionModal],
   );
 
-  return { openReportModal: open, ReportModal };
+  useSetModal(<ReportModal />);
+
+  return open;
 };
 
 /**
@@ -161,5 +165,8 @@ export const useCommentDeleteModal = (
     ),
     [FormActionModal],
   );
-  return { openDeleteModal: open, DeleteModal };
+
+  useSetModal(<DeleteModal />);
+
+  return open;
 };

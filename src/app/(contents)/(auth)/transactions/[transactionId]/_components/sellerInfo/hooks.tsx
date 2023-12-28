@@ -6,18 +6,19 @@ import {
   cancellationSellerReasons,
   initialCancellationFormValues,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
-import { useFormActionModal } from "@/features/modal";
 import { Select, Textarea } from "@/ui/form";
 import { useFormMessageToaster } from "@/ui/form/hooks";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useFormActionModal } from "@/ui/modal";
+import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
-import { type Session } from "next-auth";
+import { type SessionUser } from "@/utils";
 import { useCallback } from "react";
 import { useFormState } from "react-dom";
 
 type Props = {
   /** ユーザー情報 */
-  sessionUser?: Session["user"];
+  sessionUser?: SessionUser;
   /** 購入者判定 */
   isBuyer?: boolean;
 };
@@ -71,5 +72,7 @@ export const useCancelModal = (props: Props) => {
     [FormActionModal, options],
   );
 
-  return [handleOpen, CancelModal] as const;
+  useSetModal(<CancelModal />);
+
+  return handleOpen;
 };

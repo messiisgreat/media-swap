@@ -22,14 +22,11 @@ export const PurchaseButton = ({
   sessionUserId,
   className = "",
 }: Props) => {
-  const [handleOpen, PurchaseModal] = usePurchaseModal(item, sessionUserId);
+  const handleOpen = usePurchaseModal(item, sessionUserId);
 
   return (
-    <>
-      <Button onClick={handleOpen} className={className}>
-        購入する
-      </Button>
-      <PurchaseModal />
-    </>
+    <Button onClick={handleOpen} className={className}>
+      購入する
+    </Button>
   );
 };

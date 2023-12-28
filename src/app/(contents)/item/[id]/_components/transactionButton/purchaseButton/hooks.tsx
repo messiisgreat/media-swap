@@ -3,7 +3,8 @@
 import { useCallback } from "react";
 
 import { purchasing } from "@/app/(contents)/item/[id]/_components/transactionButton/purchaseButton/actions";
-import { useFormActionModal } from "@/features/modal";
+import { useFormActionModal } from "@/ui/modal";
+import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
 import { type Item } from "@prisma/client";
 import { signIn } from "next-auth/react";
@@ -59,5 +60,6 @@ export const usePurchaseModal = (
     [FormActionModal, item.isShippingIncluded, item.price, item.name],
   );
 
-  return [handleOpen, PurchaseModal] as const;
+  useSetModal(<PurchaseModal />);
+  return handleOpen;
 };

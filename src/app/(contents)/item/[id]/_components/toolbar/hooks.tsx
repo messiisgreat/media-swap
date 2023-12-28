@@ -4,10 +4,11 @@ import {
   addItemReport,
   removeItem,
 } from "@/app/(contents)/item/[id]/_components/toolbar/actions";
-import { useFormActionModal } from "@/features/modal";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useFormActionModal } from "@/ui/modal";
+import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
 
 import { type SessionUser } from "@/utils";
@@ -74,7 +75,10 @@ export const useDeleteModal = (
     ),
     [FormActionModal],
   );
-  return { handleDeleteModalOpen: handleOpen, DeleteModal };
+
+  useSetModal(<DeleteModal />);
+
+  return handleOpen;
 };
 
 /**
@@ -160,5 +164,7 @@ export const useReportModal = (
     [FormActionModal],
   );
 
-  return { handleReportModalOpen: handleOpen, ReportModal };
+  useSetModal(<ReportModal />);
+
+  return handleOpen;
 };

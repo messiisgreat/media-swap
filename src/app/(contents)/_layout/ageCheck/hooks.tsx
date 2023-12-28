@@ -2,7 +2,8 @@
 
 import { addAgeCheckedCookie } from "@/app/(contents)/_layout/ageCheck/actions";
 import { ageCheckCookieKey } from "@/app/(contents)/_layout/ageCheck/constants";
-import { useCheckModal } from "@/features/modal/useCheckModal";
+import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useCheckModal } from "@/ui/modal/useCheckModal";
 import { H } from "@/ui/structure/H";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
@@ -47,5 +48,8 @@ export const useAgeCheckModal = () => {
     ),
     [CheckModal],
   );
-  return { open, AgeCheckModal };
+
+  useSetModal(<AgeCheckModal />);
+
+  return open;
 };

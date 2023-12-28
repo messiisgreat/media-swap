@@ -15,7 +15,7 @@ import { useEffect } from "react";
 export const AgeCheckProvider = () => {
   const path = usePathname();
   const isAgeCheckedThrough = useAgeCheckCookie();
-  const { open, AgeCheckModal } = useAgeCheckModal();
+  const open = useAgeCheckModal();
 
   useEffect(() => {
     if (!isAgeCheckedThrough) {
@@ -26,12 +26,9 @@ export const AgeCheckProvider = () => {
   if (isAgeCheckedThrough) return null;
 
   return (
-    <>
-      <div
-        className="fixed left-0 top-0 z-30 h-full w-full backdrop-blur-xl"
-        aria-hidden
-      />
-      <AgeCheckModal />
-    </>
+    <div
+      className="fixed left-0 top-0 z-30 h-full w-full backdrop-blur-xl"
+      aria-hidden
+    />
   );
 };

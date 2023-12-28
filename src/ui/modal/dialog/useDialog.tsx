@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { Dialog as Component } from "@/ui/dialog/Dialog";
+import { Dialog as Component } from "@/ui/modal/dialog/Dialog";
 
 type Props = Omit<
   Parameters<typeof Component>[0],
@@ -32,7 +32,9 @@ export const useDialog = (): useDialogResult => {
   }, []);
 
   const Dialog: React.FC<Props> = useCallback(
-    (props: Props): React.ReactElement => <Component isOpen={isOpen} onClose={handleClose} {...props} />,
+    (props: Props): React.ReactElement => (
+      <Component isOpen={isOpen} onClose={handleClose} {...props} />
+    ),
     [handleClose, isOpen],
   );
 

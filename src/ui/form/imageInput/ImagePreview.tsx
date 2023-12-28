@@ -1,6 +1,6 @@
 "use client";
 
-import { useImageModal } from "@/features/modal";
+import { useImageModal } from "@/ui/modal";
 import Image from "next/image";
 import { useCallback } from "react";
 import { FaTimes } from "react-icons/fa";
@@ -18,7 +18,7 @@ type Props = {
  * 画像をプレビュー表示する
  */
 export const ImagePreview = ({ file, index, onRemove }: Props) => {
-  const { handleOpen, ImageModal } = useImageModal(file.preview);
+  const { handleOpen } = useImageModal(file.preview);
   const handleRemove = useCallback(() => onRemove(index), [index, onRemove]);
   return (
     <div className="relative w-fit">
@@ -37,7 +37,6 @@ export const ImagePreview = ({ file, index, onRemove }: Props) => {
           height={200}
           onClick={handleOpen}
         />
-        <ImageModal />
       </div>
     </div>
   );
