@@ -17,3 +17,14 @@ export const createBrowsingHistory = cache(
       },
     }),
 );
+
+/**
+ * 商品の閲覧数を取得する
+ * @param itemId 商品ID
+ * @returns 閲覧数
+ */
+export const countBrowsingHistory = cache(
+  async (itemId: string) => await prisma.browsingHistory.count({
+      where: { itemId },
+    }),
+);

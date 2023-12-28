@@ -39,18 +39,21 @@ export const ItemSessionContainer = async ({ id }: { id: string }) => {
       <Carousel {...{ isSoldOut, images }} />
       <H className="w-full text-xl font-bold lg:text-2xl">{item.name}</H>
       <Section className="grid w-full items-start gap-4">
-        <div className="grid grid-cols-6 grid-rows-2 items-center justify-between">
-          <Badge className="badge-lg col-span-5 w-full p-6">
+        <div className="grid grid-cols-12 grid-rows-2 items-center justify-between">
+          <Badge className="badge-lg col-span-10 w-full p-6">
             ¥{item.price}
           </Badge>
           <Toolbar
-            className="col-span-1"
+            className="col-span-2"
             {...{ itemId, sessionUser, isItemOwner }}
           />
           <Suspense fallback={<LikeButtonLoading className="col-span-3" />}>
             <LikeButton className="col-span-3" {...{ itemId, sessionUser }} />
           </Suspense>
-          <TransactionButton itemId={itemId} className="col-span-3" />
+          <Suspense fallback={null}>
+            <BrowsingHistory className="col-span-3" itemId={itemId} />
+          </Suspense>
+          <TransactionButton itemId={itemId} className="col-span-6" />
         </div>
         <TitleUnderbar title="説明" />
         <ItemDescription description={item.description} />
@@ -66,9 +69,6 @@ export const ItemSessionContainer = async ({ id }: { id: string }) => {
       <FloatingNavigation>
         <TransactionButton itemId={itemId} className="w-full" />
       </FloatingNavigation>
-      <Suspense fallback={null}>
-        <BrowsingHistory itemId={itemId} />
-      </Suspense>
     </VerifyProvider>
   );
 };

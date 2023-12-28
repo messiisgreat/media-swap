@@ -1,6 +1,6 @@
 "use server";
 
-import { createBrowsingHistory } from "@/repositories/browsingHistory";
+import { countBrowsingHistory, createBrowsingHistory } from "@/repositories/browsingHistory";
 import { findItemById, type ItemReadResult } from "@/repositories/item";
 import { findComments } from "@/repositories/itemComment";
 import { getSessionUser } from "@/utils";
@@ -18,6 +18,13 @@ export const browsing = async (itemId: string) => {
   const sessionUserId = sessionUser?.id;
   return await createBrowsingHistory(sessionUserId!, itemId);
 };
+
+/**
+ * 閲覧数を取得する
+ * @param itemId 商品ID
+ * @returns 
+ */
+export const getViewCount = async (itemId: string) => await countBrowsingHistory(itemId);
 
 /**
  * 商品を取得する
