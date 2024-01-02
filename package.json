@@ -87,7 +87,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.6.0",
     "eslint-plugin-jest-dom": "^5.1.0",
-    "eslint-plugin-jsdoc": "^46.9.0",
+    "eslint-plugin-jsdoc": "^47.0.0",
     "eslint-plugin-prefer-arrow-functions": "^3.2.4",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-tailwindcss": "^3.13.0",
