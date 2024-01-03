@@ -1,12 +1,7 @@
-import {
-  MessageSection,
-  SellerInfo,
-  ShippingNotification,
-  TrackingNumber,
-  TransactionProgressButton,
-  TransactionStatus,
-} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
-import { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/OptionMenu";
+import { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
+import { PersonSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/PersonSection";
+import { ShippingSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/ShippingSection";
+import { TransactionSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/TransactionSection";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
@@ -40,37 +35,27 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
   }
   return (
     <div className="flex w-full flex-col gap-4 py-4">
-      <aside className="flex flex-1 flex-col gap-8">
-        <VerifyProvider>
-          <TransactionStatus
+      <VerifyProvider>
+        <aside className="flex flex-1 flex-col gap-8">
+          <TransactionSection
             transaction={transaction}
             sessionUser={sessionUser}
-          />
-
-          {/* 送り状番号の送信用 */}
-          {isSeller && <ShippingNotification transactionId={transactionId} />}
-          {/* 送り状番号の表示用 */}
-          {transaction.trackingNumber && (
-            <TrackingNumber
-              trackingNumber={transaction.trackingNumber}
-              shippingMethodCode={transaction.item.shippingMethodCode}
+          >
+            <ShippingSection
+              transactionId={transactionId}
+              transaction={transaction}
+              isSeller={isSeller}
             />
-          )}
-          {/* 通常の取引更新用ボタン */}
-          <TransactionProgressButton
-            transaction={transaction}
-            sessionUser={sessionUser}
-          />
-          {/* 取引キャンセル用ボタン */}
-          <TransactionProgressButton transaction={transaction} isCancel />
-          <SellerInfo
+          </TransactionSection>
+          <PersonSection
             seller={transaction.item.seller}
             defaultIcon={defaultIcon}
+            sessionUser={sessionUser}
+            isBuyer={isBuyer}
           />
-          <OptionMenu sessionUser={sessionUser} isBuyer={isBuyer} />
-        </VerifyProvider>
-      </aside>
-      <MessageSection transaction={transaction} sessionUser={sessionUser} />
+        </aside>
+        <MessageSection transaction={transaction} sessionUser={sessionUser} />
+      </VerifyProvider>
     </div>
   );
 };

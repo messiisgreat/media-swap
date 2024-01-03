@@ -62,28 +62,29 @@ export const SHIPPING_DAYS = {
   2: "4~7日で発送",
 } as const satisfies Record<string, string>;
 
-/**
- * 取引ステータスIDから見るボタンの表示ステータス
- * ステップの進行状況を表すため、number型のkeyで定義
- */
-export const TRANSACTION_BUTTON_STATUS = {
-  0: "支払完了",
-  1: "発送完了",
-  2: "受取完了",
-  3: "取引完了",
-  4: "取引評価",
-  5: "取引キャンセル",
-} as const satisfies Record<number, string>;
-
 /** 取引ステータス */
 export const TRANSACTION_STATUS = {
   BEFORE_PAYMENT: 0, // 支払い前
   COMPLETE_PAYMENT: 1, // 支払い完了
   SENT: 2, // 発送済み
   RECEIVED: 3, // 受け取り完了
-  COMPLETED: 4, // 取引完了
-  CANCELLED: 5, // 取引キャンセル
-} as const satisfies Record<string, keyof typeof TRANSACTION_BUTTON_STATUS>;
+  COMPLETED: 98, // 取引完了
+  CANCELLED: 99, // 取引キャンセル
+} as const satisfies Record<string, number>;
+
+type TransactionStatusKey = keyof typeof TRANSACTION_STATUS;
+
+type TransactionStatusValue = (typeof TRANSACTION_STATUS)[TransactionStatusKey];
+
+/** 取引ステータスボタンの表示テキスト */
+export const TRANSACTION_CHANGE_BUTTON_TEXT = {
+  [TRANSACTION_STATUS.BEFORE_PAYMENT]: "取引状態の初期化",
+  [TRANSACTION_STATUS.COMPLETE_PAYMENT]: "支払完了",
+  [TRANSACTION_STATUS.SENT]: "発送完了",
+  [TRANSACTION_STATUS.RECEIVED]: "受取完了",
+  [TRANSACTION_STATUS.COMPLETED]: "取引完了",
+  [TRANSACTION_STATUS.CANCELLED]: "取引キャンセル",
+} as const satisfies Record<TransactionStatusValue, string>;
 
 /** 取引評価選択肢 */
 export const TRANSACTION_RATING_OPTION = {
