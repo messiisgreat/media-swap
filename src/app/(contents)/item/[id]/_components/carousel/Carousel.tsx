@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 
+import { SlideImage } from "@/app/(contents)/item/[id]/_components/carousel/SlideImage";
 import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
 import { useImageModal } from "@/ui/modal/useImageModal";
 import Image from "next/image";
@@ -23,7 +24,7 @@ export const Carousel = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLElement>, index: number, lenOfSlides: number) => {
+    (e: React.MouseEvent<HTMLElement>, index: number) => {
       setSelectedIndex(index);
 
       const container = containerRef.current;
@@ -38,10 +39,15 @@ export const Carousel = ({
 
       if (imageWidth) {
         const imageScrollLeft = index * imageWidth;
-        image.style.transform = `translateX(${-imageScrollLeft}px)`;
+        const style = image.getAttribute("style");
+        image.setAttribute(
+          "style",
+          `${style} transform:translateX(${-imageScrollLeft}px)`,
+        );
       }
 
       if (containerWidth && elementWidth && elementLeft && scrollWidth) {
+        const lenOfSlides = slides.length;
         const gap =
           (scrollWidth % (elementWidth * lenOfSlides)) / (lenOfSlides + 1);
         const padding = elementLeft - index * (elementWidth + gap) - gap;
@@ -50,7 +56,7 @@ export const Carousel = ({
         container.scrollTo({ left: scrollLeft, behavior: "smooth" });
       }
     },
-    [],
+    [slides.length],
   );
 
   const { handleOpen } = useImageModal(images[selectedIndex].imageURL);
@@ -83,22 +89,12 @@ export const Carousel = ({
         ref={containerRef}
       >
         {slides.map((imageURL, index) => (
-          <Image
+          <SlideImage
             key={imageURL}
-            role="button"
-            aria-label="表示画像選択"
-            className={`block cursor-pointer touch-manipulation transition-opacity duration-200
-                                ${
-                                  index == selectedIndex
-                                    ? "opacity-100"
-                                    : "opacity-20"
-                                }
-                                `}
+            index={index}
+            selected={index == selectedIndex}
             src={imageURL}
-            alt={`サムネイル-${index}`}
-            width={100}
-            height={100}
-            onClick={(e) => handleClick(e, index, slides.length)}
+            onClick={handleClick}
           />
         ))}
       </div>

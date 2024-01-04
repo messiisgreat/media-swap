@@ -6,12 +6,12 @@
 export const objToAssociative = (
   obj: { id: string | number; name: string }[],
 ) =>
-  obj.reduce(
-    (acc, cur) => {
-      acc[cur.id] = cur.name;
-      return acc;
-    },
-    {} as { [key: string | number]: string },
+  obj.reduce<Record<string | number, string>>(
+    (acc, cur) => ({
+      ...acc,
+      [cur.id]: cur.name,
+    }),
+    {},
   );
 
 /**
@@ -51,19 +51,15 @@ export const binaryToDecimal = (binaryArray: boolean[]): number => {
  * @returns 2進数の配列
  */
 export const decimalToBinary = (decimal: number, length: number): boolean[] => {
-  const binaryArray: boolean[] = [];
-
   // 10進数を2進数に変換
-  while (decimal > 0) {
-    // 0をtrue、1をfalseとして扱うため、余りが1でない場合にtrueをunshiftする
-    binaryArray.unshift(decimal % 2 !== 1);
-    decimal = Math.floor(decimal / 2);
-  }
+  const binary = decimal.toString(2);
+  const binaryArray = [...binary].map((value) => value === "0");
 
   // 必要に応じて、配列の長さを調整する
-  while (binaryArray.length < length) {
-    binaryArray.unshift(true); // 0をtrueとして扱う
+  if (length > binary.length) {
+    const diff = length - binary.length;
+    const trueArray = new Array<boolean>(diff).fill(true);
+    return [...trueArray, ...binaryArray];
   }
-
   return binaryArray;
 };

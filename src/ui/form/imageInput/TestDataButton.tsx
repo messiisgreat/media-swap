@@ -18,7 +18,7 @@ const setTestData = (selector: string, testData: string): void => {
       element instanceof HTMLSelectElement ||
       element instanceof HTMLTextAreaElement
     ) {
-      element.value = testData;
+      element.setAttribute("value", testData);
     } else {
       console.error(`Unsupported element type for selector ${selector}.`);
     }

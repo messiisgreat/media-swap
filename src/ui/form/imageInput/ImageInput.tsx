@@ -64,7 +64,7 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
           const dataTransfer = new DataTransfer();
           fetchImageAndConvertToFile()
             .then((file) => {
-              const fileWithPreview = Object.assign(file, {
+              const fileWithPreview = Object.assign({}, file, {
                 file,
                 preview: URL.createObjectURL(file),
               });
@@ -84,14 +84,10 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
         document.removeEventListener("click", handleClick);
       }
     };
-  }, [files, isDev]);
+  }, [files, id, isDev]);
 
   const handleRemove = useCallback((index: number) => {
-    setFiles((prevFiles) => {
-      const newFiles = [...prevFiles];
-      newFiles.splice(index, 1);
-      return newFiles;
-    });
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   }, []);
 
   const labelClass = `flex items-center justify-center rounded-md border bg-white

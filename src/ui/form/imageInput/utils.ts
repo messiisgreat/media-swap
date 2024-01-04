@@ -9,7 +9,8 @@ type FileWithPreview = File & { preview: string };
 export const reduceImageQuality = async (
   file: File,
 ): Promise<FileWithPreview | undefined> => {
-  const ext = file.name.split(".").pop()?.toLowerCase();
+  const splitFileName = file.name.split(".");
+  const ext = splitFileName[splitFileName.length - 1].toLowerCase();
   if (ext === "heic" || ext === "heif") {
     try {
       if (typeof window !== "undefined") {
@@ -25,7 +26,9 @@ export const reduceImageQuality = async (
           type: "image/jpeg",
         });
         const preview = URL.createObjectURL(reducedFile);
-        const fileWithPreview = Object.assign(reducedFile, { preview });
+        const fileWithPreview = Object.assign(structuredClone(reducedFile), {
+          preview,
+        });
         return fileWithPreview;
       }
     } catch (error) {
@@ -35,7 +38,9 @@ export const reduceImageQuality = async (
   } else {
     const grayBackgroundFile = await addGrayBackground(file);
     const preview = URL.createObjectURL(grayBackgroundFile);
-    const fileWithPreview = Object.assign(grayBackgroundFile, { preview });
+    const fileWithPreview = Object.assign(structuredClone(grayBackgroundFile), {
+      preview,
+    });
     return fileWithPreview;
   }
 };
