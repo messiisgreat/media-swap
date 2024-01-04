@@ -17,7 +17,7 @@ export const CompletedItem = async ({ itemId }: { itemId: string }) => {
       className="grid justify-center gap-4"
     >
       <Image
-        src={item.images[0].imageURL}
+        src={item.images[0]?.imageURL || ""}
         alt={item.name}
         width={400}
         height={400}

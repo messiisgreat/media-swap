@@ -10,7 +10,7 @@ export const reduceImageQuality = async (
   file: File,
 ): Promise<FileWithPreview | undefined> => {
   const splitFileName = file.name.split(".");
-  const ext = splitFileName[splitFileName.length - 1].toLowerCase();
+  const ext = splitFileName[splitFileName.length - 1]?.toLowerCase();
   if (ext === "heic" || ext === "heif") {
     try {
       if (typeof window !== "undefined") {
@@ -21,6 +21,8 @@ export const reduceImageQuality = async (
           quality: 0.7,
         });
         const outputBlob = Array.isArray(output) ? output[0] : output;
+        if (!outputBlob) throw Error;
+
         const newName = `${file.name.replace(/\.(heic|heif)$/i, "")}.jpg`;
         const reducedFile = new File([outputBlob], newName, {
           type: "image/jpeg",

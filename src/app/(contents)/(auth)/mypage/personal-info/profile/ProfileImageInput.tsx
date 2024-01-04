@@ -24,8 +24,10 @@ export const ImageInput = ({ initialSrc, labelText, ...props }: Props) => {
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
-    if (!files) return;
-    setProfileImage(window.URL.createObjectURL(files[0]));
+    const image = files?.item(0);
+    if (!image) return;
+
+    setProfileImage(window.URL.createObjectURL(image));
   }, []);
 
   return (

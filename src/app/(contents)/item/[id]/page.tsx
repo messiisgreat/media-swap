@@ -23,7 +23,7 @@ export const generateMetadata = async ({
       title: item.name,
       description: item.description,
       images: {
-        url: item.images[0].imageURL,
+        url: item.images[0]?.imageURL || "",
         width: 1200,
         height: 630,
       },
@@ -37,9 +37,9 @@ export const generateMetadata = async ({
  * @returns loading > 出品のプレースホルダ > 出品情報 > [いいね状況,コメント一覧] > 読込完了
  */
 const Page = ({ params: { id } }: Props) => (
-    <Suspense fallback={null}>
-      <ItemSessionContainer id={id} />
-    </Suspense>
-  );
+  <Suspense fallback={null}>
+    <ItemSessionContainer id={id} />
+  </Suspense>
+);
 
 export default Page;

@@ -59,7 +59,7 @@ export const Carousel = ({
     [slides.length],
   );
 
-  const { handleOpen } = useImageModal(images[selectedIndex].imageURL);
+  const { handleOpen } = useImageModal(images[selectedIndex]?.imageURL || "");
 
   return (
     <div className="grid w-full select-none gap-4">

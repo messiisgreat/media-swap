@@ -29,7 +29,7 @@ export const ItemCard = ({ item }: Props) => {
       >
         <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:h-48 sm:w-48">
           <Image
-            src={item.images[0].imageURL}
+            src={item.images[0]?.imageURL || ""}
             alt={item.name}
             sizes="500px"
             fill

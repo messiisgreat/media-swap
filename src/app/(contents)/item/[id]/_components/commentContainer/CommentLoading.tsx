@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import { FaEllipsis } from "react-icons/fa6";
 
 /**
