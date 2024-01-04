@@ -17,7 +17,6 @@ jobs:
         with:
           path: |
             **/node_modules
-            ${{ github.workspace }}/.next/cache/eslint
           key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
@@ -51,7 +50,6 @@ jobs:
         with:
           path: |
             **/node_modules
-            ${{ github.workspace }}/.next/cache/eslint
           key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
             ${{ runner.os }}-build--${{ hashFiles('bun.lockb','package.json') }}
@@ -80,7 +78,6 @@ jobs:
         with:
           path: |
             **/node_modules
-            ${{ github.workspace }}/.next/cache/eslint
           key: ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('bun.lockb','package.json') }}
