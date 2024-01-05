@@ -61,15 +61,12 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
       if (files.length < 10) {
         const target = event.target as HTMLElement;
         if (target.id === `${id}-test`) {
-          const dataTransfer = new DataTransfer();
           fetchImageAndConvertToFile()
             .then((file) => {
               const fileWithPreview = Object.assign({}, file, {
                 file,
                 preview: URL.createObjectURL(file),
               });
-              dataTransfer.items.add(file);
-              inputRef.current.files = dataTransfer.files;
               setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
             })
             .catch((error) => console.error("Error:", error));
@@ -85,6 +82,13 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
       }
     };
   }, [files, id, isDev]);
+
+  // inputタグに選択されたすべての画像を追加する
+  useEffect(() => {
+    const dataTransfer = new DataTransfer();
+    files.forEach((file) => dataTransfer.items.add(file));
+    inputRef.current.files = dataTransfer.files;
+  }, [files]);
 
   const handleRemove = useCallback((index: number) => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));

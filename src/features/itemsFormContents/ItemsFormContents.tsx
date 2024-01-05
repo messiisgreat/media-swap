@@ -13,20 +13,20 @@ type Props = React.ComponentProps<typeof DetailsContents> &
  * @returns 商品の詳細情報と配送情報を入力するフォームのエレメント
  */
 export const ItemsFormContents = (props: Props) => (
-    <>
-      <DetailsContents
-        name={props.name}
-        conditionCode={props.conditionCode}
-        description={props.description}
-        tags={props.tags}
-        selectedTags={props.selectedTags}
-      />
-      <DeliveryContents
-        isShippingIncluded={props.isShippingIncluded}
-        shippingMethodCode={props.shippingMethodCode}
-        shippingDaysCode={props.shippingDaysCode}
-        shippingMethodCustom={props.shippingMethodCustom}
-        price={props.price}
-      />
-    </>
-  );
+  <>
+    <DetailsContents
+      name={props.name}
+      conditionCode={props.conditionCode}
+      description={props.description}
+      tags={props.tags}
+      selectedTags={props.selectedTags}
+    />
+    <DeliveryContents
+      isShippingIncluded={props.isShippingIncluded}
+      shippingMethodCode={props.shippingMethodCode}
+      shippingDaysCode={props.shippingDaysCode}
+      shippingMethodCustom={props.shippingMethodCustom}
+      price={props.price}
+    />
+  </>
+);
