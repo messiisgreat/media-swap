@@ -1,8 +1,11 @@
-import { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
-import { PersonSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/PersonSection";
+import {
+  MessageSection,
+  OptionMenu,
+  SellerInfo,
+  TransactionProgressButton,
+  TransactionStatus,
+} from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
 import { ShippingSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/ShippingSection";
-import { TransactionSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/TransactionSection";
-import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { getSessionUser } from "@/utils/session";
@@ -22,9 +25,9 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
   if (!transaction || !sessionUser) {
     notFound();
   }
+  const { buyerId, statusCode } = transaction;
   const seller = transaction.item.seller;
   const sellerId = seller.id;
-  const buyerId = transaction.buyerId;
 
   const isSeller = sessionUser.id === sellerId;
   const isBuyer = sessionUser.id === buyerId;
@@ -34,30 +37,27 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
   if (isNotSellerOrBuyer) {
     notFound();
   }
+  const userType = isSeller ? "seller" : "buyer";
   return (
-    <div className="flex w-full flex-col gap-4 py-4">
-      <VerifyProvider>
-        <aside className="flex flex-1 flex-col gap-8">
-          <TransactionSection
+    <VerifyProvider>
+      <div className="w-full">
+        <aside className="grid gap-8">
+          <TransactionStatus statusCode={statusCode} userType={userType} />
+          <ShippingSection
+            transactionId={transactionId}
             transaction={transaction}
-            sessionUser={sessionUser}
-          >
-            <ShippingSection
-              transactionId={transactionId}
-              transaction={transaction}
-              isSeller={isSeller}
-            />
-          </TransactionSection>
-          <PersonSection
-            seller={seller}
-            defaultIcon={defaultIcon}
-            sessionUser={sessionUser}
-            isBuyer={isBuyer}
+            isSeller={isSeller}
           />
+          <TransactionProgressButton
+            transaction={transaction}
+            userType={userType}
+          />
+          <SellerInfo seller={seller} />
+          <OptionMenu sessionUser={sessionUser} userType={userType} />
         </aside>
         <MessageSection transaction={transaction} sessionUser={sessionUser} />
-      </VerifyProvider>
-    </div>
+      </div>
+    </VerifyProvider>
   );
 };
 

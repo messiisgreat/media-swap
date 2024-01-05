@@ -1,11 +1,12 @@
-import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/hooks";
+"use client";
+import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/optionMenu/hooks";
 import { type SessionUser } from "@/utils";
 
 type Props = {
   /** ユーザー情報 */
   sessionUser: SessionUser;
-  /** 購入者判定 */
-  isBuyer: boolean;
+  /** ユーザー種別 */
+  userType: "buyer" | "seller";
 };
 
 /**

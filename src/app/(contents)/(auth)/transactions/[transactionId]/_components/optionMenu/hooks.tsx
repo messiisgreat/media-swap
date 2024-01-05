@@ -15,10 +15,10 @@ import { type SessionUser } from "@/utils";
 import { useCallback } from "react";
 
 type Props = {
-  /** 購入者判定 */
-  isBuyer?: boolean;
   /** セッションユーザー */
   sessionUser: SessionUser;
+  /** ユーザー種別 */
+  userType: "buyer" | "seller";
 };
 
 /**
@@ -26,7 +26,7 @@ type Props = {
  * @param props - モーダルのプロパティ
  * @returns
  */
-export const useCancelModal = ({ isBuyer, sessionUser }: Props) => {
+export const useCancelModal = ({ sessionUser, userType }: Props) => {
   const { action, register } = useForm(
     sendCancelInquiry,
     initialCancellationFormValues,
@@ -37,9 +37,8 @@ export const useCancelModal = ({ isBuyer, sessionUser }: Props) => {
   );
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
-  const options = isBuyer
-    ? cancellationBuyerReasons
-    : cancellationSellerReasons;
+  const options =
+    userType === "buyer" ? cancellationBuyerReasons : cancellationSellerReasons;
 
   const CancelModal = useCallback(
     () => (

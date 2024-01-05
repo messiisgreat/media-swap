@@ -5,14 +5,14 @@ import { updateTransaction } from "@/repositories/transaction";
 /**
  * トランザクションのステータスを更新する
  * @param id トランザクションID
- * @param transactionStatus トランザクションステータス
+ * @param statusCode 取引ステータス
  */
 export const updateTransactionStatus = async (
   id: string,
-  transactionStatus: number,
+  statusCode: number,
 ) => {
   await updateTransaction({
     id,
-    transactionStatus,
+    statusCode,
   });
 };

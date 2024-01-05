@@ -74,7 +74,8 @@ export const TRANSACTION_STATUS = {
 
 type TransactionStatusKey = keyof typeof TRANSACTION_STATUS;
 
-type TransactionStatusValue = (typeof TRANSACTION_STATUS)[TransactionStatusKey];
+export type TransactionStatusValue =
+  (typeof TRANSACTION_STATUS)[TransactionStatusKey];
 
 /** 取引ステータスボタンの表示テキスト */
 export const TRANSACTION_CHANGE_BUTTON_TEXT = {

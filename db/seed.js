@@ -105,7 +105,7 @@ async function main() {
     data: {
       itemId: soldItem.id,
       buyerId: user2.id,
-      transactionStatus: 2,
+      statusCode: 2,
     },
   });
 

@@ -362,7 +362,7 @@ model Transaction {
     purchaseDate        DateTime @default(now()) @map("purchase_date") // 購入日時
     transactionRatingId String?  @map("transaction_rating_id") @db.ObjectId // 取引評価ID外部キー
     trackingNumber      String?
-    transactionStatus   Int      @default(0) // 取引ステータス 0: 出品者が発送待ち, 1: 購入者が受取待ち, 2: 出品者が受取待ち, 3: 取引完了
+    statusCode          Int      @default(0) @map("status_code") // 取引ステータス 0: 出品者が発送待ち, 1: 購入者が受取待ち, 2: 出品者が受取待ち, 3: 取引完了
 
     buyer User @relation("buyer", fields: [buyerId], references: [id])
     item  Item @relation(fields: [itemId], references: [id])

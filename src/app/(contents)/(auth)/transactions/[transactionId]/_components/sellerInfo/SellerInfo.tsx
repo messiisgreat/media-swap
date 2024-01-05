@@ -1,4 +1,5 @@
-import Image, { type StaticImageData } from "next/image";
+import defaultIcon from "@/images/profile-pic-placeholder.png";
+import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 
 type SellerInfoProps = {
@@ -11,15 +12,13 @@ type SellerInfoProps = {
     /** 出品者画像 */
     image: string | null;
   };
-  /** デフォルトのアイコン */
-  defaultIcon: StaticImageData;
 };
 
 /**
  * 出品者情報
  * @returns
  */
-export const SellerInfo = ({ seller, defaultIcon }: SellerInfoProps) => (
+export const SellerInfo = ({ seller }: SellerInfoProps) => (
   <div className="flex flex-col">
     <p>出品者情報</p>
     <div className="btn btn-ghost flex h-20 items-center justify-between px-0 normal-case">

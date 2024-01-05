@@ -1,23 +1,25 @@
+import { isStatusCode } from "@/app/(contents)/(auth)/transactions/[transactionId]/utils";
 import { TRANSACTION_STATUS } from "@/constants/item";
-import { type SessionUser } from "@/utils";
-import { type Transaction } from "@prisma/client";
 
 /**
  * 取引ステータス変更ボタンのステータスを取得する
- * @param transaction トランザクションID
- * @param sessionUser セッションユーザ
+ * @param statusCode 取引ステータス
+ * @param userType ユーザーの種類
  * @returns ステータス { currentStatus: number | null, nextStatus: number | null, isVisibleButton: boolean }
  */
 export const getThisTransactionProgressStatus = (
-  transaction: Transaction,
-  sessionUser?: SessionUser,
+  statusCode: number,
+  userType: "buyer" | "seller",
 ): {
-  currentStatus: number | null;
-  nextStatus: number | null;
+  currentStatus: number;
+  nextStatus: number;
   isVisibleButton: boolean;
 } => {
-  const isBuyer = sessionUser?.id === transaction.buyerId;
-  switch (transaction.transactionStatus) {
+  const isBuyer = userType === "buyer";
+  if (!isStatusCode(statusCode)) {
+    throw new Error("Invalid status code");
+  }
+  switch (statusCode) {
     case TRANSACTION_STATUS.BEFORE_PAYMENT:
       return {
         currentStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
@@ -48,11 +50,11 @@ export const getThisTransactionProgressStatus = (
         nextStatus: TRANSACTION_STATUS.COMPLETED,
         isVisibleButton: true,
       };
-    default:
+    case TRANSACTION_STATUS.CANCELLED:
       return {
-        currentStatus: null,
-        nextStatus: null,
-        isVisibleButton: false,
+        currentStatus: TRANSACTION_STATUS.CANCELLED,
+        nextStatus: TRANSACTION_STATUS.CANCELLED,
+        isVisibleButton: true,
       };
   }
 };

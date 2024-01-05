@@ -9,7 +9,7 @@ import { type ItemCommentsReadResult } from "@/repositories/itemComment";
 
 import { type SessionUser } from "@/utils";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 type Props = {
   /** コメント一覧 */
@@ -36,37 +36,42 @@ export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
     sessionUser,
     isItemOwner,
   );
+
+  const handleReport = useCallback(
+    (commentId: string) => () => {
+      setSelectedCommentId(commentId);
+      openReportModal();
+    },
+    [openReportModal],
+  );
+
+  const handleDelete = useCallback(
+    (commentId: string) => () => {
+      setSelectedCommentId(commentId);
+      openDeleteModal();
+    },
+    [openDeleteModal],
+  );
+
   if (comments.length === 0) {
     return <p className="text-center">コメントはありません。</p>;
   }
 
   return (
     <ul className="grid gap-6">
-      {comments.map((comment) => {
-        const handleReport = () => {
-          setSelectedCommentId(comment.id);
-          openReportModal();
-        };
-
-        const handleDelete = () => {
-          setSelectedCommentId(comment.id);
-          openDeleteModal();
-        };
-
-        return (
-          <li key={comment.id} className="">
-            <CommentCard
-              {...{
-                comment,
-                sessionUser,
-                isItemOwner,
-                onReport: handleReport,
-                onDelete: handleDelete,
-              }}
-            />
-          </li>
-        );
-      })}
+      {comments.map((comment) => (
+        <li key={comment.id} className="">
+          <CommentCard
+            {...{
+              comment,
+              sessionUser,
+              isItemOwner,
+              onReport: handleReport(comment.id),
+              onDelete: handleDelete(comment.id),
+            }}
+          />
+        </li>
+      ))}
     </ul>
   );
 };

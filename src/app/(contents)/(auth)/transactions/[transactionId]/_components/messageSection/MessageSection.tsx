@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { type Transaction, type TransactionComment } from "@prisma/client";
-import { type Session } from "next-auth";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { BiSend } from "react-icons/bi";
@@ -18,6 +17,7 @@ import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { Button } from "@/ui";
 import { LimitInput } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
+import { type SessionUser } from "@/utils";
 import { parseFixedDateTime } from "@/utils/parseRelativeTime";
 
 /**
@@ -29,7 +29,7 @@ export const MessageSection = ({
   sessionUser,
 }: {
   transaction: Transaction;
-  sessionUser: Session["user"];
+  sessionUser: SessionUser;
 }) => {
   const [messages, setMessages] = useState<
     | (TransactionComment & {

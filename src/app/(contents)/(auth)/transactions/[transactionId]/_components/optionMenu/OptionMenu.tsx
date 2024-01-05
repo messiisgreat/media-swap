@@ -1,6 +1,4 @@
-"use client";
-
-import { CancelModalButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/CancelModalButton";
+import { CancelModalButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/optionMenu/CancelModalButton";
 import { MeetballsButton } from "@/ui/button/Icon";
 import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
 import { type SessionUser } from "@/utils";
@@ -8,12 +6,12 @@ import { type SessionUser } from "@/utils";
 type OptionMenuProps = {
   /** ユーザー情報 */
   sessionUser: SessionUser;
-  /** 購入者判定 */
-  isBuyer: boolean;
+  /** ユーザー種別 */
+  userType: "buyer" | "seller";
 };
 /**
  * オプションメニュー
- * @param {OptionMenuProps} props - オプションメニューのプロパティ
+ * @param props - オプションメニューのプロパティ
  * @returns
  */
 export const OptionMenu = (props: OptionMenuProps) => {

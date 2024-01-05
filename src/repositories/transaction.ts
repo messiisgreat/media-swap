@@ -47,11 +47,12 @@ export const createTransaction = async (
   itemId: string,
   buyerId: string,
   userCouponId: string | null = null,
-) => await prisma.transaction.create({
+) =>
+  await prisma.transaction.create({
     data: {
       item: { connect: { id: itemId } },
       buyer: { connect: { id: buyerId } },
-      transactionStatus: TRANSACTION_STATUS.BEFORE_PAYMENT,
+      statusCode: TRANSACTION_STATUS.BEFORE_PAYMENT,
       ...(userCouponId
         ? { userCoupon: { connect: { id: userCouponId } } }
         : {}),
