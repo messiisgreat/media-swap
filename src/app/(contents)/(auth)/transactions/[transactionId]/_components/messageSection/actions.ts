@@ -23,13 +23,14 @@ import { decimalToBinary } from "@/utils/converter";
  */
 export const fetchMessages = async (transactionId: string) => {
   const user = await getSessionUser();
-  if (!user) throw new Error("ログインしてください");
+  if (!user)
+    return failure("セッションが切れました。再度ログインしてください。");
   const userId = user.id;
   const [comments] = await Promise.all([
     findTransactionComments(transactionId),
     markAsReadTransactionComments(transactionId, userId),
   ]);
-  return comments;
+  return success(comments);
 };
 
 /**

@@ -38,21 +38,19 @@ export const MessageSection = ({
     | null
   >(null);
   const [isReloading, setIsReloading] = useState(false);
-  const chatareaRef = useRef<HTMLDivElement>(null);
+  const chatAreaRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleReloadMessage = useCallback(async () => {
     setIsReloading(true);
-    try {
-      const res = await fetchMessages(transaction.id);
-      setMessages(res);
-      chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight);
-    } catch (e) {
-      console.error(e);
-      toast.error("メッセージの取得に失敗しました。");
-    } finally {
-      setIsReloading(false);
+    const result = await fetchMessages(transaction.id);
+    if (result.isFailure) {
+      toast.error(result.error);
+      return;
     }
+    setMessages(result.value);
+    chatAreaRef.current?.scrollTo(0, chatAreaRef.current.scrollHeight);
+    setIsReloading(false);
   }, [transaction.id]);
 
   useEffect(() => {
@@ -73,20 +71,19 @@ export const MessageSection = ({
       return;
     }
 
-    try {
-      await sendMessage(message, transaction.id);
-      setMessages(await fetchMessages(transaction.id));
-      formRef.current?.reset();
-      toast.success("メッセージを送信しました。");
-      setTimeout(
-        () =>
-          chatareaRef.current?.scrollTo(0, chatareaRef.current.scrollHeight),
-        500,
-      );
-    } catch (e) {
-      console.error(e);
-      toast.error("メッセージの送信に失敗しました。");
+    await sendMessage(message, transaction.id);
+    const result = await fetchMessages(transaction.id);
+    if (result.isFailure) {
+      toast.error(result.error);
+      return;
     }
+    setMessages(result.value);
+    formRef.current?.reset();
+    toast.success("メッセージを送信しました。");
+    setTimeout(
+      () => chatAreaRef.current?.scrollTo(0, chatAreaRef.current.scrollHeight),
+      500,
+    );
   };
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -110,7 +107,7 @@ export const MessageSection = ({
           ) : (
             <div
               className="flex max-h-96 flex-col gap-4 overflow-y-scroll"
-              ref={chatareaRef}
+              ref={chatAreaRef}
             >
               {messages.map((message) => {
                 const isMe = message.user.id === sessionUser.id;
