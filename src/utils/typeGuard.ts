@@ -1,10 +1,21 @@
 /**
  * Fileの配列かどうかを判定する
- * @param arr 任意の値
+ * @param arg 任意の値
  */
-export const isArrayOfFiles = (arr: unknown): arr is File[] => {
-  if (Array.isArray(arr)) {
-    return arr.every((item) => item instanceof File);
+export const isArrayOfFiles = (arg: unknown): arg is File[] => {
+  if (Array.isArray(arg)) {
+    return arg.every((item) => item instanceof File);
+  }
+  return false;
+};
+
+/**
+ * stringの配列かどうかを判定する
+ * @param arg 任意の値
+ */
+export const isArrayOfStrings = (arg: unknown): arg is string[] => {
+  if (Array.isArray(arg)) {
+    return arg.every((item) => typeof item === "string");
   }
   return false;
 };

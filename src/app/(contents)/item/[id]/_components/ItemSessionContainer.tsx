@@ -28,12 +28,10 @@ export const ItemSessionContainer = async ({ id }: { id: string }) => {
     findItemWithHandling(id),
     getSessionUser(),
   ]);
-  const itemId = item.id;
-
-  const images = item.images;
+  const { id: itemId, images, sellerId, transaction } = item;
   const userId = sessionUser?.id;
-  const isItemOwner = userId === item.sellerId;
-  const isSoldOut = Boolean(item.transaction?.id);
+  const isItemOwner = userId === sellerId;
+  const isSoldOut = Boolean(transaction?.id);
   return (
     <VerifyProvider>
       <Carousel {...{ isSoldOut, images }} />

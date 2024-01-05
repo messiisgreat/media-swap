@@ -1,37 +1,30 @@
 "use client";
 
-import { useFormState } from "react-dom";
-
 import { sendInquiry } from "@/app/(support)/inquiry/actions";
 import {
   categoryOptions,
   initialInquiryFormValues,
 } from "@/app/(support)/inquiry/types";
-import { Input, Select, Textarea } from "@/ui/form";
+import { Input, Select, Textarea, handleCtrlEnterSubmit } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useFormMessageToaster } from "@/ui/form/hooks";
-import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useForm } from "@/ui/form/hooks";
 
 /**
  * お問い合わせフォーム
  * @returns form
  */
 export const MailForm = () => {
-  const [state, dispatch] = useFormState(sendInquiry, initialInquiryFormValues);
-  const getVerificationCode = useVerify();
-  useFormMessageToaster(state);
-
-  const action = async (f: FormData) => {
-    const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode);
-    dispatch(f);
-  };
+  const { Form, register } = useForm(sendInquiry, initialInquiryFormValues, {
+    hasReset: true,
+    hasAuth: true,
+    hasToaster: true,
+  });
 
   return (
-    <form action={action} className="grid gap-3">
+    <Form className="grid gap-3">
       <Input
         labelText="お名前"
-        name="name"
+        {...register("name")}
         type="text"
         className="w-full"
         placeholder="山田太郎"
@@ -39,7 +32,7 @@ export const MailForm = () => {
       />
       <Input
         labelText="メールアドレス"
-        name="email"
+        {...register("email")}
         type="email"
         className="w-full"
         placeholder="you@example.com"
@@ -47,17 +40,18 @@ export const MailForm = () => {
       />
       <Select
         labelText="お問い合わせ種別"
-        name="category"
+        {...register("category")}
         options={categoryOptions}
         required
       />
       <Textarea
         labelText="お問い合わせ内容"
         placeholder="お問い合わせ内容を入力してください。"
-        name="body"
+        {...register("body")}
         required
+        onKeyDown={handleCtrlEnterSubmit}
       />
       <SubmitButton>送信</SubmitButton>
-    </form>
+    </Form>
   );
 };

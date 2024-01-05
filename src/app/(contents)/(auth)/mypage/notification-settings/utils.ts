@@ -9,7 +9,7 @@ import { decimalToBinary } from "@/utils/converter";
  * 通知コードから通知設定フォームの初期値を生成する
  * @param code 通知コード
  */
-export const convertCodeToinitial = (code: number): NoticeFormState => {
+export const convertCodeToInitial = (code: number): NoticeFormState => {
   const length = NOTIFICATION_KEYS.length;
   const noticeBooleans = decimalToBinary(code, length);
 

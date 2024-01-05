@@ -1,7 +1,7 @@
 "use client";
 
 import { profileUpdateAction } from "@/app/(contents)/(auth)/mypage/notification-settings/action";
-import { convertCodeToinitial } from "@/app/(contents)/(auth)/mypage/notification-settings/utils";
+import { convertCodeToInitial } from "@/app/(contents)/(auth)/mypage/notification-settings/utils";
 import {
   NOTIFICATION_KEYS,
   NOTIFICATION_LABELS,
@@ -9,9 +9,7 @@ import {
 } from "@/constants/emailNotification";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { ToggleSwitch } from "@/ui/form/ToggleSwitch";
-import { useFormMessageToaster } from "@/ui/form/hooks";
-import { useVerify } from "@/ui/form/securityVerifier/hooks";
-import { useFormState } from "react-dom";
+import { useForm } from "@/ui/form/hooks";
 
 /**
  * 通知を設定するフォーム
@@ -23,27 +21,23 @@ export const NoticeForm = ({
 }: {
   noticePermissionCode: number;
 }) => {
-  const initialValues = convertCodeToinitial(noticePermissionCode);
-  const [state, dispatch] = useFormState(profileUpdateAction, initialValues);
-  const getVerificationCode = useVerify();
-  useFormMessageToaster(state);
+  const initialValues = convertCodeToInitial(noticePermissionCode);
+  const { Form, values } = useForm(profileUpdateAction, initialValues, {
+    hasAuth: true,
+    hasToaster: true,
+  });
 
-  const action = async (f: FormData) => {
-    const verificationCode = await getVerificationCode();
-    f.append("verificationCode", verificationCode);
-    dispatch(f);
-  };
   return (
-    <form action={action} className="grid gap-y-4">
+    <Form className="grid gap-y-4">
       {NOTIFICATION_KEYS.map((option) => (
         <ToggleSwitch
           key={option}
           labelText={NOTIFICATION_LABELS[option]}
           name={NOTIFICATION_TYPES[option]}
-          defaultChecked={state.values[option]}
+          defaultChecked={values[option]}
         />
       ))}
       <SubmitButton>変更を保存</SubmitButton>
-    </form>
+    </Form>
   );
 };

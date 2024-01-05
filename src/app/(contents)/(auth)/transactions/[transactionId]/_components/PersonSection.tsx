@@ -16,9 +16,9 @@ type PersonSectionProps = {
   /** デフォルトのアイコン */
   defaultIcon: StaticImageData;
   /** ユーザー情報 */
-  sessionUser?: SessionUser;
+  sessionUser: SessionUser;
   /** 購入者判定 */
-  isBuyer?: boolean;
+  isBuyer: boolean;
 };
 
 /**

@@ -7,6 +7,7 @@ import {
 import { updateTransaction } from "@/repositories/transaction";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
+import { revalidatePath } from "next/cache";
 
 /**
  * 追跡番号を登録
@@ -41,9 +42,9 @@ export const insertTrackingNumber = async (
         id: transactionId,
         trackingNumber: trackingNumber,
       });
+      revalidatePath(`/transactions/${transactionId}`);
       return {
         ...prevState,
-        errors: {},
         values: {
           ...prevState.values,
           trackingNumber: trackingNumber,

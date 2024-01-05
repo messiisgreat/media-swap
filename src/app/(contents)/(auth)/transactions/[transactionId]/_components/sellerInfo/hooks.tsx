@@ -7,20 +7,18 @@ import {
   initialCancellationFormValues,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
 import { Select, Textarea } from "@/ui/form";
-import { useFormMessageToaster } from "@/ui/form/hooks";
-import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { useForm } from "@/ui/form/hooks";
 import { useFormActionModal } from "@/ui/modal";
 import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
 import { type SessionUser } from "@/utils";
 import { useCallback } from "react";
-import { useFormState } from "react-dom";
 
 type Props = {
-  /** ユーザー情報 */
-  sessionUser?: SessionUser;
   /** 購入者判定 */
   isBuyer?: boolean;
+  /** セッションユーザー */
+  sessionUser: SessionUser;
 };
 
 /**
@@ -28,26 +26,21 @@ type Props = {
  * @param props - モーダルのプロパティ
  * @returns
  */
-export const useCancelModal = (props: Props) => {
-  const [state, dispatch] = useFormState(
+export const useCancelModal = ({ isBuyer, sessionUser }: Props) => {
+  const { action, register } = useForm(
     sendCancelInquiry,
     initialCancellationFormValues,
+    {
+      hasAuth: true,
+      hasToaster: true,
+    },
   );
-  const getVerificationCode = useVerify();
-  useFormMessageToaster(state);
-
-  const action = async (f: FormData) => {
-    const verificationCode = await getVerificationCode();
-    f.append("name", props.sessionUser?.name as string);
-    f.append("email", props.sessionUser?.email as string);
-    f.append("verificationCode", verificationCode);
-    dispatch(f);
-  };
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 
-  const options = props.isBuyer
+  const options = isBuyer
     ? cancellationBuyerReasons
     : cancellationSellerReasons;
+
   const CancelModal = useCallback(
     () => (
       <FormActionModal>
@@ -57,19 +50,29 @@ export const useCancelModal = (props: Props) => {
         </p>
         <Select
           labelText="お問い合わせ種別"
-          name="category"
           options={options}
           required
+          {...register("category")}
         />
         <Textarea
           labelText="お問い合わせ内容"
           placeholder="お問い合わせ内容を入力してください。"
-          name="body"
           required
+          {...register("body")}
+        />
+        <input
+          type="hidden"
+          {...register("name")}
+          defaultValue={sessionUser?.name || ""}
+        />
+        <input
+          type="hidden"
+          {...register("email")}
+          defaultValue={sessionUser?.email || ""}
         />
       </FormActionModal>
     ),
-    [FormActionModal, options],
+    [FormActionModal, options, register, sessionUser?.email, sessionUser?.name],
   );
 
   useSetModal(<CancelModal />);

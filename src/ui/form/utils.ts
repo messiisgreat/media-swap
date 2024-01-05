@@ -1,5 +1,6 @@
-import { isArrayOfFiles } from "@/utils/typeGuard";
+import { isArrayOfFiles, isArrayOfStrings } from "@/utils/typeGuard";
 import { type KeyboardEventHandler } from "react";
+import toast from "react-hot-toast";
 
 type FormObject = {
   [key: string]: string | number | boolean | File | File[] | undefined | null;
@@ -37,4 +38,18 @@ export const handleCtrlEnterSubmit: KeyboardEventHandler<
   if (form) {
     form.requestSubmit();
   }
+};
+
+/**
+ * エラーをトースト表示する
+ * @param obj エラーのオブジェクト
+ */
+export const toastErrors = <T>(obj: Partial<Record<keyof T, string[]>>) => {
+  Object.values(obj).forEach((messages) => {
+    if (isArrayOfStrings(messages)) {
+      messages.forEach((message) => {
+        toast.error(message);
+      });
+    }
+  });
 };

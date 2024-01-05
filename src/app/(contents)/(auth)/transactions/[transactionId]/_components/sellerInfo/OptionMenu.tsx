@@ -7,9 +7,9 @@ import { type SessionUser } from "@/utils";
 
 type OptionMenuProps = {
   /** ユーザー情報 */
-  sessionUser?: SessionUser;
+  sessionUser: SessionUser;
   /** 購入者判定 */
-  isBuyer?: boolean;
+  isBuyer: boolean;
 };
 /**
  * オプションメニュー

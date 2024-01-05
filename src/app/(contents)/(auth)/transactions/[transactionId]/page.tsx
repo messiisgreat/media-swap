@@ -22,7 +22,8 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
   if (!transaction || !sessionUser) {
     notFound();
   }
-  const sellerId = transaction.item.seller.id;
+  const seller = transaction.item.seller;
+  const sellerId = seller.id;
   const buyerId = transaction.buyerId;
 
   const isSeller = sessionUser.id === sellerId;
@@ -48,7 +49,7 @@ const Page = async ({ params }: { params: { transactionId: string } }) => {
             />
           </TransactionSection>
           <PersonSection
-            seller={transaction.item.seller}
+            seller={seller}
             defaultIcon={defaultIcon}
             sessionUser={sessionUser}
             isBuyer={isBuyer}
