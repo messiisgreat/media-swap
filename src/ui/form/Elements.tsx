@@ -15,6 +15,27 @@ type InputProps = CommonProps & {
   suffix?: string;
 };
 
+type LabelProps = {
+  required?: boolean;
+};
+
+const Label = memo(
+  ({
+    required,
+    children,
+    ...props
+  }: ComponentPropsWithoutRef<"label"> & LabelProps) => (
+    <label
+      className={required ? "after:text-red-500 after:content-['*']" : ""}
+      {...props}
+    >
+      {children}
+    </label>
+  ),
+);
+
+Label.displayName = "Label";
+
 /**
  * inputタグにCSSを適用したラッパー
  */
@@ -25,6 +46,7 @@ export const Input = memo(
         className = "",
         maxLength = DEFAULT_INPUT_MAX_LENGTH,
         labelText,
+        required,
         ...props
       },
       ref,
@@ -32,7 +54,7 @@ export const Input = memo(
       const inputClass = twMerge("input input-bordered", className);
       return (
         <div className="flex w-full flex-col">
-          {labelText && <label>{labelText}</label>}
+          {labelText && <Label required={required}>{labelText}</Label>}
           {props.prefix || props.suffix ? (
             <div className="relative flex items-center font-bold">
               {props.prefix && (
@@ -75,6 +97,7 @@ export const Textarea = memo(
         className = "",
         maxLength = DEFAULT_TEXTAREA_MAX_LENGTH,
         labelText,
+        required,
         ...props
       },
       ref,
@@ -82,7 +105,7 @@ export const Textarea = memo(
       const textareaClass = twMerge("textarea textarea-bordered", className);
       return (
         <div className="flex w-full flex-col">
-          {labelText && <label>{labelText}</label>}
+          {labelText && <Label required={required}>{labelText}</Label>}
           <textarea
             className={textareaClass}
             maxLength={maxLength}
@@ -106,11 +129,11 @@ export const Select = memo(
   forwardRef<
     HTMLSelectElement,
     ComponentPropsWithoutRef<"select"> & SelectProps
-  >(({ className = "", labelText, options, ...props }, ref) => {
+  >(({ className = "", labelText, options, required, ...props }, ref) => {
     const selectClass = twMerge("select select-bordered", className);
     return (
       <div className="flex flex-col">
-        {labelText && <label>{labelText}</label>}
+        {labelText && <Label required={required}>{labelText}</Label>}
         <select
           className={selectClass}
           {...props}
@@ -138,11 +161,11 @@ export const Select = memo(
  */
 export const RadioGroup = memo(
   forwardRef<HTMLInputElement, ComponentPropsWithoutRef<"input"> & SelectProps>(
-    ({ className = "", labelText, options, ...props }, ref) => {
+    ({ className = "", labelText, options, required, ...props }, ref) => {
       const radioClass = twMerge("radio radio-primary", className);
       return (
         <div className="flex flex-col" role="radiogroup">
-          {labelText && <label>{labelText}</label>}
+          {labelText && <Label required={required}>{labelText}</Label>}
           <div className="flex flex-row gap-2">
             {Object.keys(options).map((option, i) => (
               <label key={i} className={radioClass}>
