@@ -143,7 +143,7 @@ model Item {
     price                Int // 価格
     previousPrice        Int?     @map("previous_price") // 変更前価格
     description          String // 説明
-    isPublic             Boolean  @default(false) @map("is_public") // 公開フラグ
+    isPublic             Boolean  @default(true) @map("is_public") // 公開フラグ
     isDeleted            Boolean  @default(false) @map("is_deleted") // 削除フラグ
     createdAt            DateTime @default(now()) @map("created_at") // 出品日時
     updatedAt            DateTime @default(now()) @map("updated_at") // 商品更新日時

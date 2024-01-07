@@ -5,40 +5,16 @@ import { redirect } from "next/navigation";
 import {
   ProductFormSchema,
   type ProductFormState,
-  type ProductFormValues,
 } from "@/features/itemsFormContents/types";
-import { uploadToCloudinary } from "@/lib/cloudinary/upload";
-import { createItem, type ItemCreateInput } from "@/repositories/item";
+
+import {
+  createDraftItemWithTagsAndImages,
+  createItemWithTagsAndImages,
+} from "@/app/(contents)/(auth)/listing/_listingForm/utils";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
 import { getSessionUser, strToBool } from "@/utils";
-
-const create = async (
-  formData: Omit<ProductFormValues, "verificationCode">,
-  userId: string,
-  previousPrice: number | null = null,
-) => {
-  const {
-    tags,
-    imageFiles,
-    isPublic,
-    isShippingIncluded,
-    shippingMethodCustom,
-    price,
-    ...rest
-  } = formData;
-  const item: ItemCreateInput = {
-    previousPrice,
-    isPublic: strToBool(isPublic),
-    isShippingIncluded: strToBool(isShippingIncluded),
-    shippingMethodCustom: shippingMethodCustom ?? null,
-    price: Number(price),
-    ...rest,
-  };
-  const images = await uploadToCloudinary(imageFiles);
-  const tagTexts = tags.split(",").filter((tag) => tag.trim() !== "");
-  return createItem(userId, item, images, tagTexts);
-};
 
 /**
  * フォームに入力された商品情報を登録し、完了後に確認ページにリダイレクトする
@@ -54,9 +30,8 @@ export const listingItem = async (
   const previousPrice = null;
   const sessionUser = await getSessionUser();
   const userId = sessionUser?.id;
-  const { verificationCode, ...rest } = values;
-  // 文字列の'isPublic'をブール値に変換
-  const isPublicBool = strToBool(values.isPublic);
+  const { verificationCode, isPublic, ...rest } = values;
+  const isPublicBool = strToBool(isPublic);
 
   if (!userId) {
     return {
@@ -65,17 +40,29 @@ export const listingItem = async (
     };
   }
 
-  const result = await verifyForm(verificationCode);
-  if (result.isFailure) {
+  const verifyResult = await verifyForm(verificationCode);
+  if (verifyResult.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      message: verifyResult.error,
     };
   }
 
   if (!isPublicBool) {
-    await create(rest, userId, previousPrice);
-    redirect(`/mypage/draft`);
+    const draftResult = await createDraftItemWithTagsAndImages(
+      rest,
+      userId,
+      previousPrice,
+    );
+
+    if (draftResult.isFailure) {
+      return {
+        ...prevState,
+        message: "下書きの登録に失敗しました",
+      };
+    }
+
+    redirect(PAGE_LINK[PAGE_CONTENT.DRAFTS]);
   } else {
     const validated = ProductFormSchema.safeParse(values);
     if (!validated.success) {
@@ -84,7 +71,20 @@ export const listingItem = async (
         errors: validated.error.flatten().fieldErrors,
       };
     }
-    const item = await create(rest, userId, previousPrice);
-    redirect(`/listing/complete?item_id=${item.id}&is_public=true`);
+
+    const itemResult = await createItemWithTagsAndImages(
+      rest,
+      userId,
+      previousPrice,
+    );
+
+    if (itemResult.isFailure) {
+      return {
+        ...prevState,
+        message: "商品の登録に失敗しました",
+      };
+    }
+
+    redirect(`/listing/complete?item_id=${itemResult.value.id}&is_public=true`);
   }
 };
