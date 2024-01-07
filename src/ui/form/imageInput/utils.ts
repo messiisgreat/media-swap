@@ -1,6 +1,6 @@
 import { addGrayBackground } from "@/ui/form/imageInput/addGrayBackground";
 
-type FileWithPreview = File & { preview: string };
+type FileWithPreview = { file: File; preview: string };
 
 /**
  * ドロップされたファイルの画質を下げてサイズを小さくする
@@ -28,9 +28,14 @@ export const reduceImageQuality = async (
           type: "image/jpeg",
         });
         const preview = URL.createObjectURL(reducedFile);
-        const fileWithPreview = Object.assign(structuredClone(reducedFile), {
-          preview,
-        });
+        const fileWithPreview = Object.assign(
+          {},
+          structuredClone(reducedFile),
+          {
+            file,
+            preview,
+          },
+        );
         return fileWithPreview;
       }
     } catch (error) {
@@ -40,9 +45,14 @@ export const reduceImageQuality = async (
   } else {
     const grayBackgroundFile = await addGrayBackground(file);
     const preview = URL.createObjectURL(grayBackgroundFile);
-    const fileWithPreview = Object.assign(structuredClone(grayBackgroundFile), {
-      preview,
-    });
+    const fileWithPreview = Object.assign(
+      {},
+      structuredClone(grayBackgroundFile),
+      {
+        file,
+        preview,
+      },
+    );
     return fileWithPreview;
   }
 };

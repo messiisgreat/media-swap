@@ -7,7 +7,7 @@ import { FaTimes } from "react-icons/fa";
 
 type Props = {
   /** プレビューする画像ファイルとそのURL */
-  file: File & { preview: string };
+  fileWithPreview: { file: File; preview: string };
   /** 画像のインデックス */
   index: number;
   /** 画像を削除する関数 */
@@ -17,8 +17,8 @@ type Props = {
 /**
  * 画像をプレビュー表示する
  */
-export const ImagePreview = ({ file, index, onRemove }: Props) => {
-  const { handleOpen } = useImageModal(file.preview);
+export const ImagePreview = ({ fileWithPreview, index, onRemove }: Props) => {
+  const { handleOpen } = useImageModal(fileWithPreview.preview);
   const handleRemove = useCallback(() => onRemove(index), [index, onRemove]);
   return (
     <div className="relative w-fit">
@@ -31,8 +31,8 @@ export const ImagePreview = ({ file, index, onRemove }: Props) => {
       </button>
       <div className="relative aspect-square overflow-hidden">
         <Image
-          src={file.preview}
-          alt={file.name}
+          src={fileWithPreview.preview}
+          alt={fileWithPreview.file.name}
           width={200}
           height={200}
           onClick={handleOpen}

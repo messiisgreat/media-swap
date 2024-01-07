@@ -18,7 +18,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 
-export type FileWithPreview = File & { file?: File; preview: string };
+export type FileWithPreview = { file: File; preview: string };
 
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
@@ -87,11 +87,7 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
   useEffect(() => {
     const dataTransfer = new DataTransfer();
     files.forEach((fileWithPreview) => {
-      if (fileWithPreview.file) {
-        dataTransfer.items.add(fileWithPreview.file);
-      } else {
-        dataTransfer.items.add(fileWithPreview);
-      }
+      dataTransfer.items.add(fileWithPreview.file);
     });
     inputRef.current.files = dataTransfer.files;
   }, [files]);
@@ -110,9 +106,13 @@ ${
     <div className="grid gap-2">
       {labelText && <label>{labelText}</label>}
       <ul className="grid grid-cols-3 gap-2">
-        {files.map((file, i) => (
-          <li key={file.name} className="relative">
-            <ImagePreview index={i} file={file} onRemove={handleRemove} />
+        {files.map((fileWithPreview, i) => (
+          <li key={fileWithPreview.file.name} className="relative">
+            <ImagePreview
+              index={i}
+              fileWithPreview={fileWithPreview}
+              onRemove={handleRemove}
+            />
           </li>
         ))}
       </ul>
