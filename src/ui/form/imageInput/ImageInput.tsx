@@ -18,7 +18,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import { BiSolidCamera } from "react-icons/bi";
 
-export type FileWithPreview = File & { preview: string };
+export type FileWithPreview = File & { file?: File; preview: string };
 
 type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
   labelText?: string;
@@ -86,7 +86,13 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
   // inputタグに選択されたすべての画像を追加する
   useEffect(() => {
     const dataTransfer = new DataTransfer();
-    files.forEach((file) => dataTransfer.items.add(file));
+    files.forEach((fileWithPreview) => {
+      if (fileWithPreview.file) {
+        dataTransfer.items.add(fileWithPreview.file);
+      } else {
+        dataTransfer.items.add(fileWithPreview);
+      }
+    });
     inputRef.current.files = dataTransfer.files;
   }, [files]);
 
