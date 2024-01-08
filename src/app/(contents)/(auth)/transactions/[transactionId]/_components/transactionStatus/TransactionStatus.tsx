@@ -9,7 +9,6 @@ import {
   FaTruck,
 } from "react-icons/fa";
 
-import { isStatusCode } from "@/app/(contents)/(auth)/transactions/[transactionId]/utils";
 import {
   TRANSACTION_STATUS,
   type TransactionStatusValue,
@@ -175,7 +174,7 @@ const STATUS_COMPONENTS = {
 
 type Props = {
   /** 取引のステータス */
-  statusCode: number;
+  statusCode: TransactionStatusValue;
   /** 出品者かどうか */
   userType: "seller" | "buyer";
 };
@@ -185,9 +184,6 @@ type Props = {
  * @returns div
  */
 export const TransactionStatus = ({ statusCode, userType }: Props) => {
-  if (!isStatusCode(statusCode)) {
-    throw new Error("invalid transaction status");
-  }
   const StatusComponent = STATUS_COMPONENTS[statusCode][userType];
   return <StatusComponent />;
 };

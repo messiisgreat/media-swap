@@ -21,7 +21,7 @@ export type TransactionReadResult = Awaited<ReturnType<typeof findTransaction>>;
  */
 export const findTransaction = cache(
   async (id: string) =>
-    await prisma.transaction.findUnique({
+    await prisma.transaction.findUniqueOrThrow({
       where: { id },
       include: {
         transactionComments: true,

@@ -12,7 +12,7 @@ import {
   fetchMessages,
   sendMessage,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection/actions";
-import { CommentLoading } from "@/app/(contents)/item/[id]/_components/commentContainer/CommentLoading";
+import { CommentLoading } from "@/app/(contents)/item/[itemId]/_components/commentContainer/CommentLoading";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
 import { Button } from "@/ui";
 import { LimitInput } from "@/ui/form/LimitElements";

@@ -31,29 +31,12 @@ export const SHIPPING_METHOD = {
   99: "その他",
 } as const satisfies Record<string, string>;
 
+export type ShippingMethodKey = keyof typeof SHIPPING_METHOD;
+
 /** 配送方法（その他） */
 export const SHIPPING_ID = {
   OTHER: "99",
 } as const;
-
-/** 配送状況確認ページのURL */
-export const DELIVERY_SERVICE_PROVIDER_URL = {
-  JAPAN_POST: "https://www.post.japanpost.jp/receive/tracking/result.php?code=",
-  YAMATO_TRANSPORT:
-    "http://jizen.kuronekoyamato.co.jp/jizen/servlet/crjz.b.NQ0010?id=",
-} as const satisfies Record<string, `https://${string}` | `http://${string}`>;
-
-export const SHIPPING_METHOD_DELIVERY_SERVICE_PROVIDER_URL = {
-  0: null,
-  1: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  2: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  3: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  4: DELIVERY_SERVICE_PROVIDER_URL.YAMATO_TRANSPORT,
-  5: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  6: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  7: DELIVERY_SERVICE_PROVIDER_URL.JAPAN_POST,
-  99: null,
-} as const satisfies Record<keyof typeof SHIPPING_METHOD, string | null>;
 
 /** 配送日の目安 */
 export const SHIPPING_DAYS = {

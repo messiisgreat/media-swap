@@ -16,7 +16,7 @@
 
 </details>
 
-### 商品詳細ページ("/item/[id]")
+### 商品詳細ページ("/item/[itemId]")
 
 <details><summary>画像</summary>
 

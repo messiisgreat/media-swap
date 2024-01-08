@@ -1,14 +1,16 @@
-import { isStatusCode } from "@/app/(contents)/(auth)/transactions/[transactionId]/utils";
-import { TRANSACTION_STATUS } from "@/constants/item";
+import {
+  TRANSACTION_STATUS,
+  type TransactionStatusValue,
+} from "@/constants/item";
 
 /**
  * 取引ステータス変更ボタンのステータスを取得する
  * @param statusCode 取引ステータス
  * @param userType ユーザーの種類
- * @returns ステータス { currentStatus: number | null, nextStatus: number | null, isVisibleButton: boolean }
+ * @returns 現在のステータス、次のステータス、ボタンの表示状態のオブジェクト
  */
 export const getThisTransactionProgressStatus = (
-  statusCode: number,
+  statusCode: TransactionStatusValue,
   userType: "buyer" | "seller",
 ): {
   currentStatus: number;
@@ -16,9 +18,6 @@ export const getThisTransactionProgressStatus = (
   isVisibleButton: boolean;
 } => {
   const isBuyer = userType === "buyer";
-  if (!isStatusCode(statusCode)) {
-    throw new Error("Invalid status code");
-  }
   switch (statusCode) {
     case TRANSACTION_STATUS.BEFORE_PAYMENT:
       return {

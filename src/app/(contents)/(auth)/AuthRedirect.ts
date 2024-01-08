@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 /**
  * callbackURL付きサインインページへリダイレクトする
@@ -12,6 +13,9 @@ import { signIn } from "next-auth/react";
  * ```
  */
 export const AuthRedirect = async () => {
-  await signIn();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const callbackURL = `${pathname}?${searchParams.toString()}`;
+  await signIn("google", { callbackUrl: callbackURL });
   return null;
 };
