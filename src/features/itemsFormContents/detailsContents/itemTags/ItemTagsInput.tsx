@@ -46,6 +46,7 @@ export const ItemTagsInput = ({
         if (e.keyCode !== ENTER_KEY_CODE || e.currentTarget.value === "") {
           return;
         }
+        e.preventDefault();
         const isExist = newTags.find(
           (tag) => tag.text === e.currentTarget.value,
         );
