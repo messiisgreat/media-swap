@@ -1,5 +1,6 @@
 import {
-  MessageSection,
+  MessageContainer,
+  MessageForm,
   OptionMenu,
   SellerInfo,
   TransactionProgressButton,
@@ -9,11 +10,14 @@ import { ShippingSection } from "@/app/(contents)/(auth)/transactions/[transacti
 import { isStatusCode } from "@/app/(contents)/(auth)/transactions/[transactionId]/utils";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
+import { Section, TitleUnderbar } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 /**
  * 取引ページの初期描画に必要なデータを取得する
+ * @todo コメントLoadingのfallbackを作成する
  */
 export const FirstLoadContainer = async ({
   transactionId,
@@ -47,19 +51,21 @@ export const FirstLoadContainer = async ({
   }
   return (
     <VerifyProvider>
-      <div className="w-full">
-        <aside className="grid gap-8">
-          <TransactionStatus statusCode={statusCode} userType={userType} />
-          <ShippingSection transaction={transaction} isSeller={isSeller} />
-          <TransactionProgressButton
-            transactionId={transactionId}
-            statusCode={statusCode}
-            userType={userType}
-          />
-          <SellerInfo seller={seller} />
-          <OptionMenu sessionUser={sessionUser} userType={userType} />
-        </aside>
-        <MessageSection transaction={transaction} sessionUser={sessionUser} />
+      <div className="grid w-full gap-8">
+        <TransactionStatus {...{ statusCode, userType }} />
+        <ShippingSection {...{ transaction, isSeller }} />
+        <TransactionProgressButton
+          {...{ statusCode, transactionId, userType }}
+        />
+        <SellerInfo {...{ seller }} />
+        <OptionMenu {...{ sessionUser, userType }} />
+        <TitleUnderbar title="取引メッセージ" />
+        <Section className="flex flex-1 flex-col gap-4">
+          <Suspense fallback={null}>
+            <MessageContainer {...{ transactionId, sessionUser }} />
+          </Suspense>
+          <MessageForm {...{ transactionId }} />
+        </Section>
       </div>
     </VerifyProvider>
   );

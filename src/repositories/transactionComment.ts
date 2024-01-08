@@ -8,6 +8,11 @@ export type TransactionCommentCreateResult = Awaited<
   ReturnType<typeof createTransactionComment>
 >;
 
+/** 取引コメント取得結果 */
+export type TransactionCommentReadResult = Awaited<
+  ReturnType<typeof findTransactionComments>
+>;
+
 /**
  * 取引コメントを取得
  * @param transactionId 取引ID

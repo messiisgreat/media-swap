@@ -1,4 +1,5 @@
-export { MessageSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageSection";
+export { MessageContainer } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer";
+export { MessageForm } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm";
 export { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/optionMenu";
 export { SellerInfo } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo";
 export { ShippingNotification } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification";
