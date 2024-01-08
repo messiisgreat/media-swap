@@ -110,14 +110,14 @@ export const useCommentReportModal = (
 
 /**
  * コメントの削除モーダル
- * @param commentId 削除するコメントのID
+ * @param commentId 削除するコメント
  * @param sessionUser ログインユーザー
- * @param isItemOwner 商品の出品者かどうか
+ * @param hasDeletable コメントが削除可能かどうか
  */
 export const useCommentDeleteModal = (
   commentId: string | null,
   sessionUser: SessionUser | undefined,
-  isItemOwner: boolean,
+  hasDeletable: boolean,
 ) => {
   const deleteComment = useCallback(async () => {
     if (!commentId) {
@@ -128,10 +128,14 @@ export const useCommentDeleteModal = (
       toast.error("ログインしてください");
       return;
     }
-    if (!isItemOwner) {
-      toast.error("商品の出品者のみがコメントを削除できます");
+
+    if (!hasDeletable) {
+      toast.error(
+        "商品の出品者もしくはコメントを書込みした人のみがコメントを削除できます",
+      );
       return;
     }
+
     const result = await removeComment(commentId);
     if (result.isFailure) {
       toast.error(result.error);
@@ -139,7 +143,7 @@ export const useCommentDeleteModal = (
     } else {
       toast.success("コメントを削除しました。");
     }
-  }, [commentId, sessionUser, isItemOwner]);
+  }, [commentId, sessionUser, hasDeletable]);
 
   const { handleOpen: open, FormActionModal } = useFormActionModal(
     deleteComment,

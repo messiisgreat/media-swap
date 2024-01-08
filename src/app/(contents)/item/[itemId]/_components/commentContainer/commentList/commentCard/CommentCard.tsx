@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { CommentMenu } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/CommentMenu";
+import { CommentMenu } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/commentCard/CommentMenu";
 import { type ItemCommentsReadResult } from "@/repositories/itemComment";
 import { type SessionUser } from "@/utils";
 import { parseRelativeTime } from "@/utils/parseRelativeTime";

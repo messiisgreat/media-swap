@@ -1,10 +1,11 @@
 "use client";
 
-import { CommentCard } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/CommentCard";
+import { CommentCard } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/commentCard";
 import {
   useCommentDeleteModal,
   useCommentReportModal,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/hooks";
+import { isCommentOwner } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/utils";
 import { type ItemCommentsReadResult } from "@/repositories/itemComment";
 
 import { type SessionUser } from "@/utils";
@@ -30,11 +31,13 @@ export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
   const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
     null,
   );
+  const hasDeletable =
+    isItemOwner || isCommentOwner(selectedCommentId, comments, sessionUser);
   const openReportModal = useCommentReportModal(selectedCommentId, sessionUser);
   const openDeleteModal = useCommentDeleteModal(
     selectedCommentId,
     sessionUser,
-    isItemOwner,
+    hasDeletable,
   );
 
   const handleReport = useCallback(
