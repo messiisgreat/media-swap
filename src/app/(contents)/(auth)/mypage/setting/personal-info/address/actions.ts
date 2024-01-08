@@ -3,7 +3,7 @@
 import {
   AddressFormSchema,
   type AddressFormState,
-} from "@/app/(contents)/(auth)/mypage/personal-info/address/type";
+} from "@/app/(contents)/(auth)/mypage/setting/personal-info/address/type";
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
@@ -57,5 +57,5 @@ export const addressFormAction = async (
       message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
     };
   }
-  redirect("/mypage");
+  redirect("/mypage/item");
 };

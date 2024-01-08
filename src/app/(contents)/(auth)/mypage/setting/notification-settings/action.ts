@@ -1,6 +1,6 @@
 "use server";
 
-import { type NoticeFormState } from "@/app/(contents)/(auth)/mypage/notification-settings/type";
+import { type NoticeFormState } from "@/app/(contents)/(auth)/mypage/setting/notification-settings/type";
 import { updateUser } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";

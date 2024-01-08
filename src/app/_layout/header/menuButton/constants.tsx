@@ -11,11 +11,11 @@ type MenuButtonProp = {
   Icon: IconType;
 };
 
-export const menuButtonConstants = [
+export const menuButtonConstants: ReadonlyArray<MenuButtonProp> = [
   { PAGE_CONTENT: PAGE_CONTENT.PERSONAL_INFO, Icon: FaBagShopping },
   { PAGE_CONTENT: PAGE_CONTENT.PURCHASES, Icon: FaTags },
   { PAGE_CONTENT: PAGE_CONTENT.DRAFTS, Icon: TbGitPullRequestDraft },
   { PAGE_CONTENT: PAGE_CONTENT.LIKES, Icon: FaHeartCircleCheck },
   { PAGE_CONTENT: PAGE_CONTENT.SALES_HISTORY, Icon: LuScrollText },
   { PAGE_CONTENT: PAGE_CONTENT.WITHDRAWAL, Icon: FaRegMoneyBillAlt },
-] as const satisfies MenuButtonProp[];
+];

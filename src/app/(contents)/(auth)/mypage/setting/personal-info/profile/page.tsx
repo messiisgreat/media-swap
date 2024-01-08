@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/app/(contents)/(auth)/mypage/personal-info/profile/ProfileForm";
+import { ProfileForm } from "@/app/(contents)/(auth)/mypage/setting/personal-info/profile/ProfileForm";
 import {
   PAGE_CONTENT,
   PAGE_CONTENT_ENUM_JA,
@@ -9,7 +9,7 @@ import { PageTitle, Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
-const redirectURL = "/api/auth/login?callbackUrl=/mypage/personal-info/profile";
+const redirectURL = "/api/auth/login?callbackUrl=/mypage/setting/personal-info/profile";
 
 /**
  * プロフィール編集ページ

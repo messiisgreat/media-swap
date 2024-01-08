@@ -1,7 +1,7 @@
 import {
   type NoticeFormState,
   type NoticeFormValues,
-} from "@/app/(contents)/(auth)/mypage/notification-settings/type";
+} from "@/app/(contents)/(auth)/mypage/setting/notification-settings/type";
 import { NOTIFICATION_KEYS } from "@/constants/emailNotification";
 import { decimalToBinary } from "@/utils/converter";
 

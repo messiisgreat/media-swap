@@ -2,9 +2,9 @@
 
 import { useFormState } from "react-dom";
 
-import { ImageInput } from "@/app/(contents)/(auth)/mypage/personal-info/profile/ProfileImageInput";
-import { profileFormAction } from "@/app/(contents)/(auth)/mypage/personal-info/profile/actions";
-import { initialProfileFormValues } from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
+import { ImageInput } from "@/app/(contents)/(auth)/mypage/setting/personal-info/profile/ProfileImageInput";
+import { profileFormAction } from "@/app/(contents)/(auth)/mypage/setting/personal-info/profile/actions";
+import { initialProfileFormValues } from "@/app/(contents)/(auth)/mypage/setting/personal-info/profile/type";
 import { Input } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";

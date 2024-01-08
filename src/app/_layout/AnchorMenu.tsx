@@ -37,7 +37,7 @@ const naviMenu: NaviMenu[] = [
     id: "user",
     icon: FaUser,
     text: "マイページ",
-    path: "/mypage",
+    path: "/mypage/item",
   },
 ];
 

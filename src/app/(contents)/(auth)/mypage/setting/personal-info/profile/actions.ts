@@ -3,7 +3,7 @@
 import {
   ProfileFormSchema,
   type ProfileFormState,
-} from "@/app/(contents)/(auth)/mypage/personal-info/profile/type";
+} from "@/app/(contents)/(auth)/mypage/setting/personal-info/profile/type";
 import { uploadToCloudinary } from "@/lib/cloudinary/upload";
 import { updateUser } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";

@@ -10,11 +10,11 @@ type PageContentValue = (typeof PAGE_CONTENT)[PageContentKey];
 
 /** 出金ページのコンテンツリンク先 */
 export const PAGE_LINK = {
-  [PAGE_CONTENT.REQUEST]: "/mypage/withdrawal/request",
-  [PAGE_CONTENT.HISTORY]: "/mypage/withdrawal/history",
+  [PAGE_CONTENT.REQUEST]: "/mypage/earning/withdrawal/request",
+  [PAGE_CONTENT.HISTORY]: "/mypage/earning/withdrawal/history",
 } as const satisfies Record<
   PageContentValue,
-  `/mypage/withdrawal/${PageContentValue}`
+  `/mypage/earning/withdrawal/${PageContentValue}`
 >;
 
 /** 出金ページのコンテンツタイトル */

@@ -1,7 +1,7 @@
 "use client";
 
-import { profileUpdateAction } from "@/app/(contents)/(auth)/mypage/notification-settings/action";
-import { convertCodeToInitial } from "@/app/(contents)/(auth)/mypage/notification-settings/utils";
+import { profileUpdateAction } from "@/app/(contents)/(auth)/mypage/setting/notification-settings/action";
+import { convertCodeToInitial } from "@/app/(contents)/(auth)/mypage/setting/notification-settings/utils";
 import {
   NOTIFICATION_KEYS,
   NOTIFICATION_LABELS,

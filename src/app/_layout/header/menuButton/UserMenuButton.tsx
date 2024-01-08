@@ -19,7 +19,7 @@ export const UserMenuButton = ({
   sessionUser: SessionUser;
 }) => {
   const menuItems = [
-    <Link key="mypage" href="/mypage">
+    <Link key="mypage" href="/mypage/item">
       <div className="grid">
         <p className="text-base font-bold md:text-sm">{sessionUser.name}</p>
         <p className="text-sm text-zinc-400 md:text-xs">{sessionUser.email}</p>
