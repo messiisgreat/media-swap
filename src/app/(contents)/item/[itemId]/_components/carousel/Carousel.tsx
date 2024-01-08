@@ -39,10 +39,9 @@ export const Carousel = ({
 
       if (imageWidth) {
         const imageScrollLeft = index * imageWidth;
-        const style = image.getAttribute("style");
         image.setAttribute(
           "style",
-          `${style} transform:translateX(${-imageScrollLeft}px)`,
+          `transform:translateX(${-imageScrollLeft}px)`,
         );
       }
 
