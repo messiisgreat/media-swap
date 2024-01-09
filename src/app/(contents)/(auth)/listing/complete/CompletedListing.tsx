@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { findItemById } from "@/repositories/item";
-import { Button } from "@/ui/Button";
+import { Button } from "@/ui/button/Button";
 
 /**
  * 出品完了した商品の画像とリンク
