@@ -1,6 +1,6 @@
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/withdrawalPage";
 import { SalesBalanceContainer } from "@/features/salesBalance/SalesBalanceContainer";
-import { ButtonAsLink } from "@/ui/Button";
+import { ButtonAsLink } from "@/ui/button";
 import { PageTitle } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
