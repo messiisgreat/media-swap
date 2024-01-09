@@ -1,7 +1,7 @@
 "use client";
 
 import { useShippigNotificationModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/hooks";
-import { Button } from "@/ui/button/Button";
+import { Button } from "@/ui/button";
 import { Input } from "@/ui/form";
 import { useRef } from "react";
 

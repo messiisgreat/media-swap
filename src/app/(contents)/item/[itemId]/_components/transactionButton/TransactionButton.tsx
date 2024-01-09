@@ -1,6 +1,6 @@
 import PurchaseButton from "@/app/(contents)/item/[itemId]/_components/transactionButton/purchaseButton";
 import { findItemById } from "@/repositories/item";
-import { Button, ButtonAsLink } from "@/ui/button/Button";
+import { Button, ButtonAsLink } from "@/ui/button";
 import { getSessionUser } from "@/utils";
 
 type Props = {

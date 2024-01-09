@@ -1,4 +1,4 @@
-import { ButtonAsLink } from "@/ui/button/Button";
+import { ButtonAsLink } from "@/ui/button";
 
 /**
  * ホームに戻るボタンコンポーネント
