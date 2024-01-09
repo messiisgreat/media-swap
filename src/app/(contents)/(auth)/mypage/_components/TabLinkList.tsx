@@ -1,15 +1,9 @@
 import { TabLinkListItem } from "@/app/(contents)/(auth)/mypage/_components/TabLinkListItem";
+import { PAGE_TAB_CONTENT } from "@/app/(contents)/(auth)/mypage/_components/const";
 
 import { TabMenu } from "@/ui/tabmenu/TabMenu";
 
-type PageInfo = {
-  title: string;
-  url: string;
-};
-
 type TabLinkListProps = {
-  /* タブのリスト*/
-  pages: PageInfo[];
   /* コンテンツ*/
   content: Record<string, string>;
   /* コンテンツの表示名*/
@@ -24,22 +18,22 @@ type TabLinkListProps = {
  * @returns div > ul
  */
 export const TabLinkList = ({
-  pages,
   content,
   contentEnum,
   link,
 }: TabLinkListProps) => (
   <div className="w-full">
     <div className="m-auto px-4 sm:px-8">
-      <TabMenu pages={pages} />
+      <TabMenu pages={PAGE_TAB_CONTENT} />
       <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
         {Object.values(content).map((value) => (
-          <TabLinkListItem
-            key={value}
-            contentEnum={contentEnum}
-            link={link}
-            value={value}
-          />
+          <li key={contentEnum[value]}>
+            <TabLinkListItem
+              contentEnum={contentEnum}
+              link={link}
+              value={value}
+            />
+          </li>
         ))}
       </ul>
     </div>

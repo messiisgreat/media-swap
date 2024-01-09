@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
-type PageInfo = {
+export type PageInfo = {
   title: string;
   url: string;
 };
@@ -21,7 +21,6 @@ type Props = {
  */
 export const TabMenu = ({ pages }: Props) => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <div role="tablist" className="tabs-bordered tabs-lg grid">
       {pages.map((page, index) => {

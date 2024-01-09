@@ -26,7 +26,7 @@ const Page = async () => {
       <div className="w-full">
         <div className="m-auto px-4 sm:px-8">
           <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
-            {Object.entries(WITHDRAWAL_PAGE_CONTENT).map(([, value]) => (
+            {Object.values(WITHDRAWAL_PAGE_CONTENT).map((value) => (
               <li
                 key={WITHDRAWAL_PAGE_CONTENT_ENUM_JA[value]}
                 className="border-b border-gray-200 bg-white px-4 py-2 transition-all duration-300 ease-in-out last:border-none hover:bg-sky-100 hover:text-sky-900"

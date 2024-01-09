@@ -1,3 +1,5 @@
+import { type PageInfo } from "@/ui/tabmenu/TabMenu";
+
 export const PAGE_TAB_CONTENT = [
   {
     title: "商品関連",
@@ -11,4 +13,4 @@ export const PAGE_TAB_CONTENT = [
     title: "設定",
     url: "/mypage/setting",
   },
-];
+] as const satisfies PageInfo[];
