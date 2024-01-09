@@ -8,6 +8,8 @@ type CommonProps = {
   outline?: boolean;
   /** ボタンの色 */
   secondary?: boolean;
+  /** ボタンを丸くするかどうか */
+  rounded?: boolean;
 };
 
 type ButtonProps = ComponentProps<"button"> & CommonProps;
@@ -22,6 +24,7 @@ export const Button = memo(
   ({
     outline = false,
     secondary = false,
+    rounded = false,
     children,
     className,
     type = "button",
@@ -30,6 +33,7 @@ export const Button = memo(
     const variant = twMerge(
       outline ? "btn-outline" : "",
       secondary ? "btn-secondary" : "btn-primary",
+      rounded ? "rounded-full" : "",
     );
     return (
       <button
@@ -49,6 +53,7 @@ export const ButtonAsLink = memo(
   ({
     outline = false,
     secondary = false,
+    rounded = false,
     children,
     className,
     ...props
@@ -56,6 +61,7 @@ export const ButtonAsLink = memo(
     const variant = twMerge(
       outline ? "btn-outline" : "",
       secondary ? "btn-secondary" : "btn-primary",
+      rounded ? "rounded-full" : "",
     );
     return (
       <Link className={twMerge("btn", variant, className)} {...props}>
