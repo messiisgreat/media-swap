@@ -1,4 +1,5 @@
 import { FirstLoadContainer } from "@/app/(contents)/(auth)/transactions/[transactionId]/FirstLoadContainer";
+import { Skeleton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/skeleton";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 
@@ -10,14 +11,13 @@ export const metadata: Metadata = {
 /**
  * 取引詳細ページ
  * /transactions/[transactionId]
- * @todo FirstLoadContainerのFallbackコンポーネントを作成する
  */
 const Page = ({
   params: { transactionId },
 }: {
   params: { transactionId: string };
 }) => (
-  <Suspense fallback={null}>
+  <Suspense fallback={<Skeleton />}>
     <FirstLoadContainer transactionId={transactionId} />
   </Suspense>
 );
