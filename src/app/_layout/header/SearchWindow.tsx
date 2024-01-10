@@ -1,36 +1,16 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useCallback, type FormEventHandler } from "react";
 import { FaSearch } from "react-icons/fa";
-
-const formValue = "query";
 
 /**
  * ヘッダーに固定する検索窓
  * @returns
  */
-export const SearchWindow = () => {
-  const router = useRouter();
-
-  const handleSearch: FormEventHandler<HTMLFormElement> = useCallback(
-    (event) => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      const searchQuery = formData.get(formValue)?.toString();
-      if (searchQuery) {
-        router.push(`/search?query=${searchQuery}`);
-      }
-    },
-    [router],
-  );
-  return (
+export const SearchWindow = () => (
     <form
-      onSubmit={handleSearch}
+      action="/search" 
       className="input input-bordered flex items-center justify-center py-0 pr-1"
     >
       <input
-        name={formValue}
+        name="query"
         placeholder="何をお探しですか？"
         className="m-auto w-full"
         type="search"
@@ -46,4 +26,3 @@ export const SearchWindow = () => {
       </button>
     </form>
   );
-};
