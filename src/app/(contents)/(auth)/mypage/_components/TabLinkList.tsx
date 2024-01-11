@@ -28,11 +28,7 @@ export const TabLinkList = ({
       <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
         {Object.values(content).map((value) => (
           <li key={contentEnum[value]}>
-            <TabLinkListItem
-              contentEnum={contentEnum}
-              link={link}
-              value={value}
-            />
+            <TabLinkListItem {...{ contentEnum, link, value }} />
           </li>
         ))}
       </ul>

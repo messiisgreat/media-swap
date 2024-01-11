@@ -1,20 +1,20 @@
 import { TabLinkList } from "@/app/(contents)/(auth)/mypage/_components/TabLinkList";
 import {
-  EARNING_CONTENT,
-  EARNING_CONTENT_ENUM_JA,
-  EARNING_LINK,
+  LISTING_CONTENT,
+  LISTING_CONTENT_ENUM_JA,
+  LISTING_LINK,
 } from "@/constants/myPage";
 
 /**
- * 売上関連タブリンクリスト
- * /mypage/earning
+ * 商品関連タブリンクリスト
+ * /mypage/items
  * @returns TabLinkList
  */
 const Page = () => (
   <TabLinkList
-    content={EARNING_CONTENT}
-    contentEnum={EARNING_CONTENT_ENUM_JA}
-    link={EARNING_LINK}
+    content={LISTING_CONTENT}
+    contentEnum={LISTING_CONTENT_ENUM_JA}
+    link={LISTING_LINK}
   />
 );
 

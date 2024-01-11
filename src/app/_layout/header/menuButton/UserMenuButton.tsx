@@ -8,18 +8,18 @@ import profilePicPlaceholder from "@/images/profile-pic-placeholder.png";
 import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
 import { type SessionUser } from "@/utils";
 
+type UserMenuButtonProps = {
+  sessionUser: SessionUser;
+};
+
 /**
  * ヘッダーに表示するユーザーアイコンのボタン
  * クリックでマイページなどへのリンクを表示する
  * @returns details
  */
-export const UserMenuButton = ({
-  sessionUser,
-}: {
-  sessionUser: SessionUser;
-}) => {
+export const UserMenuButton = ({ sessionUser }: UserMenuButtonProps) => {
   const menuItems = [
-    <Link key="mypage" href="/mypage/item">
+    <Link key="user" href={`/user/${sessionUser.id}`}>
       <div className="grid">
         <p className="text-base font-bold md:text-sm">{sessionUser.name}</p>
         <p className="text-sm text-zinc-400 md:text-xs">{sessionUser.email}</p>

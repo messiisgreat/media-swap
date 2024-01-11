@@ -23,5 +23,5 @@ export const createRecipientMailContent = (
     ${SITE_URL}
 
     メールの配信設定
-    ${SITE_URL}${PAGE_LINK["notification-settings"]}
+    ${SITE_URL}${PAGE_LINK["notifications"]}
     `;

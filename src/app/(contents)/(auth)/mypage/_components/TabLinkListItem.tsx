@@ -20,8 +20,12 @@ export const TabLinkListItem = ({
   link,
   value,
 }: TabLinkListItemProps) => (
-  <Link href={link[value] ?? ""}>
-    <div className="flex justify-between border-b border-gray-200 bg-white px-4 py-6 transition-all duration-300 ease-in-out last:border-none hover:bg-sky-100 hover:text-sky-900">
+  <Link href={link[value] ?? {}}>
+    <div
+      className="flex justify-between border-b border-gray-200 bg-white px-4 py-6
+     transition-all duration-300 ease-in-out
+     last:border-none hover:bg-sky-100 hover:text-sky-900"
+    >
       <p>{contentEnum[value]}</p>
       <FiChevronsRight size={24} />
     </div>

@@ -1,13 +1,14 @@
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { SalesBalanceContainer } from "@/features/salesBalance/SalesBalanceContainer";
-import { ButtonAsLink } from "@/ui/button";
+import { SalesHistoryContainer } from "@/features/salesHistory/SalesHistoryContainer";
+
 import { PageTitle } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
 /**
- * 出金申請ページ
- * /mypage/earning/withdrawal
+ * 売上履歴ページ
+ * /mypage/earning/history
  */
 const Page = async () => {
   const user = await getSessionUser();
@@ -16,9 +17,9 @@ const Page = async () => {
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.WITHDRAWAL]} />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.HISTORY]} />
       <SalesBalanceContainer />
-      <ButtonAsLink href="#">出金申請する</ButtonAsLink>
+      <SalesHistoryContainer />
     </>
   );
 };

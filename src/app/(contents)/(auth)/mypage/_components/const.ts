@@ -1,16 +1,21 @@
+import {
+  PAGE_CONTENT,
+  PAGE_CONTENT_ENUM_JA,
+  PAGE_LINK,
+} from "@/constants/myPage";
 import { type PageInfo } from "@/ui/tabmenu/TabMenu";
 
 export const PAGE_TAB_CONTENT = [
   {
-    title: "商品関連",
-    url: "/mypage/item",
+    title: PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.ITEMS],
+    url: PAGE_LINK[PAGE_CONTENT.ITEMS],
   },
   {
-    title: "売上関連",
-    url: "/mypage/earning",
+    title: PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.EARNING],
+    url: PAGE_LINK[PAGE_CONTENT.EARNING],
   },
   {
-    title: "設定",
-    url: "/mypage/setting",
+    title: PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.SETTINGS],
+    url: PAGE_LINK[PAGE_CONTENT.SETTINGS],
   },
 ] as const satisfies PageInfo[];
