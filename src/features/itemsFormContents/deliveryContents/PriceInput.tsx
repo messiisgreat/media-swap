@@ -65,16 +65,12 @@ export const PriceInput = ({ ...props }: PriceInputProps) => {
           : "　"}
       </label>
       <div className="flex justify-between">
-        <label>販売手数料</label>
-        <div>
-          <span className="mr-2">¥</span>
-          {handlingCharge}
-        </div>
+        <span>販売手数料</span>
+        <div className="before:mr-2 before:content-['¥']">{handlingCharge}</div>
       </div>
       <div className="flex justify-between">
-        <label>販売利益</label>
-        <div>
-          <span className="mr-2">¥</span>
+        <span>販売利益</span>
+        <div className="before:mr-2 before:content-['¥']">
           {amountAfterCharge}
         </div>
       </div>
