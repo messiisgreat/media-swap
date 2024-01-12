@@ -139,7 +139,6 @@ export const useCommentDeleteModal = (
     const result = await removeComment(commentId);
     if (result.isFailure) {
       toast.error(result.error);
-      return;
     } else {
       toast.success("コメントを削除しました。");
     }

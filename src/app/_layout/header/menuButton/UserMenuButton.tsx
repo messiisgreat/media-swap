@@ -36,12 +36,12 @@ export const UserMenuButton = ({ sessionUser }: UserMenuButtonProps) => {
     <DropdownContainer>
       <DropdownItem menuItems={menuItems}>
         <div
-          className="btn btn-circle btn-ghost"
           role="button"
+          className="btn btn-circle btn-ghost"
           aria-label="ユーザーメニュー"
         >
           <Image
-            src={sessionUser.image || profilePicPlaceholder}
+            src={sessionUser.image ?? profilePicPlaceholder}
             alt="プロフィール画像"
             width={40}
             height={40}
