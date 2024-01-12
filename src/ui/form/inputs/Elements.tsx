@@ -81,18 +81,16 @@ export const Textarea = memo(
   ),
 );
 
-type SelectProps = CommonProps & {
-  options: Record<string | number, string | number>;
-};
+type SelectProps = CommonProps &
+  ComponentPropsWithoutRef<"select"> & {
+    options: Record<string | number, string | number>;
+  };
 
 /**
  * selectタグにCSSを適用したラッパー
  */
 export const Select = memo(
-  forwardRef<
-    HTMLSelectElement,
-    ComponentPropsWithoutRef<"select"> & SelectProps
-  >(
+  forwardRef<HTMLSelectElement, SelectProps>(
     (
       { className: _className = "", labelText, options, required, ...props },
       ref,
@@ -105,8 +103,8 @@ export const Select = memo(
             <option disabled value="">
               選択してください
             </option>
-            {Object.keys(options).map((option, i) => (
-              <option key={i} value={option}>
+            {Object.keys(options).map((option) => (
+              <option key={option} value={option}>
                 {options[option]}
               </option>
             ))}
