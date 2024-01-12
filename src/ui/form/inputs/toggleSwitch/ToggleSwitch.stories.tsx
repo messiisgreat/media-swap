@@ -1,4 +1,4 @@
-import { ToggleSwitch } from "@/ui/form/ToggleSwitch";
+import { ToggleSwitch } from "@/ui/form/inputs";
 import { type Meta } from "@storybook/react";
 
 export default {

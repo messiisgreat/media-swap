@@ -8,8 +8,8 @@ import {
   NOTIFICATION_TYPES,
 } from "@/constants/emailNotification";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { ToggleSwitch } from "@/ui/form/ToggleSwitch";
 import { useForm } from "@/ui/form/hooks";
+import { ToggleSwitch } from "@/ui/form/inputs";
 
 /**
  * 通知を設定するフォーム

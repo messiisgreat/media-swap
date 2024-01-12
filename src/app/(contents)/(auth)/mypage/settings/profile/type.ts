@@ -47,7 +47,6 @@ export const ProfileFormSchema: ZodType<ProfileFormValues> = z.object({
     }),
   introduction: z
     .string()
-    .min(1, { message: "自己紹介文を入力してください" })
     .max(2000, { message: "自己紹介文は2000文字以内で入力してください" }),
   verificationCode: z
     .string({ required_error: "認証を行ってください" })

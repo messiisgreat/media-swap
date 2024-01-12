@@ -4,6 +4,7 @@ import {
   AddressFormSchema,
   type AddressFormState,
 } from "@/app/(contents)/(auth)/mypage/settings/address/type";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
@@ -57,5 +58,5 @@ export const addressFormAction = async (
       message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
     };
   }
-  redirect("/mypage/item");
+  redirect(PAGE_LINK[PAGE_CONTENT.SETTINGS]);
 };

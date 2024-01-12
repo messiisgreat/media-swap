@@ -6,7 +6,7 @@ import {
   removeComment,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/actions";
 
-import { LimitTextarea } from "@/ui/form/LimitElements";
+import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { useFormActionModal } from "@/ui/modal";
 import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";

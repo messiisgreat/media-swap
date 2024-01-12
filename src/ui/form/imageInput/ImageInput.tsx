@@ -7,6 +7,7 @@ import {
   addFileWithPreview,
   processDroppedFiles,
 } from "@/ui/form/imageInput/utils";
+import { Label } from "@/ui/form/inputs/Label";
 import {
   useCallback,
   useEffect,
@@ -29,10 +30,10 @@ type Props = Omit<ComponentPropsWithoutRef<"input">, "multiple" | "type"> & {
  * @param props inputタグのその他の属性
  * @returns label
  */
-export const ImageInput = ({ labelText, ...props }: Props) => {
+export const ImageInput = ({ labelText, required, ...props }: Props) => {
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const id = useId();
-  const inputRef = useRef<HTMLInputElement>(null!);
+  const ref = useRef<HTMLInputElement | null>(null);
   const isDev = process.env.NODE_ENV !== "production";
   const onDrop = useCallback(async (droppedFiles: File[]) => {
     const processedFiles = await processDroppedFiles(droppedFiles);
@@ -89,7 +90,9 @@ export const ImageInput = ({ labelText, ...props }: Props) => {
     files.forEach((fileWithPreview) => {
       dataTransfer.items.add(fileWithPreview.file);
     });
-    inputRef.current.files = dataTransfer.files;
+    if (ref.current) {
+      ref.current.files = dataTransfer.files;
+    }
   }, [files]);
 
   const handleRemove = useCallback((index: number) => {
@@ -103,8 +106,8 @@ ${
     : "cursor-no-drop border-neutral-300 text-neutral-300"
 }`;
   return (
-    <div className="grid gap-2">
-      {labelText && <label>{labelText}</label>}
+    <div className="grid">
+      {labelText && <Label required={required}>{labelText}</Label>}
       <ul className="grid grid-cols-3 gap-2">
         {files.map((fileWithPreview, i) => (
           <li key={fileWithPreview.file.name} className="relative">
@@ -118,13 +121,11 @@ ${
       </ul>
       <label className={labelClass} htmlFor={id}>
         <input
-          {...props}
           {...getInputProps()}
-          id={id}
           type="file"
           multiple
-          ref={inputRef}
           className="hidden"
+          {...{ ref, id, ...props }}
         />
         <div
           {...getRootProps()}

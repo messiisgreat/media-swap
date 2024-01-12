@@ -2,9 +2,9 @@
 
 import { messageFormAction } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm/actions";
 import { initialTransactionMessageState } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm/types";
-import { LimitInput } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useForm } from "@/ui/form/hooks";
+import { LimitInput } from "@/ui/form/inputs/LimitElements";
 import { BiSend } from "react-icons/bi";
 
 /**

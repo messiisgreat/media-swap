@@ -3,9 +3,9 @@
 import { commentFormAction } from "@/app/(contents)/item/[itemId]/_components/commentForm/actions";
 import { initialItemCommentState } from "@/app/(contents)/item/[itemId]/_components/commentForm/type";
 import { handleCtrlEnterSubmit } from "@/ui/form";
-import { LimitTextarea } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useForm } from "@/ui/form/hooks";
+import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { type SessionUser } from "@/utils";
 
 type Props = {

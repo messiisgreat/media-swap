@@ -6,9 +6,9 @@ import { ImageInput } from "@/app/(contents)/(auth)/mypage/settings/profile/Prof
 import { profileFormAction } from "@/app/(contents)/(auth)/mypage/settings/profile/actions";
 import { initialProfileFormValues } from "@/app/(contents)/(auth)/mypage/settings/profile/type";
 import { Input } from "@/ui/form";
-import { LimitTextarea } from "@/ui/form/LimitElements";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useFormMessageToaster } from "@/ui/form/hooks";
+import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { type User } from "@prisma/client";
 
@@ -55,6 +55,7 @@ export const ProfileForm = ({ user }: Props) => {
         labelText="ニックネーム"
         autoComplete="username"
         placeholder="例: スワッピー"
+        required
         defaultValue={state.values.name}
       />
       <Input
@@ -62,6 +63,7 @@ export const ProfileForm = ({ user }: Props) => {
         labelText="メールアドレス"
         autoComplete="email address"
         placeholder="例: swappy@example.com"
+        required
         defaultValue={state.values.email}
       />
       <LimitTextarea

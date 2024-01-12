@@ -4,6 +4,7 @@ import {
   ProfileFormSchema,
   type ProfileFormState,
 } from "@/app/(contents)/(auth)/mypage/settings/profile/type";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { uploadToCloudinary } from "@/lib/cloudinary/upload";
 import { updateUser } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
@@ -40,7 +41,7 @@ export const profileFormAction = async (
   const sessionUser = await getSessionUser();
   const userId = sessionUser?.id;
   if (!userId) {
-    redirect("api/auth/login?callbackUrl=/mypage/personal-info/profile");
+    redirect(`api/auth/login?callbackUrl=${PAGE_LINK[PAGE_CONTENT.PROFILE]}`);
   }
 
   const result = await verifyForm(verificationCode);
@@ -69,5 +70,5 @@ export const profileFormAction = async (
     });
   }
 
-  redirect("/mypage/");
+  redirect(PAGE_LINK[PAGE_CONTENT.SETTINGS]);
 };

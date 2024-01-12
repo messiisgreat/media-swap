@@ -50,6 +50,7 @@ export const DeliveryContents = ({
         name="isShippingIncluded"
         labelText="配送料の負担"
         options={IS_SHIPPING_INCLUDED}
+        required
         defaultValue={isShippingIncluded}
       />
       <Select
@@ -57,6 +58,7 @@ export const DeliveryContents = ({
         labelText="配送の方法"
         options={SHIPPING_METHOD}
         defaultValue={shippingMethodCode}
+        required
         onChange={handleChange}
       />
       {isOther && (
@@ -73,6 +75,7 @@ export const DeliveryContents = ({
         name="shippingDaysCode"
         labelText="発送までの日数"
         options={SHIPPING_DAYS}
+        required
         defaultValue={shippingDaysCode}
       />
       <PriceInput

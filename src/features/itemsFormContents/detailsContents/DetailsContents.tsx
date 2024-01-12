@@ -3,8 +3,8 @@ import { type Tag } from "@prisma/client";
 import { CONDITION } from "@/constants/item";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/itemTags/ItemTagsInput";
 import { Select } from "@/ui/form";
-import { LimitInput, LimitTextarea } from "@/ui/form/LimitElements";
 import ImageInput from "@/ui/form/imageInput";
+import { LimitInput, LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { TitleUnderbar } from "@/ui/structure";
 
 type Props = {
@@ -32,7 +32,7 @@ export const DetailsContents = ({
   selectedTags,
 }: Props) => (
   <div className="grid grid-cols-2 gap-3 [&>*]:col-span-2 [&>button]:col-span-1">
-    <ImageInput labelText="出品画像(最大10枚)" name="imageFiles" />
+    <ImageInput labelText="出品画像(最大10枚)" required name="imageFiles" />
     <LimitInput
       labelText="商品名"
       maxLength={32}

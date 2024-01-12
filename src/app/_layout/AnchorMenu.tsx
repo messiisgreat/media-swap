@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type IconType } from "react-icons";
@@ -34,10 +35,10 @@ const naviMenu: NaviMenu[] = [
     path: "/listing",
   },
   {
-    id: "user",
+    id: PAGE_CONTENT.ITEMS,
     icon: FaUser,
     text: "マイページ",
-    path: "/mypage/item",
+    path: PAGE_LINK[PAGE_CONTENT.ITEMS],
   },
 ];
 
