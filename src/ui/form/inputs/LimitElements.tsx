@@ -40,7 +40,7 @@ export const LimitInput = ({
       {!hideLimit && (
         <label
           className={`label-text-alt flex w-full justify-between ${
-            isOverLimit ? "text-error" : "text-black"
+            isOverLimit ? "text-error" : "text-body"
           }`}
         >
           <span>{isOverLimit ? "文字数が超過しています" : ""}</span>
@@ -77,7 +77,7 @@ export const LimitTextarea = ({
       {!hideLimit && (
         <label
           className={`label-text-alt flex w-full justify-between ${
-            isOverLimit ? "text-error" : "text-black"
+            isOverLimit ? "text-error" : "text-body"
           }`}
         >
           <span>{isOverLimit ? "文字数が超過しています" : ""}</span>

@@ -37,7 +37,7 @@ export const useCheckModal = (
           <div className="grid justify-center gap-8 md:grid-cols-2">
             <button
               className={twMerge(
-                "btn-error bg-red-500 text-white hover:bg-red-700 md:col-start-2 md:col-end-3",
+                "btn-error bg-red-500 text-dark-bg-wh hover:bg-red-700 md:col-start-2 md:col-end-3",
                 linkClass,
               )}
               onClick={handleOkClick}
@@ -46,7 +46,7 @@ export const useCheckModal = (
             </button>
             <button
               className={twMerge(
-                "bg-white text-black hover:bg-gray-100 md:row-start-1 md:row-end-2",
+                "bg-white text-body hover:bg-gray-100 md:row-start-1 md:row-end-2",
                 linkClass,
               )}
               onClick={handleNoClick}

@@ -12,7 +12,7 @@ export const PriceBadge = ({
 }) => (
   <div
     className={`flex w-20 items-center justify-center overflow-hidden whitespace-nowrap
-      rounded-r-xl bg-black/40 p-1 text-xs text-white ${className}`}
+      rounded-r-xl bg-black/40 p-1 text-xs text-dark-bg-wh ${className}`}
   >
     {children}
   </div>

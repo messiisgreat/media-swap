@@ -16,6 +16,7 @@ module.exports = {
     "testing-library",
     "functional",
     "prefer-arrow-functions",
+    "local-rules",
   ],
   extends: [
     "eslint:recommended",
@@ -182,6 +183,7 @@ module.exports = {
     ],
     /** jsxへのコールバック関数の記載を禁止 */
     "react/jsx-no-bind": ["warn", { ignoreDOMComponents: true }],
+    "local-rules/check-css-class": "warn",
     // "import/order": [
     //   "error",
     //   {

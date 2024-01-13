@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
  */
 export const ListingButton = ({ className }: { className?: string }) => {
   const buttonClass =
-    "flex h-16 w-16 flex-col items-center justify-center gap-1 font-bold text-white";
+    "flex h-16 w-16 flex-col items-center justify-center gap-1 font-bold text-dark-bg-wh";
   return (
     <ButtonAsLink
       href="/listing"

@@ -9,6 +9,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        // カスタム文字色
+        body: "#202124", // 背景が白の時
+        "light-bg-bk": "black", // 背景が明るめの時
+        "dark-bg-wh": "white", // 背景が暗めの時
+      },
       flex: {
         "28": "0 0 28%",
         "100": "0 0 100%",
