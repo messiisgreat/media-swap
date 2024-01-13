@@ -1,3 +1,4 @@
+export { LoadingSpinner } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/loadingSpinner";
 export { MessageContainer } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer";
 export { MessageForm } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm";
 export { OptionMenu } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/optionMenu";

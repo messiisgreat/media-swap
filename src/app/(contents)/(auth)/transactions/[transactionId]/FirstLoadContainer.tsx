@@ -1,4 +1,5 @@
 import {
+  LoadingSpinner,
   MessageContainer,
   MessageForm,
   OptionMenu,
@@ -17,7 +18,6 @@ import { Suspense } from "react";
 
 /**
  * 取引ページの初期描画に必要なデータを取得する
- * @todo コメントLoadingのfallbackを作成する
  */
 export const FirstLoadContainer = async ({
   transactionId,
@@ -61,7 +61,7 @@ export const FirstLoadContainer = async ({
         <OptionMenu {...{ sessionUser, userType }} />
         <TitleUnderbar title="取引メッセージ" />
         <Section className="flex flex-1 flex-col gap-4">
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingSpinner />}>
             <MessageContainer {...{ transactionId, sessionUser }} />
           </Suspense>
           <MessageForm {...{ transactionId }} />
