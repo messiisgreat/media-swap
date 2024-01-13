@@ -28,7 +28,7 @@ model User {
     isDeleted            Boolean   @default(false) @map("is_deleted") // 削除フラグ
     isBanned             Boolean   @default(false) @map("is_banned") // 凍結フラグ
     noticePermissionCode Int       @default(0) // 通知設定のビットフラグ
-    emailVerified        DateTime? @map("email_verified") // メールアドレス認証日時
+    emailVerified        DateTime? @map("email_verified") // メールアドレス認証日時(これはnextAuthで決められた値なので変更不可)
 
     accounts                Account[]
     sessions                Session[]
