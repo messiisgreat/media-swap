@@ -2,8 +2,8 @@
 
 import { CommentCard } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/commentCard";
 import {
-  useCommentDeleteModal,
-  useCommentReportModal,
+  useItemCommentDeleteModal,
+  useItemCommentReportModal,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/hooks";
 import { isCommentOwner } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/utils";
 import { type ItemCommentsReadResult } from "@/repositories/itemComment";
@@ -33,8 +33,11 @@ export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
   );
   const hasDeletable =
     isItemOwner || isCommentOwner(selectedCommentId, comments, sessionUser);
-  const openReportModal = useCommentReportModal(selectedCommentId, sessionUser);
-  const openDeleteModal = useCommentDeleteModal(
+  const openReportModal = useItemCommentReportModal(
+    selectedCommentId,
+    sessionUser,
+  );
+  const openDeleteModal = useItemCommentDeleteModal(
     selectedCommentId,
     sessionUser,
     hasDeletable,

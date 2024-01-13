@@ -5,7 +5,8 @@ import {
   initialItemCommentState,
   type ItemCommentFormState,
 } from "@/app/(contents)/item/[itemId]/_components/commentForm/type";
-import { createComment } from "@/repositories/itemComment";
+import { sendMailOnComment } from "@/app/(contents)/item/[itemId]/_components/commentForm/utils";
+import { createItemComment } from "@/repositories/itemComment";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
@@ -50,7 +51,8 @@ export const commentFormAction = async (
   }
 
   try {
-    await createComment(comment, userId, itemId);
+    const itemComment = await createItemComment(comment, userId, itemId);
+    await sendMailOnComment(itemComment);
     revalidatePath(`/item/${itemId}`);
     return {
       ...initialItemCommentState,

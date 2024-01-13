@@ -3,7 +3,15 @@ import "server-only";
 import prisma from "@/lib/prisma";
 import { cache } from "react";
 
-export type ItemCommentsReadResult = Awaited<ReturnType<typeof findComments>>;
+/** 商品コメント取得結果 */
+export type ItemCommentsReadResult = Awaited<
+  ReturnType<typeof findItemComments>
+>;
+
+/** 商品コメント作成結果 */
+export type ItemCommentsCreateResult = Awaited<
+  ReturnType<typeof createItemComment>
+>;
 
 /**
  * コメントを追加する
@@ -11,13 +19,21 @@ export type ItemCommentsReadResult = Awaited<ReturnType<typeof findComments>>;
  * @param userId ユーザーID
  * @param itemId 商品ID
  */
-export const createComment = async (
+export const createItemComment = async (
   comment: string,
   userId: string,
   itemId: string,
 ) =>
   await prisma.itemComment.create({
     data: { itemId, userId, comment },
+    include: {
+      user: true,
+      item: {
+        include: {
+          seller: true,
+        },
+      },
+    },
   });
 
 /**
@@ -25,7 +41,7 @@ export const createComment = async (
  * @param itemId 取得対象の製品のID
  * @returns 取得したコメント
  */
-export const findComments = cache(
+export const findItemComments = cache(
   async (itemId: string) =>
     await prisma.itemComment.findMany({
       where: { itemId },

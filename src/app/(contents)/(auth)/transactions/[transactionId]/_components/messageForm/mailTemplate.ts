@@ -1,4 +1,4 @@
-import { PAGE_LINK } from "@/constants/myPage";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { CORPORATE_MAIL, SITE_URL } from "@/constants/site";
 
 /**
@@ -16,12 +16,12 @@ export const createRecipientMailContent = (
 ) => `
     ${recipientName}様から取引メッセージが届きました。
     商品名: ${itemName}
-    取引ページ: ${SITE_URL}/transaction/${transactionId}
+    取引ページ: ${SITE_URL}/transactions/${transactionId}
     メッセージ: ${transactionCommentCreateComment}
 
     ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
     ${SITE_URL}
 
     メールの配信設定
-    ${SITE_URL}${PAGE_LINK["notifications"]}
+    ${SITE_URL}${PAGE_LINK[PAGE_CONTENT.NOTIFICATIONS]}
     `;

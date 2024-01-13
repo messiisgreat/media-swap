@@ -1,4 +1,4 @@
-import { fetchComments } from "@/app/(contents)/item/[itemId]/_components/commentContainer/actions";
+import { fetchItemComments } from "@/app/(contents)/item/[itemId]/_components/commentContainer/actions";
 import { CommentList } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList";
 import { type SessionUser } from "@/utils";
 
@@ -19,7 +19,7 @@ export const CommentContainer = async ({
   sessionUser,
   isItemOwner,
 }: Props) => {
-  const comments = await fetchComments(itemId);
+  const comments = await fetchItemComments(itemId);
   return (
     <CommentList
       {...{

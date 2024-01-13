@@ -2,8 +2,8 @@
 import { useCallback } from "react";
 
 import {
-  addCommentReport,
-  removeComment,
+  addItemCommentReport,
+  removeItemComment,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/actions";
 
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
@@ -22,13 +22,13 @@ import { FaTriangleExclamation } from "react-icons/fa6";
  * @param sessionUser ログインユーザー
  * @returns モーダルを開く関数
  */
-export const useCommentReportModal = (
+export const useItemCommentReportModal = (
   commentId: string | null,
   sessionUser: SessionUser | undefined,
 ) => {
   const getVerificationCode = useVerify();
 
-  const reportComment = useCallback(
+  const reportItemComment = useCallback(
     async (f: FormData) => {
       const reason = f.get("report_reason") as string;
 
@@ -62,7 +62,11 @@ export const useCommentReportModal = (
       }
 
       try {
-        const res = await addCommentReport(commentId, reason, verificationCode);
+        const res = await addItemCommentReport(
+          commentId,
+          reason,
+          verificationCode,
+        );
         if ("error" in res) {
           toast.error(res.message);
           return;
@@ -79,7 +83,7 @@ export const useCommentReportModal = (
   );
 
   const { handleOpen: open, FormActionModal } = useFormActionModal(
-    reportComment,
+    reportItemComment,
     "通報する",
   );
 
@@ -114,12 +118,12 @@ export const useCommentReportModal = (
  * @param sessionUser ログインユーザー
  * @param hasDeletable コメントが削除可能かどうか
  */
-export const useCommentDeleteModal = (
+export const useItemCommentDeleteModal = (
   commentId: string | null,
   sessionUser: SessionUser | undefined,
   hasDeletable: boolean,
 ) => {
-  const deleteComment = useCallback(async () => {
+  const deleteItemComment = useCallback(async () => {
     if (!commentId) {
       toast.error("削除するコメントが選択されていません");
       return;
@@ -136,7 +140,7 @@ export const useCommentDeleteModal = (
       return;
     }
 
-    const result = await removeComment(commentId);
+    const result = await removeItemComment(commentId);
     if (result.isFailure) {
       toast.error(result.error);
     } else {
@@ -145,7 +149,7 @@ export const useCommentDeleteModal = (
   }, [commentId, sessionUser, hasDeletable]);
 
   const { handleOpen: open, FormActionModal } = useFormActionModal(
-    deleteComment,
+    deleteItemComment,
     "削除",
   );
 

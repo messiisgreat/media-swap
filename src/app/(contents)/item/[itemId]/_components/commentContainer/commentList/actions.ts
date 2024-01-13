@@ -2,7 +2,7 @@
 
 import { failure, success, type Result } from "@/lib/result";
 import { deleteItemComment } from "@/repositories/itemComment";
-import { createCommentReport } from "@/repositories/itemCommentReport";
+import { createItemCommentReport } from "@/repositories/itemCommentReport";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
 
@@ -10,7 +10,7 @@ import { getSessionUser } from "@/utils";
  * コメントを削除
  * @param commentId コメントID
  */
-export const removeComment = async (
+export const removeItemComment = async (
   commentId: string,
 ): Promise<
   Result<
@@ -34,7 +34,7 @@ export const removeComment = async (
  * @param verificationCode reCAPTCHA v3で取得した値
  * @returns
  */
-export const addCommentReport = async (
+export const addItemCommentReport = async (
   commentId: string,
   reason: string,
   verificationCode: string,
@@ -59,5 +59,5 @@ export const addCommentReport = async (
       error: true,
     };
   const userId = user.id;
-  return await createCommentReport(commentId, userId, reason);
+  return await createItemCommentReport(commentId, userId, reason);
 };

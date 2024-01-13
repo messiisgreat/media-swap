@@ -1,11 +1,11 @@
 "use server";
 
-import { findComments } from "@/repositories/itemComment";
+import { findItemComments } from "@/repositories/itemComment";
 
 /**
  * コメントを取得
  * @param itemId 商品ID
  * @returns
  */
-export const fetchComments = async (itemId: string) =>
-  await findComments(itemId);
+export const fetchItemComments = async (itemId: string) =>
+  await findItemComments(itemId);
