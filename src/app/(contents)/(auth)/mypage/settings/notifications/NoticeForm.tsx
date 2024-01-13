@@ -34,7 +34,7 @@ export const NoticeForm = ({
           key={option}
           labelText={NOTIFICATION_LABELS[option]}
           name={NOTIFICATION_TYPES[option]}
-          defaultChecked={values[option]}
+          defaultChecked={Boolean(values[option])}
         />
       ))}
       <SubmitButton>変更を保存</SubmitButton>

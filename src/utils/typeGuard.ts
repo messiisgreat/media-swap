@@ -1,3 +1,5 @@
+import { getObjectKeys } from "@/utils/converter";
+
 /**
  * Fileの配列かどうかを判定する
  * @param arg 任意の値
@@ -35,6 +37,6 @@ export const isArrayOfStrings = (arg: unknown): arg is string[] => {
 export const generateKeyGuard = <T extends string | number>(
   obj: Record<T, string | number>,
 ) => {
-  const keySet = new Set(Object.keys(obj) as T[]);
+  const keySet = new Set(getObjectKeys(obj));
   return (arg: unknown): arg is T => keySet.has(arg as T);
 };

@@ -14,7 +14,10 @@ export const convertCodeToInitial = (code: number): NoticeFormState => {
   const noticeBooleans = decimalToBinary(code, length);
 
   const values = Object.fromEntries(
-    NOTIFICATION_KEYS.map((key, index) => [key, noticeBooleans[index]]),
+    NOTIFICATION_KEYS.map((key, index) => [
+      key,
+      noticeBooleans[index]?.toString(),
+    ]),
   ) as NoticeFormValues;
 
   return {

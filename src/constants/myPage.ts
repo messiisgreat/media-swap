@@ -90,6 +90,7 @@ export const SETTING_CONTENT = {
   PROFILE: "profile",
   ADDRESS: "address",
   NOTIFICATIONS: "notifications",
+  LEAVE: "leave",
 } as const;
 
 type SettingContentKey = keyof typeof SETTING_CONTENT;
@@ -101,6 +102,7 @@ export const SETTING_LINK = {
   [SETTING_CONTENT.PROFILE]: "/mypage/settings/profile",
   [SETTING_CONTENT.ADDRESS]: "/mypage/settings/address",
   [SETTING_CONTENT.NOTIFICATIONS]: "/mypage/settings/notifications",
+  [SETTING_CONTENT.LEAVE]: "/mypage/settings/leave",
 } as const satisfies Record<
   SettingContentValue,
   `/mypage/settings/${SettingContentValue}`
@@ -111,6 +113,7 @@ export const SETTING_CONTENT_ENUM_JA = {
   [SETTING_CONTENT.PROFILE]: "公開プロフィール設定",
   [SETTING_CONTENT.ADDRESS]: "配送先住所設定",
   [SETTING_CONTENT.NOTIFICATIONS]: "通知設定",
+  [SETTING_CONTENT.LEAVE]: "退会",
 } as const satisfies Record<SettingContentValue, string>;
 
 /** マイページのコンテンツ */

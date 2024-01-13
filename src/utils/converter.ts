@@ -63,3 +63,11 @@ export const decimalToBinary = (decimal: number, length: number): boolean[] => {
   }
   return binaryArray;
 };
+
+/**
+ * Object.keysを型安全に使用するためのラッパー関数
+ * @param obj オブジェクト
+ */
+export const getObjectKeys = <T extends Record<string, unknown>>(
+  obj: T,
+): (keyof T)[] => Object.keys(obj);

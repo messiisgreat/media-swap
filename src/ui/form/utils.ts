@@ -3,7 +3,7 @@ import { type KeyboardEventHandler } from "react";
 import toast from "react-hot-toast";
 
 type FormObject = {
-  [key: string]: string | number | boolean | File | File[] | undefined | null;
+  [key: string]: string | number | File | File[] | undefined | null;
 };
 
 /**

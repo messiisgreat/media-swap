@@ -37,8 +37,9 @@ export const profileUpdateAction = async (
       message: result.error,
     };
   }
+  const booleans = Object.values(rest).map((value) => Boolean(value));
 
-  const noticePermissionCode = binaryToDecimal(Object.values(rest));
+  const noticePermissionCode = binaryToDecimal(booleans);
 
   try {
     await updateUser({
