@@ -1,7 +1,6 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
-import { cache } from "react";
 
 /** 取引コメント作成結果 */
 export type TransactionCommentCreateResult = Awaited<
@@ -10,22 +9,8 @@ export type TransactionCommentCreateResult = Awaited<
 
 /** 取引コメント取得結果 */
 export type TransactionCommentReadResult = Awaited<
-  ReturnType<typeof findTransactionComments>
+  ReturnType<typeof findAndMarkAsReadTransactionComments>
 >;
-
-/**
- * 取引コメントを取得
- * @param transactionId 取引ID
- * @returns コメントの配列
- */
-export const findTransactionComments = cache(
-  async (transactionId: string) =>
-    await prisma.transactionComment.findMany({
-      where: { transactionId },
-      include: { user: { select: { name: true, image: true, id: true } } },
-      orderBy: { createdAt: "asc" },
-    }),
-);
 
 /**
  * 取引メッセージを作成
@@ -55,16 +40,15 @@ export const createTransactionComment = async (
     },
   });
 
-/**
- * 既読にする
- * @param transactionId 取引ID
- * @param userId メッセージを見た側のユーザーID
- */
-export const markAsReadTransactionComments = async (
-  transactionId: string,
-  userId: string,
-) => {
-  await prisma.transactionComment.updateMany({
+const findMany = (transactionId: string) =>
+  prisma.transactionComment.findMany({
+    where: { transactionId },
+    include: { user: { select: { name: true, image: true, id: true } } },
+    orderBy: { createdAt: "asc" },
+  });
+
+const updateMany = (transactionId: string, userId: string) =>
+  prisma.transactionComment.updateMany({
     where: {
       transactionId,
       userId: { not: { equals: userId } },
@@ -74,4 +58,19 @@ export const markAsReadTransactionComments = async (
       isRead: true,
     },
   });
+
+/**
+ * コメントを取得して既読にする
+ * @param transactionId 取引ID
+ * @param userId メッセージを見た側のユーザーID
+ */
+export const findAndMarkAsReadTransactionComments = async (
+  transactionId: string,
+  userId: string,
+) => {
+  const [comments] = await prisma.$transaction([
+    findMany(transactionId),
+    updateMany(transactionId, userId),
+  ]);
+  return comments;
 };
