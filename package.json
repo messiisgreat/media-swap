@@ -21,7 +21,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "init": "pnpm i && pnpm run db:generate && pnpm run db:push",
-    "rundev": "pnpm i && pnpm run db:generate && pnpm run db:push && pnpm run dev"
+    "initdev": "pnpm i && pnpm run db:generate && pnpm run db:push && pnpm run dev"
   },
   "husky": {
     "hooks": {
