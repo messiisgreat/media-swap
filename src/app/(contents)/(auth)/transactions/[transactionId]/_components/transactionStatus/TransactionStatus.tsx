@@ -109,7 +109,7 @@ const ReceivedBuyerStatus = () => (
   />
 );
 
-const CompletedSellerStatus = () => (
+const CompletedStatus = () => (
   <Component
     icon={FaBriefcase}
     alertClass="alert-success"
@@ -117,23 +117,7 @@ const CompletedSellerStatus = () => (
   />
 );
 
-const CompletedBuyerStatus = () => (
-  <Component
-    icon={FaBriefcase}
-    alertClass="alert-warning"
-    boldText="取引が完了しました"
-  />
-);
-const CancelSellerStatus = () => (
-  <Component
-    icon={FaTimes}
-    alertClass="alert-error"
-    boldText="取引がキャンセルされました"
-    text=""
-  />
-);
-
-const CancelBuyerStatus = () => (
+const CancelStatus = () => (
   <Component
     icon={FaTimes}
     alertClass="alert-error"
@@ -160,12 +144,12 @@ const STATUS_COMPONENTS = {
     buyer: ReceivedBuyerStatus,
   },
   [TRANSACTION_STATUS.COMPLETED]: {
-    seller: CompletedSellerStatus,
-    buyer: CompletedBuyerStatus,
+    seller: CompletedStatus,
+    buyer: CompletedStatus,
   },
   [TRANSACTION_STATUS.CANCELLED]: {
-    seller: CancelSellerStatus,
-    buyer: CancelBuyerStatus,
+    seller: CancelStatus,
+    buyer: CancelStatus,
   },
 } as const satisfies Record<
   TransactionStatusValue,

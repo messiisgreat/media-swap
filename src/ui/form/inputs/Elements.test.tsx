@@ -3,25 +3,23 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("Input", () => {
-  test("デフォルトでmaxLengthは256に設定されていること", async () => {
-    render(<Input />);
+  test("指定したmaxLength以上の文字数は入力できないこと", async () => {
+    const maxLength = 5;
+    render(<Input {...{ maxLength }} />);
     const input = screen.getByRole<HTMLInputElement>("textbox");
-    const inputValue = "a".repeat(257);
-
-    await userEvent.type(input, inputValue);
-
-    expect(input.value).toHaveLength(256);
+    const value = "a".repeat(maxLength + 1);
+    await userEvent.type(input, value);
+    expect(input.value).toHaveLength(maxLength);
   });
 });
 
 describe("Textarea", () => {
-  test("デフォルトでmaxLengthは4096に設定されていること", async () => {
-    render(<Textarea />);
+  test("指定したmaxLength以上の文字数は入力できないこと", async () => {
+    const maxLength = 5;
+    render(<Textarea {...{ maxLength }} />);
     const input = screen.getByRole<HTMLTextAreaElement>("textbox");
-    const inputValue = "a".repeat(4097);
-
-    await userEvent.type(input, inputValue);
-
-    expect(input.value).toHaveLength(4096);
-  }, 10000);
+    const value = "a".repeat(maxLength + 1);
+    await userEvent.type(input, value);
+    expect(input.value).toHaveLength(maxLength);
+  });
 });
