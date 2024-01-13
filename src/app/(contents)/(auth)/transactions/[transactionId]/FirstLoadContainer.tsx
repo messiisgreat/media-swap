@@ -8,6 +8,7 @@ import {
   TransactionStatus,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components";
 import { ShippingSection } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/ShippingSection";
+import { TestTransactionContainer } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/transactionProgressButton/TestTransactionContainer";
 import { isStatusCode } from "@/app/(contents)/(auth)/transactions/[transactionId]/utils";
 import { findTransaction } from "@/repositories/transaction";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
@@ -41,6 +42,8 @@ export const FirstLoadContainer = async ({
 
   const isNotSellerOrBuyer = !isSeller && !isBuyer;
 
+  const isDev = process.env.NODE_ENV !== "production";
+
   if (isNotSellerOrBuyer) {
     notFound();
   }
@@ -50,23 +53,26 @@ export const FirstLoadContainer = async ({
     throw new Error("statusCode is not found");
   }
   return (
-    <VerifyProvider>
-      <div className="grid w-full gap-8">
-        <TransactionStatus {...{ statusCode, userType }} />
-        <ShippingSection {...{ transaction, isSeller }} />
-        <TransactionProgressButton
-          {...{ statusCode, transactionId, userType }}
-        />
-        <SellerInfo {...{ seller }} />
-        <OptionMenu {...{ sessionUser, userType }} />
-        <TitleUnderbar title="取引メッセージ" />
-        <Section className="flex flex-1 flex-col gap-4">
-          <Suspense fallback={<LoadingSpinner />}>
-            <MessageContainer {...{ transactionId, sessionUser }} />
-          </Suspense>
-          <MessageForm {...{ transactionId }} />
-        </Section>
-      </div>
-    </VerifyProvider>
+    <>
+      <VerifyProvider>
+        <div className="grid w-full gap-8">
+          <TransactionStatus {...{ statusCode, userType }} />
+          <ShippingSection {...{ transaction, isSeller }} />
+          <TransactionProgressButton
+            {...{ statusCode, transactionId, userType }}
+          />
+          <SellerInfo {...{ seller }} />
+          <OptionMenu {...{ sessionUser, userType }} />
+          <TitleUnderbar title="取引メッセージ" />
+          <Section className="flex flex-1 flex-col gap-4">
+            <Suspense fallback={<LoadingSpinner />}>
+              <MessageContainer {...{ transactionId, sessionUser }} />
+            </Suspense>
+            <MessageForm {...{ transactionId }} />
+          </Section>
+        </div>
+      </VerifyProvider>
+      {isDev && <TestTransactionContainer {...{ transactionId }} />}
+    </>
   );
 };
