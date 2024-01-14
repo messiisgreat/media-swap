@@ -9,6 +9,7 @@ const envSchema = z.object({
   GOOGLE_RECAPTCHA_SECRET_KEY: z.string().min(1),
   CLOUDINARY_UPLOAD_URL: z.string().min(1),
   CLOUDINARY_UPLOAD_PRESET: z.string().min(1),
+  GMAIL_ACCOUNT: z.string().min(1),
   GMAIL_ADDRESS: z.string().min(1),
   GMAIL_PASSWORD: z.string().min(1),
 });

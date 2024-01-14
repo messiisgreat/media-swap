@@ -7,8 +7,8 @@ const sendMail = (options: SendMailOptions): Promise<boolean> => {
   const transporter = createTransport({
     service: "gmail",
     auth: {
-      user: process.env.GMAIL_ADDRESS,
-      pass: process.env.GMAIL_PASSWORD,
+      user: env.GMAIL_ACCOUNT,
+      pass: env.GMAIL_PASSWORD,
     },
   });
 
