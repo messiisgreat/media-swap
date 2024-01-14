@@ -9,6 +9,11 @@ export type ItemCreateInput = Prisma.ItemCreateWithoutSellerInput;
 /** 画像とタグ,取引IDを含んだItemの配列 */
 export type ItemsReadResult = Awaited<ReturnType<typeof findItems>>;
 
+/** 画像とタグ,購入日を含んだItemの配列 */
+export type ItemsReadResultByBuyerId = Awaited<
+  ReturnType<typeof findItemsByBuyerId>
+>;
+
 /** 画像とタグを含んだItem */
 export type ItemReadResult = Awaited<ReturnType<typeof findItemById>>;
 
@@ -25,7 +30,8 @@ export const createItem = async (
   item: ItemCreateInput,
   imageURLs: string[],
   tagTexts: string[],
-) => await prisma.item.create({
+) =>
+  await prisma.item.create({
     data: {
       ...item,
       seller: { connect: { id: sellerId } },
@@ -155,7 +161,14 @@ export const findItemsByBuyerId = cache(
       },
       skip: (page - 1) * size,
       take: size,
-      include,
+      include: {
+        ...include,
+        transaction: {
+          select: {
+            purchaseDate: true,
+          },
+        },
+      },
       orderBy,
     }),
 );

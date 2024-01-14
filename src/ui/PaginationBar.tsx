@@ -11,7 +11,10 @@ type PaginationBarProps = {
  * @param param0.totalPages 総ページ数
  * @returns ページネーションバー
  */
-export const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
+export const PaginationBar = ({
+  currentPage,
+  totalPages,
+}: PaginationBarProps) => {
   const maxPage = Math.min(totalPages, Math.max(currentPage + 4, 10));
   const minPage = Math.max(1, Math.min(currentPage - 5, maxPage - 9));
 
@@ -43,7 +46,10 @@ export const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) =
           Page {currentPage}
         </button>
         {currentPage < totalPages && (
-          <Link href={`?page=${currentPage + 1}`} className="btn join-item">
+          <Link
+            href={`?page=${Number(currentPage) + 1}`}
+            className="btn join-item"
+          >
             »
           </Link>
         )}

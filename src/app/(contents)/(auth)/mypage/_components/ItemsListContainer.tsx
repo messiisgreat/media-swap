@@ -1,17 +1,15 @@
-import ItemsList from "@/features/itemsList";
+import { ItemsList } from "@/app/(contents)/(auth)/mypage/_components/ItemsList";
 import {
   countItems,
-  countItemsByProductName,
+  countItemsByBuyerId,
   countItemsBySellerId,
-  countItemsByUserBrowsed,
   countItemsByUserLiked,
   findItems,
-  findItemsByProductName,
+  findItemsByBuyerId,
   findItemsBySellerId,
-  findItemsByUserBrowsed,
   findItemsByUserLiked,
   type ItemOrderBy,
-  type ItemsReadResult,
+  type ItemsReadResultByBuyerId,
 } from "@/repositories/item";
 import { PaginationBar } from "@/ui";
 
@@ -20,7 +18,6 @@ type CommonProps = {
   size: number;
   sort: string;
   order: string;
-  query?: string;
   buyerId?: string;
   sellerId?: string;
   isPublic?: boolean;
@@ -30,13 +27,9 @@ type CommonProps = {
 
 type Props =
   | (CommonProps & {
-      query?: never;
       buyerId?: never;
       sellerId?: never;
       isPublic?: never;
-    })
-  | (CommonProps & {
-      query: string;
     })
   | (CommonProps & {
       buyerId: string;
@@ -49,49 +42,45 @@ type Props =
     })
   | (CommonProps & {
       userId: string;
-      type: "browsing";
-    })
-  | (CommonProps & {
-      userId: string;
       type: "likes";
     });
 
-/**
- * 渡されたパラメータに応じて取得するデータを選択する
- * @param props page, size, sort, order, query, buyerId, sellerId, isPublic, userId
- * @returns [商品の配列, 商品数]
- */
-const finditemsAndCount = async ({
+const findItemsAndCount = async ({
   page,
   size,
   sort,
   order,
-  query,
+  buyerId,
   sellerId,
   isPublic,
   userId,
   type,
-}: Props): Promise<[ItemsReadResult, number]> => {
-  const orderBy: ItemOrderBy = {
-    [sort]: order,
-  };
-  // 下書き商品一覧
-  if (sellerId && !isPublic) {
+}: Props): Promise<[ItemsReadResultByBuyerId, number]> => {
+  const orderBy: ItemOrderBy = (() => {
+    if (buyerId) {
+      return {
+        transaction: {
+          [sort]: order,
+        },
+      };
+    } else {
+      return {
+        [sort]: order,
+      };
+    }
+  })();
+
+  // 購入商品一覧
+  if (buyerId) {
     return await Promise.all([
-      findItemsBySellerId(sellerId, page, size, orderBy, isPublic),
-      countItemsBySellerId(sellerId, isPublic),
+      findItemsByBuyerId(buyerId, page, size, orderBy),
+      countItemsByBuyerId(buyerId),
     ]);
     // 出品商品一覧
   } else if (sellerId && isPublic) {
     return await Promise.all([
-      findItemsBySellerId(sellerId, page, size, orderBy, isPublic),
+      findItemsBySellerId(sellerId, page, size, orderBy),
       countItemsBySellerId(sellerId, isPublic),
-    ]);
-    // 閲覧履歴を取得
-  } else if (userId && type === "browsing") {
-    return await Promise.all([
-      findItemsByUserBrowsed(userId, page, size, orderBy),
-      countItemsByUserBrowsed(userId),
     ]);
     // いいね一覧
   } else if (userId && type === "likes") {
@@ -99,24 +88,23 @@ const finditemsAndCount = async ({
       findItemsByUserLiked(userId, page, size, orderBy),
       countItemsByUserLiked(userId),
     ]);
-    // 検索結果
-  } else if (query) {
+    // 下書き商品一覧
+  } else if (sellerId && !isPublic) {
     return await Promise.all([
-      findItemsByProductName(query, page, size, orderBy),
-      countItemsByProductName(query),
+      findItemsBySellerId(sellerId, page, size, orderBy),
+      countItemsBySellerId(sellerId, isPublic),
     ]);
-    // 全商品一覧
   } else {
     return await Promise.all([findItems(page, size, orderBy), countItems()]);
   }
 };
 
 /**
- * データ取得が責務のコンテナ
- * @param props page, size, sort, order, query
+ * 購入商品のデータ取得が責務のコンテナ
+ * @param props page, size, sort, order
  */
 export const ItemsListContainer = async (props: Props) => {
-  const [items, count] = await finditemsAndCount(props);
+  const [items, count] = await findItemsAndCount(props);
   const total = Math.ceil(count / props.size);
   return (
     <>

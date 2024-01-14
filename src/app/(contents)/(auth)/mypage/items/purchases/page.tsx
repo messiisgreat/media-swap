@@ -1,8 +1,8 @@
-import { type Item } from "@prisma/client";
+import { ItemsListContainer } from "@/app/(contents)/(auth)/mypage/_components/ItemsListContainer";
+import { type Transaction } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
 
@@ -11,7 +11,7 @@ type Props = {
     query: string;
     page: number;
     size: number;
-    sort: keyof Item;
+    sort: keyof Transaction;
     order: "asc" | "desc";
   };
 };
@@ -21,7 +21,7 @@ type Props = {
  * /mypage/items/purchases
  */
 const Page = async ({
-  searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
+  searchParams: { page = 1, size = 8, sort = "purchaseDate", order = "desc" },
 }: Props) => {
   const user = await getSessionUser();
   if (!user) {
