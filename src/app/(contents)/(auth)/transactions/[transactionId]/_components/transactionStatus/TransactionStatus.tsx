@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import {
+  TRANSACTION_STATUS,
+  type TransactionStatusValue,
+} from "@/constants/item";
 import { type IconType } from "react-icons";
 import {
   FaBriefcase,
@@ -8,27 +12,24 @@ import {
   FaTimes,
   FaTruck,
 } from "react-icons/fa";
+import { twMerge } from "tailwind-merge";
 
-import {
-  TRANSACTION_STATUS,
-  type TransactionStatusValue,
-} from "@/constants/item";
-
-const Component = ({
-  icon,
-  alertClass,
-  boldText,
-  text,
-}: {
+type StatusBaseProps = {
+  /** アイコン */
   icon: IconType;
-  alertClass: string;
+  /** アラートのクラス */
+  alertClass: "alert-success" | "alert-warning" | "alert-error";
+  /** 太字のテキスト */
   boldText: string;
+  /** テキスト */
   text?: string;
-}) => {
-  const IconComponent = icon;
+};
+
+const StatusBase = ({ icon, alertClass, boldText, text }: StatusBaseProps) => {
+  const Icon = icon;
   return (
-    <div className={`alert ${alertClass} flex w-full`}>
-      <IconComponent size="2rem" />
+    <div className={twMerge("alert felx w-full", alertClass)}>
+      <Icon size="2rem" />
       <div className="flex flex-col">
         <p className="font-bold">{boldText}</p>
         <p>{text}</p>
@@ -38,7 +39,7 @@ const Component = ({
 };
 
 const BeforePaymentSellerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaMoneyCheckAlt}
     alertClass="alert-success"
     boldText="支払いをお待ち下さい"
@@ -47,7 +48,7 @@ const BeforePaymentSellerStatus = () => (
 );
 
 const BeforePaymentBuyerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaMoneyCheckAlt}
     alertClass="alert-warning"
     boldText="支払いを完了してください"
@@ -56,7 +57,7 @@ const BeforePaymentBuyerStatus = () => (
 );
 
 const CompletePaymentSellerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaTruck}
     alertClass="alert-warning"
     boldText="支払いが確認されました"
@@ -65,7 +66,7 @@ const CompletePaymentSellerStatus = () => (
 );
 
 const CompletePaymentBuyerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaClock}
     alertClass="alert-success"
     boldText="発送をお待ち下さい"
@@ -74,7 +75,7 @@ const CompletePaymentBuyerStatus = () => (
 );
 
 const SentSellerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaTruck}
     alertClass="alert-success"
     boldText="商品が発送されました"
@@ -83,7 +84,7 @@ const SentSellerStatus = () => (
 );
 
 const SentBuyerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaTruck}
     alertClass="alert-warning"
     boldText="商品が発送されました"
@@ -92,7 +93,7 @@ const SentBuyerStatus = () => (
 );
 
 const ReceivedSellerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaBriefcase}
     alertClass="alert-success"
     boldText="商品が購入者に到着しました"
@@ -101,7 +102,7 @@ const ReceivedSellerStatus = () => (
 );
 
 const ReceivedBuyerStatus = () => (
-  <Component
+  <StatusBase
     icon={FaBriefcase}
     alertClass="alert-warning"
     boldText="商品が到着しました"
@@ -110,7 +111,7 @@ const ReceivedBuyerStatus = () => (
 );
 
 const CompletedStatus = () => (
-  <Component
+  <StatusBase
     icon={FaBriefcase}
     alertClass="alert-success"
     boldText="取引が完了しました。"
@@ -118,7 +119,7 @@ const CompletedStatus = () => (
 );
 
 const CancelStatus = () => (
-  <Component
+  <StatusBase
     icon={FaTimes}
     alertClass="alert-error"
     boldText="取引がキャンセルされました"
@@ -156,7 +157,7 @@ const STATUS_COMPONENTS = {
   Record<"seller" | "buyer", () => JSX.Element>
 >;
 
-type Props = {
+type TransactionStatusProps = {
   /** 取引のステータス */
   statusCode: TransactionStatusValue;
   /** 出品者かどうか */
@@ -167,7 +168,10 @@ type Props = {
  * 取引の状況とユーザーの役割に応じたアラートを表示する
  * @returns div
  */
-export const TransactionStatus = ({ statusCode, userType }: Props) => {
+export const TransactionStatus = ({
+  statusCode,
+  userType,
+}: TransactionStatusProps) => {
   const StatusComponent = STATUS_COMPONENTS[statusCode][userType];
   return <StatusComponent />;
 };
