@@ -4,8 +4,11 @@ import prisma from "@/lib/prisma";
 import { type User } from "@prisma/client";
 import { cache } from "react";
 
+// 住所を含んだユーザー情報
+export type UserReadResult = Awaited<ReturnType<typeof findUserById>>;
+
 /**
- * 商品を取得する
+ * ユーザーを取得する
  *
  * @param {string} id - ユーザーのID
  * @returns 取得したユーザー情報
