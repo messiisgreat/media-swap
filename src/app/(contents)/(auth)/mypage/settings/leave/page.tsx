@@ -1,8 +1,5 @@
 import { LeaveButton } from "@/app/(contents)/(auth)/mypage/settings/leave/LeaveForm";
-import {
-  PAGE_CONTENT,
-  PAGE_CONTENT_ENUM_JA,
-} from "@/constants/personalInfoPage";
+import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";

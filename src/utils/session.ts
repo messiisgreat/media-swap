@@ -6,9 +6,9 @@ import { getServerSession } from "next-auth";
 /** セッションユーザーの共通型 */
 export type SessionUser = {
   id: string;
-  name?: string | null | undefined;
-  email?: string | null | undefined;
-  image?: string | null | undefined;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
 };
 
 /**

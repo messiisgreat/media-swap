@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  id: number;
   title: string;
   date: string;
   price: string;
@@ -13,7 +12,6 @@ type Props = {
  * 売上履歴を表示する
  */
 export const SalesHistoryPresenter = ({
-  // id, いらないかもしれないですが一応残してます。
   title,
   date,
   price,

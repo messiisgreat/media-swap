@@ -226,7 +226,7 @@ const privacies = [
           <li>
             (3) Cookie等の利用に関する詳細については
             <Link
-              href="/static/cookie-policy/"
+              href="/cookie-policy"
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
             >
               外部送信ポリシー

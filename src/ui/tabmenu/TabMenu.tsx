@@ -1,12 +1,13 @@
 "use client";
 
+import { type Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export type PageInfo = {
   title: string;
-  url: string;
+  href: Route;
 };
 
 type Props = {
@@ -23,8 +24,8 @@ export const TabMenu = ({ pages }: Props) => {
   const pathname = usePathname();
   return (
     <div role="tablist" className="tabs-bordered tabs-lg grid">
-      {pages.map((page, index) => {
-        const isActive = pathname === page.url;
+      {pages.map((page) => {
+        const isActive = pathname === page.href;
         const tabActiveClass = isActive ? "tab-active" : "";
         return (
           <Link
@@ -33,8 +34,8 @@ export const TabMenu = ({ pages }: Props) => {
               "tab max-sm:text-xs whitespace-nowrap",
               tabActiveClass,
             )}
-            href={page.url}
-            key={index}
+            href={page.href}
+            key={page.title}
           >
             {page.title}
           </Link>

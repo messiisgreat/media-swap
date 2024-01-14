@@ -17,7 +17,6 @@ type Story = StoryObj<typeof SalesHistoryPresenter>;
 
 export const Incomings: Story = {
   args: {
-    id: 1,
     title: "販売利益",
     date: "2023/3/11 08:23",
     price: (4000).toLocaleString("ja-JP", {
@@ -30,7 +29,6 @@ export const Incomings: Story = {
 
 export const Outgoings: Story = {
   args: {
-    id: 1,
     title: "商品購入",
     date: "2023/8/01 10:06",
     price: (-2800).toLocaleString("ja-JP", {

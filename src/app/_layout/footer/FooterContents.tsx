@@ -20,7 +20,7 @@ export const FooterMobileContent = () => (
               {section.items.map((item) => (
                 <li key={item.text}>
                   <Link
-                    href={item.url}
+                    href={item.href}
                     className="px-0 font-medium hover:text-dark-bg-wh hover:underline "
                   >
                     {item.text}
@@ -48,7 +48,7 @@ export const FooterContent = () => (
           <span className="footer-title">{section.title}</span>
           {section.items.map((item) => (
             <Link
-              href={item.url}
+              href={item.href}
               key={item.text}
               className="font-medium hover:underline"
             >

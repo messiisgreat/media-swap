@@ -2,6 +2,7 @@ import PurchaseButton from "@/app/(contents)/item/[itemId]/_components/transacti
 import { findItemById } from "@/repositories/item";
 import { Button, ButtonAsLink } from "@/ui/button";
 import { getSessionUser } from "@/utils";
+import { type Route } from "next";
 
 type Props = {
   /** 商品ID */
@@ -23,11 +24,9 @@ export const TransactionButton = async ({ itemId, className = "" }: Props) => {
 
   // 売り切れかつ出品者または購入者の場合
   if (item.transaction && isSold && (isSeller || isBuyer)) {
+    const href = `/transactions/${item.transaction.id}` as Route; //todo なぜか型エラーになるのでas Routeを追加
     return (
-      <ButtonAsLink
-        href={`/transactions/${item.transaction.id}`}
-        className={className}
-      >
+      <ButtonAsLink href={href} className={className}>
         取引へ進む
       </ButtonAsLink>
     );
@@ -44,8 +43,9 @@ export const TransactionButton = async ({ itemId, className = "" }: Props) => {
 
   // 売り切れでなく、出品者の場合
   if (isSeller) {
+    const href = `/item/edit/${item.id}` as Route; //todo なぜか型エラーになるのでas Routeを追加
     return (
-      <ButtonAsLink href={`/items/edit/${item.id}`} className={className}>
+      <ButtonAsLink href={href} className={className}>
         編集する
       </ButtonAsLink>
     );

@@ -2,6 +2,7 @@
 "use client";
 
 import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
+import { type Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type IconType } from "react-icons";
@@ -12,7 +13,7 @@ type NaviMenu = {
   id: string;
   icon: IconType;
   text: string;
-  path: string;
+  href: Route;
 };
 
 const naviMenu: NaviMenu[] = [
@@ -20,25 +21,25 @@ const naviMenu: NaviMenu[] = [
     id: "home",
     icon: AiFillHome,
     text: "ホーム",
-    path: "/",
+    href: "/",
   },
   {
     id: "bell",
     icon: AiFillBell,
     text: "お知らせ",
-    path: "/notifications",
+    href: "/notifications",
   },
   {
     id: "camera",
     icon: AiFillCamera,
     text: "出品",
-    path: "/listing",
+    href: "/listing",
   },
   {
     id: PAGE_CONTENT.ITEMS,
     icon: FaUser,
     text: "マイページ",
-    path: PAGE_LINK[PAGE_CONTENT.ITEMS],
+    href: PAGE_LINK[PAGE_CONTENT.ITEMS],
   },
 ];
 
@@ -56,11 +57,11 @@ export const AnchorMenu = () => {
         return (
           <Link
             key={item.id}
-            href={item.path}
+            href={item.href}
             className="btn btn-ghost flex-1 p-1"
           >
             <div className="flex flex-col items-center">
-              <Icon size={24} fillOpacity={pathName === item.path ? 1 : 0.5} />
+              <Icon size={24} fillOpacity={pathName === item.href ? 1 : 0.5} />
               <div className="text-xs">{item.text}</div>
             </div>
           </Link>

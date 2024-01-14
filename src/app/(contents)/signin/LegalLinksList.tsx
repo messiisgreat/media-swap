@@ -1,16 +1,17 @@
 import { TextLink } from "@/ui";
+import { type Route } from "next";
 
 export type LinkObject = {
   text: string;
-  url: string;
+  href: Route;
 };
 
 export const links: LinkObject[] = [
-  { text: "利用規約", url: "/tos" },
-  { text: "プライバシーポリシー", url: "/privacy-policy" },
-  { text: "クッキーポリシー", url: "/cookie-policy" },
-  { text: "電子交付規約", url: "/digital" },
-  { text: "コンプライアンスポリシー", url: "/compliance" },
+  { text: "利用規約", href: "/tos" },
+  { text: "プライバシーポリシー", href: "/privacy-policy" },
+  { text: "クッキーポリシー", href: "/cookie-policy" },
+  { text: "電子交付規約", href: "/digital" },
+  { text: "コンプライアンスポリシー", href: "/compliance" },
 ];
 
 /**
@@ -19,8 +20,8 @@ export const links: LinkObject[] = [
 export const LegalLinksList = () => (
   <ul>
     {links.map((item) => (
-      <li key={item.url}>
-        <TextLink href={item.url} className="text-sm">
+      <li key={item.href}>
+        <TextLink href={item.href} className="text-sm">
           {item.text}
         </TextLink>
       </li>

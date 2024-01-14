@@ -132,21 +132,19 @@ const Page = () => (
         <p className="py-6">
           この外部送信ポリシー (以下「本ポリシー」といいます) は、
           {CORPORATE_NAME}のうち、
-          <TextLink href="/static/privacy-policy/">
-            プライバシーポリシー
-          </TextLink>
+          <TextLink href="/privacy-policy">プライバシーポリシー</TextLink>
           を適用する事業体
           により提供される様々なサービス（以下、「本サービス」と称します）
           をご活用の際、ユーザーの端末より弊社または弊社が許可した第三者へ転送されるデータや、その目的、転送先等に関する内容を示しています。本ガイドラインでの用語の解釈は、特に明記されているケースや文の流れから異なる意味が取れる場合を除き、
           <Link
-            href="/static/tos/"
+            href="/tos"
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             利用規約
           </Link>
           、その他弊社の定める利用規約および
           <Link
-            href="/static/privacy-policy/"
+            href="/privacy-policy"
             className="font-medium text-blue-600 hover:underline dark:text-blue-500"
           >
             プライバシーポリシー

@@ -23,7 +23,7 @@ const definitions = [
           <li>
             (1) 「外国 PEPs 等」とは、
             <Link
-              href="/static/peps/"
+              href="/peps"
               className="font-medium text-blue-600 hover:underline dark:text-blue-500"
             >
               海外のPEPs（外国の政府や機関で重要な役職にある者）として
@@ -280,7 +280,7 @@ const exhibitRules = [
       <p>
         出品者は
         <Link
-          href="/static/guide/product/"
+          href="/guide/product"
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           ガイドの禁止されている出品物
@@ -851,7 +851,7 @@ const tocList = [
       <p>
         弊社は、本サービスに接したユーザー及び第三者の、
         <Link
-          href="/static/guide/action/"
+          href="/guide/action"
           className="font-medium text-blue-600 hover:underline dark:text-blue-500"
         >
           ガイドの禁止されている行為

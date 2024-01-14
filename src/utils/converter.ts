@@ -1,3 +1,5 @@
+import { type ValueOf } from "@/utils/types";
+
 /**
  * プロパティ名にidとnameを持つオブジェクトの配列を、連想配列に変換する
  * @param obj プロパティ名にidとnameを持つオブジェクトの配列
@@ -71,3 +73,11 @@ export const decimalToBinary = (decimal: number, length: number): boolean[] => {
 export const getObjectKeys = <T extends Record<string, unknown>>(
   obj: T,
 ): (keyof T)[] => Object.keys(obj);
+
+/**
+ * Object.valuesを型安全に使用するためのラッパー関数
+ * @param obj オブジェクト
+ */
+export const getObjectValues = <T extends Record<string, unknown>>(
+  obj: T,
+): ValueOf<T>[] => Object.values(obj) as ValueOf<T>[];

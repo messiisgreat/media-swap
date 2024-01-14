@@ -20,19 +20,19 @@ export const Default: Story = {
     pages: [
       {
         title: "出品関連",
-        url: "/a",
+        href: "/listing",
       },
       {
         title: "個人情報",
-        url: "/",
+        href: "/mypage/settings",
       },
       {
         title: "売上管理",
-        url: "/c",
+        href: "/mypage/earning",
       },
       {
         title: "その他",
-        url: "/d",
+        href: "/mypage/settings",
       },
     ],
   },

@@ -34,7 +34,7 @@ const Error = ({
         <p>お手数ですが、時間をおいて再度お試しください。</p>
         <Button onClick={handleReset}>再読み込み</Button>
         <p>解決しない場合は、お問い合わせください。</p>
-        <TextLink href="inquiry">お問い合わせ</TextLink>
+        <TextLink href="/inquiry">お問い合わせ</TextLink>
       </Section>
     </>
   );

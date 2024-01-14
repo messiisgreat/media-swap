@@ -40,7 +40,6 @@ export const SalesHistoryContainer = () => (
       historyData.map((record) => (
         <SalesHistoryPresenter
           key={record.id}
-          id={record.id}
           title={record.title}
           date={record.date}
           price={formatPrice(record.price)}

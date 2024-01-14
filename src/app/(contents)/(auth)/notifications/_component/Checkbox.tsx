@@ -1,5 +1,6 @@
 "use client";
 
+import { type Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoCheckbox } from "react-icons/io5";
@@ -15,7 +16,7 @@ type Props = {
 export const Checkbox = ({ filter }: Props) => {
   const pathname = usePathname();
   const isUnReadOnly = filter === "unread";
-  const href = `${pathname}?filter=${isUnReadOnly ? "" : "unread"}`;
+  const href = `${pathname}?filter=${isUnReadOnly ? "" : "unread"}` as Route;
 
   return (
     <Link href={href} className="flex self-start">

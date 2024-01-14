@@ -1,3 +1,5 @@
+import { type Route } from "next";
+
 /** マイページのコンテンツ */
 export const MYPAGE_CONTENT = {
   ITEMS: "items",
@@ -16,7 +18,7 @@ export const MYPAGE_LINK = {
   [MYPAGE_CONTENT.SETTINGS]: "/mypage/settings",
 } as const satisfies Record<
   MyPageContentValue,
-  `/mypage/${MyPageContentValue}`
+  Route<`/mypage/${MyPageContentValue}`>
 >;
 
 /** マイページのタイトル */
@@ -48,7 +50,7 @@ export const LISTING_LINK = {
   [LISTING_CONTENT.LIKES]: "/mypage/items/likes",
 } as const satisfies Record<
   ListingContentValue,
-  `/mypage/items/${ListingContentValue}`
+  Route<`/mypage/items/${ListingContentValue}`>
 >;
 
 /** 商品関連のタイトル */
@@ -76,7 +78,7 @@ export const EARNING_LINK = {
   [EARNING_CONTENT.HISTORY]: "/mypage/earning/history",
 } as const satisfies Record<
   EarningContentValue,
-  `/mypage/earning/${EarningContentValue}`
+  Route<`/mypage/earning/${EarningContentValue}`>
 >;
 
 /** 売上関連のタイトル */
@@ -105,7 +107,7 @@ export const SETTING_LINK = {
   [SETTING_CONTENT.LEAVE]: "/mypage/settings/leave",
 } as const satisfies Record<
   SettingContentValue,
-  `/mypage/settings/${SettingContentValue}`
+  Route<`/mypage/settings/${SettingContentValue}`>
 >;
 
 /** 設定関連のタイトル */
