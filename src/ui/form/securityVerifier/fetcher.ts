@@ -1,4 +1,5 @@
 import { type ReCaptchaResult } from "@/ui/form/securityVerifier/type";
+import { fetchResult } from "@/utils/fetcher";
 import { env } from "@/utils/serverEnv";
 
 /**
@@ -8,23 +9,18 @@ import { env } from "@/utils/serverEnv";
  */
 export const fetchVerifyResult = async (verificationCode: string) => {
   const url = "https://www.google.com/recaptcha/api/siteverify";
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
-        response: verificationCode,
-      }).toString(),
-    });
-    const json = (await response.json()) as ReCaptchaResult;
-    if (!json.success) {
-      return false;
-    }
-    return true;
-  } catch (error) {
+  const result = await fetchResult<ReCaptchaResult>(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      secret: env.GOOGLE_RECAPTCHA_SECRET_KEY,
+      response: verificationCode,
+    }).toString(),
+  });
+  if (result.isFailure) {
     return false;
   }
+  return true;
 };

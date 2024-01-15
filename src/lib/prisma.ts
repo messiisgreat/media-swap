@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+// eslint-disable-next-line no-restricted-syntax
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };

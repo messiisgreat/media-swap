@@ -8,9 +8,6 @@ type TextLinkProps = ComponentProps<typeof Link>;
 /**
  * next/linkのラッパー
  * 外部リンクを開く場合はtarget="_blank"を付与する
- * @param param0.href リンク先URL
- * @param param0.children リンクテキスト(もしくは子要素)
- * @param param0.className リンクに付与するクラス名
  * @returns TextLink
  */
 export const TextLink = ({
@@ -19,6 +16,9 @@ export const TextLink = ({
   className,
   ...props
 }: TextLinkProps) => {
+  // toString()が使えないのでキャスト
+  // TODO: 型判定できるようなったら修正予定
+  // eslint-disable-next-line no-restricted-syntax
   const hrefString = href as string;
   const target = hrefString.startsWith("http") ? "_blank" : undefined;
   return (

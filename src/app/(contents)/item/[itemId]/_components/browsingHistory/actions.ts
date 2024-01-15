@@ -14,8 +14,7 @@ import { getSessionUser } from "@/utils";
  */
 export const browsing = async (itemId: string) => {
   const sessionUser = await getSessionUser();
-  const sessionUserId = sessionUser?.id;
-  return await createBrowsingHistory(itemId, sessionUserId);
+  return await createBrowsingHistory(itemId, sessionUser?.id);
 };
 
 /**

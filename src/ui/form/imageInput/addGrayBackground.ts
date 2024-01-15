@@ -9,7 +9,6 @@ export const addGrayBackground = (file: File): Promise<File> =>
     img.setAttribute("src", objectUrl);
 
     // onloadをsetする方法が現状ないため無効化（回避策あれば修正予定）
-    // eslint-disable-next-line functional/immutable-data
     img.onload = () => {
       // オブジェクトURLの解放
       URL.revokeObjectURL(objectUrl);
@@ -26,7 +25,6 @@ export const addGrayBackground = (file: File): Promise<File> =>
 
       // 灰色の背景を設定
       // fillStyleをsetする方法が現状ないため無効化（回避策あれば修正予定）
-      // eslint-disable-next-line functional/immutable-data
       ctx.fillStyle = "#808080";
       ctx.fillRect(0, 0, maxLength, maxLength);
 
@@ -53,7 +51,6 @@ export const addGrayBackground = (file: File): Promise<File> =>
       );
     };
     // onerrorをsetする方法が現状ないため無効化（回避策あれば修正予定）
-    // eslint-disable-next-line functional/immutable-data
     img.onerror = () => {
       URL.revokeObjectURL(objectUrl);
       reject(new Error("Image loading error."));

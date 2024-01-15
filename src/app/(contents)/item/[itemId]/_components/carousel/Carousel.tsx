@@ -28,6 +28,7 @@ export const Carousel = ({
       setSelectedIndex(index);
 
       const container = containerRef.current;
+      // eslint-disable-next-line no-restricted-syntax
       const element = e.target as HTMLElement;
       const elementLeft = element.offsetLeft;
       const elementWidth = element.offsetWidth;

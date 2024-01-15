@@ -13,6 +13,8 @@ export const convertCodeToInitial = (code: number): NoticeFormState => {
   const length = NOTIFICATION_KEYS.length;
   const noticeBooleans = decimalToBinary(code, length);
 
+  // TODO: どうしようもないのでasを使用
+  // eslint-disable-next-line no-restricted-syntax
   const values = Object.fromEntries(
     NOTIFICATION_KEYS.map((key, index) => [
       key,

@@ -24,7 +24,8 @@ export const TransactionButton = async ({ itemId, className = "" }: Props) => {
 
   // 売り切れかつ出品者または購入者の場合
   if (item.transaction && isSold && (isSeller || isBuyer)) {
-    const href = `/transactions/${item.transaction.id}` as Route; //todo なぜか型エラーになるのでas Routeを追加
+    // eslint-disable-next-line no-restricted-syntax
+    const href = `/transactions/${item.transaction.id}` as Route; // TODO: なぜか型エラーになるのでas Routeを追加
     return (
       <ButtonAsLink href={href} className={className}>
         取引へ進む
@@ -43,6 +44,7 @@ export const TransactionButton = async ({ itemId, className = "" }: Props) => {
 
   // 売り切れでなく、出品者の場合
   if (isSeller) {
+    // eslint-disable-next-line no-restricted-syntax
     const href = `/item/edit/${item.id}` as Route; //todo なぜか型エラーになるのでas Routeを追加
     return (
       <ButtonAsLink href={href} className={className}>
@@ -55,7 +57,7 @@ export const TransactionButton = async ({ itemId, className = "" }: Props) => {
   return (
     <PurchaseButton
       item={item}
-      sessionUserId={sessionUser?.id}
+      userId={sessionUser?.id}
       className={className}
     />
   );

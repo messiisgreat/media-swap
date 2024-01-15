@@ -1,4 +1,5 @@
 import { getObjectKeys } from "@/utils/converter";
+import { type URLString } from "@/utils/types";
 
 /**
  * Fileの配列かどうかを判定する
@@ -20,6 +21,19 @@ export const isArrayOfStrings = (arg: unknown): arg is string[] => {
     return arg.every((item) => typeof item === "string");
   }
   return false;
+};
+
+/**
+ * URL文字列かどうかを判定する
+ * @param string 任意の文字列
+ */
+export const isURLString = (string: string): string is URLString => {
+  try {
+    new URL(string);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 /**

@@ -16,6 +16,8 @@ type Props = {
 export const Checkbox = ({ filter }: Props) => {
   const pathname = usePathname();
   const isUnReadOnly = filter === "unread";
+  // TODO: as Routeを削除する
+  // eslint-disable-next-line no-restricted-syntax
   const href = `${pathname}?filter=${isUnReadOnly ? "" : "unread"}` as Route;
 
   return (

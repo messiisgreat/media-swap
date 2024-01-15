@@ -1,7 +1,15 @@
 import { type CloudinaryUploadResponse } from "@/lib/cloudinary/type";
+import { failure, success, type Result } from "@/lib/result";
+import { fetchResult } from "@/utils/fetcher";
 import { env } from "@/utils/serverEnv";
+import { isURLString } from "@/utils/typeGuard";
+import { type URLString } from "@/utils/types";
 
-const uploadSingleFile = async (file: File, uploadUrl: string, upload_preset: string): Promise<string> => {
+const uploadSingleFile = async (
+  file: File,
+  uploadUrl: URLString,
+  upload_preset: string,
+): Promise<Result<string, string>> => {
   const formData = new FormData();
 
   formData.append("file", file);
@@ -9,24 +17,20 @@ const uploadSingleFile = async (file: File, uploadUrl: string, upload_preset: st
   formData.append("upload_preset", upload_preset);
   formData.append("fetch_format", "auto");
 
-  try {
-    const response = await fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    });
+  const result = await fetchResult<CloudinaryUploadResponse>(uploadUrl, {
+    method: "POST",
+    body: formData,
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = (await response.json()) as CloudinaryUploadResponse;
-    if (data.secure_url) {
-      return data.secure_url;
+  if (result.isFailure) {
+    return failure(result.error.title);
+  } else {
+    const secureURL = result.value.secure_url;
+    if (isURLString(secureURL)) {
+      return success(secureURL);
     } else {
-      throw new Error("Cloudinary upload failed");
+      return failure("invalid url");
     }
-  } catch {
-    throw new Error("Failed to upload file");
   }
 };
 
@@ -45,5 +49,13 @@ export const uploadToCloudinary = async (files: File[]) => {
   );
 
   const uploadResults = await Promise.all(uploadPromises);
-  return uploadResults.filter((url) => typeof url == "string");
+  const successResults = uploadResults.reduce<string[]>((acc, result) => {
+    if (result.isSuccess) {
+      return [...acc, result.value];
+    } else {
+      return acc;
+    }
+  }, []);
+
+  return successResults;
 };

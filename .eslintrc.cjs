@@ -54,6 +54,12 @@ module.exports = {
       "LabeledStatement",
       "WithStatement",
       "VariableDeclaration[kind='let']",
+      /** `as` 型アサーションを禁止 */
+      {
+        selector:
+          "VariableDeclarator[init.type='TSAsExpression'][init.typeAnnotation.typeName.name!='const']",
+        message: "Don't use `as`.",
+      },
     ],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

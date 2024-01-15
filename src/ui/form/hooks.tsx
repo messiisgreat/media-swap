@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 import { toastErrors, type FormState } from "@/ui/form";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
+import { getObjectValues } from "@/utils/converter";
 import { useFormState } from "react-dom";
 
 /**
@@ -17,9 +18,8 @@ import { useFormState } from "react-dom";
 export const useFormMessageToaster = <T,>(formState: FormState<T>) => {
   useEffect(() => {
     if (formState.errors) {
-      Object.entries(formState.errors).forEach((error) => {
-        const [, messages] = error as [string, string[]];
-        messages.forEach((message) => {
+      getObjectValues(formState.errors).forEach((messages) => {
+        messages?.forEach((message) => {
           toast.error(message);
         });
       });

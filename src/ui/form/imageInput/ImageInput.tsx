@@ -60,14 +60,15 @@ export const ImageInput = ({ labelText, required, ...props }: Props) => {
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       if (files.length < 10) {
+        // eslint-disable-next-line no-restricted-syntax
         const target = event.target as HTMLElement;
         if (target.id === `${id}-test`) {
           fetchImageAndConvertToFile()
             .then((file) => {
-              const fileWithPreview = Object.assign({}, file, {
+              const fileWithPreview = {
                 file,
                 preview: URL.createObjectURL(file),
-              });
+              };
               setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
             })
             .catch((error) => console.error("Error:", error));

@@ -7,8 +7,8 @@ import { type Item } from "@prisma/client";
 type Props = {
   /** 出品情報 */
   item: Item;
-  /** ログインユーザー */
-  sessionUserId: string | undefined;
+  /** ログイン中のユーザーID */
+  userId: string | undefined;
   /** className */
   className?: string;
 };
@@ -17,12 +17,8 @@ type Props = {
  * 購入ボタン
  * 購入確認画面用のモーダルを開く
  */
-export const PurchaseButton = ({
-  item,
-  sessionUserId,
-  className = "",
-}: Props) => {
-  const handleOpen = usePurchaseModal(item, sessionUserId);
+export const PurchaseButton = ({ item, userId, className = "" }: Props) => {
+  const handleOpen = usePurchaseModal(item, userId);
 
   return (
     <Button onClick={handleOpen} className={className}>
