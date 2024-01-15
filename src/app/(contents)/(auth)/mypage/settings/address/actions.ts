@@ -48,10 +48,7 @@ export const addressFormAction = async (
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  const address = await upsertAddress({
-    ...rest,
-    userId,
-  });
+  const address = await upsertAddress(userId, rest);
   if (!address) {
     return {
       ...prevState,

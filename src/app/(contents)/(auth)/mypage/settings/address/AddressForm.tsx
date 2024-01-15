@@ -11,7 +11,7 @@ import { type Address } from "@prisma/client";
 
 type Props = {
   /** 初期値の住所 */
-  address: Address | null;
+  address: Omit<Address, "id" | "userId"> | null;
 };
 
 /**

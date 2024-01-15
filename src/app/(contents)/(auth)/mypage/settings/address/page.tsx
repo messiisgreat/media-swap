@@ -1,6 +1,6 @@
 import { AddressForm } from "@/app/(contents)/(auth)/mypage/settings/address/AddressForm";
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
-import { getAddress } from "@/repositories/address";
+import { findAddress } from "@/repositories/address";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { PageTitle, Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
@@ -14,7 +14,7 @@ const Page = async () => {
   if (!user) {
     return null;
   }
-  const address = await getAddress(user.id);
+  const address = await findAddress(user.id);
 
   return (
     <>
