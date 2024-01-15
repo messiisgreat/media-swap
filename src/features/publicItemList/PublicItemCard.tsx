@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { PriceBadge } from "@/features/itemsList/PriceBadge";
-import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
+import { PriceBadge } from "@/features/publicItemList/PriceBadge";
+import { SoldoutBadge } from "@/features/soldoutBadge";
 import { type ItemsReadResult } from "@/repositories/item";
 import { formatPrice } from "@/utils/format";
 
@@ -16,7 +16,7 @@ type Props = {
  * @param  item 表示に必要なリレーション先をインクルード済みのItem
  * @returns div
  */
-export const ItemCard = ({ item }: Props) => {
+export const PublicItemCard = ({ item }: Props) => {
   const formattedPrice = formatPrice(item.price);
 
   const isSoldOut = Boolean(item.transaction);
@@ -29,13 +29,13 @@ export const ItemCard = ({ item }: Props) => {
       >
         <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:h-48 sm:w-48">
           <Image
-            src={item.images[0]?.imageURL || ""}
+            src={item.images[0]?.imageURL ?? ""}
             alt={item.name}
             sizes="500px"
             fill
           />
           {isSoldOut && (
-            <SoldOutBadge
+            <SoldoutBadge
               className="flex h-16 w-16"
               spanClassName="p-2 text-xs"
             />

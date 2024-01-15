@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 
 import { SlideImage } from "@/app/(contents)/item/[itemId]/_components/carousel/SlideImage";
-import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
+import { SoldoutBadge } from "@/features/soldoutBadge";
 import { useImageModal } from "@/ui/modal/useImageModal";
 import Image from "next/image";
 
@@ -78,7 +78,7 @@ export const Carousel = ({
           ))}
         </div>
         {isSoldOut && (
-          <SoldOutBadge
+          <SoldoutBadge
             className="absolute top-0 h-28 w-28"
             spanClassName="text-lg py-3"
           />

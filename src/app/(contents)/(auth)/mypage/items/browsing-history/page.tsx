@@ -1,5 +1,5 @@
+import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
 import { type Item } from "@prisma/client";
@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: {
-    query: string;
     page: number;
     size: number;
     sort: keyof Item;
@@ -29,11 +28,8 @@ const Page = async ({
   return (
     <>
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.BROWSING_HISTORY]} />
-      <ItemsListContainer
-        {...{ page, size, sort, order }}
-        userId={user.id}
-        isPublic
-        type="browsing"
+      <MypageItemListContainer
+        {...{ page, size, sort, order, type: "browsingHistory" }}
       />
     </>
   );

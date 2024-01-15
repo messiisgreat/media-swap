@@ -1,4 +1,4 @@
-import { SoldOutBadge } from "@/features/itemsList/SoldOutBadge";
+import { SoldoutBadge } from "@/features/soldoutBadge/SoldoutBadge";
 import {
   type ItemsReadResult,
   type ItemsReadResultByBuyerId,
@@ -18,7 +18,7 @@ type Props = {
  * @param  item 表示に必要なリレーション先をインクルード済みのItem
  * @returns div
  */
-export const ItemInfo = ({ item }: Props) => {
+export const MypageItemInfo = ({ item }: Props) => {
   const date = item.createdAt || item.transaction?.purchaseDate;
 
   const isSoldOut =
@@ -32,14 +32,14 @@ export const ItemInfo = ({ item }: Props) => {
         <div className="flex items-center">
           <div className="relative h-[calc((100vw-32px+4px*2)/5)] w-[calc((100vw-32px-4px*2)/5)] sm:h-24 sm:w-24">
             <Image
-              src={item.images[0]?.imageURL || ""}
+              src={item.images[0]?.imageURL ?? ""}
               alt={item.name}
               sizes="500px"
               className="rounded"
               fill
             />
             {isSoldOut && (
-              <SoldOutBadge
+              <SoldoutBadge
                 className="flex h-11 w-11 rounded"
                 spanClassName="p-1 text-xs"
               />

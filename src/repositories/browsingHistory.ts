@@ -12,7 +12,7 @@ import prisma from "@/lib/prisma";
 export const createBrowsingHistory = cache(
   async (itemId: string, userId?: string) =>
     await prisma.browsingHistory.create({
-      data: { itemId, userId },
+      data: { userId, itemId },
     }),
 );
 

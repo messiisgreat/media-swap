@@ -15,7 +15,7 @@ export const UserInfo = ({
 }) => (
   <div className="flex w-full items-center border-b-2 border-gray-300 pb-2">
     <Image
-      src={user?.image || ""}
+      src={user?.image ?? ""}
       alt="プロフィール画像"
       width={100}
       height={100}

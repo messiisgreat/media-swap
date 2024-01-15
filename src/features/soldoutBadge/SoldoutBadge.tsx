@@ -1,7 +1,7 @@
 /**
  * 商品が売り切れであることを示すバッジ
  */
-export const SoldOutBadge = ({
+export const SoldoutBadge = ({
   className,
   spanClassName,
 }: {

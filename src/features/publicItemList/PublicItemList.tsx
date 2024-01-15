@@ -1,4 +1,4 @@
-import { ItemCard } from "@/features/itemsList/ItemCard";
+import { PublicItemCard } from "@/features/publicItemList/PublicItemCard";
 import { type ItemsReadResult } from "@/repositories/item";
 
 /**
@@ -6,11 +6,11 @@ import { type ItemsReadResult } from "@/repositories/item";
  * @param items findItems関数で取得した商品一覧
  * @returns div
  */
-export const ItemsList = ({ items }: { items: ItemsReadResult }) =>
+export const PublicItemList = ({ items }: { items: ItemsReadResult }) =>
   items.length ? (
     <div className="grid grid-cols-3 gap-1">
       {items.map((item) => (
-        <ItemCard key={item.id} item={item} />
+        <PublicItemCard key={item.id} item={item} />
       ))}
     </div>
   ) : (

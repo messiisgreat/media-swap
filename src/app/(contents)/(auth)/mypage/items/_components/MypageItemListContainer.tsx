@@ -1,12 +1,14 @@
-import { ItemsList } from "@/app/(contents)/(auth)/mypage/_components/ItemsList";
+import { MypageItemList } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemList";
 import {
   countItems,
   countItemsByBuyerId,
   countItemsBySellerId,
+  countItemsByUserBrowsed,
   countItemsByUserLiked,
   findItems,
   findItemsByBuyerId,
   findItemsBySellerId,
+  findItemsByUserBrowsed,
   findItemsByUserLiked,
   type ItemOrderBy,
   type ItemsReadResultByBuyerId,
@@ -43,9 +45,13 @@ type Props =
   | (CommonProps & {
       userId: string;
       type: "likes";
+    })
+  | (CommonProps & {
+      userId: string;
+      type: "browsingHistory";
     });
 
-const findItemsAndCount = async ({
+const findItemsAndCount = ({
   page,
   size,
   sort,
@@ -56,46 +62,49 @@ const findItemsAndCount = async ({
   userId,
   type,
 }: Props): Promise<[ItemsReadResultByBuyerId, number]> => {
-  const orderBy: ItemOrderBy = (() => {
-    if (buyerId) {
-      return {
+  const orderBy: ItemOrderBy = buyerId
+    ? {
         transaction: {
           [sort]: order,
         },
-      };
-    } else {
-      return {
+      }
+    : {
         [sort]: order,
       };
-    }
-  })();
 
   // 購入商品一覧
   if (buyerId) {
-    return await Promise.all([
+    return Promise.all([
       findItemsByBuyerId(buyerId, page, size, orderBy),
       countItemsByBuyerId(buyerId),
     ]);
     // 出品商品一覧
   } else if (sellerId && isPublic) {
-    return await Promise.all([
+    return Promise.all([
       findItemsBySellerId(sellerId, page, size, orderBy),
+      countItemsBySellerId(sellerId, isPublic),
+    ]);
+    // 下書き商品一覧
+  } else if (sellerId && !isPublic) {
+    return Promise.all([
+      findItemsBySellerId(sellerId, page, size, orderBy, isPublic),
       countItemsBySellerId(sellerId, isPublic),
     ]);
     // いいね一覧
   } else if (userId && type === "likes") {
-    return await Promise.all([
+    return Promise.all([
       findItemsByUserLiked(userId, page, size, orderBy),
       countItemsByUserLiked(userId),
     ]);
-    // 下書き商品一覧
-  } else if (sellerId && !isPublic) {
-    return await Promise.all([
-      findItemsBySellerId(sellerId, page, size, orderBy),
-      countItemsBySellerId(sellerId, isPublic),
+    // 閲覧履歴
+  } else if (userId && type === "browsingHistory") {
+    return Promise.all([
+      findItemsByUserBrowsed(userId, page, size, orderBy),
+      countItemsByUserBrowsed(userId),
     ]);
+    // 全商品一覧
   } else {
-    return await Promise.all([findItems(page, size, orderBy), countItems()]);
+    return Promise.all([findItems(page, size, orderBy), countItems()]);
   }
 };
 
@@ -103,12 +112,12 @@ const findItemsAndCount = async ({
  * 購入商品のデータ取得が責務のコンテナ
  * @param props page, size, sort, order
  */
-export const ItemsListContainer = async (props: Props) => {
+export const MypageItemListContainer = async (props: Props) => {
   const [items, count] = await findItemsAndCount(props);
   const total = Math.ceil(count / props.size);
   return (
     <>
-      <ItemsList items={items} />
+      <MypageItemList items={items} />
       {total > 1 && (
         <PaginationBar currentPage={props.page} totalPages={total} />
       )}

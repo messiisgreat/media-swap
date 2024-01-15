@@ -1,4 +1,4 @@
-import { ItemsListContainer } from "@/app/(contents)/(auth)/mypage/_components/ItemsListContainer";
+import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
 import { type Transaction } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -30,7 +30,9 @@ const Page = async ({
   return (
     <>
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.PURCHASES]} />
-      <ItemsListContainer {...{ page, size, sort, order }} buyerId={user.id} />
+      <MypageItemListContainer
+        {...{ page, size, sort, order, buyerId: user.id }}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { type Item } from "@prisma/client";
 
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
+import { PublicItemListContainer } from "@/features/publicItemList/PublicItemListContainer";
 
 type Props = {
   searchParams: {
@@ -19,7 +19,7 @@ type Props = {
 const Page = ({
   searchParams: { page = 1, size = 27, sort = "createdAt", order = "desc" },
 }: Props) => (
-  <ItemsListContainer page={page} size={size} sort={sort} order={order} />
+  <PublicItemListContainer page={page} size={size} sort={sort} order={order} />
 );
 
 export default Page;

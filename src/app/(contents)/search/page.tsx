@@ -1,7 +1,7 @@
 import { type Item } from "@prisma/client";
 import { type Metadata } from "next";
 
-import { ItemsListContainer } from "@/features/itemsList/ItemsListContainer";
+import { PublicItemListContainer } from "@/features/publicItemList/PublicItemListContainer";
 import { TitleUnderbar } from "@/ui/structure/TitleUnderbar";
 
 type SearchPageProps = {
@@ -38,7 +38,7 @@ const Page = ({
 }: SearchPageProps) => (
   <>
     <TitleUnderbar title={`${query}の検索結果`} />
-    <ItemsListContainer
+    <PublicItemListContainer
       page={page}
       size={size}
       sort={sort}

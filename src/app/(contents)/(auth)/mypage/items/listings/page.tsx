@@ -1,7 +1,7 @@
 import { type Item } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-import { ItemsListContainer } from "@/app/(contents)/(auth)/mypage/_components/ItemsListContainer";
+import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils";
@@ -30,10 +30,8 @@ const Page = async ({
   return (
     <>
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.LISTINGS]} />
-      <ItemsListContainer
-        {...{ page, size, sort, order }}
-        sellerId={user.id}
-        isPublic
+      <MypageItemListContainer
+        {...{ page, size, sort, order, sellerId: user.id, isPublic: true }}
       />
     </>
   );

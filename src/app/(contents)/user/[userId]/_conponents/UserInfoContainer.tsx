@@ -1,5 +1,5 @@
 import { UserInfo } from "@/app/(contents)/user/[userId]/_conponents/UserInfo";
-import ItemsList from "@/features/itemsList";
+import { PublicItemList } from "@/features/publicItemList";
 import {
   countItemsBySellerId,
   findItemsBySellerId,
@@ -40,7 +40,7 @@ export const UserInfoContainer = async ({
   return (
     <>
       <UserInfo user={user} count={count} />
-      <ItemsList items={items} />
+      <PublicItemList items={items} />
       {total > 1 && <PaginationBar currentPage={page} totalPages={total} />}
     </>
   );
