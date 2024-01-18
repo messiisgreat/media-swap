@@ -24,7 +24,7 @@ export const ImagePreview = ({ fileWithPreview, index, onRemove }: Props) => {
     <div className="relative w-fit">
       <button
         type="button"
-        className="absolute -right-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
+        className="absolute -right-2 -top-2 z-10 flex size-6 items-center justify-center rounded-full bg-zinc-700 opacity-75"
         onClick={handleRemove}
       >
         <FaTimes color="white" />

@@ -47,7 +47,7 @@ export const CommentCard = memo(
           <Image
             src={comment.user.image || ""}
             alt={comment.user.name || "名無し"}
-            className="mr-2 mt-1 h-12 w-12 rounded-full bg-gray-400"
+            className="mr-2 mt-1 size-12 rounded-full bg-gray-400"
             width={64}
             height={64}
           />

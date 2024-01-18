@@ -27,7 +27,7 @@ export const AgeCheckProvider = () => {
 
   return (
     <div
-      className="fixed left-0 top-0 z-30 h-full w-full backdrop-blur-xl"
+      className="fixed left-0 top-0 z-30 size-full backdrop-blur-xl"
       aria-hidden
     />
   );

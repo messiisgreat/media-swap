@@ -27,7 +27,7 @@ export const PublicItemCard = ({ item }: Props) => {
         href={`/item/${item.id}`}
         className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
       >
-        <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:h-48 sm:w-48">
+        <div className="relative h-[calc((100vw-32px+4px*2)/3)] w-[calc((100vw-32px-4px*2)/3)] cursor-pointer sm:size-48">
           <Image
             src={item.images[0]?.imageURL ?? ""}
             alt={item.name}
@@ -36,7 +36,7 @@ export const PublicItemCard = ({ item }: Props) => {
           />
           {isSoldOut && (
             <SoldoutBadge
-              className="flex h-16 w-16"
+              className="flex size-16"
               spanClassName="p-2 text-xs"
             />
           )}

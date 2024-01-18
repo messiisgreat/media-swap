@@ -79,7 +79,7 @@ export const Carousel = ({
         </div>
         {isSoldOut && (
           <SoldoutBadge
-            className="absolute top-0 h-28 w-28"
+            className="absolute top-0 size-28"
             spanClassName="text-lg py-3"
           />
         )}

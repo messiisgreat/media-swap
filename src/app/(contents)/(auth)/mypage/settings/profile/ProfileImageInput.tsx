@@ -39,7 +39,7 @@ export const ImageInput = ({ initialSrc, labelText, ...props }: Props) => {
           alt={labelText}
           width={64}
           height={64}
-          className="h-16 w-16 rounded-full"
+          className="size-16 rounded-full"
         />
       </label>
       <input

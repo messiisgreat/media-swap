@@ -30,7 +30,7 @@ export const MypageItemInfo = ({ item }: Props) => {
     <div className="border-b border-gray-200 py-2">
       <Link href={`/item/${item.id}`} className="cursor-pointer">
         <div className="flex items-center">
-          <div className="relative h-[calc((100vw-32px+4px*2)/5)] w-[calc((100vw-32px-4px*2)/5)] sm:h-24 sm:w-24">
+          <div className="relative h-[calc((100vw-32px+4px*2)/5)] w-[calc((100vw-32px-4px*2)/5)] sm:size-24">
             <Image
               src={item.images[0]?.imageURL ?? ""}
               alt={item.name}
@@ -40,7 +40,7 @@ export const MypageItemInfo = ({ item }: Props) => {
             />
             {isSoldOut && (
               <SoldoutBadge
-                className="flex h-11 w-11 rounded"
+                className="flex size-11 rounded"
                 spanClassName="p-1 text-xs"
               />
             )}

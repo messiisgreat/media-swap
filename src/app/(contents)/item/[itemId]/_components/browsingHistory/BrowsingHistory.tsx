@@ -18,7 +18,7 @@ export const BrowsingHistory = async ({ itemId, className }: Props) => {
   const count = await getViewCount(itemId);
   return (
     <div className={twMerge("flex flex-col items-center", className)}>
-      <div className="grid h-12 w-12 place-items-center">
+      <div className="grid size-12 place-items-center">
         <FaEye size="2rem" />
       </div>
       <span>{count}</span>
