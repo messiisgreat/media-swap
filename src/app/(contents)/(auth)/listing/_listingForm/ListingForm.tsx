@@ -23,7 +23,7 @@ export const ListingForm = ({
   tags: Tag[];
   address: Omit<Address, "id" | "userId"> | null;
 }) => {
-  const formOptions = { hasAuth: true, hasToaster: true };
+  const formOptions = { hasAuthentication: true, showToast: true };
   const { Form, values } = useForm(
     listingItem,
     initialProductFormValues,

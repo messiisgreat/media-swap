@@ -19,14 +19,15 @@ type Props = {
  * コメントを書き込むフォーム
  */
 export const CommentForm = ({ itemId, sessionUser }: Props) => {
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
+    shouldReset: true,
+  };
   const { Form, register } = useForm(
     commentFormAction,
     initialItemCommentState,
-    {
-      hasAuth: true,
-      hasToaster: true,
-      hasReset: true,
-    },
+    formOptions,
   );
 
   const isNotLoggedIn = !sessionUser;

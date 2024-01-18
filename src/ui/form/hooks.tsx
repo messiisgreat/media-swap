@@ -12,7 +12,7 @@ import { useFormState } from "react-dom";
 /**
  * フォームの状態を監視し、エラーと通知をトースト表示する
  * @param formState フォームの状態
- * @todo 2箇所で使用されているので残しているが、削除予定
+ * @todo 1箇所で使用されているので残しているが、削除予定
  * @deprecated
  */
 export const useFormMessageToaster = <T,>(formState: FormState<T>) => {
@@ -52,11 +52,11 @@ const useMessageToaster = <T,>(
 
 export type FormOptions = {
   /** フォーム送信後に初期化するかどうか */
-  hasReset?: boolean;
+  shouldReset?: boolean;
   /** 認証を行うかどうか */
-  hasAuth?: boolean;
+  authenticationRequired?: boolean;
   /** トースト表示を行うかどうか */
-  hasToaster?: boolean;
+  showToast?: boolean;
 };
 
 /**
@@ -79,22 +79,26 @@ export const useForm = <T,>(
   const [state, dispatch] = useFormState(formAction, initialState);
   const getVerificationCode = useVerify();
   const ref = useRef<HTMLFormElement>(null);
-  const { hasReset = false, hasAuth = false, hasToaster = false } = options;
+  const {
+    shouldReset = false,
+    authenticationRequired = false,
+    showToast = false,
+  } = options;
 
-  useMessageToaster(state, hasToaster);
+  useMessageToaster(state, showToast);
 
   const action = useCallback(
     async (f: FormData) => {
-      if (hasAuth) {
+      if (authenticationRequired) {
         const verificationCode = await getVerificationCode();
         f.append("verificationCode", verificationCode);
       }
       dispatch(f);
-      if (hasReset) {
+      if (shouldReset) {
         ref.current?.reset();
       }
     },
-    [dispatch, getVerificationCode, hasAuth, hasReset],
+    [dispatch, getVerificationCode, authenticationRequired, shouldReset],
   );
 
   const Form = useCallback(

@@ -1,7 +1,7 @@
 "use client";
 
 import { addressFormAction } from "@/app/(contents)/(auth)/mypage/settings/address/actions";
-import { initialAddressFormValues } from "@/app/(contents)/(auth)/mypage/settings/address/type";
+import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/address/utils";
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { Input, Select } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
@@ -19,19 +19,16 @@ type Props = {
  * @returns form > Input, Select, SubmitButton
  */
 export const AddressForm = ({ address }: Props) => {
-  const initialValues = {
-    values: address
-      ? {
-          ...address,
-          addressLine2: address.addressLine2 ?? "",
-          verificationCode: "",
-        }
-      : initialAddressFormValues.values,
+  const initialValues = getInitialValues(address);
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
   };
-  const { Form, register } = useForm(addressFormAction, initialValues, {
-    hasAuth: true,
-    hasToaster: true,
-  });
+  const { Form, register } = useForm(
+    addressFormAction,
+    initialValues,
+    formOptions,
+  );
 
   return (
     <Form className="grid gap-3">

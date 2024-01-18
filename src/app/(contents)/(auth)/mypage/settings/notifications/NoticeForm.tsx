@@ -22,10 +22,15 @@ export const NoticeForm = ({
   noticePermissionCode: number;
 }) => {
   const initialValues = convertCodeToInitial(noticePermissionCode);
-  const { Form, values } = useForm(profileUpdateAction, initialValues, {
-    hasAuth: true,
-    hasToaster: true,
-  });
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
+  };
+  const { Form, values } = useForm(
+    profileUpdateAction,
+    initialValues,
+    formOptions,
+  );
 
   return (
     <Form className="grid gap-y-4">

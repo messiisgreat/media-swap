@@ -15,13 +15,14 @@ export const useShippigNotificationModal = (
   transactionId: string,
   value: string,
 ) => {
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
+  };
   const { action } = useForm(
     insertTrackingNumber,
     initialTrackingNumberFormValues,
-    {
-      hasAuth: true,
-      hasToaster: true,
-    },
+    formOptions,
   );
 
   const { handleOpen, FormActionModal } = useFormActionModal(

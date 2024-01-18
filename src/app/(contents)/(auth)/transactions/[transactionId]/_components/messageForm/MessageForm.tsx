@@ -12,14 +12,15 @@ import { BiSend } from "react-icons/bi";
  * @param transactionId 取引ID
  */
 export const MessageForm = ({ transactionId }: { transactionId: string }) => {
+  const formOptions = {
+    authenticationRequired: true,
+    shouldReset: true,
+    showToast: true,
+  };
   const { Form, register } = useForm(
     messageFormAction,
     initialTransactionMessageState,
-    {
-      hasAuth: true,
-      hasReset: true,
-      hasToaster: true,
-    },
+    formOptions,
   );
   return (
     <Form className="input flex w-full items-center p-0">

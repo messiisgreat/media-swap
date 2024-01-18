@@ -27,13 +27,14 @@ type Props = {
  * @returns
  */
 export const useCancelModal = ({ sessionUser, userType }: Props) => {
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
+  };
   const { action, register } = useForm(
     sendCancelInquiry,
     initialCancellationFormValues,
-    {
-      hasAuth: true,
-      hasToaster: true,
-    },
+    formOptions,
   );
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
 

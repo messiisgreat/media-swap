@@ -11,9 +11,8 @@ import { objToAssociative } from "@/utils/converter";
 import { type Address } from "@prisma/client";
 
 import { addressFormAction } from "@/app/(contents)/(auth)/listing/_listingForm/actions";
-import { initialAddressFormValues } from "@/app/(contents)/(auth)/mypage/settings/address/type";
+import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/address/utils";
 import { useForm } from "@/ui/form/hooks";
-
 
 /**
  *
@@ -22,21 +21,19 @@ import { useForm } from "@/ui/form/hooks";
  * @returns 購入ボタンのモーダルを開く関数とモーダルのコンポーネント
  * @todo クーポンを使う場合の処理を追加する場合、formでselect要素を使って実装する。
  */
-export const useAddressModal = (address: Omit<Address, "id" | "userId"> | null) => {
-  const initialValues = {
-    values: address
-      ? {
-          ...address,
-          addressLine2: address.addressLine2 ?? "",
-          verificationCode: "",
-        }
-      : initialAddressFormValues.values,
+export const useAddressModal = (
+  address: Omit<Address, "id" | "userId"> | null,
+) => {
+  const initialValues = getInitialValues(address);
+  const formOptions = {
+    authenticationRequired: true,
+    showToast: true,
   };
-  const { action, register } = useForm(addressFormAction, initialValues, {
-    hasAuth: true,
-    hasToaster: true,
-  });
-
+  const { register, action } = useForm(
+    addressFormAction,
+    initialValues,
+    formOptions,
+  );
   const { handleOpen, FormActionModal } = useFormActionModal(action, "更新");
 
   const PurchaseModal = useCallback(

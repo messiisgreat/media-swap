@@ -138,7 +138,6 @@ export const addressFormAction = async (
       message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
     };
   }
-  // redirect("/mypage");
   return {
     ...prevState,
     message: "住所を更新しました。",

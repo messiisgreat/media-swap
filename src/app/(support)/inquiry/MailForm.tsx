@@ -14,11 +14,16 @@ import { useForm } from "@/ui/form/hooks";
  * @returns form
  */
 export const MailForm = () => {
-  const { Form, register } = useForm(sendInquiry, initialInquiryFormValues, {
-    hasReset: true,
-    hasAuth: true,
-    hasToaster: true,
-  });
+  const formOptions = {
+    shouldReset: true,
+    authenticationRequired: true,
+    showToast: true,
+  };
+  const { Form, register } = useForm(
+    sendInquiry,
+    initialInquiryFormValues,
+    formOptions,
+  );
 
   return (
     <Form className="grid gap-3">
