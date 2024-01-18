@@ -40,14 +40,14 @@ export const insertTrackingNumber = async (
     try {
       await updateTransaction({
         id: transactionId,
-        trackingNumber: trackingNumber,
+        trackingNumber,
       });
       revalidatePath(`/transactions/${transactionId}`);
       return {
         ...prevState,
         values: {
           ...prevState.values,
-          trackingNumber: trackingNumber,
+          trackingNumber,
         },
       };
     } catch {

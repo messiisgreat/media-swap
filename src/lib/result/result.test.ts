@@ -9,7 +9,7 @@ describe("Result型", () => {
       expect(result).toStrictEqual({
         isSuccess: true,
         isFailure: false,
-        value: value,
+        value,
       });
     });
 
@@ -32,7 +32,7 @@ describe("Result型", () => {
       expect(result).toStrictEqual({
         isSuccess: false,
         isFailure: true,
-        error: error,
+        error,
       });
     });
 

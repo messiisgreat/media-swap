@@ -138,7 +138,7 @@ export const findItemsBySellerId = cache(
     isPublic?: boolean,
   ) =>
     await prisma.item.findMany({
-      where: { sellerId, isPublic: isPublic, isDeleted: false },
+      where: { sellerId, isPublic, isDeleted: false },
       skip: (page - 1) * size,
       take: size,
       include,
@@ -244,7 +244,7 @@ export const countItemsByProductName = cache(
 export const countItemsBySellerId = cache(
   async (sellerId: string, isPublic?: boolean) =>
     await prisma.item.count({
-      where: { sellerId, isPublic: isPublic, isDeleted: false },
+      where: { sellerId, isPublic, isDeleted: false },
     }),
 );
 

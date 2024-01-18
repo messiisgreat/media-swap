@@ -9,12 +9,16 @@ import "server-only";
  * @returns
  * @throws 通報済みの場合
  */
-export const createItemCommentReport = async (commentId: string, userId: string, reason: string) => {
+export const createItemCommentReport = async (
+  commentId: string,
+  userId: string,
+  reason: string,
+) => {
   // 既に同じユーザーによる通報があるか確認
   const existingReport = await prisma.itemCommentReport.findFirst({
     where: {
       itemCommentId: commentId,
-      userId: userId,
+      userId,
     },
   });
 
