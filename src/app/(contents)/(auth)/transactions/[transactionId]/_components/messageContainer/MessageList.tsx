@@ -1,6 +1,6 @@
 import { MessageCard } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/MessageCard";
 import { ReloadButton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/reloadButton";
-import { type TransactionCommentReadResult } from "@/repositories/transactionComment";
+import { type TransactionCommentReadResult } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/services";
 import { type SessionUser } from "@/utils";
 
 type Props = {

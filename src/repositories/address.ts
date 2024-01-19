@@ -10,11 +10,11 @@ import prisma from "@/lib/prisma";
  * @param address 住所
  * @returns 登録した住所
  */
-export const upsertAddress = async (
+export const upsertAddress = (
   userId: string,
   address: Omit<Prisma.AddressCreateWithoutUserInput, "id">,
 ): Promise<Address> =>
-  await prisma.address.upsert({
+  prisma.address.upsert({
     where: { userId },
     update: { ...address },
     create: { ...address, user: { connect: { id: userId } } },
@@ -26,8 +26,8 @@ export const upsertAddress = async (
  * @param userId  ユーザーID
  * @todo selectを網羅しなくても自動で書けるようにする
  */
-export const findAddress = async (userId: string) =>
-  await prisma.address.findFirst({
+export const findAddress = (userId: string) =>
+  prisma.address.findFirst({
     select: {
       addressLine1: true,
       addressLine2: true,

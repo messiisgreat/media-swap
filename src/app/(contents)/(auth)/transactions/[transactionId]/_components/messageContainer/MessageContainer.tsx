@@ -1,5 +1,5 @@
 import { MessageList } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/MessageList";
-import { findAndMarkAsReadTransactionComments } from "@/repositories/transactionComment";
+import { findAndMarkAsReadTransactionComments } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/services";
 import { type SessionUser } from "@/utils";
 
 type Props = {

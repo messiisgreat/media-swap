@@ -6,7 +6,8 @@ import prisma from "@/lib/prisma";
  * @param userId ユーザーID
  * @returns
  */
-export const createLike = async (itemId: string, userId: string) => await prisma.like.create({
+export const createLike = (itemId: string, userId: string) =>
+  prisma.like.create({
     data: {
       itemId,
       userId,
@@ -19,7 +20,8 @@ export const createLike = async (itemId: string, userId: string) => await prisma
  * @param userId ユーザーID
  * @returns
  */
-export const deleteLike = async (itemId: string, userId: string) => await prisma.like.delete({
+export const deleteLike = (itemId: string, userId: string) =>
+  prisma.like.delete({
     where: {
       userId_itemId: {
         itemId,
@@ -33,7 +35,8 @@ export const deleteLike = async (itemId: string, userId: string) => await prisma
  * @param itemId 商品ID
  * @param userId ユーザーID
  */
-export const findLike = async (itemId: string, userId: string) => await prisma.like.findFirst({
+export const findLike = (itemId: string, userId: string) =>
+  prisma.like.findFirst({
     where: {
       itemId,
       userId,
@@ -44,7 +47,8 @@ export const findLike = async (itemId: string, userId: string) => await prisma.l
  * いいね数を取得する
  * @param itemId 商品ID
  */
-export const countLike = async (itemId: string) => await prisma.like.count({
+export const countLike = (itemId: string) =>
+  prisma.like.count({
     where: {
       itemId,
     },

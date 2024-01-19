@@ -1,7 +1,5 @@
 import "server-only";
 
-import { cache } from "react";
-
 import { type Transaction } from "@prisma/client";
 
 import { TRANSACTION_STATUS } from "@/constants/item";
@@ -19,22 +17,20 @@ export type TransactionReadResult = Awaited<ReturnType<typeof findTransaction>>;
  * @param id - 取得対象の取引のID
  * @returns 取得した取引、もしない場合はnull
  */
-export const findTransaction = cache(
-  async (id: string) =>
-    await prisma.transaction.findUniqueOrThrow({
-      where: { id },
-      include: {
-        transactionComments: true,
-        buyer: true,
-        item: {
-          select: {
-            seller: { select: { id: true, name: true, image: true } },
-            shippingMethodCode: true,
-          },
+export const findTransaction = (id: string) =>
+  prisma.transaction.findUniqueOrThrow({
+    where: { id },
+    include: {
+      transactionComments: true,
+      buyer: true,
+      item: {
+        select: {
+          seller: { select: { id: true, name: true, image: true } },
+          shippingMethodCode: true,
         },
       },
-    }),
-);
+    },
+  });
 
 /**
  * 取引を追加する
@@ -43,12 +39,12 @@ export const findTransaction = cache(
  * @param userCouponId - 取引対象のクーポンID (オプション)
  * @returns 追加された取引
  */
-export const createTransaction = async (
+export const createTransaction = (
   itemId: string,
   buyerId: string,
   userCouponId: string | null = null,
 ) =>
-  await prisma.transaction.create({
+  prisma.transaction.create({
     data: {
       item: { connect: { id: itemId } },
       buyer: { connect: { id: buyerId } },
@@ -68,11 +64,11 @@ export const createTransaction = async (
  * @param transaction - 更新する取引
  * @returns 更新された取引
  */
-export const updateTransaction = async (
+export const updateTransaction = (
   transaction: { id: string } & Partial<Transaction>,
 ) => {
   const { id, ...data } = transaction;
-  return await prisma.transaction.update({
+  return prisma.transaction.update({
     where: { id },
     data,
   });

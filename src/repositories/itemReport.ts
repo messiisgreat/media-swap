@@ -7,6 +7,7 @@ import "server-only";
  * @param userId 通報ユーザーID
  * @param comment 通報理由
  * @returns
+ * @todo Result型で結果を返すようにする
  */
 export const createItemReport = async (
   itemId: string,

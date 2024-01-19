@@ -2,35 +2,33 @@ import prisma from "@/lib/prisma";
 import "server-only";
 
 /**
- * コメントの通報
- * @param commentId コメントのID
- * @param userId 通報ユーザーID
- * @param reason 通報理由
- * @returns
- * @throws 通報済みの場合
+ * コメントの通報を取得する
+ * @param itemCommentId コメントID
+ * @param userId ユーザーID
  */
-export const createItemCommentReport = async (
-  commentId: string,
-  userId: string,
-  reason: string,
-) => {
-  // 既に同じユーザーによる通報があるか確認
-  const existingReport = await prisma.itemCommentReport.findFirst({
+export const findItemCommentReport = (itemCommentId: string, userId: string) =>
+  prisma.itemCommentReport.findFirst({
     where: {
-      itemCommentId: commentId,
+      itemCommentId,
       userId,
     },
   });
 
-  if (existingReport) {
-    throw new Error("This comment has already been reported by the user.");
-  }
-
-  return await prisma.itemCommentReport.create({
+/**
+ * コメントの通報を作成する
+ * @param itemCommentId コメントID
+ * @param userId ユーザーID
+ * @param reason 通報理由
+ */
+export const createItemCommentReport = (
+  itemCommentId: string,
+  userId: string,
+  reason: string,
+) =>
+  prisma.itemCommentReport.create({
     data: {
-      itemCommentId: commentId,
+      itemCommentId,
       userId,
       reason,
     },
   });
-};

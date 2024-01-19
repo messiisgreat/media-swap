@@ -6,10 +6,11 @@ import "server-only";
  * @param notificationId - 通知ID
  * @param userId - ユーザID
  */
-export const createUserNotificationRead = async (
+export const createUserNotificationRead = (
   notificationId: string,
   userId: string,
-) => await prisma.userNotificationRead.create({
+) =>
+  prisma.userNotificationRead.create({
     data: {
       notification: { connect: { id: notificationId } },
       user: { connect: { id: userId } },

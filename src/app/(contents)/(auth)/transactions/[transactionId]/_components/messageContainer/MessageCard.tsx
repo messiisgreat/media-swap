@@ -1,5 +1,5 @@
+import { type TransactionCommentReadResult } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageContainer/services";
 import defaultIcon from "@/images/profile-pic-placeholder.png";
-import { type TransactionCommentReadResult } from "@/repositories/transactionComment";
 import { parseFixedDateTime, type SessionUser } from "@/utils";
 import Image from "next/image";
 

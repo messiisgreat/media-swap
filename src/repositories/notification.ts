@@ -13,11 +13,9 @@ export type NotificationsQueryResult = Awaited<
  * お知らせを作成する
  * @param notification - 作成する通知情報
  */
-export const createNotification = async (
-  notification: Omit<Notification, "id">,
-) => {
+export const createNotification = (notification: Omit<Notification, "id">) => {
   const { notificationTypeId, ...rest } = notification;
-  return await prisma.notification.create({
+  return prisma.notification.create({
     data: {
       ...rest,
       notificationType: { connect: { id: notificationTypeId } },
@@ -34,12 +32,12 @@ export const createNotification = async (
  * @param page ページ
  * @param size 1ページあたりのサイズ
  */
-export const findNotificationsByUserId = async (
+export const findNotificationsByUserId = (
   userId: string,
   page: number,
   size: number,
 ) =>
-  await prisma.notification.findMany({
+  prisma.notification.findMany({
     skip: (page - 1) * size,
     take: size,
     where: { userNotificationReads: { some: { userId } } },
@@ -56,8 +54,8 @@ export const findNotificationsByUserId = async (
  * お知らせ数を取得する
  * @param userId ユーザID
  */
-export const countNotificationsByUserId = async (userId: string) =>
-  await prisma.notification.count({
+export const countNotificationsByUserId = (userId: string) =>
+  prisma.notification.count({
     where: { userNotificationReads: { some: { userId } } },
   });
 
@@ -67,12 +65,12 @@ export const countNotificationsByUserId = async (userId: string) =>
  * @param page ページ
  * @param size 1ページあたりのサイズ
  */
-export const findNotificationsByUserIdAndUnread = async (
+export const findNotificationsByUserIdAndUnread = (
   userId: string,
   page: number,
   size: number,
 ) =>
-  await prisma.notification.findMany({
+  prisma.notification.findMany({
     skip: (page - 1) * size,
     take: size,
     where: { userNotificationReads: { some: { userId } } },
@@ -80,16 +78,15 @@ export const findNotificationsByUserIdAndUnread = async (
       notificationType: true,
       userNotificationReads: { where: { userId }, take: 1 },
     },
-    orderBy: {
-      date: "asc",
-    },
+    orderBy: { date: "asc" },
   });
 
 /**
  * 未読のお知らせ数を取得する
  * @param userId ユーザID
+ * @todo 全く同じ内容の関数が重複しているので要調査
  */
-export const countNotificationsByUserIdAndUnread = async (userId: string) =>
-  await prisma.notification.count({
+export const countNotificationsByUserIdAndUnread = (userId: string) =>
+  prisma.notification.count({
     where: { userNotificationReads: { some: { userId } } },
   });

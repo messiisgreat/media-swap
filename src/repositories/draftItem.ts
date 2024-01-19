@@ -12,13 +12,13 @@ export type DraftItemCreateInput = Prisma.DraftItemCreateWithoutSellerInput;
  * @param imageURLs 画像URL
  * @param tagTexts タグ
  */
-export const createDraftItem = async (
+export const createDraftItem = (
   sellerId: string,
   draftItem: DraftItemCreateInput,
   imageURLs?: string[],
   tagTexts?: string[],
 ) =>
-  await prisma.draftItem.create({
+  prisma.draftItem.create({
     data: {
       ...draftItem,
       seller: { connect: { id: sellerId } },

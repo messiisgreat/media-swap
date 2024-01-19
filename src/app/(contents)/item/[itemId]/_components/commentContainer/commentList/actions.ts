@@ -1,8 +1,8 @@
 "use server";
 
+import { reportComment } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/services";
 import { failure, success, type Result } from "@/lib/result";
 import { deleteItemComment } from "@/repositories/itemComment";
-import { createItemCommentReport } from "@/repositories/itemCommentReport";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
 import { getSessionUser } from "@/utils";
 
@@ -59,5 +59,5 @@ export const addItemCommentReport = async (
       error: true,
     };
   const userId = user.id;
-  return await createItemCommentReport(commentId, userId, reason);
+  return await reportComment(commentId, userId, reason);
 };
