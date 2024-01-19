@@ -16,6 +16,6 @@ export const AuthRedirect = async () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const callbackURL = `${pathname}?${searchParams.toString()}`;
-  await signIn("google", { callbackUrl: callbackURL });
+  await signIn(undefined, { callbackUrl: callbackURL });
   return null;
 };

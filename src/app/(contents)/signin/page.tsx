@@ -4,8 +4,8 @@ import { SignIn } from "@/app/(contents)/signin/SignIn";
  * ログインページ
  * /signin
  */
-const Page = ({ params }: { params: { callbackUrl?: string } }) => {
-  const callbackUrl = params.callbackUrl ?? "/";
+const Page = ({ searchParams }: { searchParams: { callbackUrl?: string } }) => {
+  const callbackUrl = searchParams.callbackUrl ?? "/";
   return <SignIn callbackUrl={callbackUrl} />;
 };
 
