@@ -29,6 +29,7 @@ export const upsertAddress = (
 export const findAddress = (userId: string) =>
   prisma.address.findFirst({
     select: {
+      name: true,
       addressLine1: true,
       addressLine2: true,
       city: true,

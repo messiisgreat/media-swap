@@ -23,7 +23,7 @@ export const metadata: Metadata = {
  */
 const Page = async () => {
   const user = await getSessionUser();
-  if (!user) {
+  if (!user?.id || !user.name) {
     redirect(redirectURL);
   }
 
@@ -34,7 +34,7 @@ const Page = async () => {
       <PageTitle title={title} />
       <Section>
         <VerifyProvider>
-          <ListingForm tags={tags} address={address} />
+          <ListingForm userName={user.name} tags={tags} address={address} />
         </VerifyProvider>
       </Section>
     </>

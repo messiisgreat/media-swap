@@ -5,7 +5,7 @@ import { type FormState } from "@/ui/form";
 
 export type AddressFormValues = {
   /** 名前 */
-  // name: string;
+  name: string;
   /** 郵便番号 */
   postalCode: string;
   /** 都道府県 */
@@ -26,7 +26,7 @@ export type AddressFormState = FormState<AddressFormValues>;
 /** 住所フォームの初期値 */
 export const initialAddressFormValues = {
   values: {
-    // name: "",
+    name: "",
     postalCode: "",
     prefecture: "",
     city: "",
@@ -41,7 +41,12 @@ export const initialAddressFormValues = {
 
 /** 住所フォームのバリデーション */
 export const AddressFormSchema: ZodType<AddressFormValues> = z.object({
-  // name: z.string().min(1, { message: "お名前を入力してください" }),
+  name: z
+    .string()
+    .min(1, { message: "名前を入力してください" })
+    .max(DEFAULT_INPUT_MAX_LENGTH, {
+      message: `名前は${DEFAULT_INPUT_MAX_LENGTH}文字以内で入力してください`,
+    }),
   postalCode: z
     .string()
     .min(1, { message: "郵便番号を入力してください" })

@@ -11,7 +11,7 @@ import { getSessionUser } from "@/utils";
  */
 const Page = async () => {
   const user = await getSessionUser();
-  if (!user) {
+  if (!user?.id || !user.name) {
     return null;
   }
   const address = await findAddress(user.id);
@@ -21,7 +21,7 @@ const Page = async () => {
       <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.ADDRESS]} />
       <Section>
         <VerifyProvider>
-          <AddressForm address={address} />
+          <AddressForm address={address} userName={user.name} />
         </VerifyProvider>
       </Section>
     </>

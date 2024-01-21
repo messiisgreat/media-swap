@@ -9,6 +9,15 @@ import { useForm } from "@/ui/form/hooks";
 import { type Address, type Tag } from "@prisma/client";
 import { useEffect } from "react";
 
+type Props = {
+  /** ユーザー名 */
+  userName: string;
+  /** タグの配列 */
+  tags: Tag[];
+  /** 初期値の住所 */
+  address: Omit<Address, "id" | "userId"> | null;
+};
+
 /**
  *
  * 購入ボタン用のモーダル
@@ -16,13 +25,7 @@ import { useEffect } from "react";
  * @returns 購入ボタンのモーダルを開く関数とモーダルのコンポーネント
  * @todo クーポンを使う場合の処理を追加する場合、formでselect要素を使って実装する。
  */
-export const ListingForm = ({
-  tags,
-  address,
-}: {
-  tags: Tag[];
-  address: Omit<Address, "id" | "userId"> | null;
-}) => {
+export const ListingForm = ({ userName, tags, address }: Props) => {
   const formOptions = { hasAuthentication: true, showToast: true };
   const { Form, values } = useForm(
     listingItem,
@@ -30,7 +33,7 @@ export const ListingForm = ({
     formOptions,
   );
 
-  const handleOpenModal = useAddressModal(address);
+  const handleOpenModal = useAddressModal(address, userName);
 
   useEffect(() => {
     if (!address) {

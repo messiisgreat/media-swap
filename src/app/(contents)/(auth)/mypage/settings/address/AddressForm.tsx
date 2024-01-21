@@ -10,6 +10,8 @@ import { objToAssociative } from "@/utils/converter";
 import { type Address } from "@prisma/client";
 
 type Props = {
+  /** ユーザー名 */
+  userName: string;
   /** 初期値の住所 */
   address: Omit<Address, "id" | "userId"> | null;
 };
@@ -18,8 +20,8 @@ type Props = {
  * ユーザーの住所を変更するフォーム
  * @returns form > Input, Select, SubmitButton
  */
-export const AddressForm = ({ address }: Props) => {
-  const initialValues = getInitialValues(address);
+export const AddressForm = ({ address, userName }: Props) => {
+  const initialValues = getInitialValues(address, userName);
   const formOptions = {
     authenticationRequired: true,
     showToast: true,
@@ -32,6 +34,12 @@ export const AddressForm = ({ address }: Props) => {
 
   return (
     <Form className="grid gap-3">
+      <Input
+        {...register("name")}
+        labelText="名前"
+        autoComplete="shipping name"
+        placeholder="例: 田中 太郎"
+      />
       <Input
         {...register("postalCode")}
         labelText="郵便番号"

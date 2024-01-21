@@ -57,6 +57,7 @@ model User {
 model Address {
     id           String  @id @default(auto()) @map("_id") @db.ObjectId
     userId       String  @unique @map("user_id") @db.ObjectId // ユーザーID外部キー
+    name         String  // 名前
     postalCode   String  @map("postal_code") // 郵便番号
     prefecture   String // 都道府県
     city         String // 市区町村
