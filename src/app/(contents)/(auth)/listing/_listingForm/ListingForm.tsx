@@ -5,7 +5,7 @@ import { listingItem } from "@/app/(contents)/(auth)/listing/_listingForm/action
 import { ItemsFormContents } from "@/features/itemsFormContents";
 import { initialProductFormValues } from "@/features/itemsFormContents/types";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { type Address, type Tag } from "@prisma/client";
 import { useEffect } from "react";
 
@@ -26,7 +26,10 @@ type Props = {
  * @todo クーポンを使う場合の処理を追加する場合、formでselect要素を使って実装する。
  */
 export const ListingForm = ({ userName, tags, address }: Props) => {
-  const formOptions = { hasAuthentication: true, showToast: true };
+  const formOptions: FormOptions = {
+    authenticationRequired: true,
+    showToast: true,
+  };
   const { Form, values } = useForm(
     listingItem,
     initialProductFormValues,

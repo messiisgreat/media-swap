@@ -5,7 +5,7 @@ import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/addres
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { Input, Select } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { objToAssociative } from "@/utils/converter";
 import { type Address } from "@prisma/client";
 
@@ -22,7 +22,7 @@ type Props = {
  */
 export const AddressForm = ({ address, userName }: Props) => {
   const initialValues = getInitialValues(address, userName);
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
   };

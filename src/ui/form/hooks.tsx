@@ -51,10 +51,10 @@ const useMessageToaster = <T,>(
 };
 
 export type FormOptions = {
-  /** フォーム送信後に初期化するかどうか */
-  shouldReset?: boolean;
   /** 認証を行うかどうか */
   authenticationRequired?: boolean;
+  /** フォーム送信後に初期化するかどうか */
+  shouldReset?: boolean;
   /** トースト表示を行うかどうか */
   showToast?: boolean;
 };

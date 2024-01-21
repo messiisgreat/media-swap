@@ -1,6 +1,6 @@
 import { insertTrackingNumber } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/actions";
 import { initialTrackingNumberFormValues } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/type";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { useFormActionModal } from "@/ui/modal";
 import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
@@ -15,7 +15,7 @@ export const useShippigNotificationModal = (
   transactionId: string,
   value: string,
 ) => {
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
   };

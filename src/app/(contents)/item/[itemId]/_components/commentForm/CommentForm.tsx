@@ -4,7 +4,7 @@ import { commentFormAction } from "@/app/(contents)/item/[itemId]/_components/co
 import { initialItemCommentState } from "@/app/(contents)/item/[itemId]/_components/commentForm/type";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { type SessionUser } from "@/utils";
 
@@ -19,10 +19,10 @@ type Props = {
  * コメントを書き込むフォーム
  */
 export const CommentForm = ({ itemId, sessionUser }: Props) => {
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
-    showToast: true,
     shouldReset: true,
+    showToast: true,
   };
   const { Form, register } = useForm(
     commentFormAction,

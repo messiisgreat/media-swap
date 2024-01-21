@@ -12,7 +12,7 @@ import { type Address } from "@prisma/client";
 
 import { addressFormAction } from "@/app/(contents)/(auth)/listing/_listingForm/actions";
 import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/address/utils";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 
 /**
  *
@@ -27,7 +27,7 @@ export const useAddressModal = (
   userName: string,
 ) => {
   const initialValues = getInitialValues(address, userName);
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
   };

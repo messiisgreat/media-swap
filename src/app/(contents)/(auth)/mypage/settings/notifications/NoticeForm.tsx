@@ -8,7 +8,7 @@ import {
   NOTIFICATION_TYPES,
 } from "@/constants/emailNotification";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { ToggleSwitch } from "@/ui/form/inputs";
 
 /**
@@ -22,7 +22,7 @@ export const NoticeForm = ({
   noticePermissionCode: number;
 }) => {
   const initialValues = convertCodeToInitial(noticePermissionCode);
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
   };

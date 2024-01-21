@@ -7,7 +7,7 @@ import {
   initialCancellationFormValues,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
 import { Select, Textarea } from "@/ui/form";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { useFormActionModal } from "@/ui/modal";
 import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { H } from "@/ui/structure/H";
@@ -27,7 +27,7 @@ type Props = {
  * @returns
  */
 export const useCancelModal = ({ sessionUser, userType }: Props) => {
-  const formOptions = {
+  const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
   };

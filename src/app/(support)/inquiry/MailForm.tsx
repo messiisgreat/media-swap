@@ -7,16 +7,16 @@ import {
 } from "@/app/(support)/inquiry/types";
 import { Input, Select, Textarea, handleCtrlEnterSubmit } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
-import { useForm } from "@/ui/form/hooks";
+import { useForm, type FormOptions } from "@/ui/form/hooks";
 
 /**
  * お問い合わせフォーム
  * @returns form
  */
 export const MailForm = () => {
-  const formOptions = {
-    shouldReset: true,
+  const formOptions: FormOptions = {
     authenticationRequired: true,
+    shouldReset: true,
     showToast: true,
   };
   const { Form, register } = useForm(
