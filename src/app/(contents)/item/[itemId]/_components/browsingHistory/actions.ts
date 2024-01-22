@@ -22,5 +22,7 @@ export const browsing = async (itemId: string) => {
  * @param itemId 商品ID
  * @returns
  */
-export const getViewCount = async (itemId: string) =>
-  await countBrowsingHistory(itemId);
+export const getViewCount = async (itemId: string) => {
+  const sessionUser = await getSessionUser();
+  return await countBrowsingHistory(itemId, sessionUser?.id);
+}
