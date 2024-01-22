@@ -49,6 +49,7 @@ model User {
     itemReports             ItemReport[]
     itemCommentReports      ItemCommentReport[]
     draftItems              DraftItem[]              @relation("seller")
+    emailVerificationCode   EmailVerificationCode?   @relation
 
     @@map("users")
 }
@@ -68,6 +69,18 @@ model Address {
     user User @relation(fields: [userId], references: [id])
 
     @@map("addresses")
+}
+
+// メールアドレス検証コードテーブル
+model EmailVerificationCode {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @unique @map("user_id") @db.ObjectId // ユーザーID外部キー
+    code      String   @unique @map("code") // メールアドレス検証コード
+    expiredAt DateTime @map("expired_at") // 有効期限
+
+    user User? @relation(fields: [userId], references: [id])
+
+    @@map("email_verification_code")
 }
 
 // 振込申請テーブル

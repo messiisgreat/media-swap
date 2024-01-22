@@ -9,7 +9,7 @@ export type UserReadResult = Awaited<ReturnType<typeof findUserById>>;
 /**
  * ユーザーを取得する
  *
- * @param id - ユーザーのID
+ * @param id ユーザーのID
  * @returns 取得したユーザー情報
  * @throws 製品が見つからない場合はエラーがスローされる
  */
@@ -34,6 +34,19 @@ export const updateUser = (user: { id: User["id"] } & Partial<User>) => {
 };
 
 /**
+ * idからユーザーとEmailVerificationCodeを取得する
+ * @param id ユーザーID
+ * @returns  ユーザーとEmailVerificationCode
+ */
+export const findUserByIdWithVerificationCode = (id: string) =>
+  prisma.user.findUnique({
+    where: { id },
+    include: {
+      emailVerificationCode: true,
+    },
+  });
+
+/**
  * ユーザーを削除する
  * @param userId - 対象ユーザーのID
  */
@@ -42,5 +55,24 @@ export const deleteUser = (userId: string) =>
     where: { id: userId },
     data: {
       isDeleted: true,
+      isEmailVerified: false,
+    },
+  });
+
+/**
+ * 認証コードをUserと紐付ける
+ * @param userId - 対象ユーザーのID
+ * @param emailVerificationCodeId - 認証コードのID
+ */
+export const connectVerificationCodeToUser = (
+  userId: string,
+  emailVerificationCodeId: string,
+) =>
+  prisma.user.update({
+    where: { id: userId },
+    data: {
+      emailVerificationCode: {
+        connect: { id: emailVerificationCodeId },
+      },
     },
   });
