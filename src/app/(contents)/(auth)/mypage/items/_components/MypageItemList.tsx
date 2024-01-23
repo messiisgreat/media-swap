@@ -7,11 +7,14 @@ import { type ItemsReadResultByBuyerId } from "@/repositories/item";
  */
 export const MypageItemList = ({
   items,
+  sellerId,
 }: {
   items: ItemsReadResultByBuyerId;
-}) =>
-  items.length ? (
-    <div className="w-full border-t border-gray-200">
+  sellerId: string | undefined;
+}) => {
+  const className = sellerId || "border-t border-gray-200";
+  return items.length ? (
+    <div className={`w-full ${className}`}>
       {items.map((item) => (
         <MypageItemInfo key={item.id} item={item} />
       ))}
@@ -19,6 +22,7 @@ export const MypageItemList = ({
   ) : (
     <NoItems />
   );
+};
 
 const NoItems = () => (
   <div className="text-center text-gray-400">商品がありません</div>

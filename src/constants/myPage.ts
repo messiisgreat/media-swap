@@ -31,7 +31,10 @@ export const MYPAGE_CONTENT_ENUM_JA = {
 /** 商品関連のコンテンツ */
 export const LISTING_CONTENT = {
   LISTINGS: "listings",
+  SELL_IN_PROGRESS: "sell-in-progress",
+  SOLD: "sold",
   PURCHASES: "purchases",
+  BUY_IN_PROGRESS: "buy-in-progress",
   DRAFTS: "drafts",
   BROWSING_HISTORY: "browsing-history",
   LIKES: "likes",
@@ -44,7 +47,10 @@ type ListingContentValue = (typeof LISTING_CONTENT)[ListingContentKey];
 /** 商品関連のリンク先 */
 export const LISTING_LINK = {
   [LISTING_CONTENT.LISTINGS]: "/mypage/items/listings",
+  [LISTING_CONTENT.SELL_IN_PROGRESS]: "/mypage/items/sell-in-progress",
+  [LISTING_CONTENT.SOLD]: "/mypage/items/sold",
   [LISTING_CONTENT.PURCHASES]: "/mypage/items/purchases",
+  [LISTING_CONTENT.BUY_IN_PROGRESS]: "/mypage/items/buy-in-progress",
   [LISTING_CONTENT.DRAFTS]: "/mypage/items/drafts",
   [LISTING_CONTENT.BROWSING_HISTORY]: "/mypage/items/browsing-history",
   [LISTING_CONTENT.LIKES]: "/mypage/items/likes",
@@ -56,7 +62,10 @@ export const LISTING_LINK = {
 /** 商品関連のタイトル */
 export const LISTING_CONTENT_ENUM_JA = {
   [LISTING_CONTENT.LISTINGS]: "出品商品一覧",
+  [LISTING_CONTENT.SELL_IN_PROGRESS]: "出品取引中商品一覧",
+  [LISTING_CONTENT.SOLD]: "売却済み商品一覧",
   [LISTING_CONTENT.PURCHASES]: "購入商品一覧",
+  [LISTING_CONTENT.BUY_IN_PROGRESS]: "購入取引中商品一覧",
   [LISTING_CONTENT.DRAFTS]: "下書き商品一覧",
   [LISTING_CONTENT.BROWSING_HISTORY]: "閲覧履歴一覧",
   [LISTING_CONTENT.LIKES]: "いいねした商品一覧",

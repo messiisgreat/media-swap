@@ -1,11 +1,11 @@
-import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
-import { type Transaction } from "@prisma/client";
-import { redirect } from "next/navigation";
-
-import { MypageItemWrapper } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemWrapper";
 import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
+
+import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
+import { MypageItemWrapper } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemWrapper";
 import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
+import { type Transaction } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: {
@@ -18,8 +18,8 @@ type Props = {
 };
 
 /**
- *  購入商品一覧を表示するページ
- * /mypage/items/purchases
+ *  購入取引中の商品一覧ページ
+ *  mypage/items/buy-in-progress
  */
 const Page = async ({
   searchParams: { page = 1, size = 8, sort = "purchaseDate", order = "desc" },
@@ -30,10 +30,17 @@ const Page = async ({
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.PURCHASES]} />
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.BUY_IN_PROGRESS]} />
       <MypageItemWrapper>
         <MypageItemListContainer
-          {...{ page, size, sort, order, buyerId: user.id }}
+          {...{
+            page,
+            size,
+            sort,
+            order,
+            buyerId: user.id,
+            type: "in-progress",
+          }}
         />
       </MypageItemWrapper>
     </>

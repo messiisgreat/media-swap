@@ -146,6 +146,82 @@ export const findItemsBySellerId = (
   });
 
 /**
+ * 指定したユーザーが出品した取引中の商品を取得する
+ * @param sellerId 出品者ID
+ * @param page ページ番号
+ * @param size 1ページあたりの商品数
+ * @param orderBy ソート順
+ * @param isPublic 公開中の商品のみを対象とするかどうか
+ */
+export const findItemsBySellerIdInTransaction = (
+  sellerId: string,
+  page: number,
+  size: number,
+  orderBy: ItemOrderBy,
+  isPublic?: boolean,
+) =>
+  prisma.item.findMany({
+    where: {
+      sellerId,
+      isPublic,
+      isDeleted: false,
+      transaction: {
+        statusCode: {
+          lte: 3,
+        },
+      },
+    },
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      ...include,
+      transaction: {
+        select: {
+          purchaseDate: true,
+        },
+      },
+    },
+    orderBy,
+  });
+
+/**
+ * 指定したユーザーの売却済みの商品を取得する
+ * @param sellerId 出品者ID
+ * @param page ページ番号
+ * @param size 1ページあたりの商品数
+ * @param orderBy ソート順
+ * @param isPublic 公開中の商品のみを対象とするかどうか
+ */
+export const findSoldItemsBySellerId = (
+  sellerId: string,
+  page: number,
+  size: number,
+  orderBy: ItemOrderBy,
+  isPublic?: boolean,
+) =>
+  prisma.item.findMany({
+    where: {
+      sellerId,
+      isPublic,
+      isDeleted: false,
+      transaction: {
+        statusCode: 98,
+      },
+    },
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      ...include,
+      transaction: {
+        select: {
+          purchaseDate: true,
+        },
+      },
+    },
+    orderBy,
+  });
+
+/**
  * 指定したユーザーが購入した商品を取得する
  * @param buyerId 購入者ID
  * @param page ページ番号
@@ -162,6 +238,43 @@ export const findItemsByBuyerId = (
     where: {
       transaction: {
         buyerId,
+      },
+      isPublic: true,
+      isDeleted: false,
+    },
+    skip: (page - 1) * size,
+    take: size,
+    include: {
+      ...include,
+      transaction: {
+        select: {
+          purchaseDate: true,
+        },
+      },
+    },
+    orderBy,
+  });
+
+/**
+ * 指定したユーザーの購入取引中の商品を取得する
+ * @param buyerId 購入者ID
+ * @param page ページ番号
+ * @param size 1ページあたりの商品数
+ * @param orderBy ソート順
+ */
+export const findItemsByBuyerIdInTransaction = (
+  buyerId: string,
+  page: number,
+  size: number,
+  orderBy: ItemOrderBy,
+) =>
+  prisma.item.findMany({
+    where: {
+      transaction: {
+        buyerId,
+        statusCode: {
+          lte: 3,
+        },
       },
       isPublic: true,
       isDeleted: false,
@@ -263,6 +376,49 @@ export const countItemsBySellerId = (sellerId: string, isPublic?: boolean) =>
   prisma.item.count({
     where: { sellerId, isPublic, isDeleted: false },
   });
+
+/**
+ * 指定したユーザーが出品した取引中の商品総数を取得する
+ * @param sellerId 出品者ID
+ * @param isPublic 公開中の商品のみを対象とするかどうか
+ */
+export const countItemsBySellerIdInTransaction = (
+  sellerId: string,
+  isPublic?: boolean,
+) =>
+  prisma.item.count({
+    where: {
+      sellerId,
+      isPublic,
+      isDeleted: false,
+      transaction: {
+        statusCode: {
+          lte: 3,
+        },
+      },
+    },
+  });
+
+/**
+ * 指定したユーザーが売却済みの商品総数を取得する
+ * @param sellerId 出品者ID
+ * @param isPublic 公開中の商品のみを対象とするかどうか
+ */
+export const countSoldItemsBySellerId = (
+  sellerId: string,
+  isPublic?: boolean,
+) =>
+  prisma.item.count({
+    where: {
+      sellerId,
+      isPublic,
+      isDeleted: false,
+      transaction: {
+        statusCode: 98,
+      },
+    },
+  });
+
 /**
  * 指定したユーザーが購入した商品総数を取得する
  * @param buyerId 購入者ID
@@ -272,6 +428,23 @@ export const countItemsByBuyerId = (buyerId: string) =>
     where: {
       transaction: {
         buyerId,
+      },
+      isDeleted: false,
+    },
+  });
+
+/**
+ * 指定したユーザーの購入取引中の商品総数を取得する
+ * @param buyerId 購入者ID
+ */
+export const countItemsByBuyerIdInTransaction = (buyerId: string) =>
+  prisma.item.count({
+    where: {
+      transaction: {
+        buyerId,
+        statusCode: {
+          lte: 3,
+        },
       },
       isDeleted: false,
     },

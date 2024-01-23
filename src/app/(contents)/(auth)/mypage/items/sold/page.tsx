@@ -1,11 +1,9 @@
 import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
+import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
+import { PageTitle } from "@/ui/structure";
+import { getSessionUser } from "@/utils/session";
 import { type Transaction } from "@prisma/client";
 import { redirect } from "next/navigation";
-
-import { MypageItemWrapper } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemWrapper";
-import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
-import { PageTitle } from "@/ui/structure/PageTitle";
-import { getSessionUser } from "@/utils/session";
 
 type Props = {
   searchParams: {
@@ -18,8 +16,8 @@ type Props = {
 };
 
 /**
- *  購入商品一覧を表示するページ
- * /mypage/items/purchases
+ * 売却済みの商品一覧ページ
+ * /mypage/items/sold
  */
 const Page = async ({
   searchParams: { page = 1, size = 8, sort = "purchaseDate", order = "desc" },
@@ -30,12 +28,18 @@ const Page = async ({
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.PURCHASES]} />
-      <MypageItemWrapper>
-        <MypageItemListContainer
-          {...{ page, size, sort, order, buyerId: user.id }}
-        />
-      </MypageItemWrapper>
+      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.SOLD]} />
+      <MypageItemListContainer
+        {...{
+          page,
+          size,
+          sort,
+          order,
+          sellerId: user.id,
+          type: "sold",
+          isPublic: true,
+        }}
+      />
     </>
   );
 };
