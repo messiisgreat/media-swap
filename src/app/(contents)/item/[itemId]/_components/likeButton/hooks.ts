@@ -48,7 +48,6 @@ export const useOptimisticLike = (
         setOptimisticState(currentState);
       }
     } catch (error) {
-      console.error(error);
       toast.error("エラーが発生しました");
       setOptimisticState(currentState);
     }

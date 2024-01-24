@@ -14,7 +14,7 @@ export const reduceImageQuality = async (
   if (ext === "heic" || ext === "heif") {
     try {
       if (typeof window !== "undefined") {
-        const heic2any = (await import("heic2any")).default; // 動的import
+        const heic2any = (await import("heic2any")).default;
         const output = await heic2any({
           blob: file,
           toType: "image/jpeg",
@@ -39,7 +39,6 @@ export const reduceImageQuality = async (
         return fileWithPreview;
       }
     } catch (error) {
-      console.error("Error converting HEIC/HEIF file:", error);
       throw new Error(`Failed to convert image file: ${file.name}`);
     }
   } else {

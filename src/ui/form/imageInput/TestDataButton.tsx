@@ -20,10 +20,10 @@ const setTestData = (selector: string, testData: string): void => {
     ) {
       element.setAttribute("value", testData);
     } else {
-      console.error(`Unsupported element type for selector ${selector}.`);
+      throw new Error("Element is not input, select or textarea.");
     }
   } else {
-    console.error(`Element with selector ${selector} not found.`);
+    throw new Error("Element is not found.");
   }
 };
 

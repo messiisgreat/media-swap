@@ -191,6 +191,10 @@ module.exports = {
     /** jsxへのコールバック関数の記載を禁止 */
     "react/jsx-no-bind": ["warn", { ignoreDOMComponents: true }],
     "local-rules/check-css-class": "warn",
+    /** console.logを禁止 */
+    "no-console": "error",
+    /** 関数の最大長を30行に */
+    "max-statements": ["warn", 30],
     // "import/order": [
     //   "error",
     //   {

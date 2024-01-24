@@ -58,20 +58,19 @@ export const ImageInput = ({ labelText, required, ...props }: Props) => {
 
   // ボタンがクリックされたらpiscum.photosから画像を取得して追加
   useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
+    const handleClick = async (event: MouseEvent) => {
       if (files.length < 10) {
         // eslint-disable-next-line no-restricted-syntax
         const target = event.target as HTMLElement;
         if (target.id === `${id}-test`) {
-          fetchImageAndConvertToFile()
-            .then((file) => {
-              const fileWithPreview = {
-                file,
-                preview: URL.createObjectURL(file),
-              };
-              setFiles((previousFiles) => [...previousFiles, fileWithPreview]);
-            })
-            .catch((error) => console.error("Error:", error));
+          const file = await fetchImageAndConvertToFile();
+          setFiles((previousFiles) => [
+            ...previousFiles,
+            {
+              file,
+              preview: URL.createObjectURL(file),
+            },
+          ]);
         }
       }
     };

@@ -30,9 +30,7 @@ export const useItemCommentReportModal = (
 
   const reportItemComment = useCallback(
     async (f: FormData) => {
-      // TODO: as stringを削除する
-      // eslint-disable-next-line no-restricted-syntax
-      const reason = f.get("report_reason") as string;
+      const reason = f.get("report_reason")?.toString();
 
       if (!sessionUser) {
         toast.error("ログインしてください");

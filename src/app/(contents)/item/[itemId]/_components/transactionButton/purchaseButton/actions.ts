@@ -4,11 +4,8 @@ import {
   createBuyerMailContent,
   createSellerMailContent,
 } from "@/app/(contents)/item/[itemId]/_components/transactionButton/purchaseButton/mailTemplate";
-import {
-  NOTIFICATION_KEYS,
-  NOTIFICATION_TYPES,
-} from "@/constants/emailNotification";
 import { SITE_NAME } from "@/constants/site";
+import { isNotificationDesired } from "@/features/notificationPermit/utils";
 import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
 import {
@@ -16,7 +13,6 @@ import {
   type TransactionCreateResult,
 } from "@/repositories/transaction";
 import { getSessionUser } from "@/utils";
-import { decimalToBinary } from "@/utils/converter";
 import { revalidatePath } from "next/cache";
 
 type PurchasingResult = Result<string, string>;
@@ -56,15 +52,17 @@ export const purchasing = async (
 const sendMailToBuyerAndSeller = async (
   transaction: TransactionCreateResult,
 ) => {
-  const item = transaction.item;
-  const itemName = item.name;
-  const itemPrice = item.price;
-  const sellerName = item.seller.name;
-  const buyerName = transaction.buyer.name;
-  const sellerEmail = item.seller.email;
-  const buyerEmail = transaction.buyer.email;
-  const sellerEmailNotificationSetting = item.seller.noticePermissionCode;
-  const buyerEmailNotificationSetting = transaction.buyer.noticePermissionCode;
+  const { name: itemName, price: itemPrice, seller } = transaction.item;
+  const {
+    name: sellerName,
+    email: sellerEmail,
+    noticePermissionCode: sellerNoticeCode,
+  } = seller;
+  const {
+    name: buyerName,
+    email: buyerEmail,
+    noticePermissionCode: buyerNoticeCode,
+  } = transaction.buyer;
 
   if (sellerName === null || buyerName === null) {
     return { sellerResult: false, buyerResult: false };
@@ -81,36 +79,16 @@ const sendMailToBuyerAndSeller = async (
     SITE_NAME,
   );
 
-  const numberOfKeys = Object.keys(NOTIFICATION_TYPES).length;
+  const [sellerNotificationDesired, buyerNotificationDesired] = [
+    isNotificationDesired(sellerNoticeCode, "purchaseNotification"),
+    isNotificationDesired(buyerNoticeCode, "purchaseNotification"),
+  ];
 
-  const sellerNoticePermissionCode = decimalToBinary(
-    sellerEmailNotificationSetting,
-    numberOfKeys,
-  );
-  const buyerNoticePermissionCode = decimalToBinary(
-    buyerEmailNotificationSetting,
-    numberOfKeys,
-  );
-
-  const purchaseNotificationIndex = NOTIFICATION_KEYS.indexOf(
-    "purchaseNotification",
-  );
-
-  // purchaseNotification の boolean 値を取得
-  const sellerWantsPurchaseNotification =
-    sellerNoticePermissionCode[purchaseNotificationIndex];
-  const buyerWantsPurchaseNotification =
-    buyerNoticePermissionCode[purchaseNotificationIndex];
-
-  try {
-    if (sellerWantsPurchaseNotification) {
-      await sendMailToUser(sellerEmail, sellerSubject, sellerText);
-    }
-    if (buyerWantsPurchaseNotification) {
-      await sendMailToUser(buyerEmail, buyerSubject, buyerText);
-    }
-    return { sellerResult: true, buyerResult: true };
-  } catch (e) {
-    return { sellerResult: false, buyerResult: false };
-  }
+  const sellerResult = sellerNotificationDesired
+    ? await sendMailToUser(sellerEmail, sellerSubject, sellerText)
+    : true;
+  const buyerResult = buyerNotificationDesired
+    ? await sendMailToUser(buyerEmail, buyerSubject, buyerText)
+    : true;
+  return { sellerResult, buyerResult };
 };

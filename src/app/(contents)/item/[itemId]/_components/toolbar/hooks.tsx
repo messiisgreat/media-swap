@@ -95,9 +95,7 @@ export const useReportModal = (
 
   const reportItem = useCallback(
     async (f: FormData) => {
-      // TODO: as stringを削除
-      // eslint-disable-next-line no-restricted-syntax
-      const reason = f.get("report_reason") as string;
+      const reason = f.get("report_reason")?.toString();
 
       if (!reason || typeof reason !== "string") return;
 
