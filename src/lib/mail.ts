@@ -1,5 +1,6 @@
 import { createTransport, type SendMailOptions } from "nodemailer";
 
+import { EMAIL_SIGNATURE } from "@/constants/emailSignature";
 import { SITE_NAME } from "@/constants/site";
 import { env } from "@/utils/serverEnv";
 
@@ -52,11 +53,12 @@ export const sendMailToUser = async (
   subject: string,
   text: string,
 ) => {
+  const fullText = `${text}\n\n${EMAIL_SIGNATURE}`; // 本文と署名をマージ
   const options = {
     from: `${SITE_NAME} 運営事務局 <${env.GMAIL_ADDRESS}>`,
     to,
     subject,
-    text,
+    text: fullText,
   };
   return await sendMail(options);
 };

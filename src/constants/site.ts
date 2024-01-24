@@ -18,6 +18,3 @@ export const CORPORATE_ADDRESS = "〒160-0022 東京都新宿区新宿７丁目�
 
 /** 法人TEL */
 export const CORPORATE_TEL = "070-8325-5472";
-
-/** 法人MAIL */
-export const CORPORATE_MAIL = "apapk434@gmail.com";

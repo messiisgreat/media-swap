@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   CORPORATE_ADDRESS,
   CORPORATE_DELEGATE,
-  CORPORATE_MAIL,
   CORPORATE_NAME,
   CORPORATE_TEL,
   SITE_NAME,
@@ -13,6 +12,7 @@ import {
 } from "@/constants/site";
 import { Section } from "@/ui/structure";
 import { H } from "@/ui/structure/H";
+import { env } from "@/utils/serverEnv";
 
 type Item = {
   title: string;
@@ -41,7 +41,7 @@ const companies = [
   },
   {
     title: "メールアドレス",
-    content: CORPORATE_MAIL,
+    content: env.GMAIL_ADDRESS,
   },
   {
     title: "所在地",

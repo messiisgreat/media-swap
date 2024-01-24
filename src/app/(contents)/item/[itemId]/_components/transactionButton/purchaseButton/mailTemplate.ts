@@ -1,6 +1,3 @@
-import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
-import { CORPORATE_MAIL, SITE_URL } from "@/constants/site";
-
 /**
  * 出品者にメールを送信
  * @param sellerName 出品者名
@@ -19,13 +16,6 @@ export const createSellerMailContent = (
   商品の発送準備をお願いします。
   発送が完了しましたら、発送完了の通知を当サービスを通じて購入者にお知らせください。
   購入者とのやり取りは取引ページをご利用ください。
-
-  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
-
-  ${SITE_URL}
-
-  メールの配信設定
-  ${SITE_URL}${PAGE_LINK[PAGE_CONTENT.NOTIFICATIONS]}
   `;
 
 /**
@@ -51,11 +41,4 @@ export const createBuyerMailContent = (
 
   出品者の ${sellerName} 様が商品の発送準備を進めています。
   出品者とのやり取りは取引ページをご利用ください。
-
-  ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
-
-  ${SITE_URL}
-
-  メールの配信設定
-  ${SITE_URL}${PAGE_LINK[PAGE_CONTENT.NOTIFICATIONS]}
   `;

@@ -1,5 +1,4 @@
-import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
-import { CORPORATE_MAIL, SITE_URL } from "@/constants/site";
+import { SITE_URL } from "@/constants/site";
 
 /**
  * 出品商品にコメントが投稿された際に、出品者にメールを送信する
@@ -19,10 +18,4 @@ export const createCommentNotificationMailContent = (
     商品名: ${itemName}
     商品ページ: ${SITE_URL}/item/${itemId}
     コメント: ${comment}
-
-    ※このメールに心当たりのない場合は、お手数ですが${CORPORATE_MAIL}までご連絡ください。
-    ${SITE_URL}
-
-    メールの配信設定
-    ${SITE_URL}${PAGE_LINK[PAGE_CONTENT.NOTIFICATIONS]}
     `;
