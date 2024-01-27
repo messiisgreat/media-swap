@@ -49,10 +49,9 @@ export const sendEmailWithVerificationCode = async (
   }
 
   const emailContent = createVerificationEmailContent(code);
-
   const sendResult = await sendMailToUser(
     sessionUser.email!, // この関数が呼ばれるタイミングでemailは必ず存在する
-    "Emailアドレス検証コード",
+    "メールアドレスの認証を行ってください",
     emailContent,
   );
   return sendResult ? success(sentMail) : failure(sendMailFailed);

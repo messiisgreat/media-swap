@@ -70,5 +70,7 @@ export const profileFormAction = async (
     });
   }
 
-  redirect(PAGE_LINK[PAGE_CONTENT.SETTINGS]);
+  return {
+    ...prevState,
+  };
 };

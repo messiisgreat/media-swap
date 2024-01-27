@@ -8,7 +8,7 @@ const couldNotFindEmailAdress =
   "送信先のEmailアドレスが見つかりませんでした。正しいユーザーでログインしているかをご確認ください。";
 
 /**
- * 認証コードの再発行とemailの送信をする
+ * 認証コードの発行とemailの送信をする
  * @returns Result型
  */
 export const createCodeAndSendEmail = async (): Promise<

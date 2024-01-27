@@ -11,6 +11,10 @@ import { useFormMessageToaster } from "@/ui/form/hooks";
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { type User } from "@prisma/client";
+import { createCodeAndSendEmail } from "@/features/emailVerification/actions";
+import { toast } from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { SETTING_CONTENT } from "@/constants/myPage";
 
 type Props = {
   user: User;
@@ -41,6 +45,12 @@ export const ProfileForm = ({ user }: Props) => {
     const verificationCode = await getVerificationCode();
     f.append("verificationCode", verificationCode);
     dispatch(f);
+    const result = await createCodeAndSendEmail();
+    if (result.isSuccess) {
+      redirect(`${SETTING_CONTENT.PROFILE}/email-success`);
+    } else {
+      toast.error(result.error);
+    }
   };
 
   return (

@@ -9,11 +9,9 @@ export const createVerificationEmailContent = (code: string) => {
   const message = `
   以下のURLをクリックして、メールアドレスの検証を完了してください。
 
-  [検証用URL]
-  ${SITE_URL}/mypage/personal-info/profile/email-verification?code=${code}
+  [認証用URL]
+  ${SITE_URL}/mypage/settings/email-verification?code=${code}
 
-  もし心当たりがない場合は、このメールを無視してください。
-  どうぞよろしくお願いいたします。
 `;
   return message;
 };
