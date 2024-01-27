@@ -13,12 +13,13 @@ import { Button } from "@/ui";
 const setTestData = (selector: string, testData: string): void => {
   const element = document.querySelector(selector);
   if (element) {
-    if (
-      element instanceof HTMLInputElement ||
+    if (element instanceof HTMLInputElement) {
+      element.setAttribute("value", testData);
+    } else if (
       element instanceof HTMLSelectElement ||
       element instanceof HTMLTextAreaElement
     ) {
-      element.setAttribute("value", testData);
+      element.value = testData;
     } else {
       throw new Error("Element is not input, select or textarea.");
     }
@@ -29,7 +30,10 @@ const setTestData = (selector: string, testData: string): void => {
 
 const generateRandomCode = (constant: { [key: string]: string }): string => {
   const keys = Object.keys(constant);
-  return Math.floor(Math.random() * keys.length).toString();
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  return keys[randomIndex] === "99"
+    ? (randomIndex - 1).toString()
+    : randomIndex.toString();
 };
 
 type Props = ComponentProps<typeof Button>;
