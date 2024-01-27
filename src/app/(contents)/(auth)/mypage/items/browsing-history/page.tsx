@@ -1,6 +1,4 @@
 import { MypageItemListContainer } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemListContainer";
-import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
-import { PageTitle } from "@/ui/structure/PageTitle";
 import { getSessionUser } from "@/utils/session";
 import { type Item } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -26,12 +24,9 @@ const Page = async ({
     redirect("/api/auth/login");
   }
   return (
-    <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.BROWSING_HISTORY]} />
-      <MypageItemListContainer
-        {...{ page, size, sort, order, type: "browsingHistory" }}
-      />
-    </>
+    <MypageItemListContainer
+      {...{ page, size, sort, order, type: "browsingHistory" }}
+    />
   );
 };
 

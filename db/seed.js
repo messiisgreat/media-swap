@@ -1,22 +1,33 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const gmail = process.env.GMAIL_ACCOUNT ?? "";
+
+const createTestGmail = () => {
+  return gmail.replace(
+    "@gmail.com",
+    `+${Math.random().toString(32).substring(2)}@gmail.com`,
+  );
+};
+
+console.log(createTestGmail());
+
 async function main() {
   const user = await prisma.user.create({
     data: {
       name: "Bob",
-      email: `${Math.random().toString(32).substring(2)}@example.com`,
+      email: createTestGmail(),
     },
   });
 
   const user2 = await prisma.user.create({
     data: {
       name: "Alice",
-      email: `${Math.random().toString(32).substring(2)}@example.com`,
+      email: createTestGmail(),
     },
   });
 
-  const tags = await prisma.tag.createMany({
+  const tag = await prisma.tag.create({
     data: { text: Math.random().toString(32).substring(2) },
   });
 
@@ -43,80 +54,48 @@ async function main() {
     tags: {
       create: {
         tag: {
-          create: {
-            text: Math.random().toString(32).substring(2),
+          connect: {
+            id: tag.id,
           },
+        },
+      },
+    },
+    comments: {
+      createMany: {
+        data: {
+          userId: user2.id,
+          comment: "Great product!",
+          createdAt: new Date("2023-01-01T00:00:00Z"),
         },
       },
     },
   };
 
-  // 購入可能データのシード
-  const onSaleItem = await prisma.item.create({
-    data,
-  });
+  const promises = Array.from({ length: 100 }).map(() =>
+    prisma.item.create({
+      data,
+    }),
+  );
 
-  // 購入済みデータのシード
-  const soldItem = await prisma.item.create({
-    data: {
-      name: "MacBook Pro 13-inch",
-      description: "M1チップ搭載のMacBook Proです。",
-      price: 150000,
-      shippingMethodCode: "1",
-      shippingDaysCode: "1",
-      conditionCode: "1",
-      isShippingIncluded: true,
-      isPublic: true,
-      seller: {
-        connect: {
-          id: user.id,
-        },
-      },
-      images: {
-        create: {
-          imageURL:
-            "https://media-swap-image-storage.s3.amazonaws.com/products/1695991467209_banana",
-        },
-      },
-      tags: {
-        create: {
-          tag: {
-            create: {
-              text: Math.random().toString(32).substring(2),
-            },
-          },
-        },
-      },
-    },
-  });
+  await Promise.all(promises);
 
-  // 出品情報コメントの作成
-  await prisma.itemComment.create({
-    data: {
-      userId: user2.id,
-      itemId: soldItem.id,
-      comment: "Great product!",
-      createdAt: new Date("2023-01-01T00:00:00Z"),
-    },
-  });
+  // // 取引データの作成
+  // const transaction = await prisma.transaction.create({
+  //   data: {
+  //     itemId: onSaleItem.id,
+  //     buyerId: user2.id,
+  //     statusCode: 2,
+  //   },
+  // });
 
-  // 取引データの作成
-  const transaction = await prisma.transaction.create({
-    data: {
-      itemId: soldItem.id,
-      buyerId: user2.id,
-      statusCode: 2,
-    },
-  });
-
-  // 取引コメントデータの作成
-  const transactionComment = await prisma.transactionComment.create({
-    data: {
-      transactionId: transaction.id,
-      userId: user2.id,
-      comment: "Looking forward to receiving the item.",
-    },
-  });
+  // // 取引コメントデータの作成
+  // const transactionComment = await prisma.transactionComment.create({
+  //   data: {
+  //     transactionId: transaction.id,
+  //     userId: user2.id,
+  //     comment: "Looking forward to receiving the item.",
+  //   },
+  // });
 
   // // TransactionRatingOptionのシードデータ
   // const transactionRatingOption = await prisma.transactionRatingOption.create({

@@ -1,8 +1,7 @@
 import { LeaveButton } from "@/app/(contents)/(auth)/mypage/settings/leave/LeaveForm";
-import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section } from "@/ui/structure";
+import { Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 
 /**
@@ -19,14 +18,11 @@ const Page = async () => {
     return null;
   }
   return (
-    <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.LEAVE]} />
-      <Section>
-        <VerifyProvider>
-          <LeaveButton userId={user.id} />
-        </VerifyProvider>
-      </Section>
-    </>
+    <Section>
+      <VerifyProvider>
+        <LeaveButton userId={user.id} />
+      </VerifyProvider>
+    </Section>
   );
 };
 

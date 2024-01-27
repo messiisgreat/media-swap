@@ -1,5 +1,4 @@
 import { MypageItemList } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemList";
-import { MypageItemTabLink } from "@/app/(contents)/(auth)/mypage/items/_components/MypageItemTabLink";
 import {
   countItems,
   countItemsByBuyerId,
@@ -32,7 +31,7 @@ type CommonProps = {
   sellerId?: string;
   isPublic?: boolean;
   userId?: string;
-  type?: string;
+  type?: "likes" | "browsingHistory" | "in-progress" | "sold";
 };
 
 type Props =
@@ -156,7 +155,6 @@ export const MypageItemListContainer = async (props: Props) => {
   const total = Math.ceil(count / props.size);
   return (
     <>
-      {props.sellerId && props.isPublic && <MypageItemTabLink />}
       <MypageItemList sellerId={props.sellerId} items={items} />
       {total > 1 && (
         <PaginationBar currentPage={props.page} totalPages={total} />

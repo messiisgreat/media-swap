@@ -1,7 +1,5 @@
-import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { SalesBalanceContainer } from "@/features/salesBalance/SalesBalanceContainer";
 import { ButtonAsLink } from "@/ui/button";
-import { PageTitle } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
@@ -16,7 +14,6 @@ const Page = async () => {
   }
   return (
     <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.WITHDRAWAL]} />
       <SalesBalanceContainer />
       <ButtonAsLink href="#">出金申請する</ButtonAsLink>
     </>

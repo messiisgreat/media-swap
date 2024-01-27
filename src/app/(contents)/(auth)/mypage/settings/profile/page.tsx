@@ -1,12 +1,8 @@
 import { ProfileForm } from "@/app/(contents)/(auth)/mypage/settings/profile/ProfileForm";
-import {
-  PAGE_CONTENT,
-  PAGE_CONTENT_ENUM_JA,
-  PAGE_LINK,
-} from "@/constants/myPage";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section } from "@/ui/structure";
+import { Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 
@@ -29,14 +25,11 @@ const Page = async () => {
   }
 
   return (
-    <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.PROFILE]} />
-      <Section>
-        <VerifyProvider>
-          <ProfileForm user={user} />
-        </VerifyProvider>
-      </Section>
-    </>
+    <Section>
+      <VerifyProvider>
+        <ProfileForm user={user} />
+      </VerifyProvider>
+    </Section>
   );
 };
 

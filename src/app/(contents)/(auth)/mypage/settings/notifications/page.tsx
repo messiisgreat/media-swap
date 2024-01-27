@@ -1,8 +1,7 @@
 import { NoticeForm } from "@/app/(contents)/(auth)/mypage/settings/notifications/NoticeForm";
-import { PAGE_CONTENT, PAGE_CONTENT_ENUM_JA } from "@/constants/myPage";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
-import { PageTitle, Section } from "@/ui/structure";
+import { Section } from "@/ui/structure";
 import { getSessionUser } from "@/utils";
 
 /**
@@ -14,14 +13,11 @@ const Page = async () => {
   if (!sessionUser) return;
   const user = await findUserById(sessionUser.id);
   return (
-    <>
-      <PageTitle title={PAGE_CONTENT_ENUM_JA[PAGE_CONTENT.LISTINGS]} />
-      <Section>
-        <VerifyProvider>
-          <NoticeForm noticePermissionCode={user.noticePermissionCode} />
-        </VerifyProvider>
-      </Section>
-    </>
+    <Section>
+      <VerifyProvider>
+        <NoticeForm noticePermissionCode={user.noticePermissionCode} />
+      </VerifyProvider>
+    </Section>
   );
 };
 

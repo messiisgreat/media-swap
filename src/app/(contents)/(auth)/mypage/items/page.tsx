@@ -1,21 +1,17 @@
 import { TabLinkList } from "@/app/(contents)/(auth)/mypage/_components/TabLinkList";
-import {
-  LISTING_CONTENT,
-  LISTING_CONTENT_ENUM_JA,
-  LISTING_LINK,
-} from "@/constants/myPage";
+import { LISTING_CONTENT } from "@/constants/myPage";
+
+const content = Object.fromEntries(
+  Object.entries(LISTING_CONTENT).filter(
+    ([key]) => !key.includes("IN_PROGRESS") && !key.includes("SOLD"),
+  ),
+);
 
 /**
  * 商品関連タブリンクリスト
  * /mypage/items
  * @returns TabLinkList
  */
-const Page = () => (
-  <TabLinkList
-    content={LISTING_CONTENT}
-    contentEnum={LISTING_CONTENT_ENUM_JA}
-    link={LISTING_LINK}
-  />
-);
+const Page = () => <TabLinkList content={content} />;
 
 export default Page;

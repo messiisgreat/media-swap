@@ -1,3 +1,4 @@
+import { TRANSACTION_STATUS } from "@/constants/item";
 import prisma from "@/lib/prisma";
 import { type Item, type Prisma } from "@prisma/client";
 import "server-only";
@@ -167,7 +168,7 @@ export const findItemsBySellerIdInTransaction = (
       isDeleted: false,
       transaction: {
         statusCode: {
-          lte: 3,
+          lte: TRANSACTION_STATUS.RECEIVED,
         },
       },
     },
@@ -393,7 +394,7 @@ export const countItemsBySellerIdInTransaction = (
       isDeleted: false,
       transaction: {
         statusCode: {
-          lte: 3,
+          lte: TRANSACTION_STATUS.RECEIVED,
         },
       },
     },
@@ -414,7 +415,7 @@ export const countSoldItemsBySellerId = (
       isPublic,
       isDeleted: false,
       transaction: {
-        statusCode: 98,
+        statusCode: TRANSACTION_STATUS.COMPLETED,
       },
     },
   });
@@ -443,7 +444,7 @@ export const countItemsByBuyerIdInTransaction = (buyerId: string) =>
       transaction: {
         buyerId,
         statusCode: {
-          lte: 3,
+          lte: TRANSACTION_STATUS.RECEIVED,
         },
       },
       isDeleted: false,

@@ -12,6 +12,7 @@ export type PageInfo = {
 
 type Props = {
   pages: PageInfo[];
+  className?: string;
 };
 
 /**
@@ -20,10 +21,13 @@ type Props = {
  * 現在のURLと一致するページはアクティブなスタイルを適用する
  * @returns div > Link
  */
-export const TabMenu = ({ pages }: Props) => {
+export const TabMenu = ({ pages, className = "" }: Props) => {
   const pathname = usePathname();
   return (
-    <div role="tablist" className="tabs-bordered tabs-lg grid">
+    <div
+      role="tablist"
+      className={twMerge("tabs-bordered tabs-lg grid", className)}
+    >
       {pages.map((page) => {
         const isActive = pathname === page.href;
         const tabActiveClass = isActive ? "tab-active" : "";

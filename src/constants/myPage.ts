@@ -62,10 +62,10 @@ export const LISTING_LINK = {
 /** 商品関連のタイトル */
 export const LISTING_CONTENT_ENUM_JA = {
   [LISTING_CONTENT.LISTINGS]: "出品商品一覧",
-  [LISTING_CONTENT.SELL_IN_PROGRESS]: "出品取引中商品一覧",
+  [LISTING_CONTENT.SELL_IN_PROGRESS]: "取引中商品一覧",
   [LISTING_CONTENT.SOLD]: "売却済み商品一覧",
   [LISTING_CONTENT.PURCHASES]: "購入商品一覧",
-  [LISTING_CONTENT.BUY_IN_PROGRESS]: "購入取引中商品一覧",
+  [LISTING_CONTENT.BUY_IN_PROGRESS]: "購入商品一覧",
   [LISTING_CONTENT.DRAFTS]: "下書き商品一覧",
   [LISTING_CONTENT.BROWSING_HISTORY]: "閲覧履歴一覧",
   [LISTING_CONTENT.LIKES]: "いいねした商品一覧",
@@ -135,7 +135,7 @@ export const PAGE_CONTENT = {
   ...SETTING_CONTENT,
 } as const;
 
-type PageContentKey = keyof typeof PAGE_CONTENT;
+export type PageContentKey = keyof typeof PAGE_CONTENT;
 
 export type PageContentValue = (typeof PAGE_CONTENT)[PageContentKey];
 

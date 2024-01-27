@@ -37,6 +37,13 @@ export const isURLString = (string: string): string is URLString => {
 };
 
 /**
+ * 指定した文字列が()で囲まれているかどうかを判定する
+ * @param string 任意の文字列
+ */
+export const isEnclosedInParentheses = (string: string) =>
+  /^\([^)]+\)$/.test(string);
+
+/**
  * 連想配列をもとに、そのキーの型ガードを作成する
  * @example
  * ```ts

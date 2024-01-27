@@ -1,18 +1,14 @@
 import { TabLinkListItem } from "@/app/(contents)/(auth)/mypage/_components/TabLinkListItem";
-import { PAGE_TAB_CONTENT } from "@/app/(contents)/(auth)/mypage/_components/const";
+import {
+  PAGE_CONTENT_ENUM_JA,
+  PAGE_LINK,
+  type PageContentKey,
+  type PageContentValue,
+} from "@/constants/myPage";
 
-import { TabMenu } from "@/ui/tabmenu/TabMenu";
-import { getObjectValues } from "@/utils/converter";
-import { type ValueOf } from "@/utils/types";
-import { type Route } from "next";
-
-type TabLinkListProps<T extends Record<string, string>> = {
-  /* コンテンツ*/
+type TabLinkListProps<T> = {
+  /* コンテンツのKey Value Object*/
   content: T;
-  /* コンテンツの表示名*/
-  contentEnum: Record<ValueOf<T>, string>;
-  /* リンク先*/
-  link: Record<ValueOf<T>, Route>;
 };
 
 /**
@@ -20,21 +16,19 @@ type TabLinkListProps<T extends Record<string, string>> = {
  * @param pages タブリンクリスト
  * @returns div > ul
  */
-export const TabLinkList = <T extends Record<string, string>>({
+export const TabLinkList = <
+  T extends Partial<Record<PageContentKey, PageContentValue>>,
+>({
   content,
-  contentEnum,
-  link,
 }: TabLinkListProps<T>) => (
-  <div className="w-full">
-    <div className="m-auto px-4 sm:px-8">
-      <TabMenu pages={PAGE_TAB_CONTENT} />
-      <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
-        {getObjectValues(content).map((value) => (
-          <li key={value}>
-            <TabLinkListItem title={contentEnum[value]} href={link[value]} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
+  <ul className="overflow-hidden rounded border border-gray-200 shadow-md">
+    {Object.values(content).map((value) => (
+      <li key={value}>
+        <TabLinkListItem
+          title={PAGE_CONTENT_ENUM_JA[value]}
+          href={PAGE_LINK[value]}
+        />
+      </li>
+    ))}
+  </ul>
 );
