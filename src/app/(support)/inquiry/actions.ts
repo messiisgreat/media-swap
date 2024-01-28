@@ -3,8 +3,8 @@
 import { subject, text } from "@/app/(support)/inquiry/mailConfig";
 import {
   InquiryFormSchema,
-  type InquiryFormState,
   initialInquiryFormValues,
+  type InquiryFormState,
 } from "@/app/(support)/inquiry/types";
 import { sendMailToAdmin, sendMailToUser } from "@/lib/mail";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
@@ -28,14 +28,18 @@ export const sendInquiry = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   } else {
     const validated = InquiryFormSchema.safeParse(values);
     if (!validated.success) {
+      const message = validated.error.errors[0]?.message;
       return {
         ...prevState,
-        errors: validated.error.flatten().fieldErrors,
+        toast: message ? { message, type: "error" } : undefined,
       };
     }
     const { name, email, category, body } = values;
@@ -47,13 +51,19 @@ export const sendInquiry = async (
       await sendMailToUser(email, subject, text);
       return {
         ...initialInquiryFormValues,
-        message: "お問い合わせを受け付けました。",
+        toast: {
+          message: "お問い合わせを受け付けました。",
+          type: "success",
+        },
       };
     } else {
       return {
         ...prevState,
-        message: `お問い合わせの送信に失敗しました。
-        時間をおいて再度お試しください。`,
+        toast: {
+          message: `お問い合わせの送信に失敗しました。
+          時間をおいて再度お試しください。`,
+          type: "error",
+        },
       };
     }
   }

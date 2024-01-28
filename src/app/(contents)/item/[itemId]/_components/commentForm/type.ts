@@ -18,8 +18,6 @@ export const initialItemCommentState = {
     itemId: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies ItemCommentFormState;
 
 export const ItemCommentSchema: ZodType<ItemCommentFormValues> = z.object({

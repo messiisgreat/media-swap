@@ -27,7 +27,10 @@ export const messageFormAction = async (
   if (!userId) {
     return {
       ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
+      toast: {
+        message: "セッションが切れました。再度ログインしてください。",
+        type: "error",
+      },
     };
   }
 
@@ -35,15 +38,19 @@ export const messageFormAction = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   }
 
   const validated = TransactionMessageSchema.safeParse(values);
   if (!validated.success) {
+    const message = validated.error.errors[0]?.message;
     return {
       ...prevState,
-      errors: validated.error.flatten().fieldErrors,
+      toast: message ? { message, type: "error" } : undefined,
     };
   }
 
@@ -57,12 +64,18 @@ export const messageFormAction = async (
     revalidatePath(`/transactions/${transactionId}`);
     return {
       ...prevState,
-      message: "メッセージを送信しました",
+      toast: {
+        message: "メッセージを送信しました",
+        type: "success",
+      },
     };
   } catch (error) {
     return {
       ...prevState,
-      message: "メッセージの送信に失敗しました",
+      toast: {
+        message: "メッセージの送信に失敗しました",
+        type: "error",
+      },
     };
   }
 };

@@ -25,8 +25,6 @@ export const initialInquiryFormValues = {
     body: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies InquiryFormState;
 
 /** お問い合わせフォームのバリデーション */

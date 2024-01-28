@@ -34,7 +34,10 @@ export const profileUpdateAction = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   }
   const booleans = Object.values(rest).map((value) => Boolean(value));
@@ -52,12 +55,18 @@ export const profileUpdateAction = async (
         ...rest,
         verificationCode: "",
       },
-      message: "通知設定を更新しました",
+      toast: {
+        message: "通知設定を更新しました",
+        type: "success",
+      },
     };
   } catch (error) {
     return {
       ...prevState,
-      message: "通知設定の更新に失敗しました",
+      toast: {
+        message: "通知設定の更新に失敗しました",
+        type: "error",
+      },
     };
   }
 };

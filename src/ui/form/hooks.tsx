@@ -4,34 +4,9 @@ import { useCallback, useEffect, useRef, type ComponentProps } from "react";
 
 import toast from "react-hot-toast";
 
-import { toastErrors, type FormState } from "@/ui/form";
+import { type FormState } from "@/ui/form";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
-import { getObjectValues } from "@/utils/converter";
 import { useFormState } from "react-dom";
-
-/**
- * フォームの状態を監視し、エラーと通知をトースト表示する
- * @param formState フォームの状態
- * @todo 1箇所で使用されているので残しているが、削除予定
- * @deprecated
- */
-export const useFormMessageToaster = <T,>(formState: FormState<T>) => {
-  useEffect(() => {
-    if (formState.errors) {
-      getObjectValues(formState.errors).forEach((messages) => {
-        messages?.forEach((message) => {
-          toast.error(message);
-        });
-      });
-    }
-  }, [formState.errors]);
-
-  useEffect(() => {
-    if (formState.message) {
-      toast.success(formState.message);
-    }
-  }, [formState.message]);
-};
 
 const useMessageToaster = <T,>(
   formState: FormState<T>,
@@ -39,22 +14,25 @@ const useMessageToaster = <T,>(
 ) => {
   useEffect(() => {
     if (!hasToaster) return;
-    if (!formState.errors) return;
-    toastErrors(formState.errors);
-  }, [formState.errors, hasToaster]);
-
-  useEffect(() => {
-    if (!hasToaster) return;
-    if (!formState.message) return;
-    toast.success(formState.message);
-  }, [formState.message, hasToaster]);
+    if (!formState.toast?.message) return;
+    switch (formState.toast.type) {
+      case "error":
+        toast.error(formState.toast.message);
+        break;
+      case "success":
+        toast.success(formState.toast.message);
+        break;
+      default:
+        break;
+    }
+  }, [formState.toast, hasToaster]);
 };
 
 export type FormOptions = {
-  /** 認証を行うかどうか */
-  authenticationRequired?: boolean;
   /** フォーム送信後に初期化するかどうか */
   shouldReset?: boolean;
+  /** 認証を行うかどうか */
+  authenticationRequired?: boolean;
   /** トースト表示を行うかどうか */
   showToast?: boolean;
 };
@@ -98,7 +76,7 @@ export const useForm = <T,>(
         ref.current?.reset();
       }
     },
-    [dispatch, getVerificationCode, authenticationRequired, shouldReset],
+    [authenticationRequired, dispatch, getVerificationCode, shouldReset],
   );
 
   const Form = useCallback(

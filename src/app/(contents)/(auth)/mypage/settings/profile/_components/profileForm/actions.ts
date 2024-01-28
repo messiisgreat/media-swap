@@ -3,8 +3,9 @@
 import {
   ProfileFormSchema,
   type ProfileFormState,
-} from "@/app/(contents)/(auth)/mypage/settings/profile/type";
-import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
+} from "@/app/(contents)/(auth)/mypage/settings/profile/_components/profileForm/type";
+import { PAGE_CONTENT, PAGE_LINK, SETTING_CONTENT } from "@/constants/myPage";
+import { createCodeAndSendEmail } from "@/features/emailVerification/actions";
 import { uploadToCloudinary } from "@/lib/cloudinary/upload";
 import { updateUser } from "@/repositories/user";
 import { getFormValues } from "@/ui/form";
@@ -44,11 +45,14 @@ export const profileFormAction = async (
     redirect(`api/auth/login?callbackUrl=${PAGE_LINK[PAGE_CONTENT.PROFILE]}`);
   }
 
-  const result = await verifyForm(verificationCode);
-  if (result.isFailure) {
+  const verifyResult = await verifyForm(verificationCode);
+  if (verifyResult.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: verifyResult.error,
+        type: "error",
+      },
     };
   }
   const uploadedImage = await uploadImage(image);
@@ -57,9 +61,10 @@ export const profileFormAction = async (
     image: uploadedImage,
   });
   if (!validated.success) {
+    const message = validated.error.errors[0]?.message;
     return {
       ...prevState,
-      errors: validated.error.flatten().fieldErrors,
+      toast: message ? { message, type: "error" } : undefined,
     };
   }
   if (rest.email) {
@@ -69,8 +74,15 @@ export const profileFormAction = async (
       image: uploadedImage,
     });
   }
-
+  const sendMailResult = await createCodeAndSendEmail();
+  if (sendMailResult.isSuccess) {
+    redirect(`${SETTING_CONTENT.PROFILE}/email-success`);
+  }
   return {
     ...prevState,
+    toast: {
+      message: sendMailResult.error,
+      type: "error",
+    },
   };
 };

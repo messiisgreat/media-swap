@@ -49,9 +49,7 @@ export const initialProductFormValues = {
     verificationCode: "",
     isPublic: "",
   },
-  errors: {},
-  message: "",
-}  satisfies ProductFormState;
+} satisfies ProductFormState;
 
 /** 出品情報登録フォームのバリデーション */
 export const ProductFormSchema: ZodType<ProductFormValues> = z

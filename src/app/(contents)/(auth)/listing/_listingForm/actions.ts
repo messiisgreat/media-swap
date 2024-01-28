@@ -41,7 +41,10 @@ export const listingItem = async (
   if (!userId) {
     return {
       ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
+      toast: {
+        message: "セッションが切れました。再度ログインしてください。",
+        type: "error",
+      },
     };
   }
 
@@ -49,7 +52,10 @@ export const listingItem = async (
   if (verifyResult.isFailure) {
     return {
       ...prevState,
-      message: verifyResult.error,
+      toast: {
+        message: verifyResult.error,
+        type: "error",
+      },
     };
   }
 
@@ -63,7 +69,10 @@ export const listingItem = async (
     if (draftResult.isFailure) {
       return {
         ...prevState,
-        message: "下書きの登録に失敗しました",
+        toast: {
+          message: "下書きの登録に失敗しました",
+          type: "error",
+        },
       };
     }
 
@@ -71,9 +80,10 @@ export const listingItem = async (
   } else {
     const validated = ProductFormSchema.safeParse(values);
     if (!validated.success) {
+      const message = validated.error.errors[0]?.message;
       return {
         ...prevState,
-        errors: validated.error.flatten().fieldErrors,
+        toast: message ? { message, type: "error" } : undefined,
       };
     }
 
@@ -83,10 +93,23 @@ export const listingItem = async (
       previousPrice,
     );
 
+    if (itemResult.isFailure && !prevState.values.imageFiles.length) {
+      return {
+        ...prevState,
+        toast: {
+          message: "最低一枚画像を追加してください",
+          type: "error",
+        },
+      };
+    }
+
     if (itemResult.isFailure) {
       return {
         ...prevState,
-        message: "商品の登録に失敗しました",
+        toast: {
+          message: "商品の登録に失敗しました",
+          type: "error",
+        },
       };
     }
 
@@ -112,7 +135,10 @@ export const addressFormAction = async (
   if (!userId) {
     return {
       ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
+      toast: {
+        message: "セッションが切れました。再度ログインしてください。",
+        type: "error",
+      },
     };
   }
 
@@ -120,26 +146,36 @@ export const addressFormAction = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   }
 
   const validated = AddressFormSchema.safeParse(values);
   if (!validated.success) {
+    const message = validated.error.errors[0]?.message;
     return {
       ...prevState,
-      errors: validated.error.flatten().fieldErrors,
+      toast: message ? { message, type: "error" } : undefined,
     };
   }
   const address = await upsertAddress(userId, rest);
   if (!address) {
     return {
       ...prevState,
-      message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
+      toast: {
+        message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
+        type: "error",
+      },
     };
   }
   return {
     ...prevState,
-    message: "住所を更新しました。",
+    toast: {
+      message: "住所を更新しました。",
+      type: "success",
+    },
   };
 };

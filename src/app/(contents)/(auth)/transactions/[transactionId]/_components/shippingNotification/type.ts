@@ -19,8 +19,6 @@ export const initialTrackingNumberFormValues = {
     trackingNumber: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies TrackingNumberFormState;
 
 export const TrackingNumberFormScheme: ZodType<TrackingNumberFormValues> =

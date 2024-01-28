@@ -17,8 +17,6 @@ export const initialTransactionMessageState = {
     transactionId: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies TransactionMessageFormState;
 
 export const TransactionMessageSchema: ZodType<TransactionMessageFormValues> =

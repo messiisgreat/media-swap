@@ -29,7 +29,10 @@ export const addressFormAction = async (
   if (!userId) {
     return {
       ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
+      toast: {
+        message: "セッションが切れました。再度ログインしてください。",
+        type: "error",
+      },
     };
   }
 
@@ -37,22 +40,29 @@ export const addressFormAction = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   }
 
   const validated = AddressFormSchema.safeParse(values);
   if (!validated.success) {
+    const message = validated.error.errors[0]?.message;
     return {
       ...prevState,
-      errors: validated.error.flatten().fieldErrors,
+      toast: message ? { message, type: "error" } : undefined,
     };
   }
   const address = await upsertAddress(userId, rest);
   if (!address) {
     return {
       ...prevState,
-      message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
+      toast: {
+        message: "住所の更新に失敗しました。時間をおいて再度お試しください。",
+        type: "error",
+      },
     };
   }
   redirect(PAGE_LINK[PAGE_CONTENT.SETTINGS]);

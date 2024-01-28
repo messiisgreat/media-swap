@@ -26,15 +26,19 @@ export const insertTrackingNumber = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   } else {
     const validated = TrackingNumberFormScheme.safeParse(values);
 
     if (!validated.success) {
+      const message = validated.error.errors[0]?.message;
       return {
         ...prevState,
-        errors: validated.error.flatten().fieldErrors,
+        toast: message ? { message, type: "error" } : undefined,
       };
     }
     try {
@@ -53,7 +57,10 @@ export const insertTrackingNumber = async (
     } catch {
       return {
         ...prevState,
-        message: "送り状番号の更新に失敗しました",
+        toast: {
+          message: "送り状番号の更新に失敗しました",
+          type: "error",
+        },
       };
     }
   }

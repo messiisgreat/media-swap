@@ -26,8 +26,6 @@ export const initialProfileFormValues = {
     introduction: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies ProfileFormState;
 
 /** プロフィールフォームのバリデーション */
@@ -44,7 +42,8 @@ export const ProfileFormSchema: ZodType<ProfileFormValues> = z.object({
     .min(1, { message: "メールアドレスを入力してください" })
     .max(DEFAULT_INPUT_MAX_LENGTH, {
       message: `メールアドレスは${DEFAULT_INPUT_MAX_LENGTH}文字以内で入力してください`,
-    }),
+    })
+    .email({ message: "メールアドレスの形式で入力してください" }),
   introduction: z
     .string()
     .max(2000, { message: "自己紹介文は2000文字以内で入力してください" }),

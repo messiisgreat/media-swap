@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/app/(contents)/(auth)/mypage/settings/profile/ProfileForm";
+import { ProfileForm } from "@/app/(contents)/(auth)/mypage/settings/profile/_components/profileForm";
 import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";

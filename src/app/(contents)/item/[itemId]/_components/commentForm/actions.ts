@@ -30,7 +30,10 @@ export const commentFormAction = async (
   if (!userId) {
     return {
       ...prevState,
-      message: "セッションが切れました。再度ログインしてください。",
+      toast: {
+        message: "セッションが切れました。再度ログインしてください。",
+        type: "error",
+      },
     };
   }
 
@@ -38,15 +41,19 @@ export const commentFormAction = async (
   if (result.isFailure) {
     return {
       ...prevState,
-      message: result.error,
+      toast: {
+        message: result.error,
+        type: "error",
+      },
     };
   }
 
   const validated = ItemCommentSchema.safeParse(values);
   if (!validated.success) {
+    const message = validated.error.errors[0]?.message;
     return {
       ...prevState,
-      errors: validated.error.flatten().fieldErrors,
+      toast: message ? { message, type: "error" } : undefined,
     };
   }
 
@@ -56,12 +63,18 @@ export const commentFormAction = async (
     revalidatePath(`/item/${itemId}`);
     return {
       ...initialItemCommentState,
-      message: "コメントを投稿しました",
+      toast: {
+        message: "コメントを投稿しました",
+        type: "success",
+      },
     };
   } catch (error) {
     return {
       ...prevState,
-      message: "コメントの投稿に失敗しました",
+      toast: {
+        message: "コメントの投稿に失敗しました",
+        type: "error",
+      },
     };
   }
 };

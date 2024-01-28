@@ -35,8 +35,6 @@ export const initialAddressFormValues = {
     phoneNumber: "",
     verificationCode: "",
   },
-  errors: {},
-  message: "",
 } as const satisfies AddressFormState;
 
 /** 住所フォームのバリデーション */
