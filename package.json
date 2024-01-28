@@ -117,5 +117,5 @@
     "npm": "🔥パッケージマネージャーはnpmではなくpnpmを使用してください。 see https://pnpm.io/installation",
     "yarn": "🔥パッケージマネージャーはyarnではなくpnpmを使用してください。see https://pnpm.io/installation"
   },
-  "packageManager": "pnpm@8.14.3"
+  "packageManager": "pnpm@8.15.0"
 }
