@@ -11,7 +11,7 @@ import { objToAssociative } from "@/utils/converter";
 import { type Address } from "@prisma/client";
 
 import { addressFormAction } from "@/app/(contents)/(auth)/listing/_listingForm/actions";
-import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/address/utils";
+import { getInitialValues } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/utils";
 import { useForm, type FormOptions } from "@/ui/form/hooks";
 
 /**

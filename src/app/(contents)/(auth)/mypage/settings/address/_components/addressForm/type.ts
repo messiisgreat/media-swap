@@ -40,7 +40,7 @@ export const initialAddressFormValues = {
 } as const satisfies AddressFormState;
 
 /** 住所フォームのバリデーション */
-export const AddressFormSchema: ZodType<AddressFormValues> = z.object({
+export const AddressFormSchema = z.object({
   name: z
     .string()
     .min(1, { message: "名前を入力してください" })
@@ -50,9 +50,9 @@ export const AddressFormSchema: ZodType<AddressFormValues> = z.object({
   postalCode: z
     .string()
     .min(1, { message: "郵便番号を入力してください" })
-    .max(DEFAULT_INPUT_MAX_LENGTH, {
-      message: `郵便番号は${DEFAULT_INPUT_MAX_LENGTH}文字以内で入力してください`,
-    }),
+    .length(7, "7桁で入力してください")
+    .regex(/^[^-]+$/, "ハイフンなしで入力してください")
+    .regex(/^[0-9]+$/, "半角数字で入力してください"),
   prefecture: z.string().min(1, { message: "都道府県を入力してください" }),
   city: z
     .string()
@@ -78,4 +78,4 @@ export const AddressFormSchema: ZodType<AddressFormValues> = z.object({
   verificationCode: z
     .string({ required_error: "認証を行ってください" })
     .min(1, { message: "認証を行ってください" }),
-});
+}) satisfies ZodType<AddressFormValues>;

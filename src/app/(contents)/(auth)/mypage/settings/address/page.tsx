@@ -1,4 +1,4 @@
-import { AddressForm } from "@/app/(contents)/(auth)/mypage/settings/address/AddressForm";
+import { AddressForm } from "@/app/(contents)/(auth)/mypage/settings/address/_components";
 import { findAddress } from "@/repositories/address";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section } from "@/ui/structure";
@@ -6,7 +6,7 @@ import { getSessionUser } from "@/utils";
 
 /**
  * 住所編集ページ
- * /mypage/personal-info/address
+ * /mypage/settings/address
  */
 const Page = async () => {
   const user = await getSessionUser();

@@ -1,4 +1,4 @@
-import { initialAddressFormValues } from "@/app/(contents)/(auth)/mypage/settings/address/type";
+import { initialAddressFormValues } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
 import { type Address } from "@prisma/client";
 
 /**

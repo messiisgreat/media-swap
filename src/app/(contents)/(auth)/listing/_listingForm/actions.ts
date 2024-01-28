@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import {
   AddressFormSchema,
   type AddressFormState,
-} from "@/app/(contents)/(auth)/mypage/settings/address/type";
+} from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
 import {
   ProductFormSchema,
   type ProductFormState,

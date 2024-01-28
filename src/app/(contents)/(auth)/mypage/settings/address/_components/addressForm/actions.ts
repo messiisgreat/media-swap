@@ -3,7 +3,7 @@
 import {
   AddressFormSchema,
   type AddressFormState,
-} from "@/app/(contents)/(auth)/mypage/settings/address/type";
+} from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
 import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
