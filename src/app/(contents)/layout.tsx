@@ -1,5 +1,7 @@
-import AgeCheckProvider from "@/app/(contents)/_layout/ageCheck";
-import ItemButtonProvider from "@/app/(contents)/_layout/listingButton";
+import {
+  AgeCheckProvider,
+  ListingButtonProvider,
+} from "@/app/(contents)/_layout";
 
 /**
  * (contents)のlayout
@@ -7,7 +9,7 @@ import ItemButtonProvider from "@/app/(contents)/_layout/listingButton";
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <>
     {children}
-    <ItemButtonProvider />
+    <ListingButtonProvider />
     <AgeCheckProvider />
   </>
 );

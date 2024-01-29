@@ -1,11 +1,11 @@
 "use client";
 
 import { addAgeCheckedCookie } from "@/app/(contents)/_layout/ageCheck/actions";
-import { ageCheckCookieKey } from "@/app/(contents)/_layout/ageCheck/constants";
 import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
 import { useCheckModal } from "@/ui/modal/useCheckModal";
 import { H } from "@/ui/structure/H";
-import { useCookies } from "next-client-cookies";
+import { COOKIES_ENUM } from "@/utils/cookies/const";
+import { useCookie } from "@/utils/cookies/hooks";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
@@ -14,8 +14,7 @@ import { useCallback } from "react";
  * @returns 年齢確認済みかどうか
  */
 export const useAgeCheckCookie = () => {
-  const cookies = useCookies();
-  const ageCheckCookie = cookies.get(ageCheckCookieKey);
+  const [ageCheckCookie] = useCookie(COOKIES_ENUM.AGE_CHECK);
   const isAgeCheckedThrough = ageCheckCookie === "true";
   return isAgeCheckedThrough;
 };
