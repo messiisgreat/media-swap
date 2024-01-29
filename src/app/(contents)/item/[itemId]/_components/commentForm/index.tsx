@@ -2,23 +2,21 @@
 
 import { commentFormAction } from "@/app/(contents)/item/[itemId]/_components/commentForm/actions";
 import { initialItemCommentState } from "@/app/(contents)/item/[itemId]/_components/commentForm/constants";
+import { useSessionUser } from "@/app/_layout/provider/AuthProvider";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { SubmitButton } from "@/ui/form/SubmitButton";
 import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
-import { type SessionUser } from "@/utils";
 
 type Props = {
   /** 商品ID */
   itemId: string;
-  /** セッションユーザーID */
-  sessionUser: SessionUser | undefined;
 };
 
 /**
  * コメントを書き込むフォーム
  */
-export const CommentForm = ({ itemId, sessionUser }: Props) => {
+export const CommentForm = ({ itemId }: Props) => {
   const formOptions: FormOptions = {
     authenticationRequired: true,
     shouldReset: true,
@@ -29,6 +27,7 @@ export const CommentForm = ({ itemId, sessionUser }: Props) => {
     initialItemCommentState,
     formOptions,
   );
+  const sessionUser = useSessionUser();
 
   const isNotLoggedIn = !sessionUser;
 

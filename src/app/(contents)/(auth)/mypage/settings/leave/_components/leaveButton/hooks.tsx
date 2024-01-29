@@ -5,7 +5,7 @@ import { FaTriangleExclamation } from "react-icons/fa6";
 
 import { leaveUser } from "@/app/(contents)/(auth)/mypage/settings/leave/_components/leaveButton/actions";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
 import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";

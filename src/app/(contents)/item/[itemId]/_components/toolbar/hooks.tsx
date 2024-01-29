@@ -4,14 +4,13 @@ import {
   addItemReport,
   removeItem,
 } from "@/app/(contents)/item/[itemId]/_components/toolbar/actions";
+import { useSessionUser } from "@/app/_layout/provider/AuthProvider";
 import { handleCtrlEnterSubmit } from "@/ui/form";
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
-
-import { type SessionUser } from "@/utils";
 
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
@@ -22,15 +21,11 @@ import { FaTriangleExclamation } from "react-icons/fa6";
 /**
  * 出品の削除モーダル
  * @param itemId 商品ID
- * @param sessionUser ログインユーザー
  * @param isItemOwner 出品者かどうか
  */
-export const useDeleteModal = (
-  itemId: string,
-  sessionUser: SessionUser | undefined,
-  isItemOwner: boolean,
-) => {
+export const useDeleteModal = (itemId: string, isItemOwner: boolean) => {
   const router = useRouter();
+  const sessionUser = useSessionUser();
   const deleteItem = useCallback(async () => {
     if (!sessionUser) {
       toast.error("ログインしてください");
@@ -84,14 +79,11 @@ export const useDeleteModal = (
 /**
  * 出品の通報モーダル
  * @param itemId 商品ID
- * @param sessionUser ログインユーザー
  * @returns open, close, ReportModal
  */
-export const useReportModal = (
-  itemId: string,
-  sessionUser: SessionUser | undefined,
-) => {
+export const useReportModal = (itemId: string) => {
   const getVerificationCode = useVerify();
+  const sessionUser = useSessionUser();
 
   const reportItem = useCallback(
     async (f: FormData) => {

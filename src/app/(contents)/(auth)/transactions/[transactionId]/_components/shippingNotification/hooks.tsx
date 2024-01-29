@@ -2,7 +2,7 @@ import { insertTrackingNumber } from "@/app/(contents)/(auth)/transactions/[tran
 import { initialTrackingNumberFormValues } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/shippingNotification/type";
 import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
 
 /**

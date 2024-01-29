@@ -1,7 +1,7 @@
 "use client";
 
 import { addAgeCheckedCookie } from "@/app/(contents)/_layout/ageCheck/actions";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { useCheckModal } from "@/ui/modal/useCheckModal";
 import { H } from "@/ui/structure/H";
 import { COOKIES_ENUM } from "@/utils/cookies/const";

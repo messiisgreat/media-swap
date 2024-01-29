@@ -6,27 +6,20 @@ import {
   cancellationSellerReasons,
   initialCancellationFormValues,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/sellerInfo/types";
+import { useSessionUser } from "@/app/_layout/provider/AuthProvider";
 import { Select, Textarea } from "@/ui/form";
 import { useForm, type FormOptions } from "@/ui/form/hooks";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
-import { type SessionUser } from "@/utils";
 import { useCallback } from "react";
-
-type Props = {
-  /** セッションユーザー */
-  sessionUser: SessionUser;
-  /** ユーザー種別 */
-  userType: "buyer" | "seller";
-};
 
 /**
  * 取引キャンセル用のモーダル
- * @param props - モーダルのプロパティ
+ * @param userType ユーザー種別
  * @returns
  */
-export const useCancelModal = ({ sessionUser, userType }: Props) => {
+export const useCancelModal = (userType: "buyer" | "seller") => {
   const formOptions: FormOptions = {
     authenticationRequired: true,
     showToast: true,
@@ -37,6 +30,7 @@ export const useCancelModal = ({ sessionUser, userType }: Props) => {
     formOptions,
   );
   const { handleOpen, FormActionModal } = useFormActionModal(action, "送信");
+  const sessionUser = useSessionUser();
 
   const options =
     userType === "buyer" ? cancellationBuyerReasons : cancellationSellerReasons;
@@ -63,12 +57,12 @@ export const useCancelModal = ({ sessionUser, userType }: Props) => {
         <input
           type="hidden"
           {...register("name")}
-          defaultValue={sessionUser?.name || ""}
+          defaultValue={sessionUser?.name ?? ""}
         />
         <input
           type="hidden"
           {...register("email")}
-          defaultValue={sessionUser?.email || ""}
+          defaultValue={sessionUser?.email ?? ""}
         />
       </FormActionModal>
     ),

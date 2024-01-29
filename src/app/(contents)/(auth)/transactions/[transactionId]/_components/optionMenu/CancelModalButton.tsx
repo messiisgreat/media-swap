@@ -1,19 +1,16 @@
 "use client";
 import { useCancelModal } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/optionMenu/hooks";
-import { type SessionUser } from "@/utils";
 
-type Props = {
-  /** ユーザー情報 */
-  sessionUser: SessionUser;
+type CancelModalButtonProps = {
   /** ユーザー種別 */
   userType: "buyer" | "seller";
 };
 
 /**
  * 取引キャンセル用のモーダルを開くボタン
- * @param props キャンセルモーダルのプロパティ
+ * @param userType ユーザー種別
  */
-export const CancelModalButton = (props: Props) => {
-  const handleOpen = useCancelModal({ ...props });
+export const CancelModalButton = ({ userType }: CancelModalButtonProps) => {
+  const handleOpen = useCancelModal(userType);
   return <button onClick={handleOpen}>運営への問合わせ</button>;
 };

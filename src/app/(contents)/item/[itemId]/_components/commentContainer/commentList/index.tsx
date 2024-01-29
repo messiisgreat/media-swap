@@ -6,17 +6,14 @@ import {
   useItemCommentReportModal,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/hooks";
 import { isCommentOwner } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/utils";
+import { useSessionUser } from "@/app/_layout/provider/AuthProvider";
 import { type ItemCommentsReadResult } from "@/repositories/itemComment";
-
-import { type SessionUser } from "@/utils";
 
 import { useCallback, useState } from "react";
 
 type Props = {
   /** コメント一覧 */
   comments: ItemCommentsReadResult;
-  /** ログインユーザー */
-  sessionUser: SessionUser | undefined;
   /** 出品者かどうか */
   isItemOwner: boolean;
 };
@@ -27,19 +24,16 @@ type Props = {
  * 選択中のコメントIDをstateで保持し、モーダルを表示するとき用に利用する
  * モーダルはパフォーマンスのため1つだけ親コンポーネントで保持する
  */
-export const CommentList = ({ comments, sessionUser, isItemOwner }: Props) => {
+export const CommentList = ({ comments, isItemOwner }: Props) => {
   const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
     null,
   );
+  const sessionUser = useSessionUser();
   const hasDeletable =
     isItemOwner || isCommentOwner(selectedCommentId, comments, sessionUser);
-  const openReportModal = useItemCommentReportModal(
-    selectedCommentId,
-    sessionUser,
-  );
+  const openReportModal = useItemCommentReportModal(selectedCommentId);
   const openDeleteModal = useItemCommentDeleteModal(
     selectedCommentId,
-    sessionUser,
     hasDeletable,
   );
 

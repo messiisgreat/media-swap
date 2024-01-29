@@ -6,12 +6,12 @@ import {
   removeItemComment,
 } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/actions";
 
+import { useSessionUser } from "@/app/_layout/provider/AuthProvider";
 import { LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { useVerify } from "@/ui/form/securityVerifier/hooks";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
-import { type SessionUser } from "@/utils";
 import toast from "react-hot-toast";
 import { FaFlag } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
@@ -19,14 +19,11 @@ import { FaTriangleExclamation } from "react-icons/fa6";
 /**
  * コメントの通報モーダル
  * @param commentId 通報するコメントのID
- * @param sessionUser ログインユーザー
  * @returns モーダルを開く関数
  */
-export const useItemCommentReportModal = (
-  commentId: string | null,
-  sessionUser: SessionUser | undefined,
-) => {
+export const useItemCommentReportModal = (commentId: string | null) => {
   const getVerificationCode = useVerify();
+  const sessionUser = useSessionUser();
 
   const reportItemComment = useCallback(
     async (f: FormData) => {
@@ -115,14 +112,14 @@ export const useItemCommentReportModal = (
 /**
  * コメントの削除モーダル
  * @param commentId 削除するコメント
- * @param sessionUser ログインユーザー
  * @param hasDeletable コメントが削除可能かどうか
  */
 export const useItemCommentDeleteModal = (
   commentId: string | null,
-  sessionUser: SessionUser | undefined,
   hasDeletable: boolean,
 ) => {
+  const sessionUser = useSessionUser();
+
   const deleteItemComment = useCallback(async () => {
     if (!commentId) {
       toast.error("削除するコメントが選択されていません");

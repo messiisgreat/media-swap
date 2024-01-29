@@ -12,6 +12,7 @@ import { AnchorMenu } from "@/app/_layout/AnchorMenu";
 import "@/app/globals.css";
 import { SITE_NAME, SITE_URL } from "@/constants/site";
 
+import { getSessionUser } from "@/utils";
 import { type Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 
@@ -38,21 +39,24 @@ export const metadata: Metadata = {
 /**
  * 基本レイアウト
  */
-const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <html lang="ja">
-    <body className={inter.className}>
-      <GoogleTagManager />
-      <CookiesProvider>
-        <ClientProvider>
-          <Header />
-          <Container>{children}</Container>
-          <Footer />
-          <Toaster />
-          <AnchorMenu />
-        </ClientProvider>
-      </CookiesProvider>
-    </body>
-  </html>
-);
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const sessionUser = await getSessionUser();
+  return (
+    <html lang="ja">
+      <body className={inter.className}>
+        <GoogleTagManager />
+        <CookiesProvider>
+          <ClientProvider {...{ sessionUser }}>
+            <Header />
+            <Container>{children}</Container>
+            <Footer />
+            <Toaster />
+            <AnchorMenu />
+          </ClientProvider>
+        </CookiesProvider>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;

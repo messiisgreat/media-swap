@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { purchasing } from "@/app/(contents)/item/[itemId]/_components/transactionButton/purchaseButton/actions";
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 import { H } from "@/ui/structure/H";
 import { type Item } from "@prisma/client";
 import { signIn } from "next-auth/react";

@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { useFormActionModal } from "@/ui/modal";
-import { useSetModal } from "@/ui/modal/modalProvider/ModalProvider";
+import { useSetModal } from "@/ui/modal/modalProvider";
 
 import { PREFECTURE_OBJ } from "@/constants/prefectures";
 import { Input, Select } from "@/ui/form";
