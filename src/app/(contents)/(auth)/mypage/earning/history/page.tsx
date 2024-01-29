@@ -1,5 +1,5 @@
-import { SalesBalanceContainer } from "@/features/salesBalance/SalesBalanceContainer";
-import { SalesHistoryContainer } from "@/features/salesHistory/SalesHistoryContainer";
+import { SalesBalanceContainer } from "@/app/(contents)/(auth)/mypage/earning/_components/salesBalance";
+import { SalesHistoryContainer } from "@/app/(contents)/(auth)/mypage/earning/history/_components/salesHistory";
 
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";

@@ -1,4 +1,4 @@
-import { Card } from "@/ui/card/Card";
+import { Card } from "@/ui/card";
 import { type Meta, type StoryObj } from "@storybook/react";
 
 export default {

@@ -1,6 +1,6 @@
 "use server";
 
-import { createVerificationEmailContent } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/mailTemplates";
+import { createVerificationEmailContent } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/authEmailSendButton/mailTemplates";
 import {
   sendMailFailed,
   sessionTimeOut,

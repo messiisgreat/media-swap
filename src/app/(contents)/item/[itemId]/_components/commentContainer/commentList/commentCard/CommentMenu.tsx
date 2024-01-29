@@ -1,4 +1,4 @@
-import { MeetballsButton } from "@/ui/button/Icon";
+import { MeetballsButton } from "@/ui/buttons/iconButton";
 import { DropdownContainer } from "@/ui/dropdownMenu/Client";
 import { DropdownItem } from "@/ui/dropdownMenu/Shared";
 import { FaTrash } from "react-icons/fa6";

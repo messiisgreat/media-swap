@@ -4,7 +4,7 @@ import {
   ItemCommentSchema,
   initialItemCommentState,
   type ItemCommentFormState,
-} from "@/app/(contents)/item/[itemId]/_components/commentForm/type";
+} from "@/app/(contents)/item/[itemId]/_components/commentForm/constants";
 import { sendMailOnComment } from "@/app/(contents)/item/[itemId]/_components/commentForm/utils";
 import { createItemComment } from "@/repositories/itemComment";
 import { getFormValues } from "@/ui/form";

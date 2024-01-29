@@ -1,5 +1,5 @@
-import { SendAuthEmailButton } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/SendAuthEmailButton";
-import { verifyEmail } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/services";
+import { AuthEmailSendButton } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/authEmailSendButton";
+import { verifyEmail } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/authEmailSendButton/services";
 import { GoToHomeButton } from "@/features/GoToHomeButton";
 import { Section, TitleUnderbar } from "@/ui/structure";
 
@@ -26,7 +26,7 @@ const Page = async ({
             </div>
             <div className="flex w-full flex-row justify-evenly">
               <GoToHomeButton />
-              {result?.isFailure && <SendAuthEmailButton />}
+              {result?.isFailure && <AuthEmailSendButton />}
             </div>
           </div>
         </div>

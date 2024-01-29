@@ -3,7 +3,7 @@ import {
   LISTING_CONTENT_ENUM_JA,
   LISTING_LINK,
 } from "@/constants/myPage";
-import { type PageInfo } from "@/ui/tabmenu/TabMenu";
+import { type PageInfo } from "@/ui/tabmenu";
 
 // 出品商品用のタブリンク
 export const LISTING_TAB_CONTENT = [

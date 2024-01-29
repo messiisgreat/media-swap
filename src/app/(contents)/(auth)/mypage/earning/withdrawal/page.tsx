@@ -1,5 +1,5 @@
-import { SalesBalanceContainer } from "@/features/salesBalance/SalesBalanceContainer";
-import { ButtonAsLink } from "@/ui/button";
+import { SalesBalanceContainer } from "@/app/(contents)/(auth)/mypage/earning/_components/salesBalance";
+import { ButtonAsLink } from "@/ui/buttons";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
 

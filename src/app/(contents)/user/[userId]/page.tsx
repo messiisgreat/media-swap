@@ -31,11 +31,7 @@ const Page = async ({
   return (
     <>
       <TitleUnderbar title="ユーザーページ" />
-      <UserInfoContainer
-        {...{ page, size, sort, order }}
-        user={user}
-        isPublic
-      />
+      <UserInfoContainer {...{ page, size, sort, order, user }} isPublic />
     </>
   );
 };

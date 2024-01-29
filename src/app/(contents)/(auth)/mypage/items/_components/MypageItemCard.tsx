@@ -1,4 +1,4 @@
-import { SoldoutBadge } from "@/features/soldoutBadge/SoldoutBadge";
+import { SoldoutBadge } from "@/features/soldoutBadge";
 import {
   type ItemsReadResult,
   type ItemsReadResultByBuyerId,

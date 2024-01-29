@@ -1,4 +1,4 @@
-import { NotificationContainer } from "@/app/(contents)/(auth)/notifications/_component/NotificationContainer";
+import { NotificationContainer } from "@/app/(contents)/(auth)/notifications/_component";
 
 type Props = {
   searchParams: {

@@ -1,5 +1,5 @@
-import { fetchItemComments } from "@/app/(contents)/item/[itemId]/_components/commentContainer/actions";
 import { CommentList } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList";
+import { fetchItemComments } from "@/app/(contents)/item/[itemId]/_components/commentContainer/services";
 import { type SessionUser } from "@/utils";
 
 type Props = {
@@ -20,13 +20,5 @@ export const CommentContainer = async ({
   isItemOwner,
 }: Props) => {
   const comments = await fetchItemComments(itemId);
-  return (
-    <CommentList
-      {...{
-        comments,
-        sessionUser,
-        isItemOwner,
-      }}
-    />
-  );
+  return <CommentList {...{ comments, sessionUser, isItemOwner }} />;
 };

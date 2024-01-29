@@ -29,32 +29,32 @@ export const MailForm = () => {
     <Form className="grid gap-3">
       <Input
         labelText="お名前"
-        {...register("name")}
         type="text"
         className="w-full"
         placeholder="山田太郎"
         required
+        {...register("name")}
       />
       <Input
         labelText="メールアドレス"
-        {...register("email")}
         type="email"
         className="w-full"
         placeholder="you@example.com"
         required
+        {...register("email")}
       />
       <Select
         labelText="お問い合わせ種別"
-        {...register("category")}
         options={categoryOptions}
         required
+        {...register("category")}
       />
       <Textarea
         labelText="お問い合わせ内容"
         placeholder="お問い合わせ内容を入力してください。"
-        {...register("body")}
         required
         onKeyDown={handleCtrlEnterSubmit}
+        {...register("body")}
       />
       <SubmitButton>送信</SubmitButton>
     </Form>

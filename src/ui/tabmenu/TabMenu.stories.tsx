@@ -1,4 +1,4 @@
-import { TabMenu } from "@/ui/tabmenu/TabMenu";
+import { TabMenu } from "@/ui/tabmenu";
 import { type Meta, type StoryObj } from "@storybook/react";
 
 export default {

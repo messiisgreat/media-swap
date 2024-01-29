@@ -1,9 +1,9 @@
 "use client";
 
+import { Button } from "@/ui";
 import { type ComponentProps } from "react";
 
 import { useFormStatus } from "react-dom";
-import { Button } from "..";
 
 type SubmitButtonProps = Omit<ComponentProps<typeof Button>, "type">;
 
@@ -19,7 +19,7 @@ export const SubmitButton = ({
   ...props
 }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
-  const disabled = props.disabled || pending;
+  const disabled = props.disabled ?? pending;
 
   return (
     <Button {...props} type="submit" {...{ outline, secondary, disabled }}>

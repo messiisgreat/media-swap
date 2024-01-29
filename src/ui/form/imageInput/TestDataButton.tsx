@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable react/jsx-no-bind */
 // ランダムな値を返す関数を使用しているため無効化
 import { type ComponentProps } from "react";
@@ -19,6 +21,7 @@ const setTestData = (selector: string, testData: string): void => {
       element instanceof HTMLSelectElement ||
       element instanceof HTMLTextAreaElement
     ) {
+      // eslint-disable-next-line functional/immutable-data
       element.value = testData;
     } else {
       throw new Error("Element is not input, select or textarea.");

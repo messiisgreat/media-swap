@@ -1,6 +1,6 @@
 import { LuBox } from "react-icons/lu";
 
-import { ButtonAsLink } from "@/ui/button";
+import { ButtonAsLink } from "@/ui/buttons";
 import { twMerge } from "tailwind-merge";
 
 /**

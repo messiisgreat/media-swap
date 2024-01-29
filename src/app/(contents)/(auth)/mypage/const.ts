@@ -3,7 +3,7 @@ import {
   PAGE_CONTENT_ENUM_JA,
   PAGE_LINK,
 } from "@/constants/myPage";
-import { type PageInfo } from "@/ui/tabmenu/TabMenu";
+import { type PageInfo } from "@/ui/tabmenu";
 
 export const PAGE_TAB_CONTENT = [
   {

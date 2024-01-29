@@ -1,4 +1,4 @@
-import { NoticeForm } from "@/app/(contents)/(auth)/mypage/settings/notifications/NoticeForm";
+import { NoticeForm } from "@/app/(contents)/(auth)/mypage/settings/notifications/_components/noticeForm";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section } from "@/ui/structure";

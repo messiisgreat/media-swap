@@ -60,16 +60,6 @@ type TransactionStatusKey = keyof typeof TRANSACTION_STATUS;
 export type TransactionStatusValue =
   (typeof TRANSACTION_STATUS)[TransactionStatusKey];
 
-/** 取引ステータスボタンの表示テキスト */
-export const TRANSACTION_CHANGE_BUTTON_TEXT = {
-  [TRANSACTION_STATUS.BEFORE_PAYMENT]: "取引状態の初期化",
-  [TRANSACTION_STATUS.COMPLETE_PAYMENT]: "支払完了",
-  [TRANSACTION_STATUS.SENT]: "発送完了",
-  [TRANSACTION_STATUS.RECEIVED]: "受取完了",
-  [TRANSACTION_STATUS.COMPLETED]: "取引完了",
-  [TRANSACTION_STATUS.CANCELLED]: "取引キャンセル",
-} as const satisfies Record<TransactionStatusValue, string>;
-
 /** 取引評価選択肢 */
 export const TRANSACTION_RATING_OPTION = {
   1: "良い",

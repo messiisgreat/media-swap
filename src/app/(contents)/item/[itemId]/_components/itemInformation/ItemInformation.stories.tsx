@@ -1,4 +1,4 @@
-import { ItemInformation } from "@/app/(contents)/item/[itemId]/_components/itemInformation/ItemInformation";
+import { ItemInformation } from "@/app/(contents)/item/[itemId]/_components/itemInformation";
 import { type Meta, type StoryObj } from "@storybook/react";
 
 export default {

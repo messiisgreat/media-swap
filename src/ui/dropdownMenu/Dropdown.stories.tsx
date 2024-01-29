@@ -1,4 +1,4 @@
-import { MeetballsButton } from "@/ui/button/Icon";
+import { MeetballsButton } from "@/ui/buttons/iconButton";
 import { DropdownContainer, DropdownItem } from "@/ui/dropdownMenu";
 import { type Meta, type StoryObj } from "@storybook/react";
 

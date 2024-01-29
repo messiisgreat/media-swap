@@ -1,5 +1,5 @@
 import { UserInfo } from "@/app/(contents)/user/[userId]/_conponents/UserInfo";
-import { PublicItemList } from "@/features/publicItemList";
+import { PublicItemListRenderer } from "@/features/publicItemList/PublicItemRenderer";
 import {
   countItemsBySellerId,
   findItemsBySellerId,
@@ -18,7 +18,7 @@ type Props = {
 };
 
 /**
- * ユーザー情報を表示するコンテナ
+ * ユーザー情報を取得し、コンポーネントに渡す
  * @param user ユーザー情報
  */
 export const UserInfoContainer = async ({
@@ -40,7 +40,7 @@ export const UserInfoContainer = async ({
   return (
     <>
       <UserInfo user={user} count={count} />
-      <PublicItemList items={items} />
+      <PublicItemListRenderer items={items} />
       {total > 1 && <PaginationBar currentPage={page} totalPages={total} />}
     </>
   );

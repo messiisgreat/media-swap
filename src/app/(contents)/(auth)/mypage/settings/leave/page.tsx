@@ -1,4 +1,4 @@
-import { LeaveButton } from "@/app/(contents)/(auth)/mypage/settings/leave/LeaveForm";
+import { LeaveButton } from "@/app/(contents)/(auth)/mypage/settings/leave/_components/leaveButton";
 import { findUserById } from "@/repositories/user";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section } from "@/ui/structure";

@@ -6,7 +6,7 @@ import {
   type PageContentValue,
 } from "@/constants/myPage";
 import { PageTitle } from "@/ui/structure";
-import { TabMenu } from "@/ui/tabmenu/TabMenu";
+import { TabMenu } from "@/ui/tabmenu";
 import { isEnclosedInParentheses } from "@/utils/typeGuard";
 import { type Route } from "next";
 import Link from "next/link";

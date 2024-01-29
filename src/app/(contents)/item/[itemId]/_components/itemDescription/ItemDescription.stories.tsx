@@ -1,4 +1,4 @@
-import { ItemDescription } from "@/app/(contents)/item/[itemId]/_components/itemDescription/ItemDescription";
+import { ItemDescription } from "@/app/(contents)/item/[itemId]/_components/itemDescription";
 import { type Meta } from "@storybook/react";
 
 export default {

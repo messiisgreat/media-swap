@@ -4,6 +4,7 @@ import { SITE_NAME } from "@/constants/site";
 import logo from "@/images/logo.png";
 import { type NotificationsQueryResult } from "@/repositories/notification";
 import { parseRelativeTime } from "@/utils";
+import { twMerge } from "tailwind-merge";
 
 /**
  * データ取得コンテナ
@@ -17,7 +18,7 @@ export const NotificationCard = ({
   const { content, date, userNotificationReads } = notification;
   const isRead = userNotificationReads.length > 0;
   return (
-    <li className={`flex gap-x-6 p-3 ${isRead && "bg-gray-100"}`}>
+    <div className={twMerge("flex gap-x-6 p-3", isRead ? "bg-gray-100" : "")}>
       <Image
         className="flex justify-center bg-gray-50"
         src={logo}
@@ -29,6 +30,6 @@ export const NotificationCard = ({
         <div className="text-sm font-medium">{content}</div>
         <div className="text-xs text-gray-500">{parseRelativeTime(date)}</div>
       </div>
-    </li>
+    </div>
   );
 };

@@ -13,8 +13,8 @@ export const getThisTransactionProgressStatus = (
   statusCode: TransactionStatusValue,
   userType: "buyer" | "seller",
 ): {
-  currentStatus: number;
-  nextStatus: number;
+  currentStatus: TransactionStatusValue;
+  nextStatus: TransactionStatusValue;
   isVisibleButton: boolean;
 } => {
   const isBuyer = userType === "buyer";

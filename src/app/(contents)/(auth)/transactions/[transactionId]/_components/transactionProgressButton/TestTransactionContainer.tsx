@@ -18,32 +18,32 @@ export const TestTransactionContainer = ({
       {/** 支払い前 */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.BEFORE_PAYMENT}
+        transactionStatus={TRANSACTION_STATUS.BEFORE_PAYMENT}
       />
       {/** 支払い完了 */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.COMPLETE_PAYMENT}
+        transactionStatus={TRANSACTION_STATUS.COMPLETE_PAYMENT}
       />
       {/** 発送済み */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.SENT}
+        transactionStatus={TRANSACTION_STATUS.SENT}
       />
       {/** 受け取り完了 */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.RECEIVED}
+        transactionStatus={TRANSACTION_STATUS.RECEIVED}
       />
       {/** 取引完了 */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.COMPLETED}
+        transactionStatus={TRANSACTION_STATUS.COMPLETED}
       />
       {/** 取引キャンセル */}
       <TransactionChangeButton
         transactionId={transactionId}
-        changeStatus={TRANSACTION_STATUS.CANCELLED}
+        transactionStatus={TRANSACTION_STATUS.CANCELLED}
       />
     </div>
   </div>

@@ -3,7 +3,7 @@ import { type Tag } from "@prisma/client";
 import { CONDITION } from "@/constants/item";
 import { ItemTagsInput } from "@/features/itemsFormContents/detailsContents/itemTags/ItemTagsInput";
 import { Select } from "@/ui/form";
-import ImageInput from "@/ui/form/imageInput";
+import { ImageInput } from "@/ui/form/imageInput";
 import { LimitInput, LimitTextarea } from "@/ui/form/inputs/LimitElements";
 import { TitleUnderbar } from "@/ui/structure";
 

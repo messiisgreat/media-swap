@@ -7,7 +7,7 @@ import {
   type ComponentProps,
 } from "react";
 
-import { Input, Textarea } from "@/ui/form/inputs/Elements";
+import { Input, Textarea } from "@/ui/form/inputs/elements";
 
 type CommonProps = {
   /** 最大文字数 */
