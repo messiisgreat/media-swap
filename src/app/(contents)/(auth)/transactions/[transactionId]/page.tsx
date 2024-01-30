@@ -1,5 +1,5 @@
 import { FirstLoadContainer } from "@/app/(contents)/(auth)/transactions/[transactionId]/FirstLoadContainer";
-import { Skeleton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/skeleton";
+import { TransactionSkeleton } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/transactionSkeleton";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 
@@ -17,7 +17,7 @@ const Page = ({
 }: {
   params: { transactionId: string };
 }) => (
-  <Suspense fallback={<Skeleton />}>
+  <Suspense fallback={<TransactionSkeleton />}>
     <FirstLoadContainer transactionId={transactionId} />
   </Suspense>
 );

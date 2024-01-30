@@ -1,7 +1,7 @@
 /**
  * 取引詳細ページのスケルトンコンポーネント
  */
-export const Skeleton = () => (
+export const TransactionSkeleton = () => (
   <div className="w-full">
     <div className="grid animate-pulse gap-8">
       <div className="alert h-20 bg-slate-700" />
