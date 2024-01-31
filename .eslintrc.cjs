@@ -34,6 +34,7 @@ module.exports = {
   env: {
     node: true,
     jest: true,
+    es2022: true,
   },
   ignorePatterns: [
     "./next*",
