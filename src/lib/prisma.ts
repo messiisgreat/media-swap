@@ -8,7 +8,7 @@ const globalForPrisma = globalThis as unknown as {
 const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: ["query", "info", "warn", "error"],
+    log: ["info", "warn", "error"],
   });
 
 // 公式記載の設定のため無効化

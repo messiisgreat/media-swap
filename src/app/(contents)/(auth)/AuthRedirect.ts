@@ -15,7 +15,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 export const AuthRedirect = async () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const callbackURL = `${pathname}?${searchParams.toString()}`;
-  await signIn(undefined, { callbackUrl: callbackURL });
+  const callbackUrl = `${pathname}?${searchParams.toString()}`;
+  await signIn(undefined, { callbackUrl });
   return null;
 };

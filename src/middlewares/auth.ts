@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import { getSession } from "next-auth/react";
 import { type ComposableMiddleware } from "next-compose-middleware";
+import { NextResponse } from "next/server";
 
 /**
  * 認証していない場合にログイン画面にリダイレクトするミドルウェア
@@ -8,16 +8,17 @@ import { type ComposableMiddleware } from "next-compose-middleware";
  * @param res NextResponse
  */
 export const authMiddleware: ComposableMiddleware = async (req, res) => {
-  const requestForNextAuth = {
-    headers: {
-      cookie: req.headers.get("cookie") ?? undefined,
+  const session = await getSession({
+    req: {
+      headers: {
+        cookie: req.headers.get("cookie") ?? undefined,
+      },
     },
-  };
-  const session = await getSession({ req: requestForNextAuth });
+  });
   if (!session) {
-    const pathName = new URL(req.url).pathname;
+    const callbackUrl = encodeURI(req.url);
     return NextResponse.redirect(
-      new URL(`/api/auth/signin?callbackUrl=${encodeURI(pathName)}`, req.url),
+      new URL(`/api/auth/signin?callbackUrl=${callbackUrl}`, req.url),
     );
   }
   return res;

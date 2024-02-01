@@ -7,10 +7,10 @@ import { useCallback } from "react";
 /**
  * ログインボタン
  */
-export const SignInButton = ({ callbackURL }: { callbackURL: string }) => {
+export const SignInButton = ({ callbackUrl }: { callbackUrl: string }) => {
   const handleSignIn = useCallback(
-    () => signIn("google", { callbackURL }),
-    [callbackURL],
+    () => signIn("google", { callbackUrl }),
+    [callbackUrl],
   );
 
   return (
