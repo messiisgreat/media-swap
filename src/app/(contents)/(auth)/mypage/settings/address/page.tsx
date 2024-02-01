@@ -1,4 +1,4 @@
-import { AddressForm } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm";
+import { AddressForm } from "@/app/(contents)/(auth)/mypage/settings/address/_components";
 import { findAddress } from "@/repositories/address";
 import { VerifyProvider } from "@/ui/form/securityVerifier/VerifyProvider";
 import { Section } from "@/ui/structure";

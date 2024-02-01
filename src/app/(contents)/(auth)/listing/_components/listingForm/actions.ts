@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import {
   AddressFormSchema,
   type AddressFormState,
-} from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
+} from "@/features/addressFormContents/type";
 import {
   ProductFormSchema,
   type ProductFormState,
@@ -14,7 +14,7 @@ import {
 import {
   createDraftItemWithTagsAndImages,
   createItemWithTagsAndImages,
-} from "@/app/(contents)/(auth)/listing/_listingForm/utils";
+} from "@/app/(contents)/(auth)/listing/_components/listingForm/utils";
 import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import { upsertAddress } from "@/repositories/address";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";

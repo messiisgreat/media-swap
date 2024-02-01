@@ -1,8 +1,8 @@
 "use cilent";
 
-import { type ZipCloudResponse } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/addressSearchButton/types";
-import { setAddressValue } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/addressSearchButton/utils";
-import { AddressFormSchema } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
+import { type ZipCloudResponse } from "@/features/addressFormContents/addressSearchButton/types";
+import { setAddressValue } from "@/features/addressFormContents/addressSearchButton/utils";
+import { AddressFormSchema } from "@/features/addressFormContents/type";
 import { Button } from "@/ui";
 import { fetchResult } from "@/utils/fetcher";
 import { useCallback, useState, type RefObject } from "react";

@@ -1,10 +1,10 @@
 "use server";
 
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import {
   AddressFormSchema,
   type AddressFormState,
-} from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/type";
-import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
+} from "@/features/addressFormContents/type";
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";

@@ -1,7 +1,7 @@
 "use client";
 
-import { useAddressModal } from "@/app/(contents)/(auth)/listing/_listingForm/AddressFormModal";
-import { listingItem } from "@/app/(contents)/(auth)/listing/_listingForm/actions";
+import { useAddressModal } from "@/app/(contents)/(auth)/listing/_components/listingForm/AddressFormModal";
+import { listingItem } from "@/app/(contents)/(auth)/listing/_components/listingForm/actions";
 import { ItemsFormContents } from "@/features/itemsFormContents";
 import { initialProductFormValues } from "@/features/itemsFormContents/types";
 import { SubmitButton } from "@/ui/form/SubmitButton";
@@ -23,7 +23,6 @@ type Props = {
  * 購入ボタン用のモーダル
  * @param address 住所
  * @returns 購入ボタンのモーダルを開く関数とモーダルのコンポーネント
- * @todo クーポンを使う場合の処理を追加する場合、formでselect要素を使って実装する。
  */
 export const ListingForm = ({ userName, tags, address }: Props) => {
   const formOptions: FormOptions = {

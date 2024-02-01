@@ -1,4 +1,4 @@
-import { type ZipCloudResult } from "@/app/(contents)/(auth)/mypage/settings/address/_components/addressForm/addressSearchButton/types";
+import { type ZipCloudResult } from "@/features/addressFormContents/addressSearchButton/types";
 import { type RefObject } from "react";
 
 /**
