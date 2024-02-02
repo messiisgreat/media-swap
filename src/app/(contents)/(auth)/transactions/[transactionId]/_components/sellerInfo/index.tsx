@@ -26,7 +26,7 @@ export const SellerInfo = ({ seller }: SellerInfoProps) => (
         <div className="avatar">
           <div className="w-16 rounded-full">
             <Image
-              src={seller.image || defaultIcon}
+              src={seller.image ?? defaultIcon}
               width={64}
               height={64}
               alt=""

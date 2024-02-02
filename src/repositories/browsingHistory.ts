@@ -22,12 +22,11 @@ export const createBrowsingHistory = cache(
  * @returns 閲覧数
  */
 export const countBrowsingHistory = cache(
-  async (itemId: string, userId?: string) => 
-  
+  async (itemId: string, userId?: string) =>
     await prisma.browsingHistory.count({
       where: {
         itemId,
-        userId: {not: userId},
-      }
-    })
+        userId: { not: userId },
+      },
+    }),
 );

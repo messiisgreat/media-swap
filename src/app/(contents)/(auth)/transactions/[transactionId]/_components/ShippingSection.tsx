@@ -9,7 +9,7 @@ type ShippingSectionProps = {
   /** 取引情報 */
   transaction: TransactionReadResult;
   /** 取引者か否か */
-  isSeller?: boolean;
+  userType: "seller" | "buyer";
 };
 
 /**
@@ -17,7 +17,7 @@ type ShippingSectionProps = {
  */
 export const ShippingSection = ({
   transaction,
-  isSeller,
+  userType,
 }: ShippingSectionProps) => {
   const { id: transactionId, trackingNumber, item } = transaction;
   const shippingMethodCode = item.shippingMethodCode;
@@ -27,12 +27,11 @@ export const ShippingSection = ({
   return (
     <>
       {/* 送り状番号の送信用 */}
-      {isSeller && <ShippingNotification transactionId={transactionId} />}
+      {userType === "seller" && (
+        <ShippingNotification transactionId={transactionId} />
+      )}
       {/* 送り状番号の表示用 */}
-      <TrackingNumber
-        trackingNumber={trackingNumber}
-        shippingMethodCode={shippingMethodCode}
-      />
+      <TrackingNumber {...{ trackingNumber, shippingMethodCode }} />
     </>
   );
 };

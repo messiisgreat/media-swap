@@ -1,7 +1,7 @@
 /**
- * 取引詳細ページのスケルトンコンポーネント
+ *  取引ページのローディングコンポーネント
  */
-export const TransactionSkeleton = () => (
+const TransactionPageSkeleton = () => (
   <div className="w-full">
     <div className="grid animate-pulse gap-8">
       <div className="alert h-20 bg-slate-700" />
@@ -30,3 +30,5 @@ export const TransactionSkeleton = () => (
     </div>
   </div>
 );
+
+export default TransactionPageSkeleton;
