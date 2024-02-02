@@ -1,5 +1,10 @@
 "use server";
 
+import {
+  likeFailedMessage,
+  sessionTimeOutMessage,
+  unlikeFailedMessage,
+} from "@/constants/errorMessage";
 import { failure, success, type Result } from "@/lib/result";
 import { createLike, deleteLike } from "@/repositories/like";
 import { getSessionUser } from "@/utils";
@@ -13,14 +18,14 @@ export type LikeResult = Result<undefined, string>;
  */
 export const like = async (itemId: string): Promise<LikeResult> => {
   const user = await getSessionUser();
-  if (!user) return failure("セッションが切れました。再度ログインしてください");
+  if (!user) return failure(sessionTimeOutMessage);
   try {
     const like = await createLike(itemId, user.id);
-    if (!like) return failure("いいねできませんでした");
+    if (!like) return failure(likeFailedMessage);
     revalidatePath(`/item/${itemId}`);
     return success();
   } catch {
-    return failure("いいねできませんでした");
+    return failure(likeFailedMessage);
   }
 };
 
@@ -30,13 +35,13 @@ export const like = async (itemId: string): Promise<LikeResult> => {
  */
 export const unlike = async (itemId: string): Promise<LikeResult> => {
   const user = await getSessionUser();
-  if (!user) return failure("セッションが切れました。再度ログインしてください");
+  if (!user) return failure(sessionTimeOutMessage);
   try {
     const like = await deleteLike(itemId, user.id);
-    if (!like) return failure("いいねを解除できませんでした");
+    if (!like) return failure(unlikeFailedMessage);
     revalidatePath(`/item/${itemId}`);
     return success();
   } catch {
-    return failure("いいねを解除できませんでした");
+    return failure(unlikeFailedMessage);
   }
 };

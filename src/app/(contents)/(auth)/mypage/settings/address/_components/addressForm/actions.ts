@@ -1,15 +1,16 @@
 "use server";
 
-import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 import {
   AddressFormSchema,
   type AddressFormState,
 } from "@/features/addressFormContents/type";
+import { sessionTimeOutMessage } from "@/constants/errorMessage";
 import { upsertAddress } from "@/repositories/address";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getSessionUser } from "@/utils";
 import { redirect } from "next/navigation";
+import { PAGE_CONTENT, PAGE_LINK } from "@/constants/myPage";
 
 /**
  * フォームに入力された住所情報を登録する
@@ -30,7 +31,7 @@ export const addressFormAction = async (
     return {
       ...prevState,
       toast: {
-        message: "セッションが切れました。再度ログインしてください。",
+        message: sessionTimeOutMessage,
         type: "error",
       },
     };

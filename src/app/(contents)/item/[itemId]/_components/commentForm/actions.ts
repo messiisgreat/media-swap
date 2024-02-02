@@ -6,6 +6,7 @@ import {
   type ItemCommentFormState,
 } from "@/app/(contents)/item/[itemId]/_components/commentForm/constants";
 import { sendMailOnComment } from "@/app/(contents)/item/[itemId]/_components/commentForm/utils";
+import { sessionTimeOutMessage } from "@/constants/errorMessage";
 import { createItemComment } from "@/repositories/itemComment";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
@@ -31,7 +32,7 @@ export const commentFormAction = async (
     return {
       ...prevState,
       toast: {
-        message: "セッションが切れました。再度ログインしてください。",
+        message: sessionTimeOutMessage,
         type: "error",
       },
     };

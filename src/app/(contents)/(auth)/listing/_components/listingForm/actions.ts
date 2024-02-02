@@ -20,6 +20,7 @@ import { upsertAddress } from "@/repositories/address";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
 import { getFormValues } from "@/ui/form/utils";
 import { getSessionUser, strToBool } from "@/utils";
+import { sessionTimeOutMessage } from "@/constants/errorMessage";
 
 /**
  * フォームに入力された商品情報を登録し、完了後に確認ページにリダイレクトする
@@ -42,7 +43,7 @@ export const listingItem = async (
     return {
       ...prevState,
       toast: {
-        message: "セッションが切れました。再度ログインしてください。",
+        message: sessionTimeOutMessage,
         type: "error",
       },
     };
@@ -136,7 +137,7 @@ export const addressFormAction = async (
     return {
       ...prevState,
       toast: {
-        message: "セッションが切れました。再度ログインしてください。",
+        message: sessionTimeOutMessage,
         type: "error",
       },
     };

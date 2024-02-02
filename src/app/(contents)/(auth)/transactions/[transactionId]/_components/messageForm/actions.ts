@@ -5,6 +5,7 @@ import {
   type TransactionMessageFormState,
 } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm/types";
 import { sendMailToRecipient } from "@/app/(contents)/(auth)/transactions/[transactionId]/_components/messageForm/utils";
+import { sessionTimeOutMessage } from "@/constants/errorMessage";
 import { createTransactionComment } from "@/repositories/transactionComment";
 import { getFormValues } from "@/ui/form";
 import { verifyForm } from "@/ui/form/securityVerifier/verifyForm";
@@ -28,7 +29,7 @@ export const messageFormAction = async (
     return {
       ...prevState,
       toast: {
-        message: "セッションが切れました。再度ログインしてください。",
+        message: sessionTimeOutMessage,
         type: "error",
       },
     };

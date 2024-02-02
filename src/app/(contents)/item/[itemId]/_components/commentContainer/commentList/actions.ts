@@ -1,6 +1,7 @@
 "use server";
 
 import { reportComment } from "@/app/(contents)/item/[itemId]/_components/commentContainer/commentList/services";
+import { authenticationFailedMessage, sessionTimeOutMessage } from "@/constants/errorMessage";
 import { failure, success, type Result } from "@/lib/result";
 import { deleteItemComment } from "@/repositories/itemComment";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
@@ -21,7 +22,7 @@ export const removeItemComment = async (
   >
 > => {
   const user = await getSessionUser();
-  if (!user) return failure("セッションが切れました。再度ログインしてください");
+  if (!user) return failure(sessionTimeOutMessage);
   const comment = await deleteItemComment(commentId, user.id);
   if (!comment) return failure("削除可能なコメントが見つかりませんでした");
   return success(comment);
@@ -48,14 +49,14 @@ export const addItemCommentReport = async (
   const verifyResult = await fetchVerifyResult(verificationCode);
   if (!verifyResult) {
     return {
-      message: "認証に失敗しました。再度認証を行ってください",
+      message: authenticationFailedMessage,
       error: true,
     };
   }
   const user = await getSessionUser();
   if (!user)
     return {
-      message: "セッションが切れました。再度ログインしてください",
+      message: sessionTimeOutMessage,
       error: true,
     };
   const userId = user.id;

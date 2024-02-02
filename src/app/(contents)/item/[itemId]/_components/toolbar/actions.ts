@@ -1,5 +1,6 @@
 "use server";
 
+import { sessionTimeOutMessage } from "@/constants/errorMessage";
 import { deleteItem, findItemById } from "@/repositories/item";
 import { createItemReport } from "@/repositories/itemReport";
 import { fetchVerifyResult } from "@/ui/form/securityVerifier/fetcher";
@@ -49,7 +50,7 @@ export const addItemReport = async (
   const user = await getSessionUser();
   if (!user) {
     return {
-      message: "セッションが切れました。再度ログインしてください",
+      message: sessionTimeOutMessage,
       error: true,
     };
   }

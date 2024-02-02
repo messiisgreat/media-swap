@@ -1,5 +1,5 @@
 "use client";
-import { networkError } from "@/constants/errorMessage";
+import { networkErrorMessage } from "@/constants/errorMessage";
 import { createCodeAndSendEmail } from "@/features/emailVerification/actions";
 import { Button } from "@/ui";
 import { useCallback } from "react";
@@ -18,7 +18,7 @@ export const AuthEmailSendButton = () => {
         toast.error(result.error);
       }
     } catch (error) {
-      toast.error(networkError);
+      toast.error(networkErrorMessage);
     }
   }, []);
   return (

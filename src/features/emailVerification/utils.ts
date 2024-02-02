@@ -2,9 +2,9 @@
 
 import { createVerificationEmailContent } from "@/app/(contents)/(auth)/mypage/settings/email-verification/_components/authEmailSendButton/mailTemplates";
 import {
-  sendMailFailed,
-  sessionTimeOut,
-  userNotMatch,
+  sendMailFailedMessage,
+  sessionTimeOutMessage,
+  userNotMatchMessage,
 } from "@/constants/errorMessage";
 import { sendMailToUser } from "@/lib/mail";
 import { failure, success, type Result } from "@/lib/result";
@@ -13,7 +13,8 @@ import { getSessionUser } from "@/utils/session";
 import { type EmailVerificationCode } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
-const sentMail = "確認コードを送信しました。メールをご確認ください。";
+const sentMailConfirmationCodeMessage =
+  "確認コードを送信しました。メールをご確認ください。";
 
 /**
  * 認証コードを生成しユーザーに紐付ける
@@ -40,12 +41,12 @@ export const sendEmailWithVerificationCode = async (
 ): Promise<Result<string, string>> => {
   const sessionUser = await getSessionUser();
   if (!sessionUser) {
-    return failure(sessionTimeOut);
+    return failure(sessionTimeOutMessage);
   }
   const { userId, code } = emailVerificationCode;
 
   if (sessionUser.id !== userId) {
-    return failure(userNotMatch);
+    return failure(userNotMatchMessage);
   }
 
   const emailContent = createVerificationEmailContent(code);
@@ -54,5 +55,7 @@ export const sendEmailWithVerificationCode = async (
     "メールアドレスの認証を行ってください",
     emailContent,
   );
-  return sendResult ? success(sentMail) : failure(sendMailFailed);
+  return sendResult
+    ? success(sentMailConfirmationCodeMessage)
+    : failure(sendMailFailedMessage);
 };
